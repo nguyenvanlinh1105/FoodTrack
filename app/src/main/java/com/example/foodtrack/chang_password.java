@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,33 +13,32 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class forgot_password extends AppCompatActivity {
-
+public class chang_password extends AppCompatActivity {
+    ImageView btn_back_phone_verify;
+    TextView btn_xacNhanDoi_MK;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_forgot_password);
+        setContentView(R.layout.activity_chang_password);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ImageView btn_back_login = findViewById(R.id.btn_back_login);
-        TextView  btn_Verify = findViewById(R.id.btn_GuiMa_verifyTK);
-
-        btn_back_login.setOnClickListener(new View.OnClickListener() {
+        btn_back_phone_verify = findViewById(R.id.btn_back_phone_verify);
+        btn_xacNhanDoi_MK = findViewById(R.id.btn_XacNhan_doiMK_changePassword);
+        btn_back_phone_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginform = new Intent(forgot_password.this, Login.class);
-                startActivity(loginform);
+                Intent phone_verify = new Intent(chang_password.this, forgot_password.class);
+                startActivity(phone_verify);
             }
         });
-        btn_Verify.setOnClickListener(new View.OnClickListener() {
+        btn_xacNhanDoi_MK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginform = new Intent(forgot_password.this, phone_verify.class);
-                startActivity(loginform);
+                Toast.makeText(chang_password.this, "Bạn đã cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
             }
         });
     }

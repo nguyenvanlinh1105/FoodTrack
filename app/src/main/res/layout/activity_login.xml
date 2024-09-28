@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/edtMail_login"
         android:layout_width="360dp"
         android:layout_height="60dp"
         android:layout_marginTop="228dp"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/edtPassword_login"
         android:layout_width="360dp"
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
@@ -74,10 +74,10 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText3"
+        app:layout_constraintEnd_toEndOf="@+id/edtMail_login"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextText3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintStart_toStartOf="@+id/edtMail_login"
+        app:layout_constraintTop_toBottomOf="@+id/edtMail_login" />
 
     <ImageView
         android:id="@+id/btn_back"
@@ -103,9 +103,9 @@
         android:textColor="@color/design_default_color_primary"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.872"
+        app:layout_constraintHorizontal_bias="0.815"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintTop_toBottomOf="@+id/edtPassword_login" />
 
     <TextView
         android:id="@+id/btn_Login_TK"
@@ -125,7 +125,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintTop_toBottomOf="@+id/edtPassword_login" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
