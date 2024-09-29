@@ -13,14 +13,13 @@
         android:theme="@style/Theme.FoodTrack"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
             android:name=".edit_profile"
-=======
+            android:exported="false"/>
+        <activity
             android:name=".chang_password"
             android:exported="false" />
         <activity
             android:name=".phone_verify"
->>>>>>> a16bb59e1f103bc783e9b5de2f9210db78c67394
             android:exported="false" />
         <activity
             android:name=".forgot_password"
