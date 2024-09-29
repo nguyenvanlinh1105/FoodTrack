@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/edt_UserName_signin"
         android:layout_width="360dp"
         android:layout_height="60dp"
         android:layout_marginTop="180dp"
@@ -60,7 +60,7 @@
 
     <EditText
 
-        android:id="@+id/editText"
+        android:id="@+id/edt_Mail_signin"
         android:layout_width="360dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
@@ -74,13 +74,13 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText3"
+        app:layout_constraintEnd_toEndOf="@+id/edt_UserName_signin"
         app:layout_constraintHorizontal_bias="0.78"
-        app:layout_constraintStart_toStartOf="@+id/editTextText3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintStart_toStartOf="@+id/edt_UserName_signin"
+        app:layout_constraintTop_toBottomOf="@+id/edt_UserName_signin" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/edt_Password_signin"
         android:layout_width="360dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
@@ -94,12 +94,12 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintEnd_toEndOf="@+id/edt_Mail_signin"
+        app:layout_constraintStart_toStartOf="@+id/edt_Mail_signin"
+        app:layout_constraintTop_toBottomOf="@+id/edt_Mail_signin" />
 
     <EditText
-
+        android:id="@+id/edt_confirmPassword_signin"
         android:layout_width="360dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
@@ -113,10 +113,10 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText4"
+        app:layout_constraintEnd_toEndOf="@+id/edt_Password_signin"
         app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toStartOf="@+id/editTextText4"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintStart_toStartOf="@+id/edt_Password_signin"
+        app:layout_constraintTop_toBottomOf="@+id/edt_Password_signin" />
 
     <ImageView
         android:id="@+id/btn_back"
@@ -130,7 +130,7 @@
         app:srcCompat="@drawable/icon_back" />
 
     <TextView
-        android:id="@+id/btn_Login_TK"
+        android:id="@+id/btn_DangKi_TK"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="96dp"
@@ -146,7 +146,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_Password_signin" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -158,7 +158,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.588"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Login_TK">
+        app:layout_constraintTop_toBottomOf="@+id/btn_DangKi_TK">
 
         <View
             android:layout_width="0dp"
