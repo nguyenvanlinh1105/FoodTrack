@@ -22,10 +22,10 @@
             android:name=".phone_verify"
             android:exported="false" />
         <activity
-            android:name=".home"
+            android:name=".Home_Page"
             android:exported="false" />
         <activity
-            android:name=".drinks"
+            android:name=".Drink"
             android:exported="false" />
         <activity
             android:name=".forgot_password"
@@ -33,6 +33,7 @@
         <activity
             android:name=".Register"
             android:exported="false" />
+
         <activity
             android:name=".first_page"
             android:exported="true">

@@ -16,6 +16,10 @@ import org.w3c.dom.Text;
 
 public class Login extends AppCompatActivity {
 
+    ImageView btn_back;
+    TextView btnDangKiFormLogin;
+    TextView btnQuenMatkhau;
+    TextView btnLogin_TK;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +30,10 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ImageView btn_back =  findViewById(R.id.btn_back);
-        TextView btnDangKiFormLogin =findViewById(R.id.btnDangKi_formLogin);
-        TextView btnQuenMatkhau = findViewById(R.id.btnQuenMatKhau);
-
+        btn_back =  findViewById(R.id.btn_back);
+        btnDangKiFormLogin =findViewById(R.id.btnDangKi_formLogin);
+        btnQuenMatkhau = findViewById(R.id.btnQuenMatKhau);
+        btnLogin_TK = findViewById(R.id.btn_Login_TK);
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +54,13 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 Intent formquenMK = new Intent(Login.this, forgot_password.class);
                 startActivity(formquenMK);
+            }
+        });
+        btnLogin_TK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent home = new Intent(Login.this, MainActivity.class);
+                startActivity(home);
             }
         });
 

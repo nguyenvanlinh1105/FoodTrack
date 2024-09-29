@@ -28,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_main);
 
         //đoạn này sau này sẽ chuyển thành new home_fragment nha
-        ReplaceFragment(new profile_fragment());
+        ReplaceFragment(new Home_Page());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if(item.getItemId() == R.id.home){
-
+                ReplaceFragment(new Home_Page());
             } else if (item.getItemId() == R.id.explore) {
-                
+
             } else if (item.getItemId() == R.id.cart) {
                 
             } else if (item.getItemId() == R.id.favorite) {
