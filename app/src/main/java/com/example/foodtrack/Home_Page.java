@@ -67,15 +67,19 @@ public class Home_Page extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home__page, container, false);
         btn_DoUong_homepage = view.findViewById(R.id.btn_DoUong_homepage);
         ControlButton();
-        return view;
+        return view ;
 
     }
-    public void ControlButton(){
+    public void ControlButton() {
         btn_DoUong_homepage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent drink = new Intent(getActivity(), Drink.class);
-                startActivity(drink);
+//                Intent drink = new Intent(getActivity(), Drink.class);
+//                startActivity(drink);
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new Drink());
+                }
             }
         });
     }

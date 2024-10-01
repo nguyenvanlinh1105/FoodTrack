@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void ReplaceFragment(Fragment fragment){
+    protected void ReplaceFragment(Fragment fragment){
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frameLayout, fragment);
