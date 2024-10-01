@@ -11,10 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Home_Page#newInstance} factory method to
@@ -75,13 +71,10 @@ public class Home_Page extends Fragment {
         return view;
 
     }
-
     public void ControlButton() {
         btn_DoUong_homepage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent drink = new Intent(getActivity(), Drink.class);
-//                startActivity(drink);
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new Drink());
@@ -101,5 +94,4 @@ public class Home_Page extends Fragment {
 
 
     }
-
 }
