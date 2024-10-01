@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
-    tools:context=".drinks">
+    tools:context=".Drink">
 
     <TextView
         android:id="@+id/textView15"

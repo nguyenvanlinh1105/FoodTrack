@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.cart) {
                 
             } else if (item.getItemId() == R.id.favorite) {
-
+                ReplaceFragment(new favorite_fragment());
             } else if (item.getItemId() == R.id.account) {
                 ReplaceFragment(new profile_fragment());
             }
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void ReplaceFragment(Fragment fragment){
+    public void ReplaceFragment(Fragment fragment){
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frameLayout, fragment);
