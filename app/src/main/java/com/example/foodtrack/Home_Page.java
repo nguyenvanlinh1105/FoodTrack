@@ -30,7 +30,7 @@ public class Home_Page extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView btn_DoUong_homepage;
+    TextView btn_DoUong_homepage, btn_DoAn_homepage;
 
     public Home_Page() {
         // Required empty public constructor
@@ -70,6 +70,7 @@ public class Home_Page extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home__page, container, false);
         btn_DoUong_homepage = view.findViewById(R.id.btn_DoUong_homepage);
+        btn_DoAn_homepage = view.findViewById(R.id.btn_DoAn_homepage);
         ControlButton();
         return view;
 
@@ -87,6 +88,18 @@ public class Home_Page extends Fragment {
                 }
             }
         });
+
+        btn_DoAn_homepage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new food_fragment());
+                }
+            }
+        });
+
+
     }
 
 }
