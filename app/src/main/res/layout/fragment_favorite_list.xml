@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".favorite_list_fragment">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:id="@+id/list_item_favorite"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:background="@drawable/edit_text_no_border"
+           android:padding="15dp">
+
+           <ImageView
+               android:id="@+id/item_image_favorite"
+               android:layout_width="80dp"
+               android:layout_height="90dp"
+               android:layout_marginStart="12dp"
+               android:src="@drawable/double_cheese"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.0" />
+
+           <TextView
+               android:id="@+id/item_title_favorite"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="30dp"
+               android:fontFamily="sans-serif-medium"
+               android:text="title"
+               android:textSize="18sp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toEndOf="@+id/item_image_favorite"
+               app:layout_constraintTop_toTopOf="parent" />
+
+           <TextView
+               android:id="@+id/item_subTitle_favorite"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="33dp"
+               android:layout_marginTop="5dp"
+               android:fontFamily="sans-serif-medium"
+               android:text="sub title"
+               android:textSize="14sp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toEndOf="@+id/item_image_favorite"
+               app:layout_constraintTop_toBottomOf="@+id/item_title_favorite" />
+
+           <TextView
+               android:id="@+id/price_favorite"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="30dp"
+               android:layout_marginTop="5dp"
+               android:fontFamily="sans-serif-medium"
+               android:text="price"
+               android:textColor="#FF5E00"
+               android:textSize="17sp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toEndOf="@+id/item_image_favorite"
+               app:layout_constraintTop_toBottomOf="@+id/item_subTitle_favorite" />
+
+           <LinearLayout
+               android:id="@+id/deleteBtn_favorite"
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:layout_marginEnd="3dp"
+               android:background="@drawable/icon_delete_favorite_bg"
+               android:gravity="center"
+               android:tag="deleteBtn_favorite"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.46">
+
+               <ImageView
+                   android:layout_width="25dp"
+                   android:layout_height="30dp"
+
+                   android:src="@drawable/icon_delete_favorite30"
+                   tools:layout_editor_absoluteX="309dp"
+                   tools:layout_editor_absoluteY="35dp" />
+           </LinearLayout>
+       </androidx.constraintlayout.widget.ConstraintLayout>
+   </LinearLayout>
+
+</FrameLayout>

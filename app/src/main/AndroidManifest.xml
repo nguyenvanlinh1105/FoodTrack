@@ -15,7 +15,7 @@
 
         <activity
             android:name=".edit_profile"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".chang_password"
             android:exported="false" />
@@ -39,7 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".first_page"
             android:exported="true">
@@ -49,8 +49,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>

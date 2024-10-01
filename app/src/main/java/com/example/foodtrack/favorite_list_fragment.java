@@ -1,22 +1,19 @@
 package com.example.foodtrack;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Home_Page#newInstance} factory method to
+ * Use the {@link favorite_list_fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Home_Page extends Fragment {
+public class favorite_list_fragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,9 +23,8 @@ public class Home_Page extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView btn_DoUong_homepage;
 
-    public Home_Page() {
+    public favorite_list_fragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +34,11 @@ public class Home_Page extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Home_Page.
+     * @return A new instance of fragment favoriet_list_fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Home_Page newInstance(String param1, String param2) {
-        Home_Page fragment = new Home_Page();
+    public static favorite_list_fragment newInstance(String param1, String param2) {
+        favorite_list_fragment fragment = new favorite_list_fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -57,28 +53,12 @@ public class Home_Page extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home__page, container, false);
-        btn_DoUong_homepage = view.findViewById(R.id.btn_DoUong_homepage);
-        ControlButton();
-        return view;
-
-    }
-    public void ControlButton() {
-        btn_DoUong_homepage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new Drink());
-                }
-            }
-        });
+        return inflater.inflate(R.layout.fragment_favorite_list, container, false);
     }
 }
