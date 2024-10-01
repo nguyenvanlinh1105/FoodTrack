@@ -36,27 +36,12 @@
         <activity
             android:name=".Register"
             android:exported="false" />
-<<<<<<< HEAD
-        <activity
-            android:name=".first_page"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-=======
->>>>>>> 65a820edff6ba1dba0bbd14a82f9c455e360c36c
         <activity
             android:name=".Login"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-<<<<<<< HEAD
             android:exported="true" />
-=======
-            android:exported="true"/>
         <activity
             android:name=".first_page"
             android:exported="true">
@@ -66,9 +51,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
->>>>>>> 65a820edff6ba1dba0bbd14a82f9c455e360c36c
     </application>
 
 </manifest>
