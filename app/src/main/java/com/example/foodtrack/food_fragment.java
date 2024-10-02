@@ -4,9 +4,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.service.controls.templates.ControlButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,12 @@ public class food_fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ArrayList<String> foodTitle = new ArrayList<>();
+    ArrayList<String> foodPrice = new ArrayList<>();
+    ArrayList<Integer> foodImg = new ArrayList<>();
+
+    ListView listView_food;
 
     public food_fragment() {
         // Required empty public constructor
@@ -53,12 +63,43 @@ public class food_fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        initializeData();
+    }
+
+    private void initializeData() {
+        foodTitle.add("Pallavi Biryani");
+        foodTitle.add("Cơm tấm");
+        foodTitle.add("Burger phô mai");
+        foodTitle.add("Burger trứng");
+
+        foodImg.add(R.drawable.pallavi_biryani);
+        foodImg.add(R.drawable.com_tam);
+        foodImg.add(R.drawable.double_cheese);
+        foodImg.add(R.drawable.double_cheese);
+
+        foodPrice.add("50.000đ");
+        foodPrice.add("30.000đ");
+        foodPrice.add("20.000đ");
+        foodPrice.add("50.000đ");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_food_fragment, container, false);
+        // Inflate the layout for this fragment'
+        View view = inflater.inflate(R.layout.fragment_food, container, false);
+        Mapping(view);
+        ControlButton();
+        return view;
+    }
+
+    private void Mapping(View view){
+        listView_food = (ListView) view.findViewById(R.id.listView_food);
+        food_list_adapter listAdapter = new food_list_adapter(getContext(), foodTitle, foodPrice, foodImg);
+        listView_food.setAdapter(listAdapter);
+    }
+
+    private void ControlButton(){
+
     }
 }
