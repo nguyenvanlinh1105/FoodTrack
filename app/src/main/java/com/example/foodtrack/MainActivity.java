@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.cart) {
                 
             } else if (item.getItemId() == R.id.favorite) {
+                ReplaceFragment(new favorite_fragment());
 
             } else if (item.getItemId() == R.id.account) {
                 ReplaceFragment(new profile_fragment());

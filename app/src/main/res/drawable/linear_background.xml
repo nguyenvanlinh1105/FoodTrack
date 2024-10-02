@@ -1,0 +1,6 @@
+<linearGradient xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_gradient"
+    android:angle="270"
+    android:startColor="#FF5E00"
+    android:endColor="#2196F3"
+    android:type="linear" />

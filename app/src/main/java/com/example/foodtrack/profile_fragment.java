@@ -76,7 +76,7 @@ public class profile_fragment extends Fragment {
         toEditHoSo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent editHoSo = new Intent(getActivity(), edit_profile.class);
+                Intent editHoSo = new Intent(getActivity(),  edit_profile.class);
                 startActivity(editHoSo);
             }
         });

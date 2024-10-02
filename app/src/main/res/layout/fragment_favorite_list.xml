@@ -9,12 +9,13 @@
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent">
+
        <androidx.constraintlayout.widget.ConstraintLayout
            android:id="@+id/list_item_favorite"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="10dp"
-           android:background="@drawable/edit_text_no_border"
+           android:background="@drawable/input_opacity_background"
            android:padding="15dp">
 
            <ImageView
