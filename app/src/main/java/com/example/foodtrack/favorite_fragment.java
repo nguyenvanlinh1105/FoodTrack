@@ -78,17 +78,33 @@ public class favorite_fragment extends Fragment {
         favoriteTitle.add("Burger bò");
         favoriteTitle.add("Burger trứng");
         favoriteTitle.add("Burger phô mai");
+        favoriteTitle.add("Burger phô mai gà");
+        favoriteTitle.add("Burger mỳ ý");
+        favoriteTitle.add("Burger heo quay");
+        favoriteTitle.add("Burger thịt bằm");
 
         favoriteImg.add(R.drawable.double_cheese);
         favoriteImg.add(R.drawable.double_cheese);
         favoriteImg.add(R.drawable.double_cheese);
         favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.double_cheese);
 
         favoriteSubTitle.add("Classic cheesburger");
         favoriteSubTitle.add("Classic cheesburger");
         favoriteSubTitle.add("Classic cheesburger");
         favoriteSubTitle.add("Classic cheesburger");
+        favoriteSubTitle.add("Classic cheesburger");
+        favoriteSubTitle.add("Classic cheesburger");
+        favoriteSubTitle.add("Classic cheesburger");
+        favoriteSubTitle.add("Classic cheesburger");
 
+        favoritePrice.add("50.000đ");
+        favoritePrice.add("50.000đ");
+        favoritePrice.add("50.000đ");
+        favoritePrice.add("50.000đ");
         favoritePrice.add("50.000đ");
         favoritePrice.add("50.000đ");
         favoritePrice.add("50.000đ");

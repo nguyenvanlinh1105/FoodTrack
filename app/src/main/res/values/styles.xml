@@ -8,4 +8,9 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="BottomNavigationViewStyle" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@drawable/nav_menu_bg</item>
+        <item name="android:paddingBottom">-8dp</item>
+    </style>
+
 </resources>

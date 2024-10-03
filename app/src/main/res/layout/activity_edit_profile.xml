@@ -79,50 +79,52 @@
             android:id="@+id/tenTaiKhoan_editProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_no_border"
-            android:textSize="16sp"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/input_opacity_background"
+            android:fontFamily="sans-serif-medium"
             android:paddingLeft="12sp"
             android:paddingTop="16sp"
             android:paddingBottom="16sp"
             android:text="TechTrio"
-            android:layout_marginBottom="10sp"
-            android:fontFamily="sans-serif-medium"/>
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/ho_editProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_no_border"
-            android:textSize="16sp"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/input_opacity_background"
+            android:fontFamily="sans-serif-medium"
             android:paddingLeft="12sp"
             android:paddingTop="16sp"
             android:paddingBottom="16sp"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="10sp"
-            android:text="Tech"/>
+            android:text="Tech"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/ten_editProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_no_border"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/input_opacity_background"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="12sp"
             android:paddingTop="16sp"
             android:paddingBottom="16sp"
             android:text="Trio"
-            android:layout_marginBottom="10sp"
             android:textSize="16sp" />
+
         <EditText
             android:id="@+id/email_editProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_no_border"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/input_opacity_background"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="12sp"
             android:paddingTop="16sp"
             android:paddingBottom="16sp"
             android:text="techtrio123@gmail.com"
-            android:layout_marginBottom="10sp"
             android:textSize="16sp" />
 
         <EditText
@@ -130,26 +132,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10sp"
-            android:background="@drawable/edit_text_no_border"
+            android:background="@drawable/input_opacity_background"
             android:drawableRight="@drawable/icon_location"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="12sp"
-            android:paddingRight="12sp"
             android:paddingTop="16sp"
+            android:paddingRight="12sp"
             android:paddingBottom="16sp"
             android:text="48 Cao Thắng, P.Thanh Bình, Q.Hải Châu..."
             android:textSize="16sp" />
+
         <EditText
             android:id="@+id/sdt_editProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_no_border"
+            android:layout_marginBottom="18sp"
+            android:background="@drawable/input_opacity_background"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="12sp"
             android:paddingTop="16sp"
             android:paddingBottom="16sp"
             android:text="01234567891"
-            android:layout_marginBottom="18sp"
             android:textSize="16sp" />
         <Button
             android:id="@+id/luuBtn_editProfile"
