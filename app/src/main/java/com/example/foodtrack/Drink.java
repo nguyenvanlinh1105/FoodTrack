@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import android.content.Intent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +37,8 @@ public class Drink extends Fragment {
 
     ListView listView_drink;
     TextView btn_DoAn_food;
+
+    ImageView chatIcon;
     public Drink() {
         // Required empty public constructor
     }
@@ -97,6 +101,8 @@ public class Drink extends Fragment {
         btn_DoAn_food = view.findViewById(R.id.btn_DoAn_food );
         food_list_adapter listAdapter = new food_list_adapter(getContext(), drinkTitle, drinkPrice, drinkImg);
         listView_drink.setAdapter(listAdapter);
+
+        chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
     }
 
     public void ControlButton(){
@@ -107,6 +113,13 @@ public class Drink extends Fragment {
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new food_fragment());
                 }
+            }
+        });
+        chatIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chat = new Intent(getActivity(),  list_chat_user.class);
+                startActivity(chat);
             }
         });
     }

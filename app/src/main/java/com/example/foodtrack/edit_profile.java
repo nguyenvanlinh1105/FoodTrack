@@ -36,8 +36,7 @@ public class edit_profile extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent profile = new Intent(edit_profile.this, profile_fragment.class);
-                startActivity(profile);
+                finish();
             }
         });
     }

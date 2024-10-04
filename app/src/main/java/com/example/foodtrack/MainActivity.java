@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             if(item.getItemId() == R.id.home){
                 ReplaceFragment(new Home_Page());
             } else if (item.getItemId() == R.id.explore) {
-
+                ReplaceFragment(new food_fragment());
             } else if (item.getItemId() == R.id.cart) {
                 
             } else if (item.getItemId() == R.id.favorite) {

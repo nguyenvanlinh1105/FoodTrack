@@ -8,10 +8,12 @@ import android.service.controls.templates.ControlButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import android.content.Intent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,10 +37,10 @@ public class food_fragment extends Fragment {
 
     ListView listView_food;
     TextView btn_DoUong_food;
-
+    ImageView chatIcon;
     public food_fragment() {
         // Required empty public constructor
-    }
+        ImageView chatIcon;    }
 
     /**
      * Use this factory method to create a new instance of
@@ -113,6 +115,8 @@ public class food_fragment extends Fragment {
         btn_DoUong_food = view.findViewById(R.id.btn_DoUong_food );
         food_list_adapter listAdapter = new food_list_adapter(getContext(), foodTitle, foodPrice, foodImg);
         listView_food.setAdapter(listAdapter);
+
+        chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
     }
 
     private void ControlButton(){
@@ -126,6 +130,18 @@ public class food_fragment extends Fragment {
                 }
             }
         });
+
+        chatIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chat = new Intent(getActivity(),  list_chat_user.class);
+                startActivity(chat);
+            }
+        });
+
+
+
+
     }
 
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -27,6 +28,7 @@ public class Home_Page extends Fragment {
     private String mParam1;
     private String mParam2;
     TextView btn_DoUong_homepage, btn_DoAn_homepage;
+    ImageView chatIcon;
 
     public Home_Page() {
         // Required empty public constructor
@@ -67,6 +69,7 @@ public class Home_Page extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home__page, container, false);
         btn_DoUong_homepage = view.findViewById(R.id.btn_DoUong_homepage);
         btn_DoAn_homepage = view.findViewById(R.id.btn_DoAn_homepage);
+        chatIcon = view.findViewById(R.id.chatIcon);
         ControlButton();
         return view;
 
@@ -92,6 +95,12 @@ public class Home_Page extends Fragment {
             }
         });
 
-
+        chatIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chat = new Intent(getActivity(),  list_chat_user.class);
+                startActivity(chat);
+            }
+        });
     }
 }
