@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class food_fragment extends Fragment {
     ArrayList<Integer> foodImg = new ArrayList<>();
 
     ListView listView_food;
+    TextView btn_DoUong_food;
 
     public food_fragment() {
         // Required empty public constructor
@@ -71,12 +73,24 @@ public class food_fragment extends Fragment {
         foodTitle.add("Cơm tấm");
         foodTitle.add("Burger phô mai");
         foodTitle.add("Burger trứng");
+        foodTitle.add("Pallavi Biryani");
+        foodTitle.add("Cơm tấm");
+        foodTitle.add("Burger phô mai");
+        foodTitle.add("Burger trứng");
 
         foodImg.add(R.drawable.pallavi_biryani);
         foodImg.add(R.drawable.com_tam);
         foodImg.add(R.drawable.double_cheese);
         foodImg.add(R.drawable.double_cheese);
+        foodImg.add(R.drawable.pallavi_biryani);
+        foodImg.add(R.drawable.com_tam);
+        foodImg.add(R.drawable.double_cheese);
+        foodImg.add(R.drawable.double_cheese);
 
+        foodPrice.add("50.000đ");
+        foodPrice.add("30.000đ");
+        foodPrice.add("20.000đ");
+        foodPrice.add("50.000đ");
         foodPrice.add("50.000đ");
         foodPrice.add("30.000đ");
         foodPrice.add("20.000đ");
@@ -93,13 +107,26 @@ public class food_fragment extends Fragment {
         return view;
     }
 
+
     private void Mapping(View view){
         listView_food = (ListView) view.findViewById(R.id.listView_food);
+        btn_DoUong_food = view.findViewById(R.id.btn_DoUong_food );
         food_list_adapter listAdapter = new food_list_adapter(getContext(), foodTitle, foodPrice, foodImg);
         listView_food.setAdapter(listAdapter);
     }
 
     private void ControlButton(){
 
+        btn_DoUong_food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new Drink());
+                }
+            }
+        });
     }
+
+
 }

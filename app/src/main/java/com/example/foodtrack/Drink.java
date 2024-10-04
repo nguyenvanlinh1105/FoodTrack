@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class Drink extends Fragment {
     ArrayList<Integer> drinkImg = new ArrayList<>();
 
     ListView listView_drink;
+    TextView btn_DoAn_food;
     public Drink() {
         // Required empty public constructor
     }
@@ -87,12 +89,29 @@ public class Drink extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_drink, container, false);
         Mapping(view);
+        ControlButton();
         return view;
     }
     private void Mapping(View view){
         listView_drink = (ListView) view.findViewById(R.id.listView_drink);
+        btn_DoAn_food = view.findViewById(R.id.btn_DoAn_food );
         food_list_adapter listAdapter = new food_list_adapter(getContext(), drinkTitle, drinkPrice, drinkImg);
         listView_drink.setAdapter(listAdapter);
     }
+
+    public void ControlButton(){
+        btn_DoAn_food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new food_fragment());
+                }
+            }
+        });
+    }
+
+
+
 
 }
