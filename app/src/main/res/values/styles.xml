@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomTextStyle" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="BottomNavigationViewStyle" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@drawable/nav_menu_bg</item>
+        <item name="android:paddingBottom">-8dp</item>
+    </style>
+
+</resources>

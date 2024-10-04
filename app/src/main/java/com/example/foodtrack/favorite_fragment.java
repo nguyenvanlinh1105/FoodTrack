@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import android.content.Intent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +42,7 @@ public class favorite_fragment extends Fragment {
     ArrayList<String> favoritePrice = new ArrayList<>();
 
     ListView listView_favorite;
+    ImageView chatIcon;
 
     public favorite_fragment() {
         // Required empty public constructor
@@ -78,17 +81,33 @@ public class favorite_fragment extends Fragment {
         favoriteTitle.add("Burger bò");
         favoriteTitle.add("Burger trứng");
         favoriteTitle.add("Burger phô mai");
+        favoriteTitle.add("Burger phô mai gà");
+        favoriteTitle.add("Burger mỳ ý");
+        favoriteTitle.add("Burger heo quay");
+        favoriteTitle.add("Burger thịt bằm");
 
         favoriteImg.add(R.drawable.double_cheese);
         favoriteImg.add(R.drawable.double_cheese);
         favoriteImg.add(R.drawable.double_cheese);
         favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.double_cheese);
 
         favoriteSubTitle.add("Classic cheesburger");
         favoriteSubTitle.add("Classic cheesburger");
         favoriteSubTitle.add("Classic cheesburger");
         favoriteSubTitle.add("Classic cheesburger");
+        favoriteSubTitle.add("Classic cheesburger");
+        favoriteSubTitle.add("Classic cheesburger");
+        favoriteSubTitle.add("Classic cheesburger");
+        favoriteSubTitle.add("Classic cheesburger");
 
+        favoritePrice.add("50.000đ");
+        favoritePrice.add("50.000đ");
+        favoritePrice.add("50.000đ");
+        favoritePrice.add("50.000đ");
         favoritePrice.add("50.000đ");
         favoritePrice.add("50.000đ");
         favoritePrice.add("50.000đ");
@@ -111,10 +130,18 @@ public class favorite_fragment extends Fragment {
         listView_favorite = (ListView) view.findViewById(R.id.listView_favorite);
         Favorite_list_adapter listAdapter = new Favorite_list_adapter(getContext(), favoriteTitle, favoriteImg, favoriteSubTitle, favoritePrice);
         listView_favorite.setAdapter(listAdapter);
+
+        chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
     }
 
     private void ControlButton() {
-
+        chatIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chat = new Intent(getActivity(),  list_chat_user.class);
+                startActivity(chat);
+            }
+        });
     }
 
 

@@ -1,23 +1,19 @@
 package com.example.foodtrack;
 
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link profile_fragment#newInstance} factory method to
+ * Use the {@link drink_list#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class profile_fragment extends Fragment {
+public class drink_list extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,10 +24,7 @@ public class profile_fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ConstraintLayout toEditHoSo;
-    ImageView chatIcon;
-
-    public profile_fragment() {
+    public drink_list() {
         // Required empty public constructor
     }
 
@@ -41,11 +34,11 @@ public class profile_fragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment profile.
+     * @return A new instance of fragment drink_list.
      */
     // TODO: Rename and change types and number of parameters
-    public static profile_fragment newInstance(String param1, String param2) {
-        profile_fragment fragment = new profile_fragment();
+    public static drink_list newInstance(String param1, String param2) {
+        drink_list fragment = new drink_list();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,38 +53,12 @@ public class profile_fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_profile, container, false);
-        toEditHoSo = (ConstraintLayout)view.findViewById(R.id.capNhatHoSo_profile);
-        chatIcon = (ImageView)view.findViewById(R.id.chatIcon);
-        ControlButton();
-        return view;
+        return inflater.inflate(R.layout.fragment_drink_list, container, false);
     }
-
-    public void ControlButton(){
-        toEditHoSo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent editHoSo = new Intent(getActivity(),  edit_profile.class);
-                startActivity(editHoSo);
-            }
-        });
-
-        chatIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent chat = new Intent(getActivity(),  list_chat_user.class);
-                startActivity(chat);
-            }
-        });
-    }
-
 }

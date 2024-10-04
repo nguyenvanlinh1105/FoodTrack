@@ -9,59 +9,127 @@
     android:layout_margin="5dp"
     tools:context=".Drink">
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:background="#fff"
-        android:text="FoodTrack"
-        android:textColor="@color/primary_color"
-        android:textSize="34sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="300dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
-            android:src="@drawable/icon_search30" />
+            android:id="@+id/imageView14"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/icon_search_orange"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:text="Khám phá sản phẩm"
-            android:textColor="@color/sub_primary_color"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="11dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Khám phá"
+            android:textColor="#FFA033"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/chatIcon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_chat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="72dp"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/listView_drink"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="Đồ ăn"
+            android:textColor="#6D3805"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.244"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Thức uống"
+            android:textColor="@color/primary_color"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.615"
+            app:layout_constraintStart_toEndOf="@+id/textView20"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageView15"
+            android:layout_width="115dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/selected_orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.805"
+            app:layout_constraintStart_toStartOf="@+id/imageView17"
+            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="43dp"
+            android:src="@drawable/underlined_light_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ListView
+        android:id="@+id/listView_drink"
+        android:layout_width="369dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="184dp"
+        android:divider="@color/white"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_chat" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

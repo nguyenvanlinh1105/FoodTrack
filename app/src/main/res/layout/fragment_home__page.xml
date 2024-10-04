@@ -5,10 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
+    android:padding="5dp"
     android:background="#fff"
     tools:context=".Home_Page">
 
@@ -50,11 +47,11 @@
             android:paddingRight="20dp"
             android:text="Chọn địa điểm giao hàng."
             android:textColor="@color/sub_primary_color"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/chatIcon"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginTop="72dp"
@@ -117,7 +114,7 @@
             android:backgroundTint="#FFD9BA"
             android:gravity="center"
             android:paddingLeft="10dp"
-            android:paddingTop="25dp"
+            android:paddingTop="20dp"
             android:paddingRight="10dp"
             android:paddingBottom="25dp"
             android:text="Đồ ăn"
@@ -134,9 +131,9 @@
             android:backgroundTint="#facccc"
             android:gravity="center"
             android:paddingLeft="10dp"
-            android:paddingTop="25dp"
+            android:paddingTop="20dp"
             android:paddingRight="10dp"
-            android:paddingBottom="25dp"
+            android:paddingBottom="20dp"
             android:text="Đồ uống"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -176,7 +173,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@drawable/input_opacity_background"
             android:backgroundTint="@color/F3f3f3"
@@ -191,7 +189,8 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:src="@drawable/icon_food1"></ImageView>
+                android:src="@drawable/icon_food1"/>
+
 
             <TextView
                 android:id="@+id/textView16"
@@ -234,7 +233,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@drawable/input_opacity_background"
             android:backgroundTint="@color/F3f3f3"
@@ -249,7 +249,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:src="@drawable/icon_food2"></ImageView>
+                android:src="@drawable/icon_food2"/>
 
             <TextView
 
