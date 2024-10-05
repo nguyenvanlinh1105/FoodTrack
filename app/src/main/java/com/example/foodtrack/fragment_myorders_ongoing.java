@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +27,7 @@ public class fragment_myorders_ongoing extends Fragment {
     private String mParam2;
 
     ImageView backBtn;
+    TextView toLichSu;
 
     public fragment_myorders_ongoing() {
         // Required empty public constructor
@@ -69,7 +71,8 @@ public class fragment_myorders_ongoing extends Fragment {
     }
 
     public void Mapping(View view){
-        backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_history);
+        backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing);
+        toLichSu = (TextView) view.findViewById(R.id.btn_lichSu_myOrders);
     }
     public void ControlButton(){
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +83,16 @@ public class fragment_myorders_ongoing extends Fragment {
                     mainActivity.ReplaceFragment(new profile_fragment());
                 }
 
+            }
+        });
+
+        toLichSu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_myorders_history());
+                }
             }
         });
     }

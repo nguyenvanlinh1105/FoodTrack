@@ -122,7 +122,7 @@ public class favorite_fragment extends Fragment {
         return view;
     }
 
-    private void Mapping(View view) {
+    public void Mapping(View view) {
         underlined = (TextView) view.findViewById(R.id.underlined_favorite);
         underlined.setPaintFlags(underlined.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
