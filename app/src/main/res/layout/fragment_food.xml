@@ -111,11 +111,12 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="43dp"
                 android:src="@drawable/underlined_light_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView15" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -123,17 +124,17 @@
             android:id="@+id/listView_food"
             android:layout_width="369dp"
             android:layout_height="630dp"
-            android:layout_marginStart="1dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="1dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginBottom="1dp"
             android:divider="@color/white"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
+
+
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
-            app:layout_constraintVertical_bias="0.126" />
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -132,7 +132,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="20dp"
             android:paddingRight="10dp"
-            android:paddingBottom="20dp"
+            android:paddingBottom="25dp"
             android:text="Đồ uống"
             android:textSize="20sp"
             android:textStyle="bold" />

@@ -71,17 +71,18 @@ public class Drink extends Fragment {
         initializeData();
     }
     private void initializeData() {
-        drinkTitle.add("Pallavi Biryani");
-        drinkTitle.add("Cơm tấm");
-        drinkTitle.add("Burger phô mai");
-        drinkTitle.add("Burger trứng");
+        drinkTitle.add("Trà đào cam sả");
+        drinkTitle.add("Cà phê capuccino");
+        drinkTitle.add("Trà chanh");
+        drinkTitle.add("Cà phê muối");
 
-        drinkImg.add(R.drawable.drink1);
         drinkImg.add(R.drawable.drink2);
         drinkImg.add(R.drawable.drink1);
         drinkImg.add(R.drawable.drink2);
+        drinkImg.add(R.drawable.drink1);
+        drinkImg.add(R.drawable.drink2);
 
-        drinkPrice.add("50.000đ");
+        drinkPrice.add("60.000đ");
         drinkPrice.add("30.000đ");
         drinkPrice.add("20.000đ");
         drinkPrice.add("50.000đ");
