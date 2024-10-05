@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -128,7 +127,7 @@ public class favorite_fragment extends Fragment {
         underlined.setPaintFlags(underlined.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         listView_favorite = (ListView) view.findViewById(R.id.listView_favorite);
-        Favorite_list_adapter listAdapter = new Favorite_list_adapter(getContext(), favoriteTitle, favoriteImg, favoriteSubTitle, favoritePrice);
+        favorite_list_adapter listAdapter = new favorite_list_adapter(getContext(), favoriteTitle, favoriteImg, favoriteSubTitle, favoritePrice);
         listView_favorite.setAdapter(listAdapter);
 
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);

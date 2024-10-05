@@ -28,7 +28,7 @@ public class profile_fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ConstraintLayout toEditHoSo;
+    ConstraintLayout toEditHoSo, toMyOrders;
     ImageView chatIcon;
 
     public profile_fragment() {
@@ -70,10 +70,15 @@ public class profile_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
-        toEditHoSo = (ConstraintLayout)view.findViewById(R.id.capNhatHoSo_profile);
-        chatIcon = (ImageView)view.findViewById(R.id.chatIcon);
+        Mapping(view);
         ControlButton();
         return view;
+    }
+
+    public void Mapping(View view){
+        toEditHoSo = (ConstraintLayout)view.findViewById(R.id.capNhatHoSo_profile);
+        chatIcon = (ImageView)view.findViewById(R.id.chatIcon);
+        toMyOrders = (ConstraintLayout) view.findViewById(R.id.donHangCuaToi_profile);
     }
 
     public void ControlButton(){
@@ -92,6 +97,18 @@ public class profile_fragment extends Fragment {
                 startActivity(chat);
             }
         });
+
+        toMyOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
+                }
+            }
+        });
+
+
     }
 
 }

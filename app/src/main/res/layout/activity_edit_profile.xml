@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".edit_profile"
-    android:background="#FFF">
+    android:background="#FFF"
+    tools:context=".edit_profile">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -75,92 +75,224 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12"
         app:layout_constraintVertical_bias="0.0">
 
-        <EditText
-            android:id="@+id/tenTaiKhoan_editProfile"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@drawable/input_opacity_background"
-            android:fontFamily="sans-serif-medium"
-            android:paddingLeft="12sp"
-            android:paddingTop="16sp"
-            android:paddingBottom="16sp"
-            android:text="TechTrio"
-            android:textSize="16sp" />
+            android:background="@drawable/edit_profile_edit_text_bg"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="7dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="3dp">
 
-        <EditText
-            android:id="@+id/ho_editProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@drawable/input_opacity_background"
-            android:fontFamily="sans-serif-medium"
-            android:paddingLeft="12sp"
-            android:paddingTop="16sp"
-            android:paddingBottom="16sp"
-            android:text="Tech"
-            android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên đăng nhập"
+                android:textColor="#757575"
+                android:textSize="12sp" />
 
-        <EditText
-            android:id="@+id/ten_editProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@drawable/input_opacity_background"
-            android:fontFamily="sans-serif-medium"
-            android:paddingLeft="12sp"
-            android:paddingTop="16sp"
-            android:paddingBottom="16sp"
-            android:text="Trio"
-            android:textSize="16sp" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="#fff"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="7dp"
+                android:text="TechTrio"
+                android:textSize="16dp" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/email_editProfile"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@drawable/input_opacity_background"
-            android:fontFamily="sans-serif-medium"
-            android:paddingLeft="12sp"
-            android:paddingTop="16sp"
-            android:paddingBottom="16sp"
-            android:text="techtrio123@gmail.com"
-            android:textSize="16sp" />
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_profile_edit_text_bg"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="7dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="3dp">
 
-        <EditText
-            android:id="@+id/diaChi_editProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@drawable/input_opacity_background"
-            android:drawableRight="@drawable/icon_location"
-            android:fontFamily="sans-serif-medium"
-            android:paddingLeft="12sp"
-            android:paddingTop="16sp"
-            android:paddingRight="12sp"
-            android:paddingBottom="16sp"
-            android:text="48 Cao Thắng, P.Thanh Bình, Q.Hải Châu..."
-            android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Họ và tên "
+                android:textColor="#757575"
+                android:textSize="12sp" />
 
-        <EditText
-            android:id="@+id/sdt_editProfile"
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="#fff"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="7dp"
+                android:text="Tech Trio"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="18sp"
-            android:background="@drawable/input_opacity_background"
-            android:fontFamily="sans-serif-medium"
-            android:paddingLeft="12sp"
-            android:paddingTop="16sp"
-            android:paddingBottom="16sp"
-            android:text="01234567891"
-            android:textSize="16sp" />
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_profile_edit_text_bg"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="7dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="#fff"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="7dp"
+                android:text="0948523874"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_profile_edit_text_bg"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="7dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="#fff"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="7dp"
+                android:text="techtrio123@gmail.com"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_profile_edit_text_bg"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="7dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/icon_locate_orange"
+                android:drawablePadding="5dp"
+                android:text="Địa chỉ"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="#fff"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="7dp"
+                android:text="48 Cao Thắng, P.Thanh Bình, Q.Hải Châu"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp">
+
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/edit_profile_edit_text_bg"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giới tính"
+                    android:textColor="#757575"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="#fff"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingBottom="7dp"
+                    android:text="Nữ"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_profile_edit_text_bg"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày sinh"
+                    android:textColor="#757575"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="#fff"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingBottom="7dp"
+                    android:text="23/11/2004"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
         <Button
             android:id="@+id/luuBtn_editProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#FF5E00"
-            android:textSize="16sp"
             android:padding="12sp"
-            android:text="Lưu"/>
+            android:text="Lưu"
+            android:textSize="16sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
