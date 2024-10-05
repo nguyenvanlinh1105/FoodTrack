@@ -1,6 +1,5 @@
 package com.example.foodtrack;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Favorite_list_adapter extends BaseAdapter {
+public class favorite_list_adapter extends BaseAdapter {
 
 
     Context context;
@@ -23,7 +21,7 @@ public class Favorite_list_adapter extends BaseAdapter {
     ArrayList<String> favoritePrice;
     LayoutInflater inflater;
 
-    public Favorite_list_adapter(Context context, ArrayList<String> title, ArrayList<Integer> img, ArrayList<String> subTitle, ArrayList<String> price) {
+    public favorite_list_adapter(Context context, ArrayList<String> title, ArrayList<Integer> img, ArrayList<String> subTitle, ArrayList<String> price) {
         this.context = context;
         this.favoriteTitle = title;
         this.favoriteImg = img;
