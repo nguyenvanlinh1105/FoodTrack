@@ -1,8 +1,8 @@
-package com.example.foodtrack;
+package com.example.foodtrack.Model;
 
 public class productModel {
-    String Title, Price, description;
-    int img;
+    protected String Title, Price, description;
+    protected int img;
 
     public productModel(String title, String price, String description, int img) {
         Title = title;

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.example.foodtrack.Model.productModel;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Drink_fragment#newInstance} factory method to
