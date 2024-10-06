@@ -133,11 +133,24 @@ public class Drink_fragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Xử lý khi click vào item
-                String selectedDrinkTitle = drinkTitle.get(position);
-                String selectedDrinkPrice = drinkPrice.get(position);
+                //String selectedDrinkTitle = drinkTitle.get(position);// đang trỏ vào item tương ứng position
+//                Intent i = new Intent(getActivity(), product_details.class);
+//                i.putExtra("title",drinkTitle.get(position));
+//                i.putExtra("price",drinkPrice.get(position));
+//                i.putExtra("description",drinkDescription.get(position));
+//                i.putExtra("image",drinkImg.get(position));
+//                startActivity(i);
+                Bundle bundle = new Bundle();
+                bundle.putString("title", drinkTitle.get(position));
+                bundle.putString("price", drinkPrice.get(position));
+                bundle.putString("description", drinkDescription.get(position));
+                bundle.putInt("image", drinkImg.get(position));
 
-                // Hiển thị thông tin, hoặc thực hiện hành động nào đó
-                Toast.makeText(getContext(), "Đã chọn: " + selectedDrinkTitle + " - Giá: " + selectedDrinkPrice, Toast.LENGTH_SHORT).show();
+                // Khởi tạo Fragment product_details và truyền Bundle
+                Intent intent = new Intent(getActivity(), product_details.class);
+                intent.putExtras(bundle); // Truyền Bundle sang Activity
+                startActivity(intent); // Chuy
+
             }
         });
     }
