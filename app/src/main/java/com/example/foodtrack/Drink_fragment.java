@@ -146,10 +146,22 @@ public class Drink_fragment extends Fragment {
                 bundle.putString("description", drinkDescription.get(position));
                 bundle.putInt("image", drinkImg.get(position));
 
+                product_details productDetailsFragment = product_details.newInstance(
+                        drinkTitle.get(position),
+                        drinkPrice.get(position),
+                        drinkDescription.get(position),
+                        drinkImg.get(position)
+                );
+
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(productDetailsFragment);
+                }
+
                 // Khởi tạo Fragment product_details và truyền Bundle
-                Intent intent = new Intent(getActivity(), product_details.class);
-                intent.putExtras(bundle); // Truyền Bundle sang Activity
-                startActivity(intent); // Chuy
+//                Intent intent = new Intent(getActivity(), product_details.class);
+//                intent.putExtras(bundle); // Truyền Bundle sang Activity
+//                startActivity(intent); // Chuy
 
             }
         });
