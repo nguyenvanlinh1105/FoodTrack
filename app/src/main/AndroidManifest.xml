@@ -28,7 +28,7 @@
             android:name=".Home_Page"
             android:exported="false" />
         <activity
-            android:name=".Drink"
+            android:name=".Drink_fragment"
             android:exported="false" />
         <activity
             android:name=".forgot_password"

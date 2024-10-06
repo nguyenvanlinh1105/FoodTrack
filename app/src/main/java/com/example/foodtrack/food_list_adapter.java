@@ -1,7 +1,6 @@
 package com.example.foodtrack;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class food_list_adapter extends BaseAdapter {
@@ -46,11 +44,11 @@ public class food_list_adapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_food_list, viewGroup, false);
+            view = inflater.inflate(R.layout.fragment_food_drink_item, viewGroup, false);
         }
-        TextView title = (TextView) view.findViewById(R.id.item_title_food);
-        TextView price = (TextView) view.findViewById(R.id.item_price_food);
-        ImageView img = (ImageView) view.findViewById(R.id.item_image_food);
+        TextView title = (TextView) view.findViewById(R.id.item_title_product);
+        TextView price = (TextView) view.findViewById(R.id.item_price_product);
+        ImageView img = (ImageView) view.findViewById(R.id.item_image_product);
         TextView addToCartBtn = (TextView) view.findViewById(R.id.add_to_cart_btn);
 
         title.setText(foodTitle.get(i));
