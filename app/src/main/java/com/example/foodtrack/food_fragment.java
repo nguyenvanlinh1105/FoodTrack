@@ -7,12 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import android.content.Intent;
+
+import com.example.foodtrack.Model.productModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +37,7 @@ public class food_fragment extends Fragment {
     ArrayList<String> foodTitle = new ArrayList<>();
     ArrayList<String> foodPrice = new ArrayList<>();
     ArrayList<Integer> foodImg = new ArrayList<>();
+    ArrayList<String> foodDescription = new ArrayList<>();
 
     ListView listView_food;
     TextView btn_DoUong_food;
@@ -69,6 +74,7 @@ public class food_fragment extends Fragment {
         initializeData();
     }
 
+    ArrayList<productModel> arraylistFood = new ArrayList<>();
     private void initializeData() {
         foodTitle.add("Pallavi Biryani");
         foodTitle.add("Cơm tấm");
@@ -96,6 +102,23 @@ public class food_fragment extends Fragment {
         foodPrice.add("30.000đ");
         foodPrice.add("20.000đ");
         foodPrice.add("50.000đ");
+
+
+        foodDescription.add("Pallavi Biryani là một món cơm trộn đặc biệt từ Ấn Độ, được nấu với gạo thơm, thịt và gia vị độc đáo.");
+        foodDescription.add("Cơm tấm là món ăn truyền thống của Việt Nam, gồm cơm tấm, sườn nướng, bì và chả.");
+        foodDescription.add("Burger phô mai là món burger với nhân thịt bò và phô mai tan chảy thơm ngon.");
+        foodDescription.add("Burger trứng là sự kết hợp giữa nhân thịt bò và trứng ốp la, mang đến hương vị béo ngậy.");
+        foodDescription.add("Pallavi Biryani là một món cơm trộn đặc biệt từ Ấn Độ, được nấu với gạo thơm, thịt và gia vị độc đáo.");
+        foodDescription.add("Cơm tấm là món ăn truyền thống của Việt Nam, gồm cơm tấm, sườn nướng, bì và chả.");
+        foodDescription.add("Burger phô mai là món burger với nhân thịt bò và phô mai tan chảy thơm ngon.");
+        foodDescription.add("Burger trứng là sự kết hợp giữa nhân thịt bò và trứng ốp la, mang đến hương vị béo ngậy.");
+
+        for (int i =0 ;i<foodTitle.size(); i++){
+            arraylistFood.add(new productModel(foodTitle.get(i), foodPrice.get(i),  foodDescription.get(i),foodImg.get(i)));
+        }
+
+
+
     }
 
     @Override
@@ -112,10 +135,40 @@ public class food_fragment extends Fragment {
     private void Mapping(View view){
         listView_food = (ListView) view.findViewById(R.id.listView_food);
         btn_DoUong_food = view.findViewById(R.id.btn_DoUong_food );
-        food_list_adapter listAdapter = new food_list_adapter(getContext(), foodTitle, foodPrice, foodImg);
+
+        food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
         listView_food.setAdapter(listAdapter);
 
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
+
+        listView_food.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("title", foodTitle.get(position));
+//                bundle.putString("price", foodPrice.get(position));
+//                bundle.putString("description", foodDescription.get(position));
+//                bundle.putInt("image", foodImg.get(position));
+//
+//                product_details productDetailsFragment = product_details.newInstance(
+//                        foodTitle.get(position),
+//                        foodPrice.get(position),
+//                        foodDescription.get(position),
+//                        foodImg.get(position)
+//                );
+//                MainActivity mainActivity = (MainActivity) getActivity();
+//                if (mainActivity != null) {
+//                    mainActivity.ReplaceFragment(productDetailsFragment);
+//                }
+
+                Intent i = new Intent(getActivity(), product_detail.class);
+                i.putExtra("title",foodTitle.get(position));
+                i.putExtra("price",foodPrice.get(position));
+                i.putExtra("description",foodDescription.get(position));
+                i.putExtra("image",foodImg.get(position));
+                startActivity(i);
+            }
+        });
     }
 
     private void ControlButton(){
