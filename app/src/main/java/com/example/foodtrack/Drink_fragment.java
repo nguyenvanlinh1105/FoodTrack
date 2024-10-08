@@ -134,29 +134,31 @@ public class Drink_fragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Xử lý khi click vào item
                 //String selectedDrinkTitle = drinkTitle.get(position);// đang trỏ vào item tương ứng position
-                Intent i = new Intent(getActivity(), product_detail.class);
-                i.putExtra("title",drinkTitle.get(position));
-                i.putExtra("price",drinkPrice.get(position));
-                i.putExtra("description",drinkDescription.get(position));
-                i.putExtra("image",drinkImg.get(position));
-                startActivity(i);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("title", drinkTitle.get(position));
-//                bundle.putString("price", drinkPrice.get(position));
-//                bundle.putString("description", drinkDescription.get(position));
-//                bundle.putInt("image", drinkImg.get(position));
 
-//                product_details productDetailsFragment = product_details.newInstance(
-//                        drinkTitle.get(position),
-//                        drinkPrice.get(position),
-//                        drinkDescription.get(position),
-//                        drinkImg.get(position)
-//                );
+//                Intent i = new Intent(getActivity(), product_detail.class);
+//                i.putExtra("title",drinkTitle.get(position));
+//                i.putExtra("price",drinkPrice.get(position));
+//                i.putExtra("description",drinkDescription.get(position));
+//                i.putExtra("image",drinkImg.get(position));
+//                startActivity(i);
 
-//                MainActivity mainActivity = (MainActivity) getActivity();
-//                if (mainActivity != null) {
-//                    mainActivity.ReplaceFragment(productDetailsFragment);
-//                }
+                Bundle bundle = new Bundle();
+                bundle.putString("title", drinkTitle.get(position));
+                bundle.putString("price", drinkPrice.get(position));
+                bundle.putString("description", drinkDescription.get(position));
+                bundle.putInt("image", drinkImg.get(position));
+
+                fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
+                        drinkTitle.get(position),
+                        drinkPrice.get(position),
+                        drinkDescription.get(position),
+                        drinkImg.get(position)
+                );
+
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(productDetailsFragment);
+                }
 
 
 

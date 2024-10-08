@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ public class fragment_myorders_history extends Fragment {
     ArrayList<orderModel> arrayListOrder = new ArrayList<>();
 
     ListView listview_myorders_history;
+    LinearLayout imageIfEmpty;
     ImageView chatIcon;
     ImageView backBtn;
     TextView toOngoing;
@@ -104,8 +106,8 @@ public class fragment_myorders_history extends Fragment {
         for (int i = 0; i < 6; i++)
             orderStatus.add("Đã giao vào 22-9");
 
-        for(int i=0; i<orderId.size();i++){
-            arrayListOrder.add(new orderModel(orderId.get(i), time.get(i), orderStatus.get(i),img.get(i), status.get(i)));
+        for (int i = 0; i < orderId.size(); i++) {
+            arrayListOrder.add(new orderModel(orderId.get(i), time.get(i), orderStatus.get(i), img.get(i), status.get(i)));
         }
     }
 
@@ -114,48 +116,60 @@ public class fragment_myorders_history extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myorders_history, container, false);
         Mapping(view);
+        checkIfListEmpty();
         ControlButton();
         return view;
     }
 
     private void Mapping(View view) {
-        listview_myorders_history = (ListView) view.findViewById(R.id.listview_myorders_history);
+        listview_myorders_history = (ListView) view.findViewById(R.id.listview_myorders);
         fragment_myorders_history_list_adapter listAdapter = new fragment_myorders_history_list_adapter(getContext(), arrayListOrder);
         listview_myorders_history.setAdapter(listAdapter);
 
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_history);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         toOngoing = (TextView) view.findViewById(R.id.btn_dangDen_myOrder);
+        imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
     }
 
-    private void ControlButton() {
-        chatIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent chat = new Intent(getActivity(), list_chat_user.class);
-                startActivity(chat);
-            }
-        });
-
-        toOngoing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
-                }
-            }
-        });
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new profile_fragment());
-                }
-
-            }
-        });
+    private void checkIfListEmpty() {
+        if (arrayListOrder.isEmpty()) {
+            listview_myorders_history.setVisibility(View.GONE);
+            imageIfEmpty.setVisibility(View.VISIBLE);
+        } else {
+            listview_myorders_history.setVisibility(View.VISIBLE);
+            imageIfEmpty.setVisibility(View.GONE);
+        }
     }
-}
+
+        private void ControlButton () {
+            chatIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent chat = new Intent(getActivity(), list_chat_user.class);
+                    startActivity(chat);
+                }
+            });
+
+            toOngoing.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    if (mainActivity != null) {
+                        mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
+                    }
+                }
+            });
+
+            backBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    if (mainActivity != null) {
+                        mainActivity.ReplaceFragment(new profile_fragment());
+                    }
+
+                }
+            });
+        }
+    }

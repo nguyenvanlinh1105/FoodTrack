@@ -44,8 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Chia sẻ cảm nhận của bản về bữa ăn"
+            android:textStyle="bold"
+            android:text="Chia sẻ cảm nhận của bạn về bữa ăn"
             android:textAlignment="center"
             android:textColor="@color/sub_primary_color"
             android:textSize="20sp" />
@@ -62,6 +62,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:layout_marginLeft="20dp"
             android:id="@+id/btn_back_myorders_history"
             android:layout_width="20sp"
             android:layout_height="20sp"
@@ -90,6 +91,7 @@
                 android:id="@+id/chatIcon"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:layout_marginEnd="16dp"
                 android:src="@drawable/icon_chat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
