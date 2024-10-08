@@ -4,57 +4,45 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.foodtrack.Model.productModel;
+
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
-public class food_list_adapter extends BaseAdapter {
-
-    Context context;
-    ArrayList<String> foodTitle;
-    ArrayList<String> foodPrice;
-    ArrayList<Integer> foodImg;
-    LayoutInflater inflater;
-
-    public food_list_adapter(Context context,  ArrayList<String> title, ArrayList<String> price, ArrayList<Integer> img){
-        this.context = context;
-        this.foodTitle = title;
-        this.foodPrice = price;
-        this.foodImg = img;
-        inflater = LayoutInflater.from(context);
+public class food_list_adapter extends ArrayAdapter<productModel> {
+    public food_list_adapter(Context context, ArrayList<productModel> arraylistFood){
+            super(context, R.layout.fragment_food_drink_item, arraylistFood);
     }
 
-    @Override
-    public int getCount() {
-        return foodTitle.size();
-    }
 
+    @NonNull
     @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_food_drink_item, viewGroup, false);
+    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
+        productModel food = getItem(position);
+        if(view ==null){
+            view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_food_drink_item, parent, false);
         }
-        TextView title = (TextView) view.findViewById(R.id.item_title_product);
-        TextView price = (TextView) view.findViewById(R.id.item_price_product);
-        ImageView img = (ImageView) view.findViewById(R.id.item_image_product);
-        TextView addToCartBtn = (TextView) view.findViewById(R.id.add_to_cart_btn);
 
-        title.setText(foodTitle.get(i));
-        price.setText(foodPrice.get(i));
-        img.setImageResource(foodImg.get(i));
+        TextView title = view.findViewById(R.id.item_title_product);
+        TextView price = view.findViewById(R.id.item_price_product);
+        ImageView img = view.findViewById(R.id.item_image_product);
+        TextView description = view.findViewById(R.id.description_product_item);
+        TextView addToCartBtn = view.findViewById(R.id.add_to_cart_btn);
 
-        return view;
+        if (food != null) {
+            img.setImageResource(food.getImg());
+            title.setText(food.getTitle());
+            description.setText(food.getDescription());
+            price.setText(food.getPrice());
+        }
+        return view ;
     }
 }
