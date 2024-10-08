@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.service.controls.templates.ControlButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,7 +125,7 @@ public class food_fragment extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new Drink());
+                    mainActivity.ReplaceFragment(new Drink_fragment());
                 }
             }
         });

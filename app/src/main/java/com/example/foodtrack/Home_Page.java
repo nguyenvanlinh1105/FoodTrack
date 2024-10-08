@@ -3,7 +3,6 @@ package com.example.foodtrack;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -80,7 +79,7 @@ public class Home_Page extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new Drink());
+                    mainActivity.ReplaceFragment(new Drink_fragment());
                 }
             }
         });

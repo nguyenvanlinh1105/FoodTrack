@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.foodtrack.Model.orderModel;
+
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
@@ -40,6 +42,7 @@ public class fragment_myorders_history extends Fragment {
     ArrayList<Integer> status = new ArrayList<>();
     ArrayList<String> orderStatus = new ArrayList<>();
 
+    ArrayList<orderModel> arrayListOrder = new ArrayList<>();
 
     ListView listview_myorders_history;
     ImageView chatIcon;
@@ -100,6 +103,10 @@ public class fragment_myorders_history extends Fragment {
 
         for (int i = 0; i < 6; i++)
             orderStatus.add("Đã giao vào 22-9");
+
+        for(int i=0; i<orderId.size();i++){
+            arrayListOrder.add(new orderModel(orderId.get(i), time.get(i), orderStatus.get(i),img.get(i), status.get(i)));
+        }
     }
 
     @Override
@@ -113,7 +120,7 @@ public class fragment_myorders_history extends Fragment {
 
     private void Mapping(View view) {
         listview_myorders_history = (ListView) view.findViewById(R.id.listview_myorders_history);
-        fragment_myorders_history_list_adapter listAdapter = new fragment_myorders_history_list_adapter(getContext(), orderId, time, img, rate, status, orderStatus);
+        fragment_myorders_history_list_adapter listAdapter = new fragment_myorders_history_list_adapter(getContext(), arrayListOrder);
         listview_myorders_history.setAdapter(listAdapter);
 
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_history);
