@@ -47,7 +47,7 @@
             android:fontFamily="sans-serif-medium"
             android:text="Chia sẻ cảm nhận của bản về bữa ăn"
             android:textAlignment="center"
-            android:textColor="@color/primary_color"
+            android:textColor="@color/sub_primary_color"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -77,7 +77,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đơn hàng"
+                android:text="Đánh giá"
                 android:textAlignment="center"
                 android:textColor="#F99C32"
                 android:textSize="24sp"
