@@ -2,7 +2,6 @@ package com.example.foodtrack;
 
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,9 +31,16 @@ public class fragment_product_detail extends Fragment {
     private static String description;
     private static int image;
 
+    // Khai báo một biến flag để kiểm tra trạng thái
+    boolean isFavorite = false;
 
     private ImageView btn_back_product_detail;
     private ImageView btn_rating_product_details;
+    private ImageView btn_favorite_check_product_detail;
+    private ImageView btn_minus_product_detail;
+    private ImageView btn_plus_product_detail;
+    TextView Text_quantity_product;
+    private int quantity;
 
     public fragment_product_detail() {
         // Required empty public constructor
@@ -100,7 +105,11 @@ public class fragment_product_detail extends Fragment {
 
     private void Mapping(View view) {
         btn_back_product_detail = (ImageView) view.findViewById(R.id.btn_back_product_detail);
-        btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_product_details);
+        btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_comment_product_details);
+        btn_favorite_check_product_detail =(ImageView) view.findViewById(R.id.btn_favorite_check_product_detail);
+        btn_plus_product_detail = (ImageView) view.findViewById(R.id.btn_plus_product_detail);
+        btn_minus_product_detail = (ImageView) view.findViewById(R.id.btn_minus_product_detail);
+        Text_quantity_product = (TextView) view.findViewById(R.id.Text_quantity_product);
     }
 
     private void ControlButton() {
@@ -120,6 +129,40 @@ public class fragment_product_detail extends Fragment {
                 }
             }
         });
+        btn_favorite_check_product_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isFavorite){
+                    btn_favorite_check_product_detail.setImageResource(R.drawable.icon_fill_heart_48);
+                    isFavorite = true;
+                }else{
+                    btn_favorite_check_product_detail.setImageResource(R.drawable.icon_heart_48);
+                    isFavorite = false;
+                }
+            }
+        });
+        btn_minus_product_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quantity = Integer.valueOf(Text_quantity_product.getText().toString());
+                if(quantity>0){
+                    quantity--;
+                }else{
+                    quantity =0;
+                }
+                Text_quantity_product.setText(String.valueOf(quantity));
+            }
+        });
+        btn_plus_product_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quantity = Integer.valueOf(Text_quantity_product.getText().toString());
+                    quantity++;
+
+                Text_quantity_product.setText(String.valueOf(quantity));
+            }
+        });
+
     }
 
 }
