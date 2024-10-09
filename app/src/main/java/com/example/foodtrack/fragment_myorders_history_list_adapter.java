@@ -22,14 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class fragment_myorders_history_list_adapter extends ArrayAdapter<orderModel> {
-    public fragment_myorders_history_list_adapter(Context context, ArrayList<orderModel> arrayListOrder){
+    public fragment_myorders_history_list_adapter(Context context, ArrayList<orderModel> arrayListOrder) {
         super(context, R.layout.fragment_myorders_history_list, arrayListOrder);
     }
+
     @NonNull
     @Override
-    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent){
+    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
         orderModel order = getItem(position);
-        if(view == null){
+        if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_myorders_history_list, parent, false);
         }
 
@@ -39,13 +40,13 @@ public class fragment_myorders_history_list_adapter extends ArrayAdapter<orderMo
         TextView ratingBtn = view.findViewById(R.id.ratingBtn_item_myOrders);
         TextView status = view.findViewById(R.id.tinhTrang_item_myOrders);
 
-        if(order!=null){
+        if (order != null) {
             id.setText(order.getId());
             time.setText(order.getCreatedAt());
             img.setImageResource(order.getImg());
             status.setText(order.getStatus());
 
-            if(order.getRateStat() == 0){
+            if (order.getRateStat() == 0) {
                 ratingBtn.setText("Đánh giá ngay");
                 ratingBtn.setTextColor(Color.parseColor("#FFFFFF"));
                 ratingBtn.setBackgroundResource(R.drawable.less_radius_btn_bg_orange);
@@ -56,6 +57,20 @@ public class fragment_myorders_history_list_adapter extends ArrayAdapter<orderMo
             }
         }
 
-        return  view;
+        ratingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ratingBtn.getText() == "Đánh giá ngay") {
+                    MainActivity mainActivity = (MainActivity)getContext();
+                    if (mainActivity != null) {
+                        mainActivity.ReplaceFragment(new fragment_rating_comment());
+                    }
+                }
+            }
+        });
+        return view;
+
+
     }
+
 }

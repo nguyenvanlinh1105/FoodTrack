@@ -91,7 +91,6 @@ public class Home_Page extends Fragment {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new food_fragment());
-                    mainActivity.getSupportFragmentManager().beginTransaction().addToBackStack("food_fragment").commit();
                 }
             }
         });

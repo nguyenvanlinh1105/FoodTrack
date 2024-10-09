@@ -14,9 +14,6 @@
         tools:targetApi="tiramisu"
         android:enableOnBackInvokedCallback="true">
         <activity
-            android:name=".product_rating"
-            android:exported="false" />
-        <activity
             android:name=".rating_comment"
             android:exported="false" />
         <activity

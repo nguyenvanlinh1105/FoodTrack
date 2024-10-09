@@ -100,6 +100,7 @@ public class fragment_product_detail extends Fragment {
 
     private void Mapping(View view) {
         btn_back_product_detail = (ImageView) view.findViewById(R.id.btn_back_product_detail);
+
         btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_product_details);
     }
 
@@ -116,7 +117,7 @@ public class fragment_product_detail extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-//                    mainActivity.ReplaceFragment(product_rating);
+                   mainActivity.ReplaceFragment(new fragment_product_rating());
                 }
             }
         });
