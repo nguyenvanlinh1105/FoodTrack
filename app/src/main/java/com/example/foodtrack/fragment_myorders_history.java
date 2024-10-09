@@ -49,7 +49,7 @@ public class fragment_myorders_history extends Fragment {
     LinearLayout imageIfEmpty;
     ImageView chatIcon;
     ImageView backBtn;
-    TextView toOngoing;
+    TextView toOngoing, rateBtn;
 
     public fragment_myorders_history() {
         // Required empty public constructor
@@ -130,6 +130,7 @@ public class fragment_myorders_history extends Fragment {
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         toOngoing = (TextView) view.findViewById(R.id.btn_dangDen_myOrder);
         imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
+        rateBtn = (TextView) view.findViewById(R.id.ratingBtn_item_myOrders);
     }
 
     private void checkIfListEmpty() {
@@ -164,12 +165,10 @@ public class fragment_myorders_history extends Fragment {
             backBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MainActivity mainActivity = (MainActivity) getActivity();
-                    if (mainActivity != null) {
-                        mainActivity.ReplaceFragment(new profile_fragment());
-                    }
+                    requireActivity().getSupportFragmentManager().popBackStack();
 
                 }
             });
+
         }
     }

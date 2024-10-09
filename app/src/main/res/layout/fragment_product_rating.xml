@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".product_rating">
+    tools:context=".fragment_product_rating">
 
     <TextView
         android:id="@+id/textView17"
@@ -47,10 +47,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView19" />
+        app:layout_constraintTop_toBottomOf="@+id/image_view" />
 
     <ImageView
-        android:id="@+id/imageView19"
+        android:id="@+id/image_view"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:layout_marginTop="4dp"
@@ -71,10 +71,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/btn_back_myorders_history"
+            android:id="@+id/btn_back_product_rating"
             android:layout_width="20sp"
             android:layout_height="20sp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/icon_back_orange" />
 
@@ -95,29 +95,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView19">
+        app:layout_constraintTop_toBottomOf="@+id/image_view">
 
         <FrameLayout
             android:id="@+id/Comment_1"
             android:layout_width="match_parent"
-            android:layout_height="148dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/input_conner">
+            android:background="@drawable/input_conner"
+            android:padding="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingBottom="15dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
 
                 <ImageView
                     android:id="@+id/ava_User"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginStart="24dp"
+
                     android:layout_marginTop="10dp"
                     android:background="@drawable/btn_primary_conner"
-                    android:src="@drawable/icon_account24"
+                    android:src="@drawable/icon_account_light_orange"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -127,9 +131,10 @@
                     android:id="@+id/textView23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="18dp"
                     android:layout_marginTop="11dp"
                     android:text="Lorem"
+                    android:textColor="#4B4B4B"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/ava_User"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -138,7 +143,7 @@
                     android:id="@+id/dateComment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:text="22 Sep 2024"
                     android:textColor="@color/material_dynamic_neutral40"
                     android:textSize="11sp"
@@ -155,89 +160,36 @@
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
                     android:textColor="@color/material_dynamic_neutral0"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="@+id/dateComment"
-                    app:layout_constraintHorizontal_bias="0.165"
-                    app:layout_constraintStart_toStartOf="@+id/dateComment"
-                    app:layout_constraintTop_toBottomOf="@+id/dateComment" />
-
-                <ImageView
-                    android:id="@+id/imageView20"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment"
-                    app:layout_constraintVertical_bias="0.538"
-                    app:srcCompat="@android:drawable/star_big_on" />
-
-                <ImageView
-                    android:id="@+id/imageView21"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView20"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment"
-                    app:layout_constraintVertical_bias="0.571"
-                    app:srcCompat="@android:drawable/star_big_on" />
-
-                <ImageView
-                    android:id="@+id/imageView22"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView21"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment"
-                    app:layout_constraintVertical_bias="0.571"
-                    app:srcCompat="@android:drawable/star_big_on" />
-
-                <ImageView
-                    android:id="@+id/imageView23"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView22"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment"
-                    app:layout_constraintVertical_bias="0.571"
-                    app:srcCompat="@android:drawable/star_big_on" />
-
-                <ImageView
-                    android:id="@+id/imageView24"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView23"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment"
-                    app:layout_constraintVertical_bias="0.571"
-                    app:srcCompat="@android:drawable/star_big_on" />
+                    app:layout_constraintTop_toBottomOf="@+id/dateComment" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 
         <FrameLayout
             android:id="@+id/Comment_2"
-            android:layout_width="match_parent"
-            android:layout_height="135dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="28dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/input_conner">
+            android:background="@drawable/input_conner"
+            android:padding="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingBottom="15dp">
 
                 <ImageView
                     android:id="@+id/ava_User_2"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/btn_primary_conner"
-                    android:src="@drawable/icon_account24"
+                    android:src="@drawable/icon_account_light_orange"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -247,9 +199,10 @@
                     android:id="@+id/textView23_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="18dp"
                     android:layout_marginTop="11dp"
                     android:text="Lorem"
+                    android:textColor="#4B4B4B"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/ava_User_2"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -258,7 +211,7 @@
                     android:id="@+id/dateComment_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:text="22 Sep 2024"
                     android:textColor="@color/material_dynamic_neutral40"
                     android:textSize="11sp"
@@ -275,63 +228,10 @@
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
                     android:textColor="@color/material_dynamic_neutral0"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="@+id/dateComment_2"
-                    app:layout_constraintHorizontal_bias="0.165"
-                    app:layout_constraintStart_toStartOf="@+id/dateComment_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dateComment_2" />
 
-                <ImageView
-                    android:id="@+id/imageView20_2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment_2"
-                    app:layout_constraintVertical_bias="0.538"
-                    app:srcCompat="@android:drawable/star_big_on" />
-
-                <ImageView
-                    android:id="@+id/imageView21_2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView20_2"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment_2"
-                    app:layout_constraintVertical_bias="0.571"
-                    app:srcCompat="@android:drawable/star_big_on" />
-
-                <ImageView
-                    android:id="@+id/imageView22_2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView21_2"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment_2"
-                    app:layout_constraintVertical_bias="0.571"
-                    app:srcCompat="@android:drawable/star_big_on" />
-                <ImageView
-                    android:id="@+id/imageView23_2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView22_2"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment_2"
-                    app:layout_constraintVertical_bias="0.571"
-                    app:srcCompat="@android:drawable/star_big_on" />
-                <ImageView
-                    android:id="@+id/imageView24_2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView23_2"
-                    app:layout_constraintTop_toBottomOf="@+id/contentComment_2"
-                    app:layout_constraintVertical_bias="0.571"
-                    app:srcCompat="@android:drawable/star_big_on" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 

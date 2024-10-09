@@ -8,14 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_myorders_ongoing#newInstance} factory method to
+ * Use the {@link fragment_product_rating#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_myorders_ongoing extends Fragment {
+public class fragment_product_rating extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,10 +25,9 @@ public class fragment_myorders_ongoing extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ImageView backBtn;
-    TextView toLichSu;
+    private ImageView btn_back;
 
-    public fragment_myorders_ongoing() {
+    public fragment_product_rating() {
         // Required empty public constructor
     }
 
@@ -39,11 +37,11 @@ public class fragment_myorders_ongoing extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_myorders_ongoing.
+     * @return A new instance of fragment fragment_product_ratings.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_myorders_ongoing newInstance(String param1, String param2) {
-        fragment_myorders_ongoing fragment = new fragment_myorders_ongoing();
+    public static fragment_product_rating newInstance(String param1, String param2) {
+        fragment_product_rating fragment = new fragment_product_rating();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,32 +62,21 @@ public class fragment_myorders_ongoing extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_myorders_ongoing, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_rating, container, false);
         Mapping(view);
         ControlButton();
         return view;
     }
 
-    public void Mapping(View view){
-        backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing);
-        toLichSu = (TextView) view.findViewById(R.id.btn_lichSu_myOrders);
+    private void Mapping(View view){
+        btn_back = (ImageView) view.findViewById(R.id.btn_back_product_rating);
     }
-    public void ControlButton(){
-        backBtn.setOnClickListener(new View.OnClickListener() {
+
+    private void ControlButton(){
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requireActivity().getSupportFragmentManager().popBackStack();
-
-            }
-        });
-
-        toLichSu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_history());
-                }
             }
         });
     }
