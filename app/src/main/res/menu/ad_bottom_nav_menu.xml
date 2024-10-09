@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/message"
+        android:title="Message"
+        android:icon="@drawable/icon_message_24"/>
+
+    <item android:id="@+id/menu"
+        android:title="Menu"
+        android:icon="@drawable/icon_menu_24"/>
+
+    <item android:id="@+id/customers"
+        android:title="Customers"
+        android:icon="@drawable/icon_account_circle_24"/>
+
+    <item android:id="@+id/staffs"
+        android:title="Staffs"
+        android:icon="@drawable/icon_staffs_24"/>
+
+</menu>

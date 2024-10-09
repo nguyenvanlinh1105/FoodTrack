@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link listchat_ad#newInstance} factory method to
+ * Use the {@link ad_fragment_list_chat#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class listchat_ad extends Fragment {
+public class ad_fragment_list_chat extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class listchat_ad extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public listchat_ad() {
+    public ad_fragment_list_chat() {
         // Required empty public constructor
     }
 
@@ -37,8 +37,8 @@ public class listchat_ad extends Fragment {
      * @return A new instance of fragment listchat_ad.
      */
     // TODO: Rename and change types and number of parameters
-    public static listchat_ad newInstance(String param1, String param2) {
-        listchat_ad fragment = new listchat_ad();
+    public static ad_fragment_list_chat newInstance(String param1, String param2) {
+        ad_fragment_list_chat fragment = new ad_fragment_list_chat();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class listchat_ad extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_listchat_ad, container, false);
+        return inflater.inflate(R.layout.ad_fragment_listchat, container, false);
     }
 }
