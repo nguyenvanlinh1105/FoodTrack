@@ -105,12 +105,12 @@ public class fragment_product_detail extends Fragment {
 
     private void Mapping(View view) {
         btn_back_product_detail = (ImageView) view.findViewById(R.id.btn_back_product_detail);
-        btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_product_details);
+        btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_comment_product_details);
         btn_favorite_check_product_detail =(ImageView) view.findViewById(R.id.btn_favorite_check_product_detail);
         btn_plus_product_detail = (ImageView) view.findViewById(R.id.btn_plus_product_detail);
         btn_minus_product_detail = (ImageView) view.findViewById(R.id.btn_minus_product_detail);
         Text_quantity_product = (TextView) view.findViewById(R.id.Text_quantity_product);
-        btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_product_details);
+        btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_comment_product_details);
     }
 
     private void ControlButton() {

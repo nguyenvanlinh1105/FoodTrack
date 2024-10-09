@@ -15,7 +15,13 @@
         tools:targetApi="tiramisu">
         <activity
             android:name=".ad_main_activity"
-            android:exported="false" />
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         <activity
             android:name=".rating_comment"
             android:exported="false" />
@@ -54,13 +60,8 @@
             android:exported="true" />
         <activity
             android:name=".first_page"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
