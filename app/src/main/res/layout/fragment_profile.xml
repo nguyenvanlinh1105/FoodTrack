@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#fff"
-    tools:context=".profile_fragment">
+    tools:context=".Fragment.Guest.profile_fragment">
 
     <LinearLayout
         android:id="@+id/linearLayout3"

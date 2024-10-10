@@ -14,46 +14,49 @@
         android:theme="@style/Theme.FoodTrack"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".ad_main_activity"
+            android:name=".Activity.Guest.cart"
             android:exported="false" />
         <activity
-            android:name=".rating_comment"
+            android:name=".Activity.Admin.ad_main_activity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".Fragment.Guest.rating_comment"
             android:exported="false" />
         <activity
-            android:name=".product_detail"
+            android:name=".Fragment.Guest.product_detail"
             android:exported="false" />
         <activity
-            android:name=".list_chat_user"
+            android:name=".Fragment.Guest.list_chat_user"
             android:exported="false" />
         <activity
-            android:name=".edit_profile"
+            android:name=".Activity.Guest.edit_profile"
             android:exported="false" />
         <activity
-            android:name=".chang_password"
+            android:name=".Activity.Guest.chang_password"
             android:exported="false" />
         <activity
-            android:name=".phone_verify"
+            android:name=".Activity.Guest.phone_verify"
             android:exported="false" />
         <activity
-            android:name=".Home_Page"
+            android:name=".Fragment.Guest.Home_Page"
             android:exported="false" />
         <activity
-            android:name=".Drink_fragment"
+            android:name=".Fragment.Guest.Drink_fragment"
             android:exported="false" />
         <activity
-            android:name=".forgot_password"
+            android:name=".Activity.Guest.forgot_password"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".Activity.Guest.Register"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".Activity.Guest.Login"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.Guest.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".first_page"
+            android:name=".Activity.Guest.first_page"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

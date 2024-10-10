@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".list_chat_user">
+    tools:context=".Fragment.Guest.list_chat_user">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/search_input_list_chat_user"
+            android:id="@+id/search_input_list_chat_ad"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -66,7 +66,7 @@
 
     <ListView
         android:layout_marginTop="25dp"
-        android:id="@+id/listview_chat_user"
+        android:id="@+id/listview_chat_ad"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/list_chat_bg"

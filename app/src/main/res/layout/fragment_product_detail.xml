@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".product_detail">
+    tools:context=".Fragment.Guest.product_detail">
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="357dp"
@@ -49,11 +49,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
-        <ImageView
-            android:id="@+id/image_product_details"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/drink2" />
+            android:layout_height="200dp">
+            <ImageView
+                android:id="@+id/image_product_details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/drink2"
+                android:scaleType="fitCenter"/>
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/title_product_details"
@@ -63,8 +69,8 @@
             android:layout_marginBottom="10dp"
             android:paddingLeft="10dp"
             android:text="Capuccino"
-            android:textColor="@color/primary_color"
-            android:textSize="24sp"
+            android:textColor="#6D3805"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -79,8 +85,9 @@
                 android:layout_weight="1"
                 android:paddingLeft="10dp"
                 android:text="30.000 vnđ"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textColor="#6D3805"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/textView24"
@@ -88,7 +95,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Đã bán được: 120 sp" />
+                android:layout_marginRight="10dp"
+                android:text="Đã bán được: 120 sp"
+                android:textColor="#6D3805" />
         </LinearLayout>
 
         <TextView
@@ -99,6 +108,8 @@
             android:gravity="center|top"
             android:maxLines="5"
             android:text="TextView"
+            android:textColor="#5F6750"
+            android:fontFamily="sans-serif-medium"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -111,15 +122,16 @@
                 android:layout_width="260dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/background_product">
+                android:layout_marginLeft="3dp"
+                android:padding="10dp"
+                android:background="@drawable/plus_minus_product_detail_bg">
 
                 <ImageView
                     android:id="@+id/btn_minus_product_detail"
                     android:layout_width="38dp"
                     android:layout_height="42dp"
                     android:layout_marginStart="4dp"
-                    android:src="@drawable/button_minus50"
+                    android:src="@drawable/minus_btn"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -130,7 +142,7 @@
                     android:layout_width="38dp"
                     android:layout_height="42dp"
                     android:layout_marginEnd="4dp"
-                    android:src="@drawable/button_plus50"
+                    android:src="@drawable/union_btn"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -141,7 +153,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="@color/primary_color"
+                    android:textColor="#6D3805"
+                    android:textAlignment="center"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
