@@ -33,7 +33,7 @@ public class ad_main_activity extends AppCompatActivity {
             if (item.getItemId() == R.id.message) {
                 ReplaceFragment(new ad_fragment_list_chat());
             } else if (item.getItemId() == R.id.menu) {
-            //    ReplaceFragment(new food_fragment());
+                ReplaceFragment(new AD_Detail_Customer());
             } else if (item.getItemId() == R.id.customers) {
                ReplaceFragment(new ad_Customer());
             } else if (item.getItemId() == R.id.staffs) {
