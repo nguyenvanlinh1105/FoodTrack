@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/message"
+    <item
+        android:id="@+id/message"
+        android:icon="@drawable/icon_message_24"
         android:title="Message"
-        android:icon="@drawable/icon_message_24"/>
+        app:showAsAction="always" />
 
-    <item android:id="@+id/menu"
+    <item
+        android:id="@+id/menu"
+        android:icon="@drawable/icon_menu_24"
         android:title="Menu"
-        android:icon="@drawable/icon_menu_24"/>
+        app:showAsAction="always" />
 
-    <item android:id="@+id/customers"
+    <item
+        android:id="@+id/customers"
+        android:icon="@drawable/icon_account_circle_24"
         android:title="Customers"
-        android:icon="@drawable/icon_account_circle_24"/>
+        app:showAsAction="always" />
 
-    <item android:id="@+id/staffs"
+    <item
+        android:id="@+id/staffs"
+        android:icon="@drawable/icon_staffs_24"
         android:title="Staffs"
-        android:icon="@drawable/icon_staffs_24"/>
+        app:showAsAction="always" />
 
 </menu>

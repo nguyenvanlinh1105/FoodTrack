@@ -8,7 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.foodtrack.Activity.Guest.cart;
 import com.example.foodtrack.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -19,14 +22,19 @@ public class cart_adapter extends BaseAdapter {
     ArrayList<Integer> cartImg;
     ArrayList<String> cartSubTitle;
     ArrayList<String> cartPrice;
+    ArrayList<Integer> cartQty;
     LayoutInflater inflater;
 
-    public cart_adapter(Context context, ArrayList<String> cartTitle, ArrayList<Integer> cartImg, ArrayList<String> cartSubTitle, ArrayList<String> cartPrice) {
+    cart activityCart;
+
+    public cart_adapter(Context context, ArrayList<String> cartTitle, ArrayList<Integer> cartImg, ArrayList<String> cartSubTitle, ArrayList<String> cartPrice, ArrayList<Integer>cartQty , cart activityCart) {
         this.context = context;
         this.cartTitle = cartTitle;
         this.cartImg = cartImg;
         this.cartSubTitle = cartSubTitle;
         this.cartPrice = cartPrice;
+        this.cartQty  = cartQty;
+        this.activityCart = activityCart;
         inflater = LayoutInflater.from(context);
     }
 
@@ -55,17 +63,16 @@ public class cart_adapter extends BaseAdapter {
         TextView subTitle = (TextView) view.findViewById(R.id.item_subTitle_cart);
         ImageView img = (ImageView) view.findViewById(R.id.item_image_cart);
         TextView price = (TextView) view.findViewById(R.id.price_cart);
+        TextView  qty = (TextView)view.findViewById(R.id.qty_cart);
 
         TextView btn_plus_cart = (TextView)view.findViewById(R.id.btn_plus_cart);
         TextView btn_minus_cart = (TextView)view.findViewById(R.id.btn_minus_cart);
-        TextView qty = (TextView)view.findViewById(R.id.qty_cart);
 
         title.setText(cartTitle.get(i));
         subTitle.setText(cartSubTitle.get(i));
         img.setImageResource(cartImg.get(i));
         price.setText(cartPrice.get(i));
-
-        qty.setText("1");
+        qty.setText(String.valueOf(cartQty.get(i)));
 
         btn_plus_cart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +80,7 @@ public class cart_adapter extends BaseAdapter {
                 int qtyNum = Integer.parseInt(qty.getText().toString());
                 qtyNum ++;
                 qty.setText(String.valueOf(qtyNum));
+                activityCart.updateTotalPrice();
             }
         });
 
@@ -80,17 +88,18 @@ public class cart_adapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int qtyNum = Integer.parseInt(qty.getText().toString());
-                qtyNum --;
-                if (qtyNum <= 0){
+                qtyNum--;
+                if (qtyNum <= 0) {
                     removeProduct(i);
                     notifyDataSetChanged();
-                }
-                else {
+                } else {
                     qty.setText(String.valueOf(qtyNum));
+                    cartQty.set(i, qtyNum);
                 }
-
+                activityCart.updateTotalPrice();
             }
         });
+
         return view;
     }
 

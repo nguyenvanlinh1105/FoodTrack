@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.foodtrack.Fragment.Admin.ad_Customer;
 import com.example.foodtrack.R;
 import com.example.foodtrack.databinding.AdActivityMainBinding;
 import com.example.foodtrack.Fragment.Admin.ad_fragment_list_chat;
@@ -34,11 +35,11 @@ public class ad_main_activity extends AppCompatActivity {
             if (item.getItemId() == R.id.message) {
                 ReplaceFragment(new ad_fragment_list_chat());
             } else if (item.getItemId() == R.id.menu) {
-//                ReplaceFragment(new food_fragment());
+            //    ReplaceFragment(new food_fragment());
             } else if (item.getItemId() == R.id.customers) {
-//                ReplaceFragment(new fragment_myorders_history());
+               ReplaceFragment(new ad_Customer());
             } else if (item.getItemId() == R.id.staffs) {
-//                ReplaceFragment(new favorite_fragment());
+             //   ReplaceFragment(new favorite_fragment());
             }
             return true;
         });
