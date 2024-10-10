@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".list_chat_user">
+    tools:context=".Fragment.Guest.list_chat_user">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -44,18 +43,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/search_input_list_chat_user"
+            android:id="@+id/search_input_list_chat_ad"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/input_opacity_background"
             android:drawableLeft="@drawable/icon_search15_light_orange"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:fontFamily="sans-serif-medium"
             android:hint="Tìm kiếm"
             android:paddingLeft="12dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
@@ -66,10 +65,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
-        android:id="@+id/listview_chat_user"
+        android:layout_marginTop="25dp"
+        android:id="@+id/listview_chat_ad"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="25dp"
         android:background="@drawable/list_chat_bg"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
