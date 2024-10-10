@@ -89,7 +89,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:paddingLeft="10dp"
-                        android:text="Khách hàng"
+                        android:text="Nhân viên "
                         android:textColor="@color/primary_color"
                         android:textSize="34sp"
                         android:textStyle="bold" />
@@ -109,7 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center|left"
-                    android:text="Tổng số KH :500"
+                    android:text="Tổng số NV: 40 "
                     android:textColor="@color/primary_color"
                     android:textSize="20sp"
                     android:textStyle="bold" />
