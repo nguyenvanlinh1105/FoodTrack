@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/F3f3f3"
-    tools:context=".Fragment.Guest.fragment_food_list">
+    tools:context=".Fragment.fragment_food_list">
 
     <LinearLayout
         android:layout_width="match_parent"

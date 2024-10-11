@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.foodtrack.Activity.Guest.MainActivity;
+import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Model.orderModel;
-import com.example.foodtrack.Fragment.Guest.fragment_rating_comment;
+import com.example.foodtrack.Fragment.fragment_rating_comment;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
