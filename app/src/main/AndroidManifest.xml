@@ -14,57 +14,52 @@
         android:theme="@style/Theme.FoodTrack"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".Activity.Guest.cart"
+            android:name=".Activity.cart"
             android:exported="false" />
         <activity
-            android:name=".Activity.Admin.ad_main_activity"
+            android:name=".Fragment.rating_comment"
+            android:exported="false" />
+        <activity
+            android:name=".Fragment.product_detail"
+            android:exported="false" />
+        <activity
+            android:name=".Fragment.list_chat_user"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.edit_profile"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.chang_password"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.phone_verify"
+            android:exported="false" />
+        <activity
+            android:name=".Fragment.Home_Page"
+            android:exported="false" />
+        <activity
+            android:name=".Fragment.Drink_fragment"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.forgot_password"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Register"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Login"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.first_page"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".Fragment.Guest.rating_comment"
-            android:exported="false" />
-        <activity
-            android:name=".Fragment.Guest.product_detail"
-            android:exported="false" />
-        <activity
-            android:name=".Fragment.Guest.list_chat_user"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.Guest.edit_profile"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.Guest.chang_password"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.Guest.phone_verify"
-            android:exported="false" />
-        <activity
-            android:name=".Fragment.Guest.Home_Page"
-            android:exported="false" />
-        <activity
-            android:name=".Fragment.Guest.Drink_fragment"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.Guest.forgot_password"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.Guest.Register"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.Guest.Login"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.Guest.MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".Activity.Guest.first_page"
-            android:exported="true">
-
         </activity>
     </application>
 

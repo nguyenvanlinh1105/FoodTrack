@@ -8,10 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.foodtrack.Activity.Guest.cart;
+import com.example.foodtrack.Activity.cart;
 import com.example.foodtrack.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
