@@ -44,8 +44,7 @@
                     android:layout_height="71dp"
                     android:layout_gravity="right"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/icon_food"
-                    android:src="@drawable/icon_food"
+                    android:src="@drawable/icon_primary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,9 +89,9 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:paddingLeft="10dp"
-                        android:text="Chi tiết khách hàng"
+                        android:text="CHI TIẾT KHÁCH HÀNG"
                         android:textColor="@color/primary_color"
-                        android:textSize="34sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -278,23 +277,34 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="240dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginRight="15dp"
                         android:layout_weight="1"
-                        android:text="Sửa" />
+                        android:backgroundTint="#FF5722"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Xóa" />
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
                         android:layout_weight="1"
-                        android:backgroundTint="#FF5722"
-                        android:text="Xóa" />
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Sửa" />
                 </LinearLayout>
 
             </LinearLayout>
