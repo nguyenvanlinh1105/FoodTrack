@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.foodtrack.Activity.MainActivity;
-import com.example.foodtrack.Model.orderModel;
+import com.example.foodtrack.Model.Order;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.fragment_myorders_history_list_adapter;
 
@@ -43,7 +43,7 @@ public class fragment_myorders_history extends Fragment {
     ArrayList<Integer> status = new ArrayList<>();
     ArrayList<String> orderStatus = new ArrayList<>();
 
-    ArrayList<orderModel> arrayListOrder = new ArrayList<>();
+    ArrayList<Order> arrayListOrder = new ArrayList<>();
 
     ListView listview_myorders_history;
     LinearLayout imageIfEmpty;
@@ -107,7 +107,7 @@ public class fragment_myorders_history extends Fragment {
             orderStatus.add("Đã giao vào 22-9");
 
         for (int i = 0; i < orderId.size(); i++) {
-            arrayListOrder.add(new orderModel(orderId.get(i), time.get(i), orderStatus.get(i), img.get(i), status.get(i)));
+            arrayListOrder.add(new Order(orderId.get(i), time.get(i), orderStatus.get(i), img.get(i), status.get(i)));
         }
     }
 

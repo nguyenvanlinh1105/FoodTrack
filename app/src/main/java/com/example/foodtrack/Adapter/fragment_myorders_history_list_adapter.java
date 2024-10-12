@@ -13,21 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.foodtrack.Activity.MainActivity;
-import com.example.foodtrack.Model.orderModel;
+import com.example.foodtrack.Model.Order;
 import com.example.foodtrack.Fragment.fragment_rating_comment;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
 
-public class fragment_myorders_history_list_adapter extends ArrayAdapter<orderModel> {
-    public fragment_myorders_history_list_adapter(Context context, ArrayList<orderModel> arrayListOrder) {
+public class fragment_myorders_history_list_adapter extends ArrayAdapter<Order> {
+    public fragment_myorders_history_list_adapter(Context context, ArrayList<Order> arrayListOrder) {
         super(context, R.layout.fragment_myorders_history_list, arrayListOrder);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        orderModel order = getItem(position);
+        Order order = getItem(position);
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_myorders_history_list, parent, false);
         }

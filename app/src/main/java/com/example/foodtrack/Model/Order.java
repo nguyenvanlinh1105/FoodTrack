@@ -1,12 +1,10 @@
 package com.example.foodtrack.Model;
 
-import java.util.Date;
-
-public class orderModel {
+public class Order {
     protected String id, createdAt, status;
     protected int img, rateStat;
 
-    public orderModel(String id, String createdAt, String status, int img, int rateStat) {
+    public Order(String id, String createdAt, String status, int img, int rateStat) {
         this.id = id;
         this.createdAt = createdAt;
         this.status = status;

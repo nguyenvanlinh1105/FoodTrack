@@ -17,8 +17,9 @@ import com.example.foodtrack.Fragment.food_fragment;
 import com.example.foodtrack.Fragment.list_chat_user;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.cart_adapter;
-import com.example.foodtrack.checkout;
 import com.example.foodtrack.Activity.MainActivity;
+
+import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class cart extends AppCompatActivity {
     private ImageView backBtn;
     private TextView total;
     private TextView btn_thanhToan_cart;
+
+    private TextView thanhToanBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +74,9 @@ public class cart extends AppCompatActivity {
         listView_cart = (ListView) findViewById(R.id.listView_cart);
         cart_adapter listAdapter = new cart_adapter(cart.this, cartTitle, cartImg, cartSubTitle, cartPrice,cartQty ,this);
         listView_cart.setAdapter(listAdapter);
-        btn_thanhToan_cart = (TextView) findViewById(R.id.btn_thanhToan_cart);
         total = (TextView) findViewById(R.id.total_cart);
+
+        thanhToanBtn = (TextView) findViewById(R.id.btn_thanh_toan_cart);
 
     }
 
@@ -120,6 +124,7 @@ public class cart extends AppCompatActivity {
                 finish();
             }
         });
+
 //        btn_thanhToan_cart.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -129,6 +134,16 @@ public class cart extends AppCompatActivity {
 //                }
 //            }
 //        });
+
+        thanhToanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent thanhToan = new Intent( cart.this, MainActivity.class);
+                thanhToan.putExtra("fragmentToLoad", "cartFragment"); // Gửi dữ liệu fragment
+                startActivity(thanhToan);
+
+            }
+        });
     }
 
     public void updateTotalPrice() {

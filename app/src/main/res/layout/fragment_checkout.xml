@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".checkout">
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    tools:context=".Fragment.checkout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,16 +15,7 @@
 
         <!-- Địa chỉ giao hàng -->
 
-        <ImageView
-            android:id="@+id/btn_back_checkout"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/icon_back_orange"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.042"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
 
         <!-- Phương thức thanh toán -->
@@ -34,28 +26,43 @@
 
         <!-- Hóa Đơn -->
 
+        <ImageView
+            android:id="@+id/btn_back_checkout"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/icon_back_orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textView25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
+            android:fontFamily="sans-serif-medium"
             android:text="Thanh toán "
             android:textColor="@color/primary_color"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.531"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="118dp"
+            android:layout_marginBottom="16dp"
             android:background="@color/FFF4E9"
             android:orientation="vertical"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="108dp">
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,6 +77,7 @@
                     android:layout_marginStart="12dp"
                     android:layout_weight="3"
                     android:text="Địa chỉ giao hàng"
+                    android:textColor="#6D3805"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -83,15 +91,29 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="340dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
-                android:maxLines="3"
-                android:text="Khách sạn Novotel, tầng 12 phòng 15, Đà Nẵng"
-                android:textColor="@android:color/black" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/locate_orange_30"/>
+
+                <TextView
+
+                    android:id="@+id/tv_address"
+                    android:layout_width="360dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:maxLines="3"
+                    android:text="Khách sạn Novotel, tầng 12 phòng 15, Đà Nẵng"
+                    android:textColor="#6D3805" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -109,7 +131,7 @@
                 android:id="@+id/tv_payment_method_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:textColor="#6D3805"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
                 android:text="Phương Thức Thanh Toán"
@@ -119,7 +141,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -136,8 +158,8 @@
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:text="Apple Pay"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textColor="#6D3805"
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:layout_width="40dp"
@@ -173,8 +195,8 @@
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:text="Thanh toán tiền mặt"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textColor="#6D3805"
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -196,7 +218,7 @@
                 android:id="@+id/tv_invoice_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:textColor="#6D3805"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
@@ -204,38 +226,98 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_total_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="Thành tiền: 231.000đ"
-                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="#6D3805"
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Thành tiền: "
+                    android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tv_service_fee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="Phí dịch vụ: 2.000đ"
-                android:textSize="16sp" />
+                <TextView
+                    android:layout_marginRight="12dp"
+                    android:id="@+id/tv_total_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="right"
 
-            <TextView
-                android:id="@+id/tv_shipping_fee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="Phí ship: 15.000đ"
-                android:textSize="16sp" />
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="231.000đ"
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="#6D3805"
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Phí dịch vụ"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_marginRight="12dp"
+                    android:id="@+id/tv_service_fee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="right"
+
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="2.000đ"
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="#6D3805"
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Phí ship"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_marginRight="12dp"
+                    android:id="@+id/tv_shipping_fee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="right"
+
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="15.000đ"
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -244,18 +326,36 @@
                 android:background="@color/sub_primary_color"
                 android:orientation="vertical"></LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_total_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="Tổng cộng: 248.000đ"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Tổng cộng: "
+                    android:textColor="#6D3805"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:gravity="right"
+                    android:id="@+id/tv_total_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="248.000đ"
+                    android:textColor="#6D3805"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <Button
@@ -274,4 +374,4 @@
 
         <!-- Nút Thanh Toán -->
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+</ScrollView>

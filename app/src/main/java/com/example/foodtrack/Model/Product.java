@@ -1,10 +1,10 @@
 package com.example.foodtrack.Model;
 
-public class productModel {
+public class Product {
     protected String Title, Price, description;
     protected int img;
 
-    public productModel(String title, String price, String description, int img) {
+    public Product(String title, String price, String description, int img) {
         Title = title;
         Price = price;
         this.description = description;
