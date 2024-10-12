@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import android.content.Intent;
 
 import com.example.foodtrack.Activity.MainActivity;
-import com.example.foodtrack.Model.productModel;
+import com.example.foodtrack.Model.Product;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.food_list_adapter;
 
@@ -76,7 +76,7 @@ public class food_fragment extends Fragment {
         initializeData();
     }
 
-    ArrayList<productModel> arraylistFood = new ArrayList<>();
+    ArrayList<Product> arraylistFood = new ArrayList<>();
     private void initializeData() {
         foodTitle.add("Pallavi Biryani");
         foodTitle.add("Cơm tấm");
@@ -116,7 +116,7 @@ public class food_fragment extends Fragment {
         foodDescription.add("Burger trứng là sự kết hợp giữa nhân thịt bò và trứng ốp la, mang đến hương vị béo ngậy.");
 
         for (int i =0 ;i<foodTitle.size(); i++){
-            arraylistFood.add(new productModel(foodTitle.get(i), foodPrice.get(i),  foodDescription.get(i),foodImg.get(i)));
+            arraylistFood.add(new Product(foodTitle.get(i), foodPrice.get(i),  foodDescription.get(i),foodImg.get(i)));
         }
 
 

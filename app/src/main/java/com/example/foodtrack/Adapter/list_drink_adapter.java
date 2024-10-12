@@ -11,22 +11,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.foodtrack.Model.productModel;
+import com.example.foodtrack.Model.Product;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
 
 
-public class list_drink_adapter extends ArrayAdapter<productModel> {
+public class list_drink_adapter extends ArrayAdapter<Product> {
 
-    public list_drink_adapter(Context context, ArrayList<productModel> arrayListDrink) {
+    public list_drink_adapter(Context context, ArrayList<Product> arrayListDrink) {
         super(context, R.layout.fragment_food_drink_item, arrayListDrink);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        productModel drink = getItem(position); // Lấy đối tượng Drink ở vị trí hiện tại
+        Product drink = getItem(position); // Lấy đối tượng Drink ở vị trí hiện tại
 
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_food_drink_item, parent, false);

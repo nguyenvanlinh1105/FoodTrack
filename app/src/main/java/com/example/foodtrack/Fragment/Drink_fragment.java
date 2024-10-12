@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import android.content.Intent;
 
 import com.example.foodtrack.Activity.MainActivity;
-import com.example.foodtrack.Model.productModel;
+import com.example.foodtrack.Model.Product;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.list_drink_adapter;
 
@@ -77,7 +77,7 @@ public class Drink_fragment extends Fragment {
         initializeData();
 
     }
-    ArrayList<productModel> arrayListDrink = new ArrayList<>();
+    ArrayList<Product> arrayListDrink = new ArrayList<>();
     private void initializeData() {
         drinkTitle.add("Trà đào cam sả");
         drinkTitle.add("Cà phê capuccino");
@@ -106,7 +106,7 @@ public class Drink_fragment extends Fragment {
 
         // Thêm dữ liệu vào arrayListDrink
         for (int i = 0; i < drinkImg.size(); i++) {
-            arrayListDrink.add(new productModel(drinkTitle.get(i), drinkPrice.get(i), drinkDescription.get(i), drinkImg.get(i)));
+            arrayListDrink.add(new Product(drinkTitle.get(i), drinkPrice.get(i), drinkDescription.get(i), drinkImg.get(i)));
         }
 
     }

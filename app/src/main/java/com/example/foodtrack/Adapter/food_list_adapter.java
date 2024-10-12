@@ -12,20 +12,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.foodtrack.Model.productModel;
+import com.example.foodtrack.Model.Product;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
 
-public class food_list_adapter extends ArrayAdapter<productModel> {
-    public food_list_adapter(Context context, ArrayList<productModel> arraylistFood) {
+public class food_list_adapter extends ArrayAdapter<Product> {
+    public food_list_adapter(Context context, ArrayList<Product> arraylistFood) {
         super(context, R.layout.fragment_food_drink_item, arraylistFood);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        productModel food = getItem(position);
+        Product food = getItem(position);
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_food_drink_item, parent, false);
         }

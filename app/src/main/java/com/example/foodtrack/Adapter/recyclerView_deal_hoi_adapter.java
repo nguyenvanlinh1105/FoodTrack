@@ -17,12 +17,12 @@ import com.example.foodtrack.R;
 
 import java.util.List;
 
-public class deal_hoi_adapter extends RecyclerView.Adapter<deal_hoi_adapter.MyViewHolder> {
+public class recyclerView_deal_hoi_adapter extends RecyclerView.Adapter<recyclerView_deal_hoi_adapter.MyViewHolder> {
 
     Context context;
     List<Product> list;
 
-    public deal_hoi_adapter(Context context, List<Product> list) {
+    public recyclerView_deal_hoi_adapter(Context context, List<Product> list) {
         this.context = context;
         this.list = list;
     }
@@ -37,7 +37,7 @@ public class deal_hoi_adapter extends RecyclerView.Adapter<deal_hoi_adapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Product product = list.get(position);
-        Log.d("Product", "Product Title: " + product.getTitle());
+//        Log.d("Product", "Product Title: " + product.getTitle());
         holder.title.setText(product.getTitle());
         holder.price.setText(product.getPrice());
         Glide.with(context).load(product.getImg()).into(holder.img);
