@@ -146,29 +146,24 @@ public class food_fragment extends Fragment {
         listView_food.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("title", foodTitle.get(position));
-//                bundle.putString("price", foodPrice.get(position));
-//                bundle.putString("description", foodDescription.get(position));
-//                bundle.putInt("image", foodImg.get(position));
-//
-//                product_details productDetailsFragment = product_details.newInstance(
-//                        foodTitle.get(position),
-//                        foodPrice.get(position),
-//                        foodDescription.get(position),
-//                        foodImg.get(position)
-//                );
-//                MainActivity mainActivity = (MainActivity) getActivity();
-//                if (mainActivity != null) {
-//                    mainActivity.ReplaceFragment(productDetailsFragment);
-//                }
+                Bundle bundle = new Bundle();
+                bundle.putString("title", foodTitle.get(position));
+                bundle.putString("price", foodPrice.get(position));
+                bundle.putString("description", foodDescription.get(position));
+                bundle.putInt("image", foodImg.get(position));
 
-                Intent i = new Intent(getActivity(), product_detail.class);
-                i.putExtra("title",foodTitle.get(position));
-                i.putExtra("price",foodPrice.get(position));
-                i.putExtra("description",foodDescription.get(position));
-                i.putExtra("image",foodImg.get(position));
-                startActivity(i);
+                fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
+                        foodTitle.get(position),
+                        foodPrice.get(position),
+                        foodDescription.get(position),
+                        foodImg.get(position)
+                );
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(productDetailsFragment);
+                }
+
+
             }
         });
     }
