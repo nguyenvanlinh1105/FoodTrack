@@ -15,7 +15,7 @@
         <!-- Địa chỉ giao hàng -->
 
         <ImageView
-            android:id="@+id/imageView18"
+            android:id="@+id/btn_back_checkout"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginTop="16dp"

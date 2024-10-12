@@ -1,5 +1,6 @@
 package com.example.foodtrack.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,8 +13,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.foodtrack.Fragment.food_fragment;
+import com.example.foodtrack.Fragment.list_chat_user;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.cart_adapter;
+import com.example.foodtrack.checkout;
+import com.example.foodtrack.Activity.MainActivity;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -30,6 +35,7 @@ public class cart extends AppCompatActivity {
     private ListView listView_cart;
     private ImageView backBtn;
     private TextView total;
+    private TextView btn_thanhToan_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +71,7 @@ public class cart extends AppCompatActivity {
         listView_cart = (ListView) findViewById(R.id.listView_cart);
         cart_adapter listAdapter = new cart_adapter(cart.this, cartTitle, cartImg, cartSubTitle, cartPrice,cartQty ,this);
         listView_cart.setAdapter(listAdapter);
-
+        btn_thanhToan_cart = (TextView) findViewById(R.id.btn_thanhToan_cart);
         total = (TextView) findViewById(R.id.total_cart);
 
     }
@@ -114,6 +120,15 @@ public class cart extends AppCompatActivity {
                 finish();
             }
         });
+//        btn_thanhToan_cart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                MainActivity mainActivity = (MainActivity) getActivity();
+//                if (mainActivity != null) {
+//                    mainActivity.ReplaceFragment(new food_fragment());
+//                }
+//            }
+//        });
     }
 
     public void updateTotalPrice() {
