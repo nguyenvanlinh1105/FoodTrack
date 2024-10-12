@@ -1,6 +1,5 @@
-package com.example.foodtrack;
+package com.example.foodtrack.Fragment;
 
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.example.foodtrack.R;
 
 /**
  * A simple {@link Fragment} subclass.

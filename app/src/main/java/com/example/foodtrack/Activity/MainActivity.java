@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodtrack.Fragment.Home_Page;
 import com.example.foodtrack.R;
-import com.example.foodtrack.checkout;
+import com.example.foodtrack.Fragment.checkout;
 import com.example.foodtrack.databinding.ActivityMainBinding;
 import com.example.foodtrack.Fragment.favorite_fragment;
 import com.example.foodtrack.Fragment.food_fragment;
