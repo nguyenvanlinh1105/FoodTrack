@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodtrack.Fragment.Home_Page;
 import com.example.foodtrack.R;
+import com.example.foodtrack.checkout;
 import com.example.foodtrack.databinding.ActivityMainBinding;
 import com.example.foodtrack.Fragment.favorite_fragment;
 import com.example.foodtrack.Fragment.food_fragment;
@@ -22,7 +23,7 @@ import com.example.foodtrack.Fragment.profile_fragment;
 
 public class MainActivity extends AppCompatActivity {
 
-     ActivityMainBinding binding;
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +35,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 //        setContentView(R.layout.activity_main);
 
-        //đoạn này sau này sẽ chuyển thành new home_fragment nha
-        ReplaceFragment(new Home_Page());
-
+        Intent intent = getIntent();
+        String fragmentToLoad = intent.getStringExtra("fragmentToLoad");
+        if (fragmentToLoad != null) {
+            if (fragmentToLoad.equals("cartFragment")) {
+                ReplaceFragment(new checkout());
+            }
+        } else {
+            ReplaceFragment(new Home_Page());
+        }
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            if(item.getItemId() == R.id.home){
+            if (item.getItemId() == R.id.home) {
                 ReplaceFragment(new Home_Page());
             } else if (item.getItemId() == R.id.explore) {
                 ReplaceFragment(new food_fragment());
@@ -75,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
-    public void ReplaceFragment(Fragment fragment){
+    public void ReplaceFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frameLayout, fragment);

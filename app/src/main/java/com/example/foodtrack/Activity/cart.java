@@ -1,5 +1,6 @@
 package com.example.foodtrack.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.cart_adapter;
+
+import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class cart extends AppCompatActivity {
     private ListView listView_cart;
     private ImageView backBtn;
     private TextView total;
+    private TextView thanhToanBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,8 @@ public class cart extends AppCompatActivity {
         listView_cart.setAdapter(listAdapter);
 
         total = (TextView) findViewById(R.id.total_cart);
+
+        thanhToanBtn = (TextView) findViewById(R.id.btn_thanh_toan_cart);
 
     }
 
@@ -112,6 +118,15 @@ public class cart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        thanhToanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent thanhToan = new Intent( cart.this, MainActivity.class);
+                thanhToan.putExtra("fragmentToLoad", "cartFragment"); // Gửi dữ liệu fragment
+                startActivity(thanhToan);
+
             }
         });
     }
