@@ -18,7 +18,8 @@ const NguoiDung= sequelize.define("NguoiDung",{
     },
     sdt:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique: true
     },
     tenDangNhap:{
         type:DataTypes.STRING,
@@ -54,6 +55,10 @@ const NguoiDung= sequelize.define("NguoiDung",{
     },
     ngayCapNhat:{
         type:DataTypes.DATE,
+    },
+    token:{
+        type:DataTypes.STRING,
+        unique: true
     }
 },{
     tableName: "NguoiDung",

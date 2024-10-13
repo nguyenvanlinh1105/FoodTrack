@@ -8,7 +8,7 @@ html
     // Fontawesome CDN
     link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
     link(id="bootstrap-css" href='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css', rel='stylesheet')
-
+    link(rel="icon" type="image/x-icon" href="/admin/images/icon.jpg")
     link(rel='stylesheet', type='text/css', href='/admin/css/login.css')
   body
     .container
@@ -24,17 +24,30 @@ html
               span
                 i.fab.fa-twitter-square
           .card-body
-            form
+            form( action=`/${prefixAdmin}/login`
+                  method="POST"
+                )
               .input-group.form-group
                 .input-group-prepend
                   span.input-group-text
-                    i.fas.fa-user
-                input.form-control(type='text', placeholder='username')
+                    i.fas.fa-envelope
+                input.form-control(
+                  type='email'  
+                  id="email"
+                  name="email"
+                  required 
+                  placeholder='Email'
+                )
               .input-group.form-group
                 .input-group-prepend
                   span.input-group-text
                     i.fas.fa-key
-                input.form-control(type='password', placeholder='password')
+                input.form-control(
+                  type='password'
+                  id="password"
+                  name="password"
+                  placeholder='Password'
+                )
               .row.align-items-center.remember
                 input(type='checkbox')
                 | Remember Me
