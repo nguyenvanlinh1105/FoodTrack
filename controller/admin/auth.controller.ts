@@ -22,12 +22,11 @@ export const login =async (req:Request,res:Response)=>{
         });
         if(!user){
             res.redirect('back');
-            return;
         }else{
             const newPassword= hashPassword(password);
             const isMatch=verifyPassword(password,newPassword);
             if(isMatch){
-               res.send('OKE');
+                res.redirect('/admin/dashboard');
             }else{
                 res.redirect('back');
             }
