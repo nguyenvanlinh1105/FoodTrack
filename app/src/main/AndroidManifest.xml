@@ -20,7 +20,7 @@
             android:name=".Fragment.rating_comment"
             android:exported="false" />
         <activity
-            android:name=".Fragment.list_chat_user"
+            android:name=".Activity.list_chat_user"
             android:exported="false" />
         <activity
             android:name=".Activity.edit_profile"

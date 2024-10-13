@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Activity.edit_profile;
 

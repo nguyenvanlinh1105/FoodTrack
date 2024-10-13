@@ -1,5 +1,6 @@
-package com.example.foodtrack;
+package com.example.foodtrack.Fragment;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.example.foodtrack.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,8 @@ public class fragment_chat_user_shop extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ImageView backBtn;
 
     public fragment_chat_user_shop() {
         // Required empty public constructor
@@ -58,7 +64,22 @@ public class fragment_chat_user_shop extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat_user_shop, container, false);
+        View view = inflater.inflate(R.layout.fragment_chat_user_shop, container, false);
+        Mapping(view);
+        ControlButton();
+        return view;
+    }
+
+    private void Mapping(View view){
+        backBtn = (ImageView) view.findViewById(R.id.btn_back_chat_user);
+    }
+
+    private void ControlButton(){
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
     }
 }

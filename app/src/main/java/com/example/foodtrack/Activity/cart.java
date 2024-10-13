@@ -1,5 +1,6 @@
 package com.example.foodtrack.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +36,8 @@ public class cart extends AppCompatActivity {
     private TextView total;
     private TextView thanhToanBtn;
 
+    public static Activity ToFinishActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,8 @@ public class cart extends AppCompatActivity {
         listView_cart = (ListView) findViewById(R.id.listView_cart);
         cart_adapter listAdapter = new cart_adapter(cart.this, cartTitle, cartImg, cartSubTitle, cartPrice,cartQty ,this);
         listView_cart.setAdapter(listAdapter);
+
+        ToFinishActivity = this;
 
         total = (TextView) findViewById(R.id.total_cart);
 

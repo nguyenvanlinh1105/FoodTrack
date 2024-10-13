@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Activity.cart;
 import com.example.foodtrack.R;
 
 /**
@@ -28,6 +31,7 @@ public class checkout extends Fragment {
     private String mParam2;
 
     private ImageView backBtn;
+    private Button payBtn;
 
     public checkout() {
         // Required empty public constructor
@@ -71,6 +75,7 @@ public class checkout extends Fragment {
 
     private void Mapping(View view){
         backBtn = (ImageView) view.findViewById(R.id.btn_back_checkout);
+        payBtn = (Button) view.findViewById(R.id.btn_pay);
     }
 
     private void ControlButton(){
@@ -78,6 +83,16 @@ public class checkout extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
+            }
+        });
+        payBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_confirm_payment());
+                    cart.ToFinishActivity.finish();
+                }
             }
         });
     }

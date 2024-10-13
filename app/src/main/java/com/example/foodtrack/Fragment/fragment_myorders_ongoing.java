@@ -1,5 +1,6 @@
 package com.example.foodtrack.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.R;
 
 /**
@@ -31,6 +33,7 @@ public class fragment_myorders_ongoing extends Fragment {
 
     ImageView backBtn;
     TextView toLichSu;
+    ImageView chatIcon;
 
     public fragment_myorders_ongoing() {
         // Required empty public constructor
@@ -76,6 +79,7 @@ public class fragment_myorders_ongoing extends Fragment {
     public void Mapping(View view){
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing);
         toLichSu = (TextView) view.findViewById(R.id.btn_lichSu_myOrders);
+        chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
     }
     public void ControlButton(){
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +97,14 @@ public class fragment_myorders_ongoing extends Fragment {
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new fragment_myorders_history());
                 }
+            }
+        });
+
+        chatIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chat = new Intent(getActivity(), list_chat_user.class);
+                startActivity(chat);
             }
         });
     }

@@ -33,13 +33,13 @@ public class food_list_adapter extends ArrayAdapter<Product> {
         TextView title = view.findViewById(R.id.item_title_product);
         TextView price = view.findViewById(R.id.item_price_product);
         ImageView img = view.findViewById(R.id.item_image_product);
-        TextView description = view.findViewById(R.id.description_product_item);
+//        TextView description = view.findViewById(R.id.description_product_item);
         TextView addToCartBtn = view.findViewById(R.id.add_to_cart_btn);
 
         if (food != null) {
             img.setImageResource(food.getImg());
             title.setText(food.getTitle());
-            description.setText(food.getDescription());
+//            description.setText(food.getDescription());
             price.setText(food.getPrice());
         }
         return view;

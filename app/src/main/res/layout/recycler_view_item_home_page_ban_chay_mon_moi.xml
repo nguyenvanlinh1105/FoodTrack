@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/F3f3f3"
+    android:background="@color/F3F3F3"
+    android:id="@+id/container_item_ban_chay_mon_moi"
     tools:context=".Fragment.fragment_food_list">
 
     <LinearLayout

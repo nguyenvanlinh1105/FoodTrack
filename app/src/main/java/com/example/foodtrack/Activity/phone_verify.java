@@ -39,8 +39,7 @@ public class phone_verify extends AppCompatActivity {
         btn_back_forgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent forgot_password = new Intent(phone_verify.this, forgot_password.class);
-                startActivity(forgot_password);
+                finish();
             }
         });
     }

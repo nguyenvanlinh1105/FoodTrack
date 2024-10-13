@@ -40,6 +40,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 Intent firstpage = new Intent(Login.this, first_page.class);
                 startActivity(firstpage);
+                finish();
             }
         });
         btnDangKiFormLogin.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +48,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 Intent formDangKi = new Intent(Login.this, Register.class);
                 startActivity(formDangKi);
+                finish();
             }
         });
         btnQuenMatkhau.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +63,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 Intent home = new Intent(Login.this, MainActivity.class);
                 startActivity(home);
+                finish();
             }
         });
 

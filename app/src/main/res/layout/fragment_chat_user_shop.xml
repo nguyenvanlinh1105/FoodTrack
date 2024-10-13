@@ -1,14 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment_chat_user_shop">
+    android:background="@drawable/list_chat_bg"
+    tools:context=".Fragment.fragment_chat_user_shop">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout7"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/btn_back_chat_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ava_nguoiNhan_chat_user"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/icon_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_back_chat_user"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tv_ten_nguoiNhan_chat_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="FoodTrack"
+            android:textColor="@color/primary_color"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/ava_nguoiNhan_chat_user"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:text="\u25CF Online"
+            android:textColor="@color/green"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_ten_nguoiNhan_chat_user"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ten_nguoiNhan_chat_user" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_setting_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout10"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ECECEC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"></LinearLayout>
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/edit_text_no_border"
+        android:drawableRight="@drawable/icon_send"
+        android:hint="Nhập nội dung..."
+        android:padding="20dp"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginBottom="337dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/editText2"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout10"-->
+    <!--        app:layout_constraintVertical_bias="0.0">-->
+
+    <!--    </androidx.recyclerview.widget.RecyclerView>-->
+
+    <LinearLayout
+        android:id="@+id/left_list_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/chat_receiver_bg"
+        android:padding="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/right_list_chat">
+
+        <TextView
+            android:maxWidth="300dp"
+            android:id="@+id/tv_left_list_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Xin chào Tech Trio" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/right_list_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/chat_sender_bg"
+        android:padding="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
+
+        <TextView
+            android:id="@+id/tv_right_list_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:maxWidth="300dp"
+            android:text="Xin chào FoodTrack"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/right_list_chat_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/chat_sender_bg"
+        android:padding="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/left_list_chat">
+
+        <TextView
+            android:id="@+id/tv_right_list_chat_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxWidth="300dp"
+            android:text="Bạn có thể tư vấn cho tôi về giá
+và thông tin của món bùn bò Huế không"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/left_list_chat_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/chat_receiver_bg"
+        android:padding="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/right_list_chat_2">
+
+        <TextView
+            android:maxWidth="300dp"
+            android:id="@+id/tv_left_list_chat_2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Bún bò Huế là món ăn đặc trưng của miền Trung, với nước dùng đậm đà và thơm ngon từ xương bò, ăn kèm thịt bò, giò heo và rau sống. Một tô bún bò thường có giá khoảng 50.000 đồng." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/right_list_chat_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/chat_sender_bg"
+        android:padding="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/left_list_chat_2">
+
+        <TextView
+            android:id="@+id/tv_right_list_chat_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxWidth="300dp"
+            android:text="Cảm ơn shop nhiều nha &lt;3"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

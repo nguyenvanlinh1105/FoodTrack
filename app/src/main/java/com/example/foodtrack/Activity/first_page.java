@@ -32,6 +32,7 @@ public class first_page extends AppCompatActivity {
             public void onClick(View view) {
                 Intent login = new Intent( first_page.this, Login.class);
                 startActivity(login);
+                finish();
             }
         });
         btnDangKi.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +40,7 @@ public class first_page extends AppCompatActivity {
             public void onClick(View view) {
                 Intent login = new Intent( first_page.this, Register.class);
                 startActivity(login);
+                finish();
             }
         });
 

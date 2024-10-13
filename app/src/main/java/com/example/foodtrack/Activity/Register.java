@@ -31,6 +31,7 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 Intent firstpage = new Intent(Register.this, first_page.class);
                 startActivity(firstpage);
+                finish();
             }
         });
     }

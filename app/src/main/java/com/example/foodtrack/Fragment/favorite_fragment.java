@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import android.content.Intent;
 
+import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.favorite_list_adapter;
 

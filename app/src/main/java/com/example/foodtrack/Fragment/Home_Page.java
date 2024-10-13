@@ -4,14 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
-import com.example.foodtrack.Adapter.recyclerView_mon_moi_ban_chay_adapter;
 import com.example.foodtrack.Adapter.viewPager_mon_moi_ban_chay_home_page_adapter;
 import com.example.foodtrack.Model.Product;
 import com.example.foodtrack.R;
@@ -177,5 +173,7 @@ public class Home_Page extends Fragment {
                 startActivity(chat);
             }
         });
+
+
     }
 }

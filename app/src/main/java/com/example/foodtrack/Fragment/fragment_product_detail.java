@@ -3,6 +3,8 @@ package com.example.foodtrack.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
+import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
+import com.example.foodtrack.Model.Product;
 import com.example.foodtrack.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +53,9 @@ public class fragment_product_detail extends Fragment {
     TextView Text_quantity_product;
     private int quantity;
 
+    private List<Product> listProduct;
+    private RecyclerView rvProductDetail;
+
     public fragment_product_detail() {
         // Required empty public constructor
     }
@@ -76,6 +87,16 @@ public class fragment_product_detail extends Fragment {
             description = getArguments().getString(ARG_DESCRIPTION);
             image = getArguments().getInt(ARG_IMAGE);
         }
+    }
+
+    private void InitializeData() {
+        listProduct = new ArrayList<>();
+        listProduct.add(new Product("Cơm tấm", "70.000đ", "Cơm tấm bì nướng", R.drawable.com_tam));
+        listProduct.add(new Product("Chuối tươi", "30.000đ", "Chuối sứ", R.drawable.icon_food2));
+        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
+        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
+        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
+        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
     }
 
     @Override
@@ -114,6 +135,14 @@ public class fragment_product_detail extends Fragment {
         btn_minus_product_detail = (ImageView) view.findViewById(R.id.btn_minus_product_detail);
         Text_quantity_product = (TextView) view.findViewById(R.id.Text_quantity_product);
         btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_comment_product_details);
+
+        rvProductDetail = (RecyclerView) view.findViewById(R.id.recyclerView_product_detail);
+        InitializeData();
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvProductDetail.setLayoutManager(layoutManager);
+        recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct );
+        rvProductDetail.setAdapter(dealAdapter);
     }
 
     private void ControlButton() {

@@ -34,6 +34,7 @@ public class forgot_password extends AppCompatActivity {
             public void onClick(View view) {
                 Intent loginform = new Intent(forgot_password.this, Login.class);
                 startActivity(loginform);
+                finish();
             }
         });
         btn_Verify.setOnClickListener(new View.OnClickListener() {
