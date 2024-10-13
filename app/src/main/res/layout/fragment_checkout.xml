@@ -16,6 +16,8 @@
         <!-- Địa chỉ giao hàng -->
 
 
+
+
         <!-- Phương thức thanh toán -->
 
         <!-- Apple Pay -->
@@ -56,7 +58,6 @@
             android:background="@color/FFF4E9"
             android:orientation="vertical"
             android:paddingTop="20dp"
-            android:paddingBottom="20dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -94,17 +95,17 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/locate_orange_30"/>
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/locate_orange_30" />
 
                 <TextView
 
                     android:id="@+id/tv_address"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="306dp"
+                    android:layout_height="53dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="16dp"
                     android:maxLines="3"
@@ -129,17 +130,17 @@
                 android:id="@+id/tv_payment_method_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#6D3805"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
+                android:paddingBottom="10dp"
                 android:text="Phương Thức Thanh Toán"
+                android:textColor="#6D3805"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -223,6 +224,14 @@
                 android:text="Hóa Đơn"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/sub_primary_color"
+                android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
