@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -120,6 +121,31 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/dessert_ico" />
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/drink3" />
+
+            <ImageView
+                android:id="@+id/imageView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/com_tam" />
+
+            <ImageView
+                android:id="@+id/imageView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/drink1" />
+
+            <ImageView
+                android:id="@+id/imageView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/drink4" />
+
         </ViewFlipper>
 
         <TextView

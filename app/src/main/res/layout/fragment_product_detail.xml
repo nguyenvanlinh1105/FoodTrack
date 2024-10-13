@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".Fragment.fragment_product_detail">
 
         <LinearLayout
@@ -48,7 +49,7 @@
             android:id="@+id/linearLayout6"
             android:layout_width="394dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -108,24 +109,24 @@
             </LinearLayout>
 
             <TextView
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
                 android:id="@+id/description_product_detail"
                 android:layout_width="match_parent"
-                android:padding="8dp"
                 android:layout_height="95dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-medium"
+                android:gravity="center"
                 android:maxLines="5"
+                android:padding="8dp"
                 android:text="TextView"
                 android:textColor="#5F6750"
                 android:textSize="18sp" />
 
             <LinearLayout
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -189,7 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="16dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/btn_primary_conner"
             android:fontFamily="sans-serif-medium"
@@ -204,16 +205,18 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:padding="10dp"
             android:id="@+id/recyclerView_product_detail"
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/btn_AddToCart_product_detail">
+            app:layout_constraintTop_toBottomOf="@+id/btn_AddToCart_product_detail"
+            app:layout_constraintVertical_bias="1.0">
 
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>

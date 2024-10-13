@@ -191,8 +191,7 @@ public class fragment_product_detail extends Fragment {
             public void onClick(View view) {
                 quantity = Integer.valueOf(Text_quantity_product.getText().toString());
                     quantity++;
-
-                Text_quantity_product.setText(String.valueOf(quantity));
+                    Text_quantity_product.setText(String.valueOf(quantity));
             }
         });
 

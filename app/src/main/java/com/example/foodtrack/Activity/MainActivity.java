@@ -11,7 +11,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.foodtrack.Fragment.Home_Page;
 import com.example.foodtrack.R;
@@ -20,6 +22,7 @@ import com.example.foodtrack.databinding.ActivityMainBinding;
 import com.example.foodtrack.Fragment.favorite_fragment;
 import com.example.foodtrack.Fragment.food_fragment;
 import com.example.foodtrack.Fragment.profile_fragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
         getOnBackPressedDispatcher().addCallback(this, callback);
+
+
     }
 
     public void ReplaceFragment(Fragment fragment) {

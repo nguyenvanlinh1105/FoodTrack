@@ -44,6 +44,7 @@ public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<
 //        Log.d("Product", "Product Title: " + product.getTitle());
         holder.title.setText(product.getTitle());
         holder.price.setText(product.getPrice());
+
         Glide.with(context).load(product.getImg()).into(holder.img);
 
         holder.container.setOnClickListener(new View.OnClickListener() {
