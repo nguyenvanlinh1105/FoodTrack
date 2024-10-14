@@ -129,6 +129,7 @@ public class Home_Page extends Fragment {
         viewPager_mon_moi_ban_chay_home_page_adapter adapter = new viewPager_mon_moi_ban_chay_home_page_adapter(this);
         vpMonMoiBanChay.setAdapter(adapter);
 
+
         new TabLayoutMediator(tlMonMoiBanChay, vpMonMoiBanChay,
                 (tab, position) -> {
                     switch (position) {

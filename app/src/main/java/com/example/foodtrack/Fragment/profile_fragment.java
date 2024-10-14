@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Activity.forgot_password;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Activity.edit_profile;
@@ -32,8 +33,9 @@ public class profile_fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ConstraintLayout toEditHoSo, toMyOrders;
+    ConstraintLayout toEditHoSo, toMyOrders, doiMatKhau_profile;
     ImageView chatIcon;
+
 
     public profile_fragment() {
         // Required empty public constructor
@@ -83,6 +85,7 @@ public class profile_fragment extends Fragment {
         toEditHoSo = (ConstraintLayout)view.findViewById(R.id.capNhatHoSo_profile);
         chatIcon = (ImageView)view.findViewById(R.id.chatIcon);
         toMyOrders = (ConstraintLayout) view.findViewById(R.id.donHangCuaToi_profile);
+        doiMatKhau_profile = view.findViewById(R.id.doiMatKhau_profile);
     }
 
     public void ControlButton(){
@@ -109,6 +112,19 @@ public class profile_fragment extends Fragment {
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
                 }
+            }
+        });
+        doiMatKhau_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                MainActivity mainActivity =(MainActivity) getActivity();
+//                if(mainActivity!=null){
+//                    mainActivity.ReplaceFragment(new ch);
+//                }
+
+                Intent changepass = new Intent(getActivity(), forgot_password.class);
+                startActivity(changepass);
+
             }
         });
 
