@@ -41,10 +41,10 @@ public class recyclerView_product_detail_adapter extends RecyclerView.Adapter<re
         holder.title.setText(product.getTitle());
         holder.price.setText(product.getPrice());
         Glide.with(context).load(product.getImg()).into(holder.img);
-        if (position % 2 == 0)
+        //if (position % 2 == 0)
             holder.main.setBackgroundResource(R.drawable.input_conner);
-        else
-            holder.main.setBackground(null);
+       // else
+       //     holder.main.setBackground(null);
 
     }
 
