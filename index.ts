@@ -1,8 +1,12 @@
-import express, { Express } from "express";
+import express, { Express,Request,Response,NextFunction } from "express";
 import dotenv from 'dotenv';//Nhúng dotenv từ module dotenv
 import cors from "cors" //Nhúng cors vào dự án
 dotenv.config();//Thêm config cho dotenv
 import bodyParser from'body-parser';//Nhúng body-parser từ module body-parser
+
+import flash from 'connect-flash';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 
 //Import Config
 import { systemConfig } from "./config/system";
@@ -31,6 +35,22 @@ app.use(bodyParser.json());//Nhận dữ liệu từ fetch
 
 app.locals.prefixAdmin= systemConfig.prefixAdmin;//Truyền biến locals cho các router và file pug sử dụng
 
+//Phần flash -> Để hiển thị thông báo (Quan trọng phải có)
+app.use(cookieParser('alert-1x2'));
+app.use(session(
+    {   secret: 'some secret', // Thay thế bằng một khóa bí mật mạnh
+        resave: false,
+        cookie: { maxAge: 20*60*1000 },
+        saveUninitialized:true
+    }
+));
+app.use(flash());
+
+//Middleware để truyền biến messages vào tất cả các view
+app.use((req:Request, res:Response,next:NextFunction)=>{
+    res.locals.messages = req.flash();
+    next();
+})
 
 routesAPI(app);
 routesAdmin(app);

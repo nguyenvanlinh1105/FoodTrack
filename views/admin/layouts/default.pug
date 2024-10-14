@@ -1,3 +1,4 @@
+include ../mixins/show-alert.pug
 doctype html
 html(lang='en')
   head
@@ -6,7 +7,6 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
     meta(name='description', content='')
     meta(name='author', content='')
-    link(href='vendor/fontawesome-free/css/all.min.css', rel='stylesheet', type='text/css')
     link(href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i', rel='stylesheet')
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO', crossorigin='anonymous')
     link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
@@ -14,6 +14,8 @@ html(lang='en')
     link(rel='stylesheet', type='text/css', href='/admin/css/style.css')
     title #{title}
   body#page-top
+    +alertSuccess(6000)
+    +alertError(6000)
     #wrapper
       include ../partials/sider
       #content-wrapper.d-flex.flex-column

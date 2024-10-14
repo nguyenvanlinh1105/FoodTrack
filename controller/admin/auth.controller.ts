@@ -21,17 +21,19 @@ export const login =async (req:Request,res:Response)=>{
             raw:true
         });
         if(!user){
+            req.flash('error','Tài khoản không tồn tại');
             res.redirect('back');
         }else{
-            const newPassword= hashPassword(password);
-            const isMatch=verifyPassword(password,newPassword);
+            const isMatch=verifyPassword(password,user['matKhau']);
             if(isMatch){
                 res.redirect('/admin/dashboard');
             }else{
+                req.flash('error','Mật khẩu không đúng');
                 res.redirect('back');
             }
         }
     } catch (error) {
+        req.flash('error','Lỗi');
         res.redirect('back');
     }
 }
