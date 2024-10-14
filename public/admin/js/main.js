@@ -6,4 +6,3 @@ if (alertSuccess) {
         alertSuccess.classList.add('hidden');
     }, time)
 }
-console.log('Hello alert');

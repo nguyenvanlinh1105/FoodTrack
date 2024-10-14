@@ -5,3 +5,4 @@ mixin alertSuccess(time=3000)
 mixin alertError(time=3000)
     if(messages.error)
         div(class="alert alert-danger show-alert" show-alert=`${time}`) #{messages.error}
+    

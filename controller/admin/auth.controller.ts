@@ -26,6 +26,8 @@ export const login =async (req:Request,res:Response)=>{
         }else{
             const isMatch=verifyPassword(password,user['matKhau']);
             if(isMatch){
+                res.cookie('token',user['token'],{maxAge:1000*60*60*1});
+                req.flash('success','Đăng nhập thành công');
                 res.redirect('/admin/dashboard');
             }else{
                 req.flash('error','Mật khẩu không đúng');
@@ -36,4 +38,9 @@ export const login =async (req:Request,res:Response)=>{
         req.flash('error','Lỗi');
         res.redirect('back');
     }
+}
+export const logout = async (req: Request,res: Response) =>{
+    res.clearCookie('token');
+    req.flash('success','Đăng xuất thành công');
+    res.redirect('/admin/login');
 }

@@ -5015,26 +5015,17 @@
     padding-left: 0;
     border-radius: 0;
   }
-  
-  .alert {
-    position: relative;
-    padding: 0.75rem 1.25rem;
-    margin-bottom: 1rem;
-    border: 1px solid transparent;
-    border-radius: 0.35rem;
-  }
-  
   /* Alert */
-.show-alert {
-  position: fixed;
-  top: 70px;
-  right: 20px;
-  z-index: 999;
-}
+  .show-alert {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 999;
+  }
 
-.show-alert.hidden {
-  display: none;
-}
+  .show-alert.hidden {
+    display: none;
+  }
 /* Alert */
   
   @-webkit-keyframes progress-bar-stripes {
