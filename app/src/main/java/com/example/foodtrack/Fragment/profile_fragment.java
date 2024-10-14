@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Activity.first_page;
 import com.example.foodtrack.Activity.forgot_password;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.R;
@@ -33,7 +34,7 @@ public class profile_fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ConstraintLayout toEditHoSo, toMyOrders, doiMatKhau_profile,btn_card_profile;
+    ConstraintLayout toEditHoSo, toMyOrders, doiMatKhau_profile, dangXuat_profile;
     ImageView chatIcon;
 
 
@@ -86,7 +87,8 @@ public class profile_fragment extends Fragment {
         chatIcon = (ImageView)view.findViewById(R.id.chatIcon);
         toMyOrders = (ConstraintLayout) view.findViewById(R.id.donHangCuaToi_profile);
         doiMatKhau_profile = view.findViewById(R.id.doiMatKhau_profile);
-        btn_card_profile = view.findViewById(R.id.btn_card_profile);
+
+        dangXuat_profile = view.findViewById(R.id.dangXuat_profile);
     }
 
     public void ControlButton(){
@@ -118,26 +120,22 @@ public class profile_fragment extends Fragment {
         doiMatKhau_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                MainActivity mainActivity =(MainActivity) getActivity();
-//                if(mainActivity!=null){
-//                    mainActivity.ReplaceFragment(new ch);
-//                }
-
+//
                 Intent changepass = new Intent(getActivity(), forgot_password.class);
                 startActivity(changepass);
 
             }
         });
-
-        btn_card_profile.setOnClickListener(new View.OnClickListener() {
+        dangXuat_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if(mainActivity!=null){
-                    mainActivity.ReplaceFragment(new mycard_frag());
-                }
+                Intent firstPage = new Intent(getActivity(), first_page.class);
+                startActivity(firstPage);
+                getActivity().finish();
             }
         });
+
+
 
 
     }

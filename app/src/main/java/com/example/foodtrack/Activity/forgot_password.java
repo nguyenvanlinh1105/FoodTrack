@@ -32,8 +32,8 @@ public class forgot_password extends AppCompatActivity {
         btn_back_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginform = new Intent(forgot_password.this, Login.class);
-                startActivity(loginform);
+//                Intent loginform = new Intent(forgot_password.this, Login.class);
+//                startActivity(loginform);
                 finish();
             }
         });
