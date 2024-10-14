@@ -52,6 +52,7 @@ public class Home_Page extends Fragment {
     private ViewPager2 vpMonMoiBanChay;
 
 
+
     public Home_Page() {
         // Required empty public constructor
     }
