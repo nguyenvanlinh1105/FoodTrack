@@ -83,38 +83,38 @@ public class food_fragment extends Fragment {
         foodTitle.add("Cơm tấm");
         foodTitle.add("Burger phô mai");
         foodTitle.add("Burger trứng");
-        foodTitle.add("Pallavi Biryani");
-        foodTitle.add("Cơm tấm");
-        foodTitle.add("Burger phô mai");
-        foodTitle.add("Burger trứng");
+        foodTitle.add("Mì Spaghetti");
+        foodTitle.add("Cơm gà sốt chua ngọt");
+        foodTitle.add("Mì Carbonara");
+        foodTitle.add("Gnocchi sốt cà chua");
 
         foodImg.add(R.drawable.pallavi_biryani);
         foodImg.add(R.drawable.com_tam);
         foodImg.add(R.drawable.double_cheese);
         foodImg.add(R.drawable.double_cheese);
-        foodImg.add(R.drawable.pallavi_biryani);
-        foodImg.add(R.drawable.com_tam);
-        foodImg.add(R.drawable.double_cheese);
-        foodImg.add(R.drawable.double_cheese);
+        foodImg.add(R.drawable.spaghetti);
+        foodImg.add(R.drawable.chicken);
+        foodImg.add(R.drawable.carbonara);
+        foodImg.add(R.drawable.gnocchi_tomato);
 
         foodPrice.add("50.000đ");
         foodPrice.add("30.000đ");
         foodPrice.add("20.000đ");
         foodPrice.add("50.000đ");
-        foodPrice.add("50.000đ");
-        foodPrice.add("30.000đ");
-        foodPrice.add("20.000đ");
-        foodPrice.add("50.000đ");
+        foodPrice.add("80.000đ");
+        foodPrice.add("90.000đ");
+        foodPrice.add("80.000đ");
+        foodPrice.add("90.000đ");
 
 
         foodDescription.add("Pallavi Biryani là một món cơm trộn đặc biệt từ Ấn Độ, được nấu với gạo thơm, thịt và gia vị độc đáo.");
         foodDescription.add("Cơm tấm là món ăn truyền thống của Việt Nam, gồm cơm tấm, sườn nướng, bì và chả.");
         foodDescription.add("Burger phô mai là món burger với nhân thịt bò và phô mai tan chảy thơm ngon.");
         foodDescription.add("Burger trứng là sự kết hợp giữa nhân thịt bò và trứng ốp la, mang đến hương vị béo ngậy.");
-        foodDescription.add("Pallavi Biryani là một món cơm trộn đặc biệt từ Ấn Độ, được nấu với gạo thơm, thịt và gia vị độc đáo.");
-        foodDescription.add("Cơm tấm là món ăn truyền thống của Việt Nam, gồm cơm tấm, sườn nướng, bì và chả.");
-        foodDescription.add("Burger phô mai là món burger với nhân thịt bò và phô mai tan chảy thơm ngon.");
-        foodDescription.add("Burger trứng là sự kết hợp giữa nhân thịt bò và trứng ốp la, mang đến hương vị béo ngậy.");
+        foodDescription.add("Sợi mì spaghetti tươi ngon nấu cùng sốt cà chua nguyên chất");
+        foodDescription.add("Cơm nóng ăn kèm gà rán tẩm sốt chua ngọt bí truyền");
+        foodDescription.add("Carbonara béo ngậy hòa cùng chút mặn đến từ thịt xông khói.");
+        foodDescription.add(".Gnocchi tươi nấu cùng sốt cà chua nhà làm.");
 
         for (int i =0 ;i<foodTitle.size(); i++){
             arraylistFood.add(new Product(foodTitle.get(i), foodPrice.get(i),  foodDescription.get(i),foodImg.get(i)));

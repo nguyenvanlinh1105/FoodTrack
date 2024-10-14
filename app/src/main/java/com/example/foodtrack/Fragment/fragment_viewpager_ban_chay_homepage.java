@@ -73,10 +73,10 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         listProduct = new ArrayList<>();
         listProduct.add(new Product("Cơm tấm", "50.000đ", "Cơm tấm bì nướng", R.drawable.com_tam));
         listProduct.add(new Product("Chuối tươi", "30.000đ", "Chuối sứ", R.drawable.icon_food2));
+        listProduct.add(new Product("Pallavi Biryani", "50.000đ", "Burger phô mai cổ điển", R.drawable.pallavi_biryani));
         listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
+        listProduct.add(new Product("Cơm gà sốt chua ngọt", "80.000đ", "Burger phô mai cổ điển", R.drawable.chicken));
+        listProduct.add(new Product("Burger trứng", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
     }
 
     @Override

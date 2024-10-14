@@ -84,30 +84,30 @@ public class cart extends AppCompatActivity {
     private void initializeData() {
         cartTitle.add("Burger phô mai");
         cartTitle.add("Burger bò");
-        cartTitle.add("Burger trứng");
-        cartTitle.add("Burger phô mai");
-        cartTitle.add("Burger phô mai gà");
+        cartTitle.add("Spaghetti");
+        cartTitle.add("Carbonara");
+        cartTitle.add("Cơm tấm");
         cartTitle.add("Burger heo bằm");
 
         cartImg.add(R.drawable.double_cheese);
         cartImg.add(R.drawable.double_cheese);
-        cartImg.add(R.drawable.double_cheese);
-        cartImg.add(R.drawable.double_cheese);
-        cartImg.add(R.drawable.double_cheese);
+        cartImg.add(R.drawable.spaghetti);
+        cartImg.add(R.drawable.carbonara);
+        cartImg.add(R.drawable.com_tam);
         cartImg.add(R.drawable.double_cheese);
 
         cartSubTitle.add("Classic cheesburger");
         cartSubTitle.add("Classic cheesburger");
-        cartSubTitle.add("Classic cheesburger");
-        cartSubTitle.add("Classic cheesburger");
-        cartSubTitle.add("Classic cheesburger");
+        cartSubTitle.add("Classic spaghetti");
+        cartSubTitle.add("Classic carbonara");
+        cartSubTitle.add("Classic com tam");
         cartSubTitle.add("Classic cheesburger");
 
         cartPrice.add("50.000đ");
         cartPrice.add("50.000đ");
-        cartPrice.add("50.000đ");
-        cartPrice.add("50.000đ");
-        cartPrice.add("50.000đ");
+        cartPrice.add("80.000đ");
+        cartPrice.add("90.000đ");
+        cartPrice.add("60.000đ");
         cartPrice.add("50.000đ");
 
         cartQty.add(1);

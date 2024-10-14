@@ -87,11 +87,12 @@ public class Home_Page extends Fragment {
     private void InitializeData() {
         listProduct = new ArrayList<>();
         listProduct.add(new Product("Salad trái cây", "70.000đ", "Salad cổ điển cùng trái cây tươi trong ngày", R.drawable.icon_food1));
-        listProduct.add(new Product("Chuối tươi", "30.000đ", "Chuối sứ", R.drawable.icon_food2));
+        listProduct.add(new Product("Mì Carbonara", "90.000đ", "Carbonara béo ngậy hòa cùng chút mặn đến từ thịt xông khói", R.drawable.carbonara));
         listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
+        listProduct.add(new Product("Gnocchi sốt cà chua", "80.000đ", "Gnocchi tươi nấu cùng sốt cà chua nhà làm", R.drawable.gnocchi_tomato));
+        listProduct.add(new Product("Cơm gà sốt chua ngọt", "80.000đ", "Cơm nóng ăn kèm gà rán tẩm sốt chua ngọt bí truyền", R.drawable.chicken));
         listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
+        listProduct.add(new Product("Mì Spaghetti", "90.000đ", "Sợi mì spaghetti tươi ngon nấu cùng sốt cà chua nguyên chất", R.drawable.spaghetti));
     }
 
     @Override
