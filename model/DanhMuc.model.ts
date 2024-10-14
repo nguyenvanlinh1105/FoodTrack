@@ -1,19 +1,25 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
-const ThanhPho= sequelize.define("ThanhPho",{
-    idThanhPho:{
+const DanhMuc= sequelize.define("DanhMuc",{
+    idDanhMuc:{
         type:DataTypes.STRING,
         allowNull:false,
         primaryKey:true
     },
-    tenThanhPho:{
+    tenDanhMuc:{
         type:DataTypes.STRING,
         allowNull:false
     },
+    moTa:{
+        type:DataTypes.TEXT,
+    },
+    ngayTao:{
+        type:DataTypes.DATE,
+    }
 },{
-    tableName: "ThanhPho",
+    tableName: "DanhMuc",
     timestamps: false
 })
 
-export default ThanhPho;
+export default DanhMuc;
