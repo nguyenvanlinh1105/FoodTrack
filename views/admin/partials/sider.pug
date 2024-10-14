@@ -14,52 +14,26 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
             span Trang chủ
     hr.sidebar-divider
     .sidebar-heading
-        | Interface
+        | Management Staff
     li.nav-item
-        a.nav-link.collapsed(href='#', data-toggle='collapse', data-target='#collapseTwo', aria-expanded='true', aria-controls='collapseTwo')
-            i.fas.fa-fw.fa-cog
-            span Components
-        #collapseTwo.collapse(aria-labelledby='headingTwo', data-parent='#accordionSidebar')
-            .bg-white.py-2.collapse-inner.rounded
-                h6.collapse-header Custom Components:
-                a.collapse-item(href='buttons.html') Buttons
-                a.collapse-item(href='cards.html') Cards
-    li.nav-item
-        a.nav-link.collapsed(href='#', data-toggle='collapse', data-target='#collapseUtilities', aria-expanded='true', aria-controls='collapseUtilities')
-            i.fas.fa-fw.fa-wrench
-            span Utilities
-        #collapseUtilities.collapse(aria-labelledby='headingUtilities', data-parent='#accordionSidebar')
-            .bg-white.py-2.collapse-inner.rounded
-                h6.collapse-header Custom Utilities:
-                a.collapse-item(href='utilities-color.html') Colors
-                a.collapse-item(href='utilities-border.html') Borders
-                a.collapse-item(href='utilities-animation.html') Animations
-                a.collapse-item(href='utilities-other.html') Other
+        a.nav-link.collapsed(href='/admin/management/staff', data-toggle='collapse', data-target='#collapseTwo', aria-expanded='true', aria-controls='collapseTwo')
+            i.fas.fa-user-check
+            span Quản lý nhân viên
     hr.sidebar-divider
     .sidebar-heading
-        | Addons
+        | Management Customer
     li.nav-item
-        a.nav-link.collapsed(href='#', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
-            i.fas.fa-fw.fa-folder
-            span Pages
-        #collapsePages.collapse(aria-labelledby='headingPages', data-parent='#accordionSidebar')
-            .bg-white.py-2.collapse-inner.rounded
-                h6.collapse-header Login Screens:
-                a.collapse-item(href='login.html') Login
-                a.collapse-item(href='register.html') Register
-                a.collapse-item(href='forgot-password.html') Forgot Password
-                .collapse-divider
-                h6.collapse-header Other Pages:
-                a.collapse-item(href='404.html') 404 Page
-                a.collapse-item(href='blank.html') Blank Page
+        a.nav-link.collapsed(href='/admin/management/customer', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
+            i.fas.fa-user
+            span Quản lý khách hàng
+    hr.sidebar-divider
+    .sidebar-heading
+        | Management Food
     li.nav-item
-        a.nav-link(href='charts.html')
-            i.fas.fa-fw.fa-chart-area
-            span Charts
+        a.nav-link.collapsed(href='/admin/management/food', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
+            i.fas.fa-utensils
+            span Quản lý món ăn
     li.nav-item
-        a.nav-link(href='tables.html')
-            i.fas.fa-fw.fa-table
-            span Tables
     hr.sidebar-divider
     .sidebar-heading
         | Logout
