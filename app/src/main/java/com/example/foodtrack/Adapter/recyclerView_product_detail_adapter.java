@@ -44,7 +44,9 @@ public class recyclerView_product_detail_adapter extends RecyclerView.Adapter<re
         if (position % 2 == 0)
             holder.main.setBackgroundResource(R.drawable.input_conner);
         else
-            holder.main.setBackground(null);
+            //holder.main.setBackground(null);
+            holder.main.setBackgroundResource(R.drawable.input_search_conner);
+
 
     }
 
