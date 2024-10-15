@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,15 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 Intent firstpage = new Intent(Register.this, first_page.class);
                 startActivity(firstpage);
+                finish();
+            }
+        });
+        TextView btnDangNhap_formRegister = findViewById(R.id.btnDangNhap_formRegister);
+        btnDangNhap_formRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent login = new Intent(Register.this, Login.class);
+                startActivity(login);
                 finish();
             }
         });

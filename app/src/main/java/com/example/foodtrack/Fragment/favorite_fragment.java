@@ -83,20 +83,20 @@ public class favorite_fragment extends Fragment {
 
     private void initializeData() {
         favoriteTitle.add("Burger phô mai");
-        favoriteTitle.add("Burger bò");
+        favoriteTitle.add("Capuccino");
         favoriteTitle.add("Burger trứng");
-        favoriteTitle.add("Burger phô mai");
+        favoriteTitle.add("Nước ép cam ");
         favoriteTitle.add("Burger phô mai gà");
-        favoriteTitle.add("Burger mỳ ý");
+        favoriteTitle.add("Sinh tố đu đủ");
         favoriteTitle.add("Burger heo quay");
         favoriteTitle.add("Burger thịt bằm");
 
         favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.drink1);
         favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.drink2);
         favoriteImg.add(R.drawable.double_cheese);
-        favoriteImg.add(R.drawable.double_cheese);
-        favoriteImg.add(R.drawable.double_cheese);
-        favoriteImg.add(R.drawable.double_cheese);
+        favoriteImg.add(R.drawable.drink3);
         favoriteImg.add(R.drawable.double_cheese);
         favoriteImg.add(R.drawable.double_cheese);
 
