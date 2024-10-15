@@ -140,7 +140,7 @@ public class profile_fragment extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if(mainActivity!=null){
-                    mainActivity.ReplaceFragment(new mycard_frag());
+                    mainActivity.ReplaceFragment(new fragment_myCard());
                 }
             }
         });

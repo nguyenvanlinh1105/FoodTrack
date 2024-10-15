@@ -4,26 +4,24 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.service.controls.Control;
-import android.service.controls.templates.ControlButton;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.foodtrack.Adapter.card_adapter;
+import com.example.foodtrack.Adapter.mycard_adapter;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link mycard_frag#newInstance} factory method to
+ * Use the {@link fragment_myCard#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class mycard_frag extends Fragment {
+public class fragment_myCard extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,8 +33,13 @@ public class mycard_frag extends Fragment {
     private String mParam2;
     private ListView listView;
     LayoutInflater inflater;
-    private ImageView imageView21;
-    public mycard_frag() {
+    private ImageView backBtn;
+
+    private mycard_adapter adapter;
+
+    private int selectedPosition = -1; //biến lưu vị trí item được chọn
+
+    public fragment_myCard() {
         // Required empty public constructor
     }
 
@@ -49,8 +52,8 @@ public class mycard_frag extends Fragment {
      * @return A new instance of fragment mycard_frag.
      */
     // TODO: Rename and change types and number of parameters
-    public static mycard_frag newInstance(String param1, String param2) {
-        mycard_frag fragment = new mycard_frag();
+    public static fragment_myCard newInstance(String param1, String param2) {
+        fragment_myCard fragment = new fragment_myCard();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -81,7 +84,7 @@ public class mycard_frag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mycard_frag, container, false);
+        View view = inflater.inflate(R.layout.fragment_mycard, container, false);
         Mapping(view);
         ControlButton();
         return view;
@@ -90,15 +93,23 @@ public class mycard_frag extends Fragment {
 
     private void Mapping(View view){
         listView = (ListView) view.findViewById(R.id.list_mycard_card_frag);
-        imageView21 = view.findViewById(R.id.imageView21);
-        card_adapter adapter = new card_adapter(getContext(),imgs);
+        backBtn = view.findViewById(R.id.btn_back_myCard);
+        adapter = new mycard_adapter(getContext(),imgs);
         listView.setAdapter(adapter);
     }
-    private  void ControlButton(){
-        imageView21.setOnClickListener(new View.OnClickListener() {
+    private void ControlButton(){
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                adapter.setSelectedPosition(i);
+                adapter.notifyDataSetChanged();
             }
         });
     }
