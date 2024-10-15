@@ -7,32 +7,30 @@
     tools:context=".Fragment.cardItem">
 
     <LinearLayout
+        android:id="@+id/card_item_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:background="@drawable/input_conner">
 
         <LinearLayout
+            android:padding="30dp"
+            android:id="@+id/card_img_item"
             android:layout_width="wrap_content"
             android:layout_height="181dp"
-            android:layout_gravity="center"
-            android:background="@drawable/less_radius_btn_bg_white"
-            android:gravity="center"
+            android:layout_gravity="right"
+            android:background="@drawable/card1"
+            android:gravity="right"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingRight="20dp"
             android:paddingBottom="10dp"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="1dp">
-
-            <ImageView
-                android:id="@+id/card_img_item"
-                android:layout_width="wrap_content"
-                android:layout_height="158dp"
-                android:src="@drawable/card1" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
