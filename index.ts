@@ -46,6 +46,8 @@ app.use(session(
 ));
 app.use(flash());
 
+app.use(express.json());
+
 //Middleware để truyền biến messages vào tất cả các view
 app.use((req:Request, res:Response,next:NextFunction)=>{
     res.locals.messages = req.flash();

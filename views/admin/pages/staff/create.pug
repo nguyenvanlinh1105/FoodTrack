@@ -1,0 +1,49 @@
+extends ../../layouts/default.pug
+
+block content 
+    .form-body
+        .form-holder
+            .form-content
+                .form-items
+                    h3 Tạo tài khoản nhân viên  
+                    p Điền đầy đủ thông tin
+                    form.requires-validation(novalidate='')
+                        .col-md-12
+                            input.form-control(type='text', name='hoTen', placeholder='Họ tên', required=true)
+                            .valid-feedback Trường Họ tên hợp lệ!
+                            .invalid-feedback Trường Họ tên không thể để trống!
+                        .col-md-12
+                            input.form-control(type='email', name='email', placeholder='Địa chỉ E-mail', required=true)
+                            .valid-feedback Trường Email hợp lệ!
+                            .invalid-feedback Trường Email không thể để trống!
+                        .col-md-12
+                            input.form-control(type='password', name='matKhau', placeholder='Mật khẩu', required=true)
+                            .valid-feedback Trường Mật khẩu hợp lệ!
+                            .invalid-feedback Trường Mật khẩu không thể để trống!
+                        .col-md-12
+                            input.form-control(type='text', name='sdt', placeholder='Số điện thoại', required=true)
+                            .valid-feedback Trường Số điện thoại hợp lệ!
+                            .invalid-feedback Trường Số điện thoại không thể để trống!
+                        .col-md-12
+                            select.form-select.mt-3(required=true)
+                                option(selected=true, value='') Vai trò
+                                each role in roles
+                                    option(value=role.idVaiTro) #{role.tenVaiTro}
+                            .valid-feedback You selected a position!
+                            .invalid-feedback Vui lòng chọn vai trò!
+                        .col-md-12.mt-3
+                            label.mb-3.mr-1(for='gioiTinh') Gender: 
+                            input#male.btn-check(type='radio', name='gioiTinh', value="Nam" autocomplete='off', required=true)
+                            label.btn.btn-sm.btn-outline-secondary(for='Nam') Nam
+                            input#female.btn-check(type='radio', name='gioiTinh', value="Nữ" autocomplete='off', required=true)
+                            label.btn.btn-sm.btn-outline-secondary(for='Nữ') Nữ
+                            input#secret.btn-check(type='radio', name='gioiTinh', value="Khác" autocomplete='off', required=true)
+                            label.btn.btn-sm.btn-outline-secondary(for='Khác') Khác
+                            .valid-feedback.mv-up Bạn đã chọn giới tính!
+                            .invalid-feedback.mv-up Vui lòng chọn giới tính!
+                        .form-check
+                            input#invalidCheck.form-check-input(type='checkbox', value='confirm', required=true)
+                            label.form-check-label Tôi xác nhận tất cả dữ liệu đều đúng
+                            .invalid-feedback Please confirm that the entered data are all correct!
+                        .form-button.mt-3
+                            button#submit.btn.btn-primary(type='submit') Tạo tài khoản

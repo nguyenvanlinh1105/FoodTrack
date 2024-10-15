@@ -8,14 +8,14 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
     hr.sidebar-divider
     .sidebar-heading
         | Dashboard
-    li.nav-item
+    li.nav-item(class=(title === 'Trang chủ' ? 'active' : ''))
         a.nav-link(href='/admin/dashboard')
             i.fas.fa-fw.fa-tachometer-alt
             span Trang chủ
     hr.sidebar-divider
     .sidebar-heading
         | Management Staff
-    li.nav-item
+    li.nav-item(class=(title === 'Quản lý nhân viên' ? 'active' : ''))
         a.nav-link.collapsed(href='/admin/management/staff', data-toggle='collapse', data-target='#collapseTwo', aria-expanded='true', aria-controls='collapseTwo')
             i.fas.fa-user-check
             span Quản lý nhân viên

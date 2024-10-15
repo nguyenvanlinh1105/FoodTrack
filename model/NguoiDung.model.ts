@@ -21,10 +21,6 @@ const NguoiDung= sequelize.define("NguoiDung",{
         allowNull:false,
         unique: true
     },
-    tenDangNhap:{
-        type:DataTypes.STRING,
-        allowNull:false,
-    },
     matKhau:{
         type:DataTypes.STRING,
         allowNull:false,

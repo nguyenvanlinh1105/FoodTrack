@@ -2,6 +2,8 @@ import { Request,Response } from 'express';//Nhúng kiểu Request và Response 
 import NguoiDung from '../../model/NguoiDung.model';
 
 export const login= async (req:Request,res:Response)=>{
+    const { email, password } = req.body;
+    console.log(email, password);
     const users=await NguoiDung.findAll({
         raw: true
     });
