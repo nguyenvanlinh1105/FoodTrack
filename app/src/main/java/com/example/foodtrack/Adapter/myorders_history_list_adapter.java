@@ -38,6 +38,8 @@ public class myorders_history_list_adapter extends ArrayAdapter<Order> {
         ImageView img = view.findViewById(R.id.img_item_myOrders);
         TextView ratingBtn = view.findViewById(R.id.ratingBtn_item_myOrders);
         TextView status = view.findViewById(R.id.tinhTrang_item_myOrders);
+        TextView qty = view.findViewById(R.id.qty_myOrders);
+        TextView price = view.findViewById(R.id.price_myOrders);
 
         if (order != null) {
             id.setText(order.getId());
@@ -45,6 +47,8 @@ public class myorders_history_list_adapter extends ArrayAdapter<Order> {
             name.setText(order.getName());
             img.setImageResource(order.getImg());
             status.setText(order.getStatus());
+            price.setText(order.getPrice());
+            qty.setText(String.valueOf(order.getQty()));
 
             if (order.getRateStat() == 0) {
                 ratingBtn.setText("Đánh giá ngay");

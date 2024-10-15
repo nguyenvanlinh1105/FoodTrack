@@ -36,6 +36,8 @@ public class myorders_ongoing_list_adapter extends ArrayAdapter<Order> {
         TextView name = view.findViewById(R.id.name_item_myOrders);
         ImageView img = view.findViewById(R.id.img_item_myOrders);
         TextView status = view.findViewById(R.id.tinhTrang_item_myOrders);
+        TextView qty = view.findViewById(R.id.qty_myOrders);
+        TextView price = view.findViewById(R.id.price_myOrders);
 
         if (order != null) {
             id.setText(order.getId());
@@ -43,6 +45,8 @@ public class myorders_ongoing_list_adapter extends ArrayAdapter<Order> {
             name.setText(order.getName());
             img.setImageResource(order.getImg());
             status.setText(order.getStatus());
+            price.setText(order.getPrice());
+            qty.setText(String.valueOf(order.getQty()));
 
 
         }

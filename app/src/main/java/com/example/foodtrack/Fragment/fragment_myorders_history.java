@@ -44,6 +44,8 @@ public class fragment_myorders_history extends Fragment {
     ArrayList<String> rate = new ArrayList<>();
     ArrayList<Integer> status = new ArrayList<>();
     ArrayList<String> orderStatus = new ArrayList<>();
+    ArrayList<String>  price = new ArrayList<>();
+    ArrayList<Integer> qty = new ArrayList<>();
 
     ArrayList<Order> arrayListOrder = new ArrayList<>();
 
@@ -116,8 +118,23 @@ public class fragment_myorders_history extends Fragment {
         for (int i = 0; i < 6; i++)
             orderStatus.add("Đã giao vào 22-9");
 
+        price.add("20.000đ");
+        price.add("30.000đ");
+        price.add("50.000đ");
+        price.add("20.000đ");
+        price.add("40.000đ");
+        price.add("20.000đ");
+
+        qty.add(1);
+        qty.add(2);
+        qty.add(1);
+        qty.add(4);
+        qty.add(1);
+        qty.add(3);
+
+
         for (int i = 0; i < orderId.size(); i++) {
-            arrayListOrder.add(new Order(orderId.get(i), time.get(i), name.get(i), orderStatus.get(i), img.get(i), status.get(i)));
+            arrayListOrder.add(new Order(orderId.get(i), time.get(i), name.get(i), orderStatus.get(i), img.get(i), status.get(i), price.get(i), qty.get(i)));
         }
     }
 

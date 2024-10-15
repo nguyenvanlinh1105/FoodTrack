@@ -1,16 +1,18 @@
 package com.example.foodtrack.Model;
 
 public class Order {
-    protected String id, createdAt, status, name;
-    protected int img, rateStat;
+    protected String id, createdAt, status, name, price;
+    protected int img, rateStat, qty;
 
-    public Order(String id, String createdAt, String name, String status, int img, int rateStat) {
+    public Order(String id, String createdAt, String name, String status, int img, int rateStat, String price, int qty) {
         this.id = id;
         this.createdAt = createdAt;
         this.name = name;
         this.status = status;
         this.img = img;
         this.rateStat = rateStat;
+        this.price = price;
+        this.qty = qty;
     }
 
     public String getId() {
@@ -59,5 +61,21 @@ public class Order {
 
     public void setRateStat(int rateStat) {
         this.rateStat = rateStat;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 }

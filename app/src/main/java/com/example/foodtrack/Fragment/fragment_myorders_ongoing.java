@@ -50,6 +50,8 @@ public class fragment_myorders_ongoing extends Fragment {
     ArrayList<Integer> img = new ArrayList<>();
     ArrayList<String> rate = new ArrayList<>();    ArrayList<Integer> status = new ArrayList<>();
     ArrayList<String> orderStatus = new ArrayList<>();
+    ArrayList<String>  price = new ArrayList<>();
+    ArrayList<Integer> qty = new ArrayList<>();
 
     ArrayList<Order> arrayListOrder = new ArrayList<>();
 
@@ -82,7 +84,7 @@ public class fragment_myorders_ongoing extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        initializeData();
+//        initializeData();
     }
 
     private void initializeData() {
@@ -101,11 +103,17 @@ public class fragment_myorders_ongoing extends Fragment {
         status.add(0);
         status.add(0);
 
+        price.add("20.000đ");
+        price.add("30.000đ");
+
+        qty.add(1);
+        qty.add(2);
+
         for (int i = 0; i < 6; i++)
             orderStatus.add("Đang giao hàng");
 
         for (int i = 0; i < orderId.size(); i++) {
-            arrayListOrder.add(new Order(orderId.get(i), time.get(i), name.get(i), orderStatus.get(i), img.get(i), status.get(i)));
+            arrayListOrder.add(new Order(orderId.get(i), time.get(i), name.get(i), orderStatus.get(i), img.get(i), status.get(i),price.get(i), qty.get(i)));
         }
     }
 
