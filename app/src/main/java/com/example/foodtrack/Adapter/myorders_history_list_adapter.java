@@ -19,8 +19,8 @@ import com.example.foodtrack.R;
 
 import java.util.ArrayList;
 
-public class fragment_myorders_history_list_adapter extends ArrayAdapter<Order> {
-    public fragment_myorders_history_list_adapter(Context context, ArrayList<Order> arrayListOrder) {
+public class myorders_history_list_adapter extends ArrayAdapter<Order> {
+    public myorders_history_list_adapter(Context context, ArrayList<Order> arrayListOrder) {
         super(context, R.layout.fragment_myorders_history_list, arrayListOrder);
     }
 
@@ -34,6 +34,7 @@ public class fragment_myorders_history_list_adapter extends ArrayAdapter<Order> 
 
         TextView id = view.findViewById(R.id.item_id_myOrders);
         TextView time = view.findViewById(R.id.time_item_myOrders);
+        TextView name = view.findViewById(R.id.name_item_myOrders);
         ImageView img = view.findViewById(R.id.img_item_myOrders);
         TextView ratingBtn = view.findViewById(R.id.ratingBtn_item_myOrders);
         TextView status = view.findViewById(R.id.tinhTrang_item_myOrders);
@@ -41,6 +42,7 @@ public class fragment_myorders_history_list_adapter extends ArrayAdapter<Order> 
         if (order != null) {
             id.setText(order.getId());
             time.setText(order.getCreatedAt());
+            name.setText(order.getName());
             img.setImageResource(order.getImg());
             status.setText(order.getStatus());
 
@@ -53,6 +55,7 @@ public class fragment_myorders_history_list_adapter extends ArrayAdapter<Order> 
                 ratingBtn.setTextColor(Color.parseColor("#ff5e00"));
                 ratingBtn.setBackgroundResource(R.drawable.less_radius_btn_bg_white);
             }
+
         }
 
         ratingBtn.setOnClickListener(new View.OnClickListener() {

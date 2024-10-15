@@ -17,7 +17,7 @@ import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.Model.Order;
 import com.example.foodtrack.R;
-import com.example.foodtrack.Adapter.fragment_myorders_history_list_adapter;
+import com.example.foodtrack.Adapter.myorders_history_list_adapter;
 
 import java.util.ArrayList;
 
@@ -39,6 +39,7 @@ public class fragment_myorders_history extends Fragment {
 
     ArrayList<String> orderId = new ArrayList<>();
     ArrayList<String> time = new ArrayList<>();
+    ArrayList<String> name = new ArrayList<>();
     ArrayList<Integer> img = new ArrayList<>();
     ArrayList<String> rate = new ArrayList<>();
     ArrayList<Integer> status = new ArrayList<>();
@@ -90,6 +91,14 @@ public class fragment_myorders_history extends Fragment {
         for (int i = 0; i < 6; i++)
             time.add("22-9-2024, 12:00 p.m");
 
+        name.add("Cheesecake việt quất");
+        name.add("Cơm tấm");
+        name.add("Trà chanh");
+        name.add("Cà phê capuccino");
+        name.add("Salad hoa quả");
+        name.add("Pallavi Biryani");
+
+
         img.add(R.drawable.dessert_ico);
         img.add(R.drawable.com_tam);
         img.add(R.drawable.drink2);
@@ -108,7 +117,7 @@ public class fragment_myorders_history extends Fragment {
             orderStatus.add("Đã giao vào 22-9");
 
         for (int i = 0; i < orderId.size(); i++) {
-            arrayListOrder.add(new Order(orderId.get(i), time.get(i), orderStatus.get(i), img.get(i), status.get(i)));
+            arrayListOrder.add(new Order(orderId.get(i), time.get(i), name.get(i), orderStatus.get(i), img.get(i), status.get(i)));
         }
     }
 
@@ -124,7 +133,7 @@ public class fragment_myorders_history extends Fragment {
 
     private void Mapping(View view) {
         listview_myorders_history = (ListView) view.findViewById(R.id.listview_myorders);
-        fragment_myorders_history_list_adapter listAdapter = new fragment_myorders_history_list_adapter(getContext(), arrayListOrder);
+        myorders_history_list_adapter listAdapter = new myorders_history_list_adapter(getContext(), arrayListOrder);
         listview_myorders_history.setAdapter(listAdapter);
 
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_history);
@@ -144,32 +153,32 @@ public class fragment_myorders_history extends Fragment {
         }
     }
 
-        private void ControlButton () {
-            chatIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent chat = new Intent(getActivity(), list_chat_user.class);
-                    startActivity(chat);
+    private void ControlButton() {
+        chatIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chat = new Intent(getActivity(), list_chat_user.class);
+                startActivity(chat);
+            }
+        });
+
+        toOngoing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
                 }
-            });
+            }
+        });
 
-            toOngoing.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    MainActivity mainActivity = (MainActivity) getActivity();
-                    if (mainActivity != null) {
-                        mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
-                    }
-                }
-            });
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
 
-            backBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
-                }
-            });
-
-        }
     }
+}

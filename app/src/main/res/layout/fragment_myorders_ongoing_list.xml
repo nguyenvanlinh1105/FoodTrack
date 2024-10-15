@@ -54,9 +54,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="85dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="8dp"
             app:cardCornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,43 +65,28 @@
 
             <ImageView
                 android:id="@+id/img_item_myOrders"
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/dessert_ico" />
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/ratingBtn_item_myOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/less_radius_btn_bg_orange"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="5dp"
-            android:tag="0"
-            android:text="Đánh giá ngay"
-            android:textColor="#fff"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2"
-            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tinhTrang_item_myOrders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="154dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="158dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Đã giao vào 22-9"
+            android:text="Đang giao hàng"
             android:textColor="@color/brown"
             android:textSize="16sp"
+
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ratingBtn_item_myOrders"
+            app:layout_constraintEnd_toStartOf="@+id/cardView2"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time_item_myOrders"
-            app:layout_constraintVertical_bias="0.916" />
+            app:layout_constraintTop_toBottomOf="@+id/name_item_myOrders" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

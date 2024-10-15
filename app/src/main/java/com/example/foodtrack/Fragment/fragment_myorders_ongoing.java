@@ -9,11 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.myorders_history_list_adapter;
+import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter;
+import com.example.foodtrack.Model.Order;
 import com.example.foodtrack.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +41,17 @@ public class fragment_myorders_ongoing extends Fragment {
     ImageView backBtn;
     TextView toLichSu;
     ImageView chatIcon;
+    ListView listview_myorders_ongoing;
+    LinearLayout imageIfEmpty;
+
+    ArrayList<String> orderId = new ArrayList<>();
+    ArrayList<String> time = new ArrayList<>();
+    ArrayList<String> name = new ArrayList<>();
+    ArrayList<Integer> img = new ArrayList<>();
+    ArrayList<String> rate = new ArrayList<>();    ArrayList<Integer> status = new ArrayList<>();
+    ArrayList<String> orderStatus = new ArrayList<>();
+
+    ArrayList<Order> arrayListOrder = new ArrayList<>();
 
     public fragment_myorders_ongoing() {
         // Required empty public constructor
@@ -64,6 +82,31 @@ public class fragment_myorders_ongoing extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        initializeData();
+    }
+
+    private void initializeData() {
+        for (int i = 0; i < 2; i++)
+            orderId.add("Order: #000" + i);
+        for (int i = 0; i < 2; i++)
+            time.add("22-9-2024, 12:00 p.m");
+
+        name.add("Cheesecake việt quất");
+        name.add("Cơm tấm");
+
+
+        img.add(R.drawable.dessert_ico);
+        img.add(R.drawable.com_tam);
+
+        status.add(0);
+        status.add(0);
+
+        for (int i = 0; i < 6; i++)
+            orderStatus.add("Đang giao hàng");
+
+        for (int i = 0; i < orderId.size(); i++) {
+            arrayListOrder.add(new Order(orderId.get(i), time.get(i), name.get(i), orderStatus.get(i), img.get(i), status.get(i)));
+        }
     }
 
     @Override
@@ -72,6 +115,7 @@ public class fragment_myorders_ongoing extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_myorders_ongoing, container, false);
         Mapping(view);
+        checkIfListEmpty();
         ControlButton();
         return view;
     }
@@ -80,6 +124,11 @@ public class fragment_myorders_ongoing extends Fragment {
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing);
         toLichSu = (TextView) view.findViewById(R.id.btn_lichSu_myOrders);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
+        imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
+
+        listview_myorders_ongoing = (ListView) view.findViewById(R.id.listview_myorders);
+        myorders_ongoing_list_adapter listAdapter = new myorders_ongoing_list_adapter(getContext(), arrayListOrder);
+        listview_myorders_ongoing.setAdapter(listAdapter);
     }
     public void ControlButton(){
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,5 +156,15 @@ public class fragment_myorders_ongoing extends Fragment {
                 startActivity(chat);
             }
         });
+    }
+
+    private void checkIfListEmpty() {
+        if (arrayListOrder.isEmpty()) {
+            listview_myorders_ongoing.setVisibility(View.GONE);
+            imageIfEmpty.setVisibility(View.VISIBLE);
+        } else {
+            listview_myorders_ongoing.setVisibility(View.VISIBLE);
+            imageIfEmpty.setVisibility(View.GONE);
+        }
     }
 }
