@@ -116,7 +116,7 @@ public class fragment_myorders_history extends Fragment {
         status.add(1);
 
         for (int i = 0; i < 6; i++)
-            orderStatus.add("Đã giao vào 22-9");
+            orderStatus.add("22-9-2024");
 
         price.add("20.000đ");
         price.add("30.000đ");

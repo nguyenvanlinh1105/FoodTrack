@@ -73,6 +73,7 @@
             android:id="@+id/ratingBtn_item_myOrders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:background="@drawable/less_radius_btn_bg_orange"
             android:paddingLeft="10dp"
             android:paddingTop="5dp"
@@ -87,9 +88,9 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
@@ -105,13 +106,16 @@
                     android:text="Số lượng: "
                     android:textColor="@color/brown"
                     android:textSize="14sp" />
+
                 <TextView
-                    android:layout_marginLeft="30dp"
                     android:id="@+id/qty_myOrders"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2"/>
+                    android:layout_marginLeft="30dp"
+                    android:text="2"
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -122,30 +126,44 @@
                     android:text="Đơn giá: "
                     android:textColor="@color/brown"
                     android:textSize="14sp" />
+
                 <TextView
-                    android:layout_marginLeft="30dp"
                     android:id="@+id/price_myOrders"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20.000đ"/>
+                    android:layout_marginLeft="30dp"
+                    android:text="20.000đ"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:layout_marginTop="10dp"
+                android:gravity="center|left">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày giao hàng: "
+                    android:textColor="@color/primary_color"
+                    android:textSize="16sp" />
+
+                <TextView
+
+                    android:id="@+id/tinhTrang_item_myOrders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="22/09/2024"
+                    android:textColor="@color/brown"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tinhTrang_item_myOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="154dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Đã giao vào 22-9"
-            android:textColor="@color/brown"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ratingBtn_item_myOrders"
-            app:layout_constraintHorizontal_bias="0.071"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time_item_myOrders"
-            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
