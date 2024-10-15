@@ -41,6 +41,9 @@ public class chang_password extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(chang_password.this, "Bạn đã cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                Intent firstPage = new Intent(chang_password.this, first_page.class);
+                startActivity(firstPage);
+                finish();
             }
         });
     }

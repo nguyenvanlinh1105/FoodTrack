@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,13 +36,20 @@ public class list_drink_adapter extends ArrayAdapter<Product> {
         TextView title = view.findViewById(R.id.item_title_product);
         TextView price = view.findViewById(R.id.item_price_product);
         ImageView img = view.findViewById(R.id.item_image_product);
-        TextView addToCartBtn = view.findViewById(R.id.add_to_cart_btn);
+        TextView addToCartBtn = view.findViewById(R.id.btn_AddToCart_food_drink);
 
         if (drink != null) {
             img.setImageResource(drink.getImg());
             title.setText(drink.getTitle());
             price.setText(drink.getPrice());
         }
+
+        addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
+            }
+        });
 
         return view;
     }

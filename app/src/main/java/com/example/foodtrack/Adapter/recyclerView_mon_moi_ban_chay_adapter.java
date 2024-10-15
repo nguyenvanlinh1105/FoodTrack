@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,6 +69,13 @@ public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<
             }
         });
 
+        holder.btn_AddToCart_banChay_monMoi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context.getApplicationContext(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
     }
 
@@ -78,7 +86,7 @@ public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         FrameLayout container;
-        TextView title, price;
+        TextView title, price, btn_AddToCart_banChay_monMoi;
         ImageView img;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +94,7 @@ public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<
             price = itemView.findViewById(R.id.item_price_product);
             img = itemView.findViewById(R.id.item_image_product);
             container = itemView.findViewById(R.id.container_item_ban_chay_mon_moi);
+            btn_AddToCart_banChay_monMoi = itemView.findViewById(R.id.btn_AddToCart_banChay_monMoi);
         }
     }
 

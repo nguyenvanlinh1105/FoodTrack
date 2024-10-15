@@ -91,6 +91,7 @@
         android:background="@drawable/edittext_conner"
         android:drawableLeft="@drawable/icon_user24"
         android:ems="10"
+        android:drawablePadding="10dp"
         android:hint="Tên người dùng"
         android:inputType="text"
         android:paddingLeft="10dp"
@@ -104,7 +105,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-
+        android:drawablePadding="10dp"
         android:id="@+id/edt_SDT_signin"
         android:layout_width="360dp"
         android:layout_height="60dp"
@@ -124,7 +125,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_Mail_signin" />
 
     <EditText
-
+        android:drawablePadding="10dp"
         android:id="@+id/edt_Mail_signin"
         android:layout_width="360dp"
         android:layout_height="60dp"
@@ -236,6 +237,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
+            android:textSize="16sp"
             android:paddingRight="10dp"
             android:text="Hoặc tiếp tục với"
             android:textColor="@color/primary_color"
@@ -266,6 +268,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:layout_marginLeft="5dp"
             android:id="@+id/btnDangNhap_formRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

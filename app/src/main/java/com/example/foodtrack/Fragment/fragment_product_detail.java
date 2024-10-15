@@ -11,12 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
 import com.example.foodtrack.Model.Product;
 import com.example.foodtrack.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +53,9 @@ public class fragment_product_detail extends Fragment {
     private ImageView btn_favorite_check_product_detail;
     private ImageView btn_minus_product_detail;
     private ImageView btn_plus_product_detail;
-    TextView Text_quantity_product;
+    private TextView Text_quantity_product;
     private int quantity;
+    private TextView btn_AddToCart_product_detail;
 
     private List<Product> listProduct;
     private RecyclerView rvProductDetail;
@@ -135,6 +139,7 @@ public class fragment_product_detail extends Fragment {
         btn_minus_product_detail = (ImageView) view.findViewById(R.id.btn_minus_product_detail);
         Text_quantity_product = (TextView) view.findViewById(R.id.Text_quantity_product);
         btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_comment_product_details);
+        btn_AddToCart_product_detail = (TextView)view.findViewById(R.id.btn_AddToCart_product_detail);
 
         rvProductDetail = (RecyclerView) view.findViewById(R.id.recyclerView_product_detail);
         InitializeData();
@@ -192,6 +197,12 @@ public class fragment_product_detail extends Fragment {
                 quantity = Integer.valueOf(Text_quantity_product.getText().toString());
                 quantity++;
                 Text_quantity_product.setText(String.valueOf(quantity));
+            }
+        });
+        btn_AddToCart_product_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
             }
         });
 

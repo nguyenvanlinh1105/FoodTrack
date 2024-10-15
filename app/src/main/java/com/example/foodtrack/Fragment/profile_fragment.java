@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Activity.chang_password;
 import com.example.foodtrack.Activity.first_page;
 import com.example.foodtrack.Activity.forgot_password;
 import com.example.foodtrack.Activity.list_chat_user;
@@ -121,7 +122,7 @@ public class profile_fragment extends Fragment {
             @Override
             public void onClick(View view) {
 //
-                Intent changepass = new Intent(getActivity(), forgot_password.class);
+                Intent changepass = new Intent(getActivity(), chang_password.class);
                 startActivity(changepass);
 
             }

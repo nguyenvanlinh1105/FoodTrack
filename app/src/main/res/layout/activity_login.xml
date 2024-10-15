@@ -41,6 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:drawablePadding="10dp"
         android:id="@+id/edtMail_login"
         android:layout_width="360dp"
         android:layout_height="60dp"
@@ -50,10 +51,7 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="text"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
+        android:padding="10dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
@@ -94,17 +92,17 @@
         android:id="@+id/btnQuenMatKhau"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
         android:paddingRight="5dp"
         android:paddingBottom="5dp"
         android:text="Quên mật khẩu?"
-        android:textColor="@color/design_default_color_primary"
-        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.815"
+        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPassword_login" />
 
@@ -153,6 +151,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:textSize="16sp"
             android:text="Hoặc tiếp tục với"
             android:textColor="@color/primary_color"
             android:textStyle="bold" />
@@ -185,6 +184,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Đăng kí ngay!"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/primary_color"
             android:textSize="16sp" />
     </LinearLayout>

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import android.content.Intent;
 
+import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.favorite_list_adapter;
@@ -143,6 +145,27 @@ public class favorite_fragment extends Fragment {
             public void onClick(View view) {
                 Intent chat = new Intent(getActivity(),  list_chat_user.class);
                 startActivity(chat);
+            }
+        });
+        listView_favorite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Bundle bundle = new Bundle();
+                bundle.putString("title", favoriteTitle.get(position));
+                bundle.putString("price", favoritePrice.get(position));
+                bundle.putString("description", favoriteSubTitle.get(position));
+                bundle.putInt("image", favoriteImg.get(position));
+
+                fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
+                        favoriteTitle.get(position),
+                        favoritePrice.get(position),
+                        favoriteSubTitle.get(position),
+                        favoriteImg.get(position)
+                );
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(productDetailsFragment);
+                }
             }
         });
     }

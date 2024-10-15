@@ -97,7 +97,6 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         rvBanChay.setLayoutManager(layoutManager);
         recyclerView_mon_moi_ban_chay_adapter dealAdapter = new recyclerView_mon_moi_ban_chay_adapter(getContext(), listProduct);
         rvBanChay.setAdapter(dealAdapter);
-        System.out.println("setup recycler view thanh cong");
 
     }
 }

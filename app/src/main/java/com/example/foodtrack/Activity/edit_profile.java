@@ -3,6 +3,8 @@ package com.example.foodtrack.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import com.example.foodtrack.R;
 
 public class edit_profile extends AppCompatActivity {
     ImageView btn_back;
+    TextView luuBtn_editProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class edit_profile extends AppCompatActivity {
 
     public void Mapping() {
         btn_back = (ImageView) findViewById(R.id.btn_back_editProfile);
+        luuBtn_editProfile = (TextView) findViewById(R.id.luuBtn_editProfile);
     }
 
     public void ControlButton() {
@@ -38,6 +42,12 @@ public class edit_profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        luuBtn_editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(edit_profile.this, "Lưu thay đổi thành công", Toast.LENGTH_SHORT).show();
             }
         });
     }
