@@ -3,7 +3,7 @@ extends ../../layouts/default.pug
 block content 
     .form-body
         .form-holder
-            .form-content
+            .form-content.mt-2
                 .form-items
                     h3 Tạo tài khoản nhân viên  
                     p Điền đầy đủ thông tin
@@ -38,8 +38,8 @@ block content
                             .invalid-feedback.mv-up.invalid-feedback-gioiTinh-missed Vui lòng chọn giới tính!
                         .col-md-12.mt-3.mb-3
                             input(type='hidden', name='isConfirm', value='')
-                            input#invalidCheck.form-check-input(type='checkbox' name="isConfirm" value='confirm', required=true)
-                            label.form-check-label Tôi xác nhận tất cả dữ liệu đều đúng
+                            input#invalidCheck.form-check-input(type='checkbox' name="isConfirm" value='confirm', required=true style="margin-left:-9px")
+                            label.form-check-label(style="padding-left:10px;") Tôi xác nhận tất cả dữ liệu đều đúng
                             .invalid-feedback.invalid-feedback-isConfirm-missed Vui lòng chọn xác nhận thông tin!
                         .form-button.mt-3
                             button#submit.btn.btn-primary(type='submit') Tạo tài khoản

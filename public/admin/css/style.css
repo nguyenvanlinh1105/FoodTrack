@@ -11153,6 +11153,7 @@
 }
 
 .form-holder .form-content {
+  width: 85%;
   position: relative;
   text-align: center;
   display: -webkit-box;
@@ -11164,7 +11165,6 @@
   justify-content: center;
   -webkit-align-items: center;
   align-items: center;
-  padding: 60px;
 }
 
 .form-content .form-items {
@@ -11264,5 +11264,8 @@
 }
 .valid-feedback{
  color: #2acc80;
+}
+.form-button > .btn.btn-primary{
+  width: 100%;
 }
   

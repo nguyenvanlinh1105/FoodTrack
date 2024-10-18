@@ -43,19 +43,21 @@ if (staffForm) {
             const result = await response.json();
 
             if(result.code==400){
-                Swal.fire({
+                await Swal.fire({
                     icon: "error",
                     title: "Lỗi xảy ra",
                     text: result.message,
                 });
+                location.reload();
             }else{
-                Swal.fire({
+                await Swal.fire({
                     position: "center",
                     icon: "success",
                     title: result.message,
                     showConfirmButton: false,
                     timer: 1500
                 });
+                location.reload();
             }
 
         } catch (error) {

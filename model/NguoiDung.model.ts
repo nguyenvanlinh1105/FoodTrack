@@ -48,6 +48,14 @@ const NguoiDung= sequelize.define("NguoiDung",{
     token:{
         type:DataTypes.STRING,
         unique: true
+    },
+    vaiTro:{
+        type:DataTypes.STRING,
+        allowNull:false,
+        references:{
+            model: "VaiTro",
+            key: "idVaiTro",
+        }
     }
 },{
     tableName: "NguoiDung",

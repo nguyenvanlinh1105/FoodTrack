@@ -1,4 +1,4 @@
-nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
+nav.navbar.navbar-expand.navbar-light.bg-white.topbar.static-top.shadow
   button#sidebarToggleTop.btn.btn-link.d-md-none.rounded-circle.mr-3
     i.fa.fa-bars
   form.d-none.d-sm-inline-block.form-inline.mr-auto.ml-md-3.my-2.my-md-0.mw-100.navbar-search
@@ -89,7 +89,10 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
     li.nav-item.dropdown.no-arrow(userAdminLi)
       a#userDropdown.nav-link.dropdown-toggle(href="#" userAdminAvatar)
         span.mr-2.d-none.d-lg-inline.text-gray-600.small #{user.hoTen}
-        img.img-profile.rounded-circle(src='/admin/images/undraw_profile.svg')
+        if(user.gioiTinh==='Nam')
+          img.img-profile.rounded-circle(src='/admin/images/undraw_profile.svg')
+        else
+          img.img-profile.rounded-circle(src='/admin/images/undraw_profile_3.svg')
       .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(userAdminDropdown)
         a.dropdown-item(href='/admin/profile')
           i.fas.fa-user.fa-sm.fa-fw.mr-2 Thông tin tài khoản
