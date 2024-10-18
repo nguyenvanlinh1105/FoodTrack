@@ -36,9 +36,6 @@ const NguoiDung= sequelize.define("NguoiDung",{
     ngaySinh:{
         type:DataTypes.DATE,
     },
-    diaChi:{
-        type:DataTypes.TEXT,
-    },
     gioiTinh:{
         type:DataTypes.STRING,
         allowNull:false,

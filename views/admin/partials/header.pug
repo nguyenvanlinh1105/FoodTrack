@@ -54,7 +54,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
         h6.dropdown-header Message Center
         a.dropdown-item.d-flex.align-items-center(href='#')
           .dropdown-list-image.mr-3
-            img.rounded-circle(src='img/undraw_profile_1.svg', alt='...')
+            img.rounded-circle(src='', alt='...')
             .status-indicator.bg-success
           .font-weight-bold
             .text-truncate
@@ -62,7 +62,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
           .small.text-gray-500 Emily Fowler · 58m
         a.dropdown-item.d-flex.align-items-center(href='#')
           .dropdown-list-image.mr-3
-            img.rounded-circle(src='img/undraw_profile_2.svg', alt='...')
+            img.rounded-circle(src='', alt='...')
             .status-indicator
           div
             .text-truncate
@@ -70,7 +70,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
           .small.text-gray-500 Jae Chun · 1d
         a.dropdown-item.d-flex.align-items-center(href='#')
           .dropdown-list-image.mr-3
-            img.rounded-circle(src='/admin/images/undraw_profile_3.svg', alt='Avatar')
+            img.rounded-circle(src='', alt='Avatar')
             .status-indicator.bg-warning
           div
             .text-truncate
@@ -78,7 +78,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
           .small.text-gray-500 Morgan Alvarez · 2d
         a.dropdown-item.d-flex.align-items-center(href='#')
           .dropdown-list-image.mr-3
-            img.rounded-circle(src='https://source.unsplash.com/Mv9hjnEUHR4/60x60', alt='...')
+            img.rounded-circle(src='', alt='...')
             .status-indicator.bg-success
           div
             .text-truncate
@@ -86,17 +86,13 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
           .small.text-gray-500 Chicken the Dog · 2w
         a.dropdown-item.text-center.small.text-gray-500(href='#') Read More Messages
     .topbar-divider.d-none.d-sm-block
-    li.nav-item.dropdown.no-arrow
-      a#userDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+    li.nav-item.dropdown.no-arrow(userAdminLi)
+      a#userDropdown.nav-link.dropdown-toggle(href="#" userAdminAvatar)
         span.mr-2.d-none.d-lg-inline.text-gray-600.small #{user.hoTen}
         img.img-profile.rounded-circle(src='/admin/images/undraw_profile.svg')
-      .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby='userDropdown')
-        a.dropdown-item(href='#')
-          i.fas.fa-user.fa-sm.fa-fw.mr-2.text-gray-400 Profile
-        a.dropdown-item(href='#')
-          i.fas.fa-cogs.fa-sm.fa-fw.mr-2.text-gray-400 Settings
-        a.dropdown-item(href='#')
-          i.fas.fa-list.fa-sm.fa-fw.mr-2.text-gray-400 Activity Log
+      .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(userAdminDropdown)
+        a.dropdown-item(href='/admin/profile')
+          i.fas.fa-user.fa-sm.fa-fw.mr-2 Thông tin tài khoản
         .dropdown-divider
-        a.dropdown-item(href='#', data-toggle='modal', data-target='#logoutModal')
-          i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400 Logout
+        a.dropdown-item(href='/admin/logout', data-toggle='modal', data-target='#logoutModal')
+          i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2 Đăng xuất

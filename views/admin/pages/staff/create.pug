@@ -7,43 +7,39 @@ block content
                 .form-items
                     h3 Tạo tài khoản nhân viên  
                     p Điền đầy đủ thông tin
-                    form.requires-validation(novalidate='')
+                    form.requires-validation(action="/admin/management/staff/create"  method="POST" id="staffForm")
                         .col-md-12
                             input.form-control(type='text', name='hoTen', placeholder='Họ tên', required=true)
-                            .valid-feedback Trường Họ tên hợp lệ!
-                            .invalid-feedback Trường Họ tên không thể để trống!
+                            .invalid-feedback.invalid-feedback-hoTen-missed Trường Họ tên không thể để trống!
                         .col-md-12
                             input.form-control(type='email', name='email', placeholder='Địa chỉ E-mail', required=true)
-                            .valid-feedback Trường Email hợp lệ!
-                            .invalid-feedback Trường Email không thể để trống!
+                            .invalid-feedback.invalid-feedback-email-missed Trường Email không thể để trống!
                         .col-md-12
                             input.form-control(type='password', name='matKhau', placeholder='Mật khẩu', required=true)
-                            .valid-feedback Trường Mật khẩu hợp lệ!
-                            .invalid-feedback Trường Mật khẩu không thể để trống!
+                            .invalid-feedback.invalid-feedback-matKhau-missed Trường Mật khẩu không thể để trống!
                         .col-md-12
                             input.form-control(type='text', name='sdt', placeholder='Số điện thoại', required=true)
-                            .valid-feedback Trường Số điện thoại hợp lệ!
-                            .invalid-feedback Trường Số điện thoại không thể để trống!
+                            .invalid-feedback.invalid-feedback-sdt-missed Trường Số điện thoại không thể để trống!
                         .col-md-12
-                            select.form-select.mt-3(required=true)
+                            select.form-select.mt-3(name='vaiTro' required=true)
                                 option(selected=true, value='') Vai trò
                                 each role in roles
                                     option(value=role.idVaiTro) #{role.tenVaiTro}
-                            .valid-feedback You selected a position!
-                            .invalid-feedback Vui lòng chọn vai trò!
+                            .invalid-feedback.invalid-feedback-vaiTro-missed Vui lòng chọn vai trò!
                         .col-md-12.mt-3
-                            label.mb-3.mr-1(for='gioiTinh') Gender: 
-                            input#male.btn-check(type='radio', name='gioiTinh', value="Nam" autocomplete='off', required=true)
+                            label.mb-3.mr-1(for='gioiTinh') Giới tính: 
+                            input(type='radio', name='gioiTinh', value='' hidden checked)
+                            input#male.btn-check(type='radio', name='gioiTinh', value="Nam" required=true)
                             label.btn.btn-sm.btn-outline-secondary(for='Nam') Nam
-                            input#female.btn-check(type='radio', name='gioiTinh', value="Nữ" autocomplete='off', required=true)
+                            input#female.btn-check(type='radio', name='gioiTinh', value="Nữ" required=true)
                             label.btn.btn-sm.btn-outline-secondary(for='Nữ') Nữ
-                            input#secret.btn-check(type='radio', name='gioiTinh', value="Khác" autocomplete='off', required=true)
+                            input#secret.btn-check(type='radio', name='gioiTinh', value="Khác" required=true)
                             label.btn.btn-sm.btn-outline-secondary(for='Khác') Khác
-                            .valid-feedback.mv-up Bạn đã chọn giới tính!
-                            .invalid-feedback.mv-up Vui lòng chọn giới tính!
-                        .form-check
-                            input#invalidCheck.form-check-input(type='checkbox', value='confirm', required=true)
+                            .invalid-feedback.mv-up.invalid-feedback-gioiTinh-missed Vui lòng chọn giới tính!
+                        .col-md-12.mt-3.mb-3
+                            input(type='hidden', name='isConfirm', value='')
+                            input#invalidCheck.form-check-input(type='checkbox' name="isConfirm" value='confirm', required=true)
                             label.form-check-label Tôi xác nhận tất cả dữ liệu đều đúng
-                            .invalid-feedback Please confirm that the entered data are all correct!
+                            .invalid-feedback.invalid-feedback-isConfirm-missed Vui lòng chọn xác nhận thông tin!
                         .form-button.mt-3
                             button#submit.btn.btn-primary(type='submit') Tạo tài khoản

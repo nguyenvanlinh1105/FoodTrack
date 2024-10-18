@@ -11259,7 +11259,9 @@
 .invalid-feedback{
   color: #ff606e;
 }
-
+.invalid-feedback.active{
+  display: block;
+}
 .valid-feedback{
  color: #2acc80;
 }
