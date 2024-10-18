@@ -5,6 +5,11 @@ import { QueryTypes } from "sequelize";
 import nodemailer from 'nodemailer';
 
 import * as isValid from '../../helper/validField.helper';
+import {hashPassword,verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
+import generateNextId from '../../helper/generateNextId.helper';
+
+import NguoiDung from '../../model/NguoiDung.model';
+import VaiTroNguoiDung from '../../model/VaiTroNguoiDung.model';
 
 export const pageStaff = async(req:Request,res:Response)=>{
     
@@ -41,6 +46,12 @@ export const createAdmin=async(req:Request, res:Response)=>{
         });
         return;
     }
+    const userExist=await NguoiDung.findOne({
+        where:{
+            email:req.body['email'],
+            trangThai:'active'
+        }
+    });
     res.json({
         code:200,
         message:'Tạo tài khoản thành công'

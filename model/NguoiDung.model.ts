@@ -25,14 +25,6 @@ const NguoiDung= sequelize.define("NguoiDung",{
         type:DataTypes.STRING,
         allowNull:false,
     },
-    vaiTro:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        references:{
-            model: 'VaiTro',
-            key: "idVaiTro"
-        }
-    },
     ngaySinh:{
         type:DataTypes.DATE,
     },

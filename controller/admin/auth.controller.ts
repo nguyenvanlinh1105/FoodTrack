@@ -1,6 +1,6 @@
 import { Request,Response } from 'express';//Nhúng kiểu Request và Response từ module express
 import NguoiDung from '../../model/NguoiDung.model';
-
+import VaiTroNguoiDung from '../../model/VaiTroNguoiDung.model';
 //Helper
 import {hashPassword,verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
 
@@ -26,9 +26,22 @@ export const login =async (req:Request,res:Response)=>{
         }else{
             const isMatch=verifyPassword(password,user['matKhau']);
             if(isMatch){
-                res.cookie('token',user['token'],{maxAge:1000*60*60*1});
-                req.flash('success','Đăng nhập thành công');
-                res.redirect('/admin/dashboard');
+                const role=await VaiTroNguoiDung.findOne({
+                    where:{
+                        idNguoiDung:user['idNguoiDung'],
+                        idVaiTro: ['VT001', 'VT003', 'VT004', 'VT005']
+                    },
+                    raw:true
+                })
+                if(!role){
+                    req.flash('error','Bạn không có quyền truy cập vào hệ thống');
+                    res.redirect('back');
+                    return;
+                }else{
+                    res.cookie('token',user['token'],{maxAge:1000*60*60*1});
+                    req.flash('success','Đăng nhập thành công');
+                    res.redirect('/admin/dashboard');
+                }
             }else{
                 req.flash('error','Mật khẩu không đúng');
                 res.redirect('back');
