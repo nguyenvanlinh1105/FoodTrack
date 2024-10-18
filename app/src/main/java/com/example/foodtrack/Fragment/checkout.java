@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.cart;
 import com.example.foodtrack.R;
+import com.example.foodtrack.fragment_choosing_payment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +34,8 @@ public class checkout extends Fragment {
 
     private ImageView backBtn;
     private Button payBtn;
+
+    private LinearLayout tienMat, applePay, icon_check_tien_mat, icon_check_applePay;
 
     public checkout() {
         // Required empty public constructor
@@ -73,12 +77,16 @@ public class checkout extends Fragment {
         return view;
     }
 
-    private void Mapping(View view){
+    private void Mapping(View view) {
         backBtn = (ImageView) view.findViewById(R.id.btn_back_checkout);
         payBtn = (Button) view.findViewById(R.id.btn_pay);
+        tienMat = (LinearLayout) view.findViewById(R.id.tien_mat_checkout);
+        applePay = (LinearLayout) view.findViewById(R.id.apple_pay_checkout);
+        icon_check_applePay = (LinearLayout) view.findViewById(R.id.icon_check_applePay_checkout);
+        icon_check_tien_mat = (LinearLayout) view.findViewById(R.id.icon_check_tien_mat_checkout);
     }
 
-    private void ControlButton(){
+    private void ControlButton() {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,10 +97,33 @@ public class checkout extends Fragment {
             @Override
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
+
+                if (payBtn.getText().toString().equals("Xác nhận đặt đơn")) {
                     mainActivity.ReplaceFragment(new fragment_confirm_payment());
                     cart.ToFinishActivity.finish();
+                } else {
+                    mainActivity.ReplaceFragment(new fragment_choosing_payment());
+                    cart.ToFinishActivity.finish();
+
                 }
+
+            }
+
+        });
+        tienMat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon_check_tien_mat.setBackgroundResource(R.drawable.icon_check_50);
+                icon_check_applePay.setBackground(null);
+                payBtn.setText("Xác nhận đặt đơn");
+            }
+        });
+        applePay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon_check_applePay.setBackgroundResource(R.drawable.icon_check_50);
+                icon_check_tien_mat.setBackground(null);
+                payBtn.setText("Thanh toán 248.000đ");
             }
         });
     }

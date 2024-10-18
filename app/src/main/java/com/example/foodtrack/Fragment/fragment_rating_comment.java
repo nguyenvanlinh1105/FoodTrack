@@ -9,10 +9,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.R;
 
 /**
@@ -33,6 +35,7 @@ public class fragment_rating_comment extends Fragment {
 
     private ImageView btn_back;
     private TextView btn_GuiCamNhan;
+    private EditText textArea_Comment;
 
 
     public fragment_rating_comment() {
@@ -78,6 +81,7 @@ public class fragment_rating_comment extends Fragment {
     private void Mapping(View view){
         btn_back = (ImageView) view.findViewById(R.id.btn_back_rating_comment);
         btn_GuiCamNhan = (TextView) view.findViewById(R.id.btn_GuiCamNhan);
+        textArea_Comment = (EditText) view.findViewById(R.id.textArea_Comment);
     }
 
     private void ControlButton(){
@@ -91,7 +95,10 @@ public class fragment_rating_comment extends Fragment {
         btn_GuiCamNhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                textArea_Comment.setText("");
                 CreatePopup(view);
+
+
             }
         });
     }
@@ -107,7 +114,6 @@ public class fragment_rating_comment extends Fragment {
         PopupWindow popupWindow = new PopupWindow(popupView ,width, height, focusable);
 
         view.post(new Runnable(){
-
             @Override
             public void run() {
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -119,6 +125,10 @@ public class fragment_rating_comment extends Fragment {
             @Override
             public void onClick(View view) {
                 popupWindow.dismiss();
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if(mainActivity!=null){
+                    mainActivity.ReplaceFragment(new fragment_myorders_history());
+                }
             }
         });
     }

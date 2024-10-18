@@ -34,7 +34,7 @@ public class cart extends AppCompatActivity {
     private ListView listView_cart;
     private ImageView backBtn;
     private TextView total;
-    private TextView thanhToanBtn;
+    private TextView datDonBtn;
 
     public static Activity ToFinishActivity;
 
@@ -77,7 +77,7 @@ public class cart extends AppCompatActivity {
 
         total = (TextView) findViewById(R.id.total_cart);
 
-        thanhToanBtn = (TextView) findViewById(R.id.btn_thanh_toan_cart);
+        datDonBtn = (TextView) findViewById(R.id.btn_dat_don_cart);
 
     }
 
@@ -125,7 +125,7 @@ public class cart extends AppCompatActivity {
                 finish();
             }
         });
-        thanhToanBtn.setOnClickListener(new View.OnClickListener() {
+        datDonBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent thanhToan = new Intent( cart.this, MainActivity.class);
