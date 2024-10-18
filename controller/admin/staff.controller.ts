@@ -2,6 +2,7 @@ import { Request,Response } from 'express';//Nhúng kiểu Request và Response 
 import sequelize from "../../config/database";
 import { QueryTypes } from "sequelize";
 import NguoiDung from '../../model/NguoiDung.model';
+import VaiTro from '../../model/VaiTro.model';
 
 // Hellper
 import * as isValid from '../../helper/validField.helper';
@@ -10,8 +11,25 @@ import generateNextId from '../../helper/generateNextId.helper';
 import * as generateString from '../../helper/generateRandom.helper';
 
 export const pageStaff = async(req:Request,res:Response)=>{
+    const idUserCurrent=res.locals.user['idNguoiDung'];
+    const listStaffs= await sequelize.query
+    (   `SELECT NguoiDung.hoTen, NguoiDung.email, NguoiDung.sdt, 
+                NguoiDung.ngaySinh, NguoiDung.gioiTinh, NguoiDung.avatar, 
+                NguoiDung.trangThai,VaiTro.tenVaiTro as tenVaiTro
+        FROM NguoiDung
+        JOIN VaiTro ON NguoiDung.vaiTro = VaiTro.idVaiTro
+        WHERE NguoiDung.idNguoiDung <> :idUserCurrent
+        AND NguoiDung.vaiTro IN ('VT001', 'VT003', 'VT004', 'VT005')
+        AND NguoiDung.trangThai = 'active'
+        `,
+        {
+            type:QueryTypes.SELECT,
+            replacements:{idUserCurrent}
+        }
+    )
     res.render('admin/pages/staff/index',{
-        title:'Quản lý nhân viên'
+        title:'Quản lý nhân viên',
+        listStaffs:listStaffs
     })
 }
 export const createAdminPage=async(req:Request, res:Response)=>{
