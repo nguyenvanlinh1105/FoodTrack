@@ -17,11 +17,9 @@
             android:name=".Activity.cart"
             android:exported="false" />
         <activity
-            android:name=".Fragment.rating_comment"
-            android:exported="false" />
-        <activity
             android:name=".Activity.list_chat_user"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Activity.edit_profile"
             android:exported="false" />
