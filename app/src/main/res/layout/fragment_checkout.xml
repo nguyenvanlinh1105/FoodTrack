@@ -16,8 +16,6 @@
         <!-- Địa chỉ giao hàng -->
 
 
-
-
         <!-- Phương thức thanh toán -->
 
         <!-- Apple Pay -->
@@ -43,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Thanh toán "
+            android:text="Đặt hàng"
             android:textColor="@color/primary_color"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -139,6 +137,7 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/apple_pay_checkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -148,7 +147,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:paddingLeft="20dp"
-                    android:src="@drawable/icon_apple_pay" />
+                    android:src="@drawable/icon_online_banking" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -156,15 +155,22 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
-                    android:text="Apple Pay"
+                    android:text="Thanh toán online"
                     android:textColor="#6D3805"
                     android:textSize="18sp" />
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:paddingRight="10dp"
-                    android:src="@drawable/icon_check_pay" />
+                    android:layout_marginRight="10dp"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:id="@+id/icon_check_applePay_checkout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/icon_check_50"></LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -175,7 +181,7 @@
                 android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayout7"
+                android:id="@+id/tien_mat_checkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -196,6 +202,20 @@
                     android:text="Thanh toán tiền mặt"
                     android:textColor="#6D3805"
                     android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:id="@+id/icon_check_tien_mat_checkout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        ></LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -217,11 +237,11 @@
                 android:id="@+id/tv_invoice_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#6D3805"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="Hóa Đơn"
+                android:textColor="#6D3805"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -236,8 +256,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:textColor="#6D3805"
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -246,14 +266,15 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Thành tiền: "
+                    android:textColor="#6D3805"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_marginRight="12dp"
                     android:id="@+id/tv_total_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
                     android:gravity="right"
 
                     android:paddingLeft="15dp"
@@ -267,8 +288,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:textColor="#6D3805"
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -277,14 +298,15 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Phí dịch vụ"
+                    android:textColor="#6D3805"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_marginRight="12dp"
                     android:id="@+id/tv_service_fee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
                     android:gravity="right"
 
                     android:paddingLeft="15dp"
@@ -298,8 +320,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:textColor="#6D3805"
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -308,14 +330,15 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Phí ship"
+                    android:textColor="#6D3805"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_marginRight="12dp"
                     android:id="@+id/tv_shipping_fee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
                     android:gravity="right"
 
                     android:paddingLeft="15dp"
@@ -336,6 +359,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
@@ -348,12 +372,13 @@
                     android:textColor="#6D3805"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
                 <TextView
-                    android:gravity="right"
                     android:id="@+id/tv_total_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:gravity="right"
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
