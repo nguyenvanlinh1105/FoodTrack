@@ -1,6 +1,6 @@
 package com.example.foodtrack.Model;
 
-public class vaiTro {
+public class vaiTroModel {
     private String idVaiTro;
     private String idtenVaiTro;
 }
