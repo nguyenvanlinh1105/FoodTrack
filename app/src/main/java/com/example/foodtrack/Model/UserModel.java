@@ -2,13 +2,14 @@ package com.example.foodtrack.Model;
 
 import java.time.LocalDateTime;
 
-public class User {
+public class UserModel {
+    private int code;
+    private  String message ;
     private int idUser;
     private String hoTenNguoiDung;
     private String email;
     private String diaChi;
     private String sdt;
-    private String tenDangNhap;
     private LocalDateTime ngaySinh;
     private String matKhau;
     private String gioiTinh;
@@ -18,12 +19,28 @@ public class User {
     private LocalDateTime ngayCapNhat;
     private String nguoiCapNhat;
     private String thongTinUser;
-
+    private vaiTroModel vaitro;
     // Default constructor
-    public User() {
+
+    public UserModel() {
     }
 
-    // Getters and setters
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public int getIdUser() {
         return idUser;
     }
@@ -63,15 +80,7 @@ public class User {
     public void setSdt(String sdt) {
         this.sdt = sdt;
     }
-
-    public String getTenDangNhap() {
-        return tenDangNhap;
-    }
-
-    public void setTenDangNhap(String tenDangNhap) {
-        this.tenDangNhap = tenDangNhap;
-    }
-
+    
     public LocalDateTime getNgaySinh() {
         return ngaySinh;
     }
@@ -142,5 +151,13 @@ public class User {
 
     public void setThongTinUser(String thongTinUser) {
         this.thongTinUser = thongTinUser;
+    }
+
+    public vaiTroModel getVaitro() {
+        return vaitro;
+    }
+
+    public void setVaitro(vaiTroModel vaitro) {
+        this.vaitro = vaitro;
     }
 }
