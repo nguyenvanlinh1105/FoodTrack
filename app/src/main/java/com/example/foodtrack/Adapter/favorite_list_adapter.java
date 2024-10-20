@@ -20,10 +20,10 @@ public class favorite_list_adapter extends BaseAdapter {
     ArrayList<String> favoriteTitle;
     ArrayList<Integer> favoriteImg;
     ArrayList<String> favoriteSubTitle;
-    ArrayList<String> favoritePrice;
+    ArrayList<Double> favoritePrice;
     LayoutInflater inflater;
 
-    public favorite_list_adapter(Context context, ArrayList<String> title, ArrayList<Integer> img, ArrayList<String> subTitle, ArrayList<String> price) {
+    public favorite_list_adapter(Context context, ArrayList<String> title, ArrayList<Integer> img, ArrayList<String> subTitle, ArrayList<Double> price) {
         this.context = context;
         this.favoriteTitle = title;
         this.favoriteImg = img;
@@ -62,7 +62,7 @@ public class favorite_list_adapter extends BaseAdapter {
         title.setText(favoriteTitle.get(i));
         subTitle.setText(favoriteSubTitle.get(i));
         img.setImageResource(favoriteImg.get(i));
-        price.setText(favoritePrice.get(i));
+        price.setText(String.valueOf(favoritePrice.get(i))+"vnđ");
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,7 +2,7 @@ package com.example.foodtrack.Model;
 
 import java.time.LocalDateTime;
 
-public class UserModel {
+public class NguoiDungModel {
     private int code;
     private  String message ;
     private int idUser;
@@ -22,7 +22,7 @@ public class UserModel {
     private vaiTroModel vaitro;
     // Default constructor
 
-    public UserModel() {
+    public NguoiDungModel() {
     }
 
     public int getCode() {

@@ -13,21 +13,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.foodtrack.Activity.chang_password;
-import com.example.foodtrack.Model.Product;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
 
-public class food_list_adapter extends ArrayAdapter<Product> {
-    public food_list_adapter(Context context, ArrayList<Product> arraylistFood) {
+public class food_list_adapter extends ArrayAdapter<SanPhamModel> {
+    public food_list_adapter(Context context, ArrayList<SanPhamModel> arraylistFood) {
         super(context, R.layout.fragment_food_drink_item, arraylistFood);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        Product food = getItem(position);
+        SanPhamModel food = getItem(position);
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_food_drink_item, parent, false);
         }
@@ -39,10 +38,10 @@ public class food_list_adapter extends ArrayAdapter<Product> {
         TextView addToCartBtn = view.findViewById(R.id.btn_AddToCart_food_drink);
 
         if (food != null) {
-            img.setImageResource(food.getImg());
-            title.setText(food.getTitle());
+            img.setImageResource(food.getImages());
+            title.setText(food.getTenSanPham());
 //            description.setText(food.getDescription());
-            price.setText(food.getPrice());
+            price.setText(String.valueOf(food.getGiaTien())+"vnđ");
         }
 
         addToCartBtn.setOnClickListener(new View.OnClickListener() {

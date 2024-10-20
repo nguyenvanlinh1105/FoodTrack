@@ -3,7 +3,6 @@ package com.example.foodtrack.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionProvider;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,7 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.foodtrack.API.APIService;
-import com.example.foodtrack.Model.UserModel;
+import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.R;
 
 import retrofit2.Call;
@@ -71,7 +70,7 @@ public class Register extends AppCompatActivity {
 
                 Log.d("MatKhau",password);
 
-                UserModel userModel = new UserModel();
+                NguoiDungModel userModel = new NguoiDungModel();
                 userModel.setHoTenNguoiDung(hoTen);
                 userModel.setEmail(email);
                 userModel.setSdt(sdt);
@@ -93,17 +92,17 @@ public class Register extends AppCompatActivity {
 
     }
 
-    private void PostUserToSingin (UserModel userModel){
-        APIService.API_SERVICE.PostUserToSingin(userModel).enqueue(new Callback<UserModel>() {
+    private void PostUserToSingin (NguoiDungModel userModel){
+        APIService.API_SERVICE.PostUserToSingin(userModel).enqueue(new Callback<NguoiDungModel>() {
             @Override
-            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+            public void onResponse(Call<NguoiDungModel> call, Response<NguoiDungModel> response) {
                 Intent login = new Intent(Register.this, Login.class);
                 startActivity(login);
                 finish();
             }
 
             @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
+            public void onFailure(Call<NguoiDungModel> call, Throwable t) {
                 Toast.makeText(Register.this, "Đăng kí thất bại, thử lại.", Toast.LENGTH_LONG).show();
             }
         });

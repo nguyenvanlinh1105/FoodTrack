@@ -9,11 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.foodtrack.Model.Product;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.util.List;
@@ -21,9 +20,9 @@ import java.util.List;
 public class recyclerView_product_detail_adapter extends RecyclerView.Adapter<recyclerView_product_detail_adapter.MyViewHolder> {
 
     Context context;
-    List<Product> list;
+    List<SanPhamModel> list;
 
-    public recyclerView_product_detail_adapter(Context context, List<Product> list) {
+    public recyclerView_product_detail_adapter(Context context, List<SanPhamModel> list) {
         this.context = context;
         this.list = list;
     }
@@ -37,10 +36,10 @@ public class recyclerView_product_detail_adapter extends RecyclerView.Adapter<re
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Product product = list.get(position);
-        holder.title.setText(product.getTitle());
-        holder.price.setText(product.getPrice());
-        Glide.with(context).load(product.getImg()).into(holder.img);
+        SanPhamModel product = list.get(position);
+        holder.title.setText(product.getTenSanPham());
+        holder.price.setText(String.valueOf(product.getGiaTien())+"vnđ");
+        Glide.with(context).load(product.getImages()).into(holder.img);
         if (position % 2 == 0)
             holder.main.setBackgroundResource(R.drawable.input_conner);
         else

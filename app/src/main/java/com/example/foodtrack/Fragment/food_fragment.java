@@ -17,7 +17,7 @@ import android.content.Intent;
 
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
-import com.example.foodtrack.Model.Product;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.food_list_adapter;
 
@@ -38,7 +38,7 @@ public class food_fragment extends Fragment {
     private String mParam2;
 
     ArrayList<String> foodTitle = new ArrayList<>();
-    ArrayList<String> foodPrice = new ArrayList<>();
+    ArrayList<Double> foodPrice = new ArrayList<>();
     ArrayList<Integer> foodImg = new ArrayList<>();
     ArrayList<String> foodDescription = new ArrayList<>();
 
@@ -77,7 +77,7 @@ public class food_fragment extends Fragment {
         initializeData();
     }
 
-    ArrayList<Product> arraylistFood = new ArrayList<>();
+    ArrayList<SanPhamModel> arraylistFood = new ArrayList<>();
     private void initializeData() {
         foodTitle.add("Pallavi Biryani");
         foodTitle.add("Cơm tấm");
@@ -97,14 +97,14 @@ public class food_fragment extends Fragment {
         foodImg.add(R.drawable.carbonara);
         foodImg.add(R.drawable.gnocchi_tomato);
 
-        foodPrice.add("50.000đ");
-        foodPrice.add("30.000đ");
-        foodPrice.add("20.000đ");
-        foodPrice.add("50.000đ");
-        foodPrice.add("80.000đ");
-        foodPrice.add("90.000đ");
-        foodPrice.add("80.000đ");
-        foodPrice.add("90.000đ");
+        foodPrice.add(50.000);
+        foodPrice.add(30.000);
+        foodPrice.add(20.000);
+        foodPrice.add(50.000);
+        foodPrice.add(80.000);
+        foodPrice.add(90.000);
+        foodPrice.add(80.000);
+        foodPrice.add(90.000);
 
 
         foodDescription.add("Pallavi Biryani là một món cơm trộn đặc biệt từ Ấn Độ, được nấu với gạo thơm, thịt và gia vị độc đáo.");
@@ -117,7 +117,7 @@ public class food_fragment extends Fragment {
         foodDescription.add(".Gnocchi tươi nấu cùng sốt cà chua nhà làm.");
 
         for (int i =0 ;i<foodTitle.size(); i++){
-            arraylistFood.add(new Product(foodTitle.get(i), foodPrice.get(i),  foodDescription.get(i),foodImg.get(i)));
+            arraylistFood.add(new SanPhamModel(foodTitle.get(i), foodPrice.get(i),  foodImg.get(i),foodDescription.get(i)));
         }
 
 
@@ -149,7 +149,7 @@ public class food_fragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Bundle bundle = new Bundle();
                 bundle.putString("title", foodTitle.get(position));
-                bundle.putString("price", foodPrice.get(position));
+                bundle.putDouble("price", foodPrice.get(position));
                 bundle.putString("description", foodDescription.get(position));
                 bundle.putInt("image", foodImg.get(position));
 

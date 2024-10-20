@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodtrack.Adapter.recyclerView_mon_moi_ban_chay_adapter;
-import com.example.foodtrack.Model.Product;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private List<Product> listProduct;
+    private List<SanPhamModel> listProduct;
     private RecyclerView rvBanChay;
 
 
@@ -71,12 +70,13 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
 
     private void InitializeData() {
         listProduct = new ArrayList<>();
-        listProduct.add(new Product("Cơm tấm", "50.000đ", "Cơm tấm bì nướng", R.drawable.com_tam));
-        listProduct.add(new Product("Chuối tươi", "30.000đ", "Chuối sứ", R.drawable.icon_food2));
-        listProduct.add(new Product("Pallavi Biryani", "50.000đ", "Burger phô mai cổ điển", R.drawable.pallavi_biryani));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Cơm gà sốt chua ngọt", "80.000đ", "Burger phô mai cổ điển", R.drawable.chicken));
-        listProduct.add(new Product("Burger trứng", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
+        listProduct.add(new SanPhamModel("Cơm tấm", 50000, R.drawable.com_tam, "Cơm tấm bì nướng"));
+        listProduct.add(new SanPhamModel("Chuối tươi", 30000, R.drawable.icon_food2, "Chuối sứ"));
+        listProduct.add(new SanPhamModel("Pallavi Biryani", 50000, R.drawable.pallavi_biryani, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Burger trứng", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+
     }
 
     @Override

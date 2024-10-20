@@ -17,7 +17,7 @@ import android.content.Intent;
 
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
-import com.example.foodtrack.Model.Product;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.list_drink_adapter;
 
@@ -38,7 +38,7 @@ public class Drink_fragment extends Fragment {
     private String mParam2;
 
     ArrayList<String> drinkTitle = new ArrayList<>();
-    ArrayList<String> drinkPrice = new ArrayList<>();
+    ArrayList<Double> drinkPrice = new ArrayList<Double>();
     ArrayList<Integer> drinkImg = new ArrayList<>();
     ArrayList<String> drinkDescription = new ArrayList<>();
 
@@ -78,7 +78,7 @@ public class Drink_fragment extends Fragment {
         initializeData();
 
     }
-    ArrayList<Product> arrayListDrink = new ArrayList<>();
+    ArrayList<SanPhamModel> arrayListDrink = new ArrayList<>();
     private void initializeData() {
         drinkTitle.add("Trà đào cam sả");
         drinkTitle.add("Cà phê capuccino");
@@ -92,11 +92,11 @@ public class Drink_fragment extends Fragment {
         drinkImg.add(R.drawable.drink1);
         drinkImg.add(R.drawable.drink2);
 
-        drinkPrice.add("60.000đ");
-        drinkPrice.add("30.000đ");
-        drinkPrice.add("20.000đ");
-        drinkPrice.add("50.000đ");
-        drinkPrice.add("50.000đ");
+        drinkPrice.add(60.000);
+        drinkPrice.add(30.000);
+        drinkPrice.add(20.000);
+        drinkPrice.add(50.000);
+        drinkPrice.add(50.000);
 
         // Thêm dữ liệu vào drinkDescription
         drinkDescription.add("Thức uống giải khát có mùi vị thơm ngon.");
@@ -107,7 +107,7 @@ public class Drink_fragment extends Fragment {
 
         // Thêm dữ liệu vào arrayListDrink
         for (int i = 0; i < drinkImg.size(); i++) {
-            arrayListDrink.add(new Product(drinkTitle.get(i), drinkPrice.get(i), drinkDescription.get(i), drinkImg.get(i)));
+            arrayListDrink.add(new SanPhamModel(drinkTitle.get(i), drinkPrice.get(i),  drinkImg.get(i),drinkDescription.get(i)));
         }
 
     }
@@ -147,7 +147,7 @@ public class Drink_fragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("title", drinkTitle.get(position));
-                bundle.putString("price", drinkPrice.get(position));
+                bundle.putDouble("price", drinkPrice.get(position));
                 bundle.putString("description", drinkDescription.get(position));
                 bundle.putInt("image", drinkImg.get(position));
 

@@ -44,7 +44,7 @@ public class favorite_fragment extends Fragment {
     ArrayList<String> favoriteTitle = new ArrayList<>();
     ArrayList<Integer> favoriteImg = new ArrayList<>();
     ArrayList<String> favoriteSubTitle = new ArrayList<>();
-    ArrayList<String> favoritePrice = new ArrayList<>();
+    ArrayList<Double> favoritePrice = new ArrayList<>();
 
     ListView listView_favorite;
     ImageView chatIcon;
@@ -109,14 +109,14 @@ public class favorite_fragment extends Fragment {
         favoriteSubTitle.add("Classic cheesburger");
         favoriteSubTitle.add("Classic cheesburger");
 
-        favoritePrice.add("50.000đ");
-        favoritePrice.add("50.000đ");
-        favoritePrice.add("50.000đ");
-        favoritePrice.add("50.000đ");
-        favoritePrice.add("50.000đ");
-        favoritePrice.add("50.000đ");
-        favoritePrice.add("50.000đ");
-        favoritePrice.add("50.000đ");
+        favoritePrice.add(50.000);
+        favoritePrice.add(50.000);
+        favoritePrice.add(50.000);
+        favoritePrice.add(50.000);
+        favoritePrice.add(50.000);
+        favoritePrice.add(50.000);
+        favoritePrice.add(50.000);
+        favoritePrice.add(50.000);
     }
 
     @Override
@@ -152,7 +152,7 @@ public class favorite_fragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Bundle bundle = new Bundle();
                 bundle.putString("title", favoriteTitle.get(position));
-                bundle.putString("price", favoritePrice.get(position));
+                bundle.putDouble("price", favoritePrice.get(position));
                 bundle.putString("description", favoriteSubTitle.get(position));
                 bundle.putInt("image", favoriteImg.get(position));
 

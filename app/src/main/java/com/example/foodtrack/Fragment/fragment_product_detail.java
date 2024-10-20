@@ -14,12 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodtrack.Activity.MainActivity;
-import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
-import com.example.foodtrack.Model.Product;
+import com.example.foodtrack.Model.SanPhamModel;
+import com.example.foodtrack.Model.SanPhamYeuThichModel;
 import com.example.foodtrack.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +55,7 @@ public class fragment_product_detail extends Fragment {
     private int quantity;
     private TextView btn_AddToCart_product_detail;
 
-    private List<Product> listProduct;
+    private List<SanPhamModel> listProduct;
     private RecyclerView rvProductDetail;
 
     public fragment_product_detail() {
@@ -71,11 +69,11 @@ public class fragment_product_detail extends Fragment {
      * @return A new instance of fragment fragment_product_detail.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_product_detail newInstance(String title, String price, String description, int image) {
+    public static fragment_product_detail newInstance(String title, Double price, String description, int image) {
         fragment_product_detail fragment = new fragment_product_detail();
         Bundle args = new Bundle();
         args.putString(ARG_TITLE, title);
-        args.putString(ARG_PRICE, price);
+        args.putDouble(ARG_PRICE, price);
         args.putString(ARG_DESCRIPTION, description);
         args.putInt(ARG_IMAGE, image);
         fragment.setArguments(args);
@@ -95,12 +93,12 @@ public class fragment_product_detail extends Fragment {
 
     private void InitializeData() {
         listProduct = new ArrayList<>();
-        listProduct.add(new Product("Cơm tấm", "70.000đ", "Cơm tấm bì nướng", R.drawable.com_tam));
-        listProduct.add(new Product("Chuối tươi", "30.000đ", "Chuối sứ", R.drawable.icon_food2));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
+        listProduct.add(new SanPhamModel("Cơm tấm", 70.000, R.drawable.com_tam,"Cơm tấm bì nướng"));
+        listProduct.add(new SanPhamModel("Chuối tươi", 30.000, R.drawable.icon_food2, "Chuối sứ"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
     }
 
     @Override

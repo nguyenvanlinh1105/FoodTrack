@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodtrack.Adapter.recyclerView_mon_moi_ban_chay_adapter;
-import com.example.foodtrack.Model.Product;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class fragment_viewpager_mon_moi_homepage extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private List<Product> listProduct;
+    private List<SanPhamModel> listProduct;
     private RecyclerView rvMonMoi;
 
     public fragment_viewpager_mon_moi_homepage() {
@@ -69,13 +69,14 @@ public class fragment_viewpager_mon_moi_homepage extends Fragment {
 
     private void InitializeData() {
         listProduct = new ArrayList<>();
-        listProduct.add(new Product("Salad trái cây", "70.000đ", "Salad cổ điển cùng trái cây tươi trong ngày", R.drawable.icon_food1));
-        listProduct.add(new Product("Mì Carbonara", "90.000đ", "Carbonara béo ngậy hòa cùng chút mặn đến từ thịt xông khói", R.drawable.carbonara));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Gnocchi sốt cà chua", "80.000đ", "Gnocchi tươi nấu cùng sốt cà chua nhà làm", R.drawable.gnocchi_tomato));
-        listProduct.add(new Product("Cơm gà sốt chua ngọt", "80.000đ", "Cơm nóng ăn kèm gà rán tẩm sốt chua ngọt bí truyền", R.drawable.chicken));
-        listProduct.add(new Product("Burger phô mai", "30.000đ", "Burger phô mai cổ điển", R.drawable.double_cheese));
-        listProduct.add(new Product("Mì Spaghetti", "90.000đ", "Sợi mì spaghetti tươi ngon nấu cùng sốt cà chua nguyên chất", R.drawable.spaghetti));
+        listProduct.add(new SanPhamModel("Salad trái cây", 70000, R.drawable.icon_food1, "Salad cổ điển cùng trái cây tươi trong ngày"));
+        listProduct.add(new SanPhamModel("Mì Carbonara", 90000, R.drawable.carbonara, "Carbonara béo ngậy hòa cùng chút mặn đến từ thịt xông khói"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Gnocchi sốt cà chua", 80000, R.drawable.gnocchi_tomato, "Gnocchi tươi nấu cùng sốt cà chua nhà làm"));
+        listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Cơm nóng ăn kèm gà rán tẩm sốt chua ngọt bí truyền"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Mì Spaghetti", 90000, R.drawable.spaghetti, "Sợi mì spaghetti tươi ngon nấu cùng sốt cà chua nguyên chất"));
+
     }
 
     @Override
