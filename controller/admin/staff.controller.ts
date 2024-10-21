@@ -110,8 +110,15 @@ export const createAdmin=async(req:Request, res:Response)=>{
 }
 
 export const changeStatus=async (req:Request, res:Response)=>{
-    const token=req.params.token;
-    const status=req.params.status;
-    console.log(token,status);
-    res.send('OKE');
+    const {token,status} = req.params;
+    const [affectedRows]= await NguoiDung.update(
+        { trangThai: status }, // Dữ liệu cần cập nhật
+        { where: { token: token } } // Điều kiện cập nhật
+    );
+    if (affectedRows > 0) {
+        req.flash("success","Cập nhật trạng thái thành công");
+    }else{
+        req.flash("error","Cập nhật trạng thái thất bại");
+    }
+    res.redirect('/admin/management/staff');
 }

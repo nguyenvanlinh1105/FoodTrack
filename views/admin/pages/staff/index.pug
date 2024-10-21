@@ -34,10 +34,10 @@ block content
                     td #{staff.sdt}
                     td
                       if(staff.trangThai == "active")
-                        a(href=`/admin/management/staff/change-status/:${staff.token}/:inactive` class="badge badge-success"
+                        a(href=`/admin/management/staff/change-status/${staff.token}/inactive` class="badge badge-success"
                                 staff-id=`` staff-status=`inactive`) Hoạt động
                       else
-                        a(href=`/admin/management/staff/change-status/:${staff.token}/:active` class="badge badge-danger"
+                        a(href=`/admin/management/staff/change-status/${staff.token}/active` class="badge badge-danger"
                             staff-id=`` staff-status=`active`) Dừng hoạt động
                     td #{staff.gioiTinh}
                     td 
