@@ -3,6 +3,7 @@ package com.example.foodtrack.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.list_drink_adapter;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,11 +84,11 @@ public class Drink_fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        initializeData();
+
 
     }
     ArrayList<SanPhamModel> arrayListDrink = new ArrayList<>();
-    private void initializeData() {
+    private void InitializeData() {
         drinkTitle.add("Trà đào cam sả");
         drinkTitle.add("Cà phê capuccino");
         drinkTitle.add("Trà chanh");
@@ -125,26 +134,19 @@ public class Drink_fragment extends Fragment {
     private void Mapping(View view) {
         listView_drink = (ListView) view.findViewById(R.id.listView_drink);
         btn_DoAn_food = view.findViewById(R.id.btn_DoAn_food);
+        chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
 
+        InitializeData();
         list_drink_adapter listAdapter = new list_drink_adapter(getContext(), arrayListDrink);
         listView_drink.setAdapter(listAdapter);
+       // GetDoUong();
 
-        chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
 
         // Thiết lập sự kiện cho từng item trong ListView
         listView_drink.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Xử lý khi click vào item
-                //String selectedDrinkTitle = drinkTitle.get(position);// đang trỏ vào item tương ứng position
-
-//                Intent i = new Intent(getActivity(), product_detail.class);
-//                i.putExtra("title",drinkTitle.get(position));
-//                i.putExtra("price",drinkPrice.get(position));
-//                i.putExtra("description",drinkDescription.get(position));
-//                i.putExtra("image",drinkImg.get(position));
-//                startActivity(i);
-
                 Bundle bundle = new Bundle();
                 bundle.putString("title", drinkTitle.get(position));
                 bundle.putDouble("price", drinkPrice.get(position));
@@ -162,8 +164,6 @@ public class Drink_fragment extends Fragment {
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(productDetailsFragment);
                 }
-
-
 
             }
         });
@@ -190,6 +190,32 @@ public class Drink_fragment extends Fragment {
     }
 
 
+    private void GetDoUong(){
+        APIService.API_SERVICE.getListDoUong_Explore().enqueue(new Callback<List<SanPhamModel>>() {
+            @Override
+            public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
+                if(response.isSuccessful()&& response.body()!=null &&!response.body().isEmpty()){
+                    List<SanPhamModel> listUongDo_explore = response.body();
+                    UpdateRecyclerView(listUongDo_explore);
+                }else{
+                    UseFallbackData();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
+                UseFallbackData();
+            }
+        });
+    }
+    private void UseFallbackData() {
+        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct
+        UpdateRecyclerView(arrayListDrink);
+    }
+
+    private void UpdateRecyclerView(List<SanPhamModel> data) {
+        list_drink_adapter listAdapter = new list_drink_adapter(getContext(), arrayListDrink);
+        listView_drink.setAdapter(listAdapter);
+    }
 
 }

@@ -10,12 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Adapter.recyclerView_mon_moi_ban_chay_adapter;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,5 +110,42 @@ public class fragment_viewpager_mon_moi_homepage extends Fragment {
         recyclerView_mon_moi_ban_chay_adapter dealAdapter = new recyclerView_mon_moi_ban_chay_adapter(getContext(), listProduct);
         rvMonMoi.setAdapter(dealAdapter);
 
+
+        //GetMonMoi();
+
+    }
+    private void GetMonMoi() {
+        APIService.API_SERVICE.getListSanphamHomePage_MonMoi().enqueue(new Callback<List<SanPhamModel>>() {
+            @Override
+            public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
+                if(response.isSuccessful()&&response.body()!=null && !response.body().isEmpty()){
+                    List<SanPhamModel> listMonBanChay = response.body();
+                    UpdateRecyclerView(listMonBanChay);
+                }else{
+                    UseFallbackData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
+                UseFallbackData();
+            }
+        });
+    }
+
+    private void UseFallbackData() {
+        // Khởi tạo dữ liệu giả lập
+        listProduct = new ArrayList<>();
+        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct
+        UpdateRecyclerView(listProduct);
+    }
+
+    private void UpdateRecyclerView(List<SanPhamModel> data) {
+        // Cập nhật RecyclerView với dữ liệu (có thể từ API hoặc dữ liệu khởi tạo)
+        GridLayoutManager layoutManager
+                = new GridLayoutManager(requireContext(),1);
+        rvMonMoi.setLayoutManager(layoutManager);
+        recyclerView_mon_moi_ban_chay_adapter dealAdapter = new recyclerView_mon_moi_ban_chay_adapter(getContext(), listProduct);
+        rvMonMoi.setAdapter(dealAdapter);
     }
 }

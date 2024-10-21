@@ -13,13 +13,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.list_drink_adapter;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.food_list_adapter;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,11 +82,11 @@ public class food_fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        initializeData();
+
     }
 
     ArrayList<SanPhamModel> arraylistFood = new ArrayList<>();
-    private void initializeData() {
+    private void InitializeData() {
         foodTitle.add("Pallavi Biryani");
         foodTitle.add("Cơm tấm");
         foodTitle.add("Burger phô mai");
@@ -139,8 +147,11 @@ public class food_fragment extends Fragment {
         listView_food = (ListView) view.findViewById(R.id.listView_food);
         btn_DoUong_food = view.findViewById(R.id.btn_DoUong_food );
 
+        InitializeData();
         food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
         listView_food.setAdapter(listAdapter);
+
+//        GetMonAn();
 
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
 
@@ -189,9 +200,34 @@ public class food_fragment extends Fragment {
             }
         });
 
+    }
 
+    private void GetMonAn(){
+        APIService.API_SERVICE.getListMonAn_Explore().enqueue(new Callback<List<SanPhamModel>>() {
+            @Override
+            public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
+                if(response.isSuccessful()&& response.body()!=null &&!response.body().isEmpty()){
+                        List<SanPhamModel> listMonAn_explore = response.body();
+                    UpdateRecyclerView(listMonAn_explore);
+                }else{
+                    UseFallbackData();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
+                UseFallbackData();
+            }
+        });
+    }
+    private void UseFallbackData() {
+        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct
+        UpdateRecyclerView(arraylistFood);
+    }
 
+    private void UpdateRecyclerView(List<SanPhamModel> data) {
+        food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
+        listView_food.setAdapter(listAdapter);
     }
 
 

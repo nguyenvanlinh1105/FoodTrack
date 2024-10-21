@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
@@ -25,6 +26,10 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,7 +99,13 @@ public class Home_Page extends Fragment {
         listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Cơm nóng ăn kèm gà rán tẩm sốt chua ngọt bí truyền"));
         listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
         listProduct.add(new SanPhamModel("Mì Spaghetti", 90000, R.drawable.spaghetti, "Sợi mì spaghetti tươi ngon nấu cùng sốt cà chua nguyên chất"));
-
+        listProduct.add(new SanPhamModel("Salad trái cây", 70000, R.drawable.icon_food1, "Salad cổ điển cùng trái cây tươi trong ngày"));
+        listProduct.add(new SanPhamModel("Mì Carbonara", 90000, R.drawable.carbonara, "Carbonara béo ngậy hòa cùng chút mặn đến từ thịt xông khói"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Gnocchi sốt cà chua", 80000, R.drawable.gnocchi_tomato, "Gnocchi tươi nấu cùng sốt cà chua nhà làm"));
+        listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Cơm nóng ăn kèm gà rán tẩm sốt chua ngọt bí truyền"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Mì Spaghetti", 90000, R.drawable.spaghetti, "Sợi mì spaghetti tươi ngon nấu cùng sốt cà chua nguyên chất"));
     }
 
     @Override
@@ -105,8 +116,6 @@ public class Home_Page extends Fragment {
         Mapping(view);
         ControlButton();
 
-
-
         return view;
 
     }
@@ -115,16 +124,19 @@ public class Home_Page extends Fragment {
         btn_DoUong_homepage = view.findViewById(R.id.btn_DoUong_homepage);
         btn_DoAn_homepage = view.findViewById(R.id.btn_DoAn_homepage);
         chatIcon = view.findViewById(R.id.chatIcon);
-
-        listProduct = new ArrayList<>();
-
         rvDealHoi = view.findViewById(R.id.recyclerView_deal_hoi_home_page);
-        InitializeData();
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        rvDealHoi.setLayoutManager(layoutManager);
-        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), listProduct );
-        rvDealHoi.setAdapter(dealAdapter);
+
+
+//        listProduct = new ArrayList<>();
+//
+//        InitializeData();
+//        LinearLayoutManager layoutManager
+//                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+//        rvDealHoi.setLayoutManager(layoutManager);
+//        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), listProduct );
+//        rvDealHoi.setAdapter(dealAdapter);
+
+        GetDealHoi();
 
         tlMonMoiBanChay = view.findViewById(R.id.tabLayout_banChay_monMoi_home_page);
         vpMonMoiBanChay = view.findViewById(R.id.view_pager_mon_moi_ban_chay_home_page);
@@ -180,4 +192,39 @@ public class Home_Page extends Fragment {
 
 
     }
+
+    private void GetDealHoi(){
+        APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamModel>>() {
+            @Override
+            public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<SanPhamModel> listSanPhamDeaHoi = response.body(); // Lấy danh sách sản phẩm
+                    UpdateRecyclerView(listSanPhamDeaHoi);
+                }else{
+                    UseFallbackData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
+                UseFallbackData();
+            }
+        });
+    }
+    private void UseFallbackData() {
+        // Khởi tạo dữ liệu nếu get fail api
+        listProduct = new ArrayList<>();
+        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct nếu không lấy được data từ api
+        UpdateRecyclerView(listProduct);
+    }
+
+    private void UpdateRecyclerView(List<SanPhamModel> data) {
+        // Cập nhật RecyclerView với dữ liệu (có thể từ API hoặc dữ liệu khởi tạo) rút gọn code cho dễ nhìn
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvDealHoi.setLayoutManager(layoutManager);
+        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), data);
+        rvDealHoi.setAdapter(dealAdapter);
+    }
+
+
 }

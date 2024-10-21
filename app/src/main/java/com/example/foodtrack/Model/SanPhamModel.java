@@ -15,6 +15,12 @@ public class SanPhamModel {
     private String donViTinh;
     private Timestamp ngayTao;
 
+    private DanhMucModel danhMuc;
+    private List<ChiTietDonHangModel> chiTietDonHangs;
+    private List<BinhLuanSanPhamModel> binhLuans;
+    private List<SanPhamYeuThichModel> sanPhamYeuThichs;
+
+
     public SanPhamModel(String tenSanPham, double giaTien, int images, String moTa) {
         this.tenSanPham = tenSanPham;
         this.giaTien = giaTien;
@@ -101,12 +107,35 @@ public class SanPhamModel {
     public void setNgayTao(Timestamp ngayTao) {
         this.ngayTao = ngayTao;
     }
+    public DanhMucModel getDanhMuc() {
+        return danhMuc;
+    }
 
-    // Navigation properties
-    private DanhMucModel danhMuc;
-    private List<ChiTietDonHangModel> chiTietDonHangs;
-    private List<BinhLuanSanPhamModel> binhLuans;
-    private List<SanPhamYeuThichModel> sanPhamYeuThichs;
+    public void setDanhMuc(DanhMucModel danhMuc) {
+        this.danhMuc = danhMuc;
+    }
 
+    public List<ChiTietDonHangModel> getChiTietDonHangs() {
+        return chiTietDonHangs;
+    }
 
+    public void setChiTietDonHangs(List<ChiTietDonHangModel> chiTietDonHangs) {
+        this.chiTietDonHangs = chiTietDonHangs;
+    }
+
+    public List<BinhLuanSanPhamModel> getBinhLuans() {
+        return binhLuans;
+    }
+
+    public void setBinhLuans(List<BinhLuanSanPhamModel> binhLuans) {
+        this.binhLuans = binhLuans;
+    }
+
+    public List<SanPhamYeuThichModel> getSanPhamYeuThichs() {
+        return sanPhamYeuThichs;
+    }
+
+    public void setSanPhamYeuThichs(List<SanPhamYeuThichModel> sanPhamYeuThichs) {
+        this.sanPhamYeuThichs = sanPhamYeuThichs;
+    }
 }
