@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.foodtrack.Adapter.recyclerView_mon_moi_ban_chay_adapter;
+import com.example.foodtrack.Adapter.recyclerView_mon_moi_adapter;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
@@ -102,7 +102,7 @@ public class fragment_viewpager_mon_moi_homepage extends Fragment {
         GridLayoutManager layoutManager
                 = new GridLayoutManager(requireContext(),1);
         rvMonMoi.setLayoutManager(layoutManager);
-        recyclerView_mon_moi_ban_chay_adapter dealAdapter = new recyclerView_mon_moi_ban_chay_adapter(getContext(), listProduct);
+        recyclerView_mon_moi_adapter dealAdapter = new recyclerView_mon_moi_adapter(getContext(), listProduct);
         rvMonMoi.setAdapter(dealAdapter);
 
     }
