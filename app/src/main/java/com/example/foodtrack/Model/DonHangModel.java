@@ -10,7 +10,6 @@ public class DonHangModel {
     private String tinhTrang;
     private Date ngayTao;
     private Timestamp thoiGianCapNhat;
-
     // Navigation properties
     private NguoiDungModel nguoiDung;
     private List<ChiTietDonHangModel> chiTietDonHangs;

@@ -76,6 +76,12 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
         listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Burger phô mai cổ điển"));
         listProduct.add(new SanPhamModel("Burger trứng", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Cơm tấm", 50000, R.drawable.com_tam, "Cơm tấm bì nướng"));
+        listProduct.add(new SanPhamModel("Chuối tươi", 30000, R.drawable.icon_food2, "Chuối sứ"));
+        listProduct.add(new SanPhamModel("Pallavi Biryani", 50000, R.drawable.pallavi_biryani, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Burger trứng", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
 
     }
 

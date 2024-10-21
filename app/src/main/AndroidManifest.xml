@@ -30,12 +30,6 @@
             android:name=".Activity.phone_verify"
             android:exported="false" />
         <activity
-            android:name=".Fragment.Home_Page"
-            android:exported="false" />
-        <activity
-            android:name=".Fragment.Drink_fragment"
-            android:exported="false" />
-        <activity
             android:name=".Activity.forgot_password"
             android:exported="false" />
         <activity

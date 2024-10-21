@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,6 +78,8 @@ public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<
             }
         });
 
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_listview_sanpham);
+        holder.itemView.startAnimation(animation);
 
     }
 
