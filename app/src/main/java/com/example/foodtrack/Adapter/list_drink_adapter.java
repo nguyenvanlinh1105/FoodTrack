@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,7 +52,8 @@ public class list_drink_adapter extends ArrayAdapter<SanPhamModel> {
                 Toast.makeText(getContext(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
             }
         });
-
+        Animation animation = AnimationUtils.loadAnimation(getContext(),R.anim.scale_listview_sanpham);
+        view.startAnimation(animation);
         return view;
     }
 }
