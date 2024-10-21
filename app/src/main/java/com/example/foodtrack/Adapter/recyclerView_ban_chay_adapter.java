@@ -55,12 +55,12 @@ public class recyclerView_ban_chay_adapter extends RecyclerView.Adapter<recycler
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("title",holder.title.getText().toString());
-                bundle.putString("price",holder.price.getText().toString());
+                bundle.putDouble("price",product.getGiaTien());
                 bundle.putString("description", "Mô tả món ăn/đồ uống");
                 bundle.putInt("image", product.getImages());
                 fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
                         holder.title.getText().toString(),
-                        Double.valueOf(holder.price.getText().toString()),
+                        product.getGiaTien(),
                         "Mô tả món ăn/đồ uống",
                         product.getImages()
                 );

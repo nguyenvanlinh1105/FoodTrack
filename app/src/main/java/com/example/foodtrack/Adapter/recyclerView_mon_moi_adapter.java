@@ -60,7 +60,7 @@ public class recyclerView_mon_moi_adapter extends RecyclerView.Adapter<recyclerV
                 bundle.putInt("image", product.getImages());
                 fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
                         holder.title.getText().toString(),
-                        Double.valueOf(holder.price.getText().toString()),
+                        product.getGiaTien(),
                         "Mô tả món ăn/đồ uống",
                         product.getImages()
                 );

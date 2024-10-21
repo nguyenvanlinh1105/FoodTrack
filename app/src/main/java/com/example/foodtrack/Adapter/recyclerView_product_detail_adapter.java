@@ -48,8 +48,7 @@ public class recyclerView_product_detail_adapter extends RecyclerView.Adapter<re
             //holder.main.setBackground(null);
             holder.main.setBackgroundResource(R.drawable.input_search_conner);
 
-        Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_listview_sanpham);
-        holder.itemView.startAnimation(animation);
+
 
     }
 
