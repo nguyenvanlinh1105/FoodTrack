@@ -25,15 +25,6 @@ block content
                     th Trạng thái
                     th Giới tính
                     th Hành động
-              tfoot
-                tr
-                    th STT
-                    th Họ tên
-                    th Vai trò 
-                    th Điện thoại
-                    th Trạng thái
-                    th Giới tính
-                    th Hành động
               tbody
                 each staff, index in listStaffs
                   tr
@@ -43,10 +34,10 @@ block content
                     td #{staff.sdt}
                     td
                       if(staff.trangThai == "active")
-                        button(link=`` class="badge badge-success"
+                        a(href=`/admin/management/staff/change-status/:${staff.token}/:inactive` class="badge badge-success"
                                 staff-id=`` staff-status=`inactive`) Hoạt động
                       else
-                        button(link=`` class="badge badge-danger"
+                        a(href=`/admin/management/staff/change-status/:${staff.token}/:active` class="badge badge-danger"
                             staff-id=`` staff-status=`active`) Dừng hoạt động
                     td #{staff.gioiTinh}
                     td 
@@ -62,3 +53,15 @@ block content
                           class="btn btn-danger btn-sm ml-1"
                           button-delete=`/${prefixAdmin}/accounts/remove/`
                       ) Xóa
+                  nav(aria-label='Page navigation example')
+        nav.ml-3
+          ul(class="pagination")
+            if(pagination.currentPage > 1)
+              li(class="page-item")
+                a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage-1}`) Trang trước  
+            - for (let index = 1; index <= pagination.totalPages; index++) 
+                li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
+                  a(class="page-link" href=`/admin/management/staff?page=${index}`) #{index}
+            if(pagination.currentPage < pagination.totalPages)
+              li(class="page-item")
+                a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage+1}`) Trang sau

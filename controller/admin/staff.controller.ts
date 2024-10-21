@@ -4,23 +4,28 @@ import { QueryTypes } from "sequelize";
 import NguoiDung from '../../model/NguoiDung.model';
 import VaiTro from '../../model/VaiTro.model';
 
-// Hellper
+// Helper
 import * as isValid from '../../helper/validField.helper';
 import {hashPassword,verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
 import generateNextId from '../../helper/generateNextId.helper';
 import * as generateString from '../../helper/generateRandom.helper';
+import * as paginationHelper from '../../helper/pagination.helper';
+
 
 export const pageStaff = async(req:Request,res:Response)=>{
+    //Tính năng phân trang
     const idUserCurrent=res.locals.user['idNguoiDung'];
+    const pagination= await paginationHelper.paginationStaff(req,NguoiDung,4,idUserCurrent);
+    
     const listStaffs= await sequelize.query
     (   `SELECT NguoiDung.hoTen, NguoiDung.email, NguoiDung.sdt, 
                 NguoiDung.ngaySinh, NguoiDung.gioiTinh, NguoiDung.avatar, 
-                NguoiDung.trangThai,VaiTro.tenVaiTro as tenVaiTro
+                NguoiDung.trangThai, NguoiDung.token, VaiTro.tenVaiTro as tenVaiTro
         FROM NguoiDung
         JOIN VaiTro ON NguoiDung.vaiTro = VaiTro.idVaiTro
         WHERE NguoiDung.idNguoiDung <> :idUserCurrent
         AND NguoiDung.vaiTro IN ('VT001', 'VT003', 'VT004', 'VT005')
-        AND NguoiDung.trangThai = 'active'
+        LIMIT ${pagination.limitItems} OFFSET ${pagination.skip}
         `,
         {
             type:QueryTypes.SELECT,
@@ -29,7 +34,8 @@ export const pageStaff = async(req:Request,res:Response)=>{
     )
     res.render('admin/pages/staff/index',{
         title:'Quản lý nhân viên',
-        listStaffs:listStaffs
+        listStaffs:listStaffs,
+        pagination:pagination
     })
 }
 export const createAdminPage=async(req:Request, res:Response)=>{
@@ -101,4 +107,11 @@ export const createAdmin=async(req:Request, res:Response)=>{
             error: error.message
         });
     }
+}
+
+export const changeStatus=async (req:Request, res:Response)=>{
+    const token=req.params.token;
+    const status=req.params.status;
+    console.log(token,status);
+    res.send('OKE');
 }
