@@ -3,13 +3,26 @@ package com.example.foodtrack.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.foodtrack.Adapter.recyclerView_product_rating_adapter;
+import com.example.foodtrack.Model.BinhLuanSanPhamModel;
+import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.R;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +41,8 @@ public class fragment_product_rating extends Fragment {
     private String mParam2;
 
     private ImageView btn_back;
+    private RecyclerView rv_product_rating;
+    private List<BinhLuanSanPhamModel> binhLuanList = new ArrayList<>();
 
     public fragment_product_rating() {
         // Required empty public constructor
@@ -58,6 +73,31 @@ public class fragment_product_rating extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        initializeData();
+    }
+
+    private void initializeData(){
+        // Replace this with real data fetching logic
+        for (int i = 1; i <= 10; i++) {
+            NguoiDungModel user = new NguoiDungModel();
+            user.setHoTenNguoiDung("Người dùng " + i);
+            user.setAvatar(String.valueOf(R.drawable.icon_account_light_orange));
+
+            BinhLuanSanPhamModel comment = new BinhLuanSanPhamModel();
+            comment.setNguoiDung(user);
+            comment.setNoiDung("Lorem ipsum dolor sit amet, consectetur adipiscing elit. ");
+
+            try {
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date date = dateFormat.parse("22/9/2024");
+                long time = date.getTime();
+                comment.setNgayBinhLuan(new Timestamp(time));
+            } catch (ParseException e) {
+                e.printStackTrace(); // In ra lỗi nếu có
+            }
+
+            binhLuanList.add(comment);
+        }
     }
 
     @Override
@@ -65,13 +105,20 @@ public class fragment_product_rating extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_rating, container, false);
+
         Mapping(view);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        rv_product_rating.setLayoutManager(layoutManager);
+        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
+        rv_product_rating.setAdapter(adapter);
         ControlButton();
         return view;
     }
 
     private void Mapping(View view){
         btn_back = (ImageView) view.findViewById(R.id.btn_back_product_rating);
+        rv_product_rating = (RecyclerView) view.findViewById(R.id.recyclerView_product_rating);
     }
 
     private void ControlButton(){

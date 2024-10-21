@@ -23,13 +23,13 @@ import com.example.foodtrack.R;
 
 import java.util.List;
 
-public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<recyclerView_mon_moi_ban_chay_adapter.MyViewHolder> {
+public class recyclerView_ban_chay_adapter extends RecyclerView.Adapter<recyclerView_ban_chay_adapter.MyViewHolder> {
 
 
     Context context;
     List<SanPhamModel> list;
 
-    public recyclerView_mon_moi_ban_chay_adapter(Context context, List<SanPhamModel> list) {
+    public recyclerView_ban_chay_adapter(Context context, List<SanPhamModel> list) {
         this.context = context;
         this.list = list;
     }
@@ -37,8 +37,8 @@ public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_home_page_ban_chay_mon_moi, parent, false);
-        return new recyclerView_mon_moi_ban_chay_adapter.MyViewHolder(item);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_home_page_ban_chay, parent, false);
+        return new recyclerView_ban_chay_adapter.MyViewHolder(item);
     }
 
     @Override
@@ -71,10 +71,10 @@ public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<
             }
         });
 
-        holder.btn_AddToCart_banChay_monMoi.setOnClickListener(new View.OnClickListener() {
+        holder.btn_AddToFavorite_banChay_monMoi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context.getApplicationContext(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
+                Toast.makeText(context.getApplicationContext(), "Thêm sản phẩm vào mục yêu thích thành công", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -90,7 +90,7 @@ public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         FrameLayout container;
-        TextView title, price, btn_AddToCart_banChay_monMoi;
+        TextView title, price, btn_AddToFavorite_banChay_monMoi;
         ImageView img;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,7 +98,7 @@ public class recyclerView_mon_moi_ban_chay_adapter extends RecyclerView.Adapter<
             price = itemView.findViewById(R.id.item_price_product);
             img = itemView.findViewById(R.id.item_image_product);
             container = itemView.findViewById(R.id.container_item_ban_chay_mon_moi);
-            btn_AddToCart_banChay_monMoi = itemView.findViewById(R.id.btn_AddToCart_banChay_monMoi);
+            btn_AddToFavorite_banChay_monMoi = itemView.findViewById(R.id.btn_add_to_yeuThich_banChay);
         }
     }
 

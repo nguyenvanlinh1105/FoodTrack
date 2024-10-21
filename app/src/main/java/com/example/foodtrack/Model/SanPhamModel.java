@@ -11,7 +11,7 @@ public class SanPhamModel {
     private double giaTien;
     private int images;
     private String moTa;
-    private String soluongBH;
+    private int soluongBH;
     private String donViTinh;
     private Timestamp ngayTao;
 
@@ -84,11 +84,11 @@ public class SanPhamModel {
         this.moTa = moTa;
     }
 
-    public String getSoluongBH() {
+    public int getSoluongBH() {
         return soluongBH;
     }
 
-    public void setSoluongBH(String soluongBH) {
+    public void setSoluongBH(int soluongBH) {
         this.soluongBH = soluongBH;
     }
 

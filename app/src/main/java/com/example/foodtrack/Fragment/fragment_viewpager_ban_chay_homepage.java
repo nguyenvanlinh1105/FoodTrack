@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodtrack.API.APIService;
-import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
-import com.example.foodtrack.Adapter.recyclerView_mon_moi_ban_chay_adapter;
+import com.example.foodtrack.Adapter.recyclerView_ban_chay_adapter;
+
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
@@ -77,18 +77,31 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
 
     private void InitializeData() {
         listProduct = new ArrayList<>();
-        listProduct.add(new SanPhamModel("Cơm tấm", 50000, R.drawable.com_tam, "Cơm tấm bì nướng"));
-        listProduct.add(new SanPhamModel("Chuối tươi", 30000, R.drawable.icon_food2, "Chuối sứ"));
-        listProduct.add(new SanPhamModel("Pallavi Biryani", 50000, R.drawable.pallavi_biryani, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger trứng", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Cơm tấm", 50000, R.drawable.com_tam, "Cơm tấm bì nướng"));
-        listProduct.add(new SanPhamModel("Chuối tươi", 30000, R.drawable.icon_food2, "Chuối sứ"));
-        listProduct.add(new SanPhamModel("Pallavi Biryani", 50000, R.drawable.pallavi_biryani, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger trứng", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+
+        SanPhamModel product1 = new SanPhamModel("Cơm tấm", 50000, R.drawable.com_tam, "Cơm tấm bì nướng");
+        product1.setSoluongBH(1239);
+        listProduct.add(product1);
+
+        SanPhamModel product2 = new SanPhamModel("Chuối tươi", 30000, R.drawable.icon_food2, "Chuối sứ");
+        product2.setSoluongBH(1220);
+        listProduct.add(product2);
+
+        SanPhamModel product3 = new SanPhamModel("Pallavi Biryani", 50000, R.drawable.pallavi_biryani, "Burger phô mai cổ điển");
+        product3.setSoluongBH(1241);
+        listProduct.add(product3);
+
+        SanPhamModel product4 = new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển");
+        product4.setSoluongBH(1239);
+        listProduct.add(product4);
+
+        SanPhamModel product5 = new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Burger phô mai cổ điển");
+        product5.setSoluongBH(1230);
+        listProduct.add(product5);
+
+        SanPhamModel product6 = new SanPhamModel("Mì Carbonara", 80000, R.drawable.carbonara, "Burger phô mai cổ điển");
+        product5.setSoluongBH(1230);
+        listProduct.add(product6);
+
 
     }
 
@@ -106,9 +119,9 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         rvBanChay = view.findViewById(R.id.recyclerView_ban_chay_homepage);
         InitializeData();
         GridLayoutManager layoutManager
-                = new GridLayoutManager(requireContext(),1);
+                = new GridLayoutManager(requireContext(), 1);
         rvBanChay.setLayoutManager(layoutManager);
-        recyclerView_mon_moi_ban_chay_adapter dealAdapter = new recyclerView_mon_moi_ban_chay_adapter(getContext(), listProduct);
+        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), listProduct);
         rvBanChay.setAdapter(dealAdapter);
 
 
@@ -145,9 +158,9 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
     private void UpdateRecyclerView(List<SanPhamModel> data) {
         // Cập nhật RecyclerView với dữ liệu (có thể từ API hoặc dữ liệu khởi tạo)
         GridLayoutManager layoutManager
-                = new GridLayoutManager(requireContext(),1);
+                = new GridLayoutManager(requireContext(), 1);
         rvBanChay.setLayoutManager(layoutManager);
-        recyclerView_mon_moi_ban_chay_adapter dealAdapter = new recyclerView_mon_moi_ban_chay_adapter(getContext(), listProduct);
+        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), listProduct);
         rvBanChay.setAdapter(dealAdapter);
     }
 
