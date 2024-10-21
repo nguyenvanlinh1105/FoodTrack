@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.cart;
 import com.example.foodtrack.R;
-import com.example.foodtrack.fragment_choosing_payment;
 
 /**
  * A simple {@link Fragment} subclass.

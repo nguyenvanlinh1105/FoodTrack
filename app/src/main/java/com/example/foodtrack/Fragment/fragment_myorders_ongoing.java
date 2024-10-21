@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -15,12 +16,15 @@ import android.widget.TextView;
 
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
-import com.example.foodtrack.Adapter.myorders_history_list_adapter;
 import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter;
-import com.example.foodtrack.Model.Order;
+import com.example.foodtrack.Model.ChiTietDonHangModel;
+import com.example.foodtrack.Model.DonHangModel;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,12 +52,13 @@ public class fragment_myorders_ongoing extends Fragment {
     ArrayList<String> time = new ArrayList<>();
     ArrayList<String> name = new ArrayList<>();
     ArrayList<Integer> img = new ArrayList<>();
-    ArrayList<String> rate = new ArrayList<>();    ArrayList<Integer> status = new ArrayList<>();
+    ArrayList<String> rate = new ArrayList<>();
+    ArrayList<Integer> status = new ArrayList<>();
     ArrayList<String> orderStatus = new ArrayList<>();
-    ArrayList<String>  price = new ArrayList<>();
+    ArrayList<String> price = new ArrayList<>();
     ArrayList<Integer> qty = new ArrayList<>();
 
-    ArrayList<Order> arrayListOrder = new ArrayList<>();
+    ArrayList<DonHangModel> arrayListOrder = new ArrayList<>();
 
     public fragment_myorders_ongoing() {
         // Required empty public constructor
@@ -87,35 +92,44 @@ public class fragment_myorders_ongoing extends Fragment {
         initializeData();
     }
 
+
     private void initializeData() {
-        for (int i = 0; i < 2; i++)
-            orderId.add("Order: #000" + i);
-        for (int i = 0; i < 2; i++)
-            time.add("22-9-2024, 12:00 p.m");
+        List<SanPhamModel> sanPhamList = createSampleProducts();
 
-        name.add("Cheesecake việt quất");
-        name.add("Cơm tấm");
-
-
-        img.add(R.drawable.dessert_ico);
-        img.add(R.drawable.com_tam);
-
-        status.add(0);
-        status.add(0);
-
-        price.add("20.000đ");
-        price.add("30.000đ");
-
-        qty.add(1);
-        qty.add(2);
-
-        for (int i = 0; i < 6; i++)
-            orderStatus.add("Đang giao hàng");
-
-        for (int i = 0; i < orderId.size(); i++) {
-            arrayListOrder.add(new Order(orderId.get(i), time.get(i), name.get(i), orderStatus.get(i), img.get(i), status.get(i),price.get(i), qty.get(i)));
-        }
+        arrayListOrder = createSampleOrders(sanPhamList);
     }
+
+    private List<SanPhamModel> createSampleProducts() {
+        List<SanPhamModel> sanPhamList = new ArrayList<>();
+
+        sanPhamList.add(new SanPhamModel("Cheesecake việt quất", 20000, R.drawable.dessert_ico, ""));
+        sanPhamList.add(new SanPhamModel("Cơm tấm", 30000, R.drawable.com_tam, ""));
+
+        return sanPhamList;
+    }
+
+    private ArrayList<DonHangModel> createSampleOrders(List<SanPhamModel> sanPhamList) {
+        ArrayList<DonHangModel> donHangList = new ArrayList<>();
+
+        for (int i = 0; i < 2; i++) {
+            DonHangModel donHang = new DonHangModel();
+            donHang.setIdDonHang("Order: #000" + i);
+            donHang.setNgayTao(new Date());
+            donHang.setTinhTrang("Đang giao hàng");
+
+            List<ChiTietDonHangModel> chiTietDonHangs = new ArrayList<>();
+            ChiTietDonHangModel chiTietDonHang = new ChiTietDonHangModel();
+            chiTietDonHang.setSanPham(sanPhamList.get(i));
+            chiTietDonHang.setSoLuongDat(i + 1);
+            chiTietDonHangs.add(chiTietDonHang);
+
+            donHang.setChiTietDonHangs(chiTietDonHangs);
+            donHangList.add(donHang);
+        }
+
+        return donHangList;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,7 +142,7 @@ public class fragment_myorders_ongoing extends Fragment {
         return view;
     }
 
-    public void Mapping(View view){
+    public void Mapping(View view) {
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing);
         toLichSu = (TextView) view.findViewById(R.id.btn_lichSu_myOrders);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
@@ -138,7 +152,8 @@ public class fragment_myorders_ongoing extends Fragment {
         myorders_ongoing_list_adapter listAdapter = new myorders_ongoing_list_adapter(getContext(), arrayListOrder);
         listview_myorders_ongoing.setAdapter(listAdapter);
     }
-    public void ControlButton(){
+
+    public void ControlButton() {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,6 +177,17 @@ public class fragment_myorders_ongoing extends Fragment {
             public void onClick(View view) {
                 Intent chat = new Intent(getActivity(), list_chat_user.class);
                 startActivity(chat);
+            }
+        });
+
+        listview_myorders_ongoing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing_details());
+                }
+
             }
         });
     }

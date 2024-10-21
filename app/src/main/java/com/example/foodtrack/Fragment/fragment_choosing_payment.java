@@ -1,4 +1,4 @@
-package com.example.foodtrack;
+package com.example.foodtrack.Fragment;
 
 import android.os.Bundle;
 
@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 
 import com.example.foodtrack.Activity.MainActivity;
-import com.example.foodtrack.Fragment.fragment_confirm_payment;
+import com.example.foodtrack.R;
 
 /**
  * A simple {@link Fragment} subclass.

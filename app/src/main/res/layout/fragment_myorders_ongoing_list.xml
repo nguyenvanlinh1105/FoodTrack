@@ -40,17 +40,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/name_item_myOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:text="Tên món"
-            android:textColor="@color/primary_color"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/item_id_myOrders"
-            app:layout_constraintTop_toBottomOf="@+id/item_id_myOrders" />
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
             android:layout_width="80dp"
@@ -73,11 +62,11 @@
             android:id="@+id/linearLayout11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name_item_myOrders">
+            app:layout_constraintTop_toBottomOf="@+id/item_id_myOrders">
 
             <LinearLayout
                 android:layout_width="wrap_content"

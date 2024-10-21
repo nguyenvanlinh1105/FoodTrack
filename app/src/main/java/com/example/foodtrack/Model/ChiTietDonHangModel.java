@@ -5,7 +5,7 @@ public class ChiTietDonHangModel {
     private String idSanPham;
     private String idDonHang;
     private String nhanVienXuLy;
-    private int soLuongDet;
+    private int soLuongDat;
 
     // Navigation properties
     private DonHangModel donHang;
@@ -43,12 +43,12 @@ public class ChiTietDonHangModel {
         this.nhanVienXuLy = nhanVienXuLy;
     }
 
-    public int getSoLuongDet() {
-        return soLuongDet;
+    public int getSoLuongDat() {
+        return soLuongDat;
     }
 
-    public void setSoLuongDet(int soLuongDet) {
-        this.soLuongDet = soLuongDet;
+    public void setSoLuongDat(int soLuongDat) {
+        this.soLuongDat = soLuongDat;
     }
 
     public DonHangModel getDonHang() {

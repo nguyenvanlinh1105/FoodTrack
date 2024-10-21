@@ -19,7 +19,7 @@
         <activity
             android:name=".Activity.list_chat_user"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.edit_profile"
             android:exported="false" />
@@ -28,12 +28,6 @@
             android:exported="false" />
         <activity
             android:name=".Activity.phone_verify"
-            android:exported="false" />
-        <activity
-            android:name=".Fragment.Home_Page"
-            android:exported="false" />
-        <activity
-            android:name=".Fragment.Drink_fragment"
             android:exported="false" />
         <activity
             android:name=".Activity.forgot_password"
