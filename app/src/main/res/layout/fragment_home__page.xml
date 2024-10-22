@@ -82,7 +82,7 @@
             android:layout_height="38dp"
             android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintHorizontal_bias="0.983"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/icon_chat" />
@@ -142,7 +142,7 @@
                 app:srcCompat="@drawable/drink1" />
 
             <ImageView
-                android:id="@+id/imageView22"
+                android:id="@+id/imageView19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/drink4" />
@@ -216,7 +216,6 @@
             android:layout_marginTop="4dp"
             android:paddingLeft="15dp"
             android:paddingTop="5dp"
-            android:paddingRight="15dp"
             android:paddingBottom="5dp"
             android:text="Deal hời"
             android:textColor="#6D3805"
@@ -311,6 +310,42 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout7"></LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageViewRotate2"
+            android:layout_width="45dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bell64" />
+
+        <ImageView
+            android:id="@+id/imageViewRotate1"
+            android:layout_width="45dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="67dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bell64" />
+
+        <ImageView
+            android:id="@+id/imageViewRotate_DealHoi"
+            android:layout_width="50dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView14"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+            app:srcCompat="@drawable/hot_deal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

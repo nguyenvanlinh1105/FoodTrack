@@ -21,8 +21,10 @@ import com.example.foodtrack.R;
 import java.util.ArrayList;
 
 public class food_list_adapter extends ArrayAdapter<SanPhamModel> {
+    private Context context;
     public food_list_adapter(Context context, ArrayList<SanPhamModel> arraylistFood) {
         super(context, R.layout.fragment_food_drink_item, arraylistFood);
+        this.context = context;
     }
 
     @NonNull
@@ -53,7 +55,7 @@ public class food_list_adapter extends ArrayAdapter<SanPhamModel> {
             }
         });
 
-        Animation animation = AnimationUtils.loadAnimation(getContext(),R.anim.scale_listview_sanpham);
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.scale_listview_sanpham);
         view.startAnimation(animation);
 
         return view;

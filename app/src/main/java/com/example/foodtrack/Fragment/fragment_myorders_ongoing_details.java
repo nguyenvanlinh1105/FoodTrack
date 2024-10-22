@@ -1,7 +1,10 @@
 package com.example.foodtrack.Fragment;
 
+import android.media.Image;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.service.controls.templates.ControlButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,7 @@ import java.util.Locale;
  */
 public class fragment_myorders_ongoing_details extends Fragment {
 
+    private ImageView btn_back_myorders_ongoing_detail;
     private LinearLayout ll_list_myorders_details;
     private ArrayList<ChiTietDonHangModel> arrayChiTietDonHang = new ArrayList<>();
 
@@ -66,15 +70,27 @@ public class fragment_myorders_ongoing_details extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initializeData();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myorders_ongoing_details, container, false);
         ll_list_myorders_details = view.findViewById(R.id.ll_list_myorders_details);
+        btn_back_myorders_ongoing_detail=(ImageView)view.findViewById(R.id. btn_back_myorders_ongoing_detail);
         displayOrderDetails();
+        ControlButton();
         return view;
+    }
+    private void ControlButton(){
+        btn_back_myorders_ongoing_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
     }
 
     private void displayOrderDetails() {
@@ -88,6 +104,7 @@ public class fragment_myorders_ongoing_details extends Fragment {
             TextView soLuongDat = itemView.findViewById(R.id.tv_so_luong_myOrders_detail);
             TextView tenSanPham = itemView.findViewById(R.id.tv_ten_mon_myOrders_detail);
             TextView giaTien = itemView.findViewById(R.id.tv_gia_myOrders_detail);
+
 
             // Set data to views
             soLuongDat.setText(String.valueOf(item.getSoLuongDat()));

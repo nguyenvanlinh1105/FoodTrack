@@ -11,6 +11,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,7 +50,7 @@ public class Home_Page extends Fragment {
     private String mParam2;
 
     private TextView btn_DoUong_homepage, btn_DoAn_homepage;
-    private ImageView chatIcon;
+    private ImageView chatIcon, imageViewRotate1, imageViewRotate2, imageViewRotate_DealHoi;
 
     private List<SanPhamModel> listProduct;
     private RecyclerView rvDealHoi;
@@ -125,6 +127,17 @@ public class Home_Page extends Fragment {
         btn_DoAn_homepage = view.findViewById(R.id.btn_DoAn_homepage);
         chatIcon = view.findViewById(R.id.chatIcon);
         rvDealHoi = view.findViewById(R.id.recyclerView_deal_hoi_home_page);
+        imageViewRotate1 = view.findViewById(R.id.imageViewRotate1);
+        imageViewRotate2 = view.findViewById(R.id.imageViewRotate2);
+        imageViewRotate_DealHoi = view.findViewById(R.id.imageViewRotate_DealHoi);
+
+        Animation anim_rotate = AnimationUtils.loadAnimation(getContext(), R.anim.anim_rotate);
+        Animation anim_rotate_dealhoi = AnimationUtils.loadAnimation(getContext(), R.anim.anim_rotate_dealhoi);
+
+        imageViewRotate_DealHoi.startAnimation(anim_rotate_dealhoi);
+        imageViewRotate1.startAnimation(anim_rotate);
+        imageViewRotate2.startAnimation(anim_rotate);
+
 
 
 //        listProduct = new ArrayList<>();
