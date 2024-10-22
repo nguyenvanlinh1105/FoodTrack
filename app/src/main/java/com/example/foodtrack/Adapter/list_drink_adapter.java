@@ -1,6 +1,7 @@
 package com.example.foodtrack.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,9 @@ import androidx.annotation.Nullable;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class list_drink_adapter extends ArrayAdapter<SanPhamModel> {
@@ -41,9 +44,14 @@ public class list_drink_adapter extends ArrayAdapter<SanPhamModel> {
         TextView addToCartBtn = view.findViewById(R.id.btn_AddToCart_food_drink);
 
         if (drink != null) {
+
             img.setImageResource(drink.getImages());
             title.setText(drink.getTenSanPham());
-            price.setText(String.valueOf(drink.getGiaTien())+"vnđ");
+
+            NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
+            String formattedPrice= formatter.format(drink.getGiaTien());
+            formattedPrice = formattedPrice + "vnđ";
+            price.setText(formattedPrice);
         }
 
         addToCartBtn.setOnClickListener(new View.OnClickListener() {

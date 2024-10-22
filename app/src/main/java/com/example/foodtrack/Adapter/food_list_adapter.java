@@ -18,7 +18,9 @@ import androidx.annotation.Nullable;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class food_list_adapter extends ArrayAdapter<SanPhamModel> {
     private Context context;
@@ -44,8 +46,11 @@ public class food_list_adapter extends ArrayAdapter<SanPhamModel> {
         if (food != null) {
             img.setImageResource(food.getImages());
             title.setText(food.getTenSanPham());
-//            description.setText(food.getDescription());
-            price.setText(String.valueOf(food.getGiaTien())+"vnđ");
+
+            NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
+            String formattedPrice= formatter.format(food.getGiaTien());
+            formattedPrice = formattedPrice + "vnđ";
+            price.setText(formattedPrice);
         }
 
         addToCartBtn.setOnClickListener(new View.OnClickListener() {
