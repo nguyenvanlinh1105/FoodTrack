@@ -1,8 +1,10 @@
 package com.example.foodtrack.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,20 +30,34 @@ public class Login extends AppCompatActivity {
     TextView btnQuenMatkhau;
     TextView btnLogin_TK;
     TextView edit_mail, edit_password;
+    CheckBox cb_nho_mat_khau_login ;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+
+
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        edit_mail = findViewById(R.id.edtMail_login);
+        edit_password = findViewById(R.id.edtPassword_login);
         btn_back =  findViewById(R.id.btn_back);
         btnDangKiFormLogin =findViewById(R.id.btnDangKi_formLogin);
         btnQuenMatkhau = findViewById(R.id.btnQuenMatKhau);
         btnLogin_TK = findViewById(R.id.btn_Login_TK);
+        cb_nho_mat_khau_login = findViewById(R.id.cb_nho_mat_khau_login);
+        sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+
+        edit_mail.setText(sharedPreferences.getString("email",""));
+        edit_password.setText(sharedPreferences.getString("password",""));
+        cb_nho_mat_khau_login.setChecked(sharedPreferences.getBoolean("checked",false));
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +82,7 @@ public class Login extends AppCompatActivity {
                 startActivity(formquenMK);
             }
         });
-        edit_mail = findViewById(R.id.edtMail_login);
-        edit_password = findViewById(R.id.edtPassword_login);
+
         btnLogin_TK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +91,14 @@ public class Login extends AppCompatActivity {
                 NguoiDungModel userModel = new NguoiDungModel();
                 userModel.setEmail(email);
                 userModel.setMatKhau(password);
+                if(cb_nho_mat_khau_login.isChecked()){
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("email", email);
+                    editor.putString("password",password);
+                    editor.putBoolean("checked", true);
+                    editor.apply();
 
+                }
                 Intent home = new Intent(Login.this, MainActivity.class);
                 startActivity(home);
                 finish();
@@ -89,6 +111,7 @@ public class Login extends AppCompatActivity {
 //                    GetUserToLogin(userModel);
 //
 //                }
+
             }
         });
 
@@ -103,7 +126,7 @@ public class Login extends AppCompatActivity {
                     startActivity(home);
                     finish();
                 } else {
-                    // Xử lý trường hợp mã phản hồi không phải là 200 hoặc response body là null
+
                     Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
                 }
             }

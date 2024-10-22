@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,11 +44,12 @@ public class fragment_myorders_ongoing extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ImageView backBtn;
+    ImageView backBtn, imageViewTranslate;
     TextView toLichSu;
     ImageView chatIcon;
     ListView listview_myorders_ongoing;
     LinearLayout imageIfEmpty;
+
 
     ArrayList<String> orderId = new ArrayList<>();
     ArrayList<String> time = new ArrayList<>();
@@ -136,7 +139,10 @@ public class fragment_myorders_ongoing extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_myorders_ongoing, container, false);
+
         Mapping(view);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_shipper);
+        imageViewTranslate.startAnimation(animation);
         checkIfListEmpty();
         ControlButton();
         return view;
@@ -147,10 +153,12 @@ public class fragment_myorders_ongoing extends Fragment {
         toLichSu = (TextView) view.findViewById(R.id.btn_lichSu_myOrders);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
+        imageViewTranslate = (ImageView) view.findViewById(R.id.imageViewTranslate);
 
         listview_myorders_ongoing = (ListView) view.findViewById(R.id.listview_myorders);
         myorders_ongoing_list_adapter listAdapter = new myorders_ongoing_list_adapter(getContext(), arrayListOrder);
         listview_myorders_ongoing.setAdapter(listAdapter);
+
     }
 
     public void ControlButton() {
@@ -196,8 +204,10 @@ public class fragment_myorders_ongoing extends Fragment {
         if (arrayListOrder.isEmpty()) {
             listview_myorders_ongoing.setVisibility(View.GONE);
             imageIfEmpty.setVisibility(View.VISIBLE);
+            imageViewTranslate.setVisibility(View.GONE);
         } else {
             listview_myorders_ongoing.setVisibility(View.VISIBLE);
+            imageViewTranslate.setVisibility(View.VISIBLE);
             imageIfEmpty.setVisibility(View.GONE);
         }
     }
