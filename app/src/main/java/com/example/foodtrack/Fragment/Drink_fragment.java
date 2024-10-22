@@ -101,11 +101,11 @@ public class Drink_fragment extends Fragment {
         drinkImg.add(R.drawable.drink1);
         drinkImg.add(R.drawable.drink2);
 
-        drinkPrice.add(60.000);
-        drinkPrice.add(30.000);
-        drinkPrice.add(20.000);
-        drinkPrice.add(50.000);
-        drinkPrice.add(50.000);
+        drinkPrice.add(60000.0);
+        drinkPrice.add(30000.0);
+        drinkPrice.add(20000.0);
+        drinkPrice.add(50000.0);
+        drinkPrice.add(50000.0);
 
         // Thêm dữ liệu vào drinkDescription
         drinkDescription.add("Thức uống giải khát có mùi vị thơm ngon.");

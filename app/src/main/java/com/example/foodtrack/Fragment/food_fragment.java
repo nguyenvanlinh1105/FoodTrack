@@ -105,14 +105,14 @@ public class food_fragment extends Fragment {
         foodImg.add(R.drawable.carbonara);
         foodImg.add(R.drawable.gnocchi_tomato);
 
-        foodPrice.add(50.000);
-        foodPrice.add(30.000);
-        foodPrice.add(20.000);
-        foodPrice.add(50.000);
-        foodPrice.add(80.000);
-        foodPrice.add(90.000);
-        foodPrice.add(80.000);
-        foodPrice.add(90.000);
+        foodPrice.add(50000.0);
+        foodPrice.add(30000.0);
+        foodPrice.add(20000.0);
+        foodPrice.add(50000.0);
+        foodPrice.add(80000.0);
+        foodPrice.add(90000.0);
+        foodPrice.add(80000.0);
+        foodPrice.add(90000.0);
 
 
         foodDescription.add("Pallavi Biryani là một món cơm trộn đặc biệt từ Ấn Độ, được nấu với gạo thơm, thịt và gia vị độc đáo.");

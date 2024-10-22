@@ -19,8 +19,10 @@ import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.Model.SanPhamYeuThichModel;
 import com.example.foodtrack.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,7 +87,7 @@ public class fragment_product_detail extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             title = getArguments().getString(ARG_TITLE);
-            price = getArguments().getString(ARG_PRICE);
+            price = String.valueOf(getArguments().getDouble(ARG_PRICE));
             description = getArguments().getString(ARG_DESCRIPTION);
             image = getArguments().getInt(ARG_IMAGE);
         }
@@ -110,7 +112,7 @@ public class fragment_product_detail extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             String title = bundle.getString("title");
-            String price = bundle.getString("price");
+            Double price = bundle.getDouble("price");
             String description = bundle.getString("description");
             int image = bundle.getInt("image");
 
@@ -119,10 +121,16 @@ public class fragment_product_detail extends Fragment {
             TextView descriptionView = view.findViewById(R.id.description_product_detail);
             ImageView imageView = view.findViewById(R.id.image_product_details);
 
+            NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
+            String formattedPrice = formatter.format(price);
+            formattedPrice = formattedPrice + "đ";
+
             titleView.setText(title);
-            priceView.setText(price);
+            priceView.setText(formattedPrice);
             descriptionView.setText(description);
             imageView.setImageResource(image);
+
+            System.out.println("Gia trong product detail: " + price);
         }
 
         ControlButton();

@@ -21,7 +21,9 @@ import com.example.foodtrack.Fragment.fragment_product_detail;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class recyclerView_mon_moi_adapter extends RecyclerView.Adapter<recyclerView_mon_moi_adapter.MyViewHolder> {
 
@@ -46,7 +48,11 @@ public class recyclerView_mon_moi_adapter extends RecyclerView.Adapter<recyclerV
         SanPhamModel product = list.get(position);
 //        Log.d("Product", "Product Title: " + product.getTitle());
         holder.title.setText(product.getTenSanPham());
-        holder.price.setText(String.valueOf(product.getGiaTien())+"vnđ");
+
+        NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
+        String formattedPrice= formatter.format(product.getGiaTien());
+        formattedPrice = formattedPrice + "vnđ";
+        holder.price.setText(formattedPrice);
 
         Glide.with(context).load(product.getImages()).into(holder.img);
 
