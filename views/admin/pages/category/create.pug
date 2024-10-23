@@ -1,0 +1,24 @@
+extends ../../layouts/default.pug
+
+block content 
+    .form-body
+        .form-holder
+            .form-content.mt-2
+                .form-items
+                    h3 Tạo danh mục mới
+                    p Điền đầy đủ thông tin
+                    form.requires-validation(action="/admin/management/category/create"  method="POST" id="categoryForm")
+                        .col-md-12
+                            input.form-control(type='text', name='tenDanhMuc', placeholder='Tên danh mục', required=true)
+                            .invalid-feedback.invalid-feedback-tenDanhMuc-missed Trường Danh mục không thể để trống!
+                        .col-md-12.mt-3
+                            textarea(
+                                    type="text"
+                                    class="form-control"
+                                    name="moTa"
+                                    rows="5"
+                                    textEditor-tinymce
+                                    placeholder="Mô tả"
+                                )
+                        .form-button.mt-3
+                            button#submit.btn.btn-primary(type='submit') Tạo danh mục

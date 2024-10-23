@@ -15,7 +15,7 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
     hr.sidebar-divider
     .sidebar-heading
         | Management Staff
-    li.nav-item(class=(title === 'Quản lý nhân viên' ? 'active' : ''))
+    li.nav-item(class=(title.includes('nhân viên') ? 'active' : ''))
         a.nav-link.collapsed(href='/admin/management/staff', data-toggle='collapse', data-target='#collapseTwo', aria-expanded='true', aria-controls='collapseTwo')
             i.fas.fa-user-check
             span Quản lý nhân viên
@@ -29,7 +29,7 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
     hr.sidebar-divider
     .sidebar-heading
         | Management Category
-    li.nav-item
+    li.nav-item(class=(title.includes('danh mục') ? 'active' : ''))
         a.nav-link.collapsed(href='/admin/management/category', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
             i.fas.fa-list-1-2
             span Quản lý danh mục

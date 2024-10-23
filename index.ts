@@ -2,6 +2,7 @@ import express, { Express,Request,Response,NextFunction } from "express";
 import dotenv from 'dotenv';//Nhúng dotenv từ module dotenv
 import cors from "cors" //Nhúng cors vào dự án
 dotenv.config();//Thêm config cho dotenv
+import path from "path";//Nhúng path
 import bodyParser from'body-parser';//Nhúng body-parser từ module body-parser
 
 import flash from 'connect-flash';
@@ -47,6 +48,8 @@ app.use(session(
 app.use(flash());
 
 app.use(express.json());
+
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 //Middleware để truyền biến messages vào tất cả các view
 app.use((req:Request, res:Response,next:NextFunction)=>{
