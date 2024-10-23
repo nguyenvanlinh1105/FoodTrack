@@ -10,7 +10,7 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
         | Dashboard
     li.nav-item(class=(title === 'Trang chủ' ? 'active' : ''))
         a.nav-link(href='/admin/dashboard')
-            i.fas.fa-fw.fa-tachometer-alt
+            i.fas.fa-fw.fa-tachometer-alt-average
             span Trang chủ
     hr.sidebar-divider
     .sidebar-heading
@@ -26,6 +26,13 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
         a.nav-link.collapsed(href='/admin/management/customer', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
             i.fas.fa-user
             span Quản lý khách hàng
+    hr.sidebar-divider
+    .sidebar-heading
+        | Management Category
+    li.nav-item
+        a.nav-link.collapsed(href='/admin/management/category', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
+            i.fas.fa-list-1-2
+            span Quản lý danh mục
     hr.sidebar-divider
     .sidebar-heading
         | Management Food

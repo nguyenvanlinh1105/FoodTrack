@@ -10,7 +10,8 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
         const userExist= await NguoiDung.findOne({
             where:{
                 token:token,
-                trangThai:'active'
+                trangThai:'active',
+                deleted:0
             },
             attributes: { 
                 exclude: ['matKhau', 'token'] // Loại bỏ các trường không cần lấy

@@ -16,6 +16,11 @@ const DanhMuc= sequelize.define("DanhMuc",{
     },
     ngayTao:{
         type:DataTypes.DATE,
+    },
+    deleted:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue: false
     }
 },{
     tableName: "DanhMuc",

@@ -37,7 +37,7 @@ const ChiTietDonHang= sequelize.define("ChiTietDonHang",{
     soLuongDat:{
         type:DataTypes.INTEGER,
         allowNull:false
-    }
+    },
 },{
     tableName: "ChiTietDonHang",
     timestamps: false

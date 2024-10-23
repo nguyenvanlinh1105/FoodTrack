@@ -43,6 +43,11 @@ const SanPham= sequelize.define("SanPham",{
     },
     ngayTao:{
         type:DataTypes.DATE
+    },
+    deleted:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue: false
     }
 },{
     tableName: "SanPham",

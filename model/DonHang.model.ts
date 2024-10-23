@@ -25,6 +25,11 @@ const DonHang= sequelize.define("DonHang",{
     ngayTao:{
         type:DataTypes.DATE,
         allowNull:false,
+    },
+    deleted:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue: false
     }
 },{
     tableName: "DonHang",

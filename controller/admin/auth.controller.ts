@@ -17,7 +17,8 @@ export const login =async (req:Request,res:Response)=>{
             where:{
                 email:email,
                 trangThai:'active',
-                vaiTro:['VT001','VT003','VT004','VT005']
+                vaiTro:['VT001','VT003','VT004','VT005'],
+                deleted:0
             },
             raw:true
         });

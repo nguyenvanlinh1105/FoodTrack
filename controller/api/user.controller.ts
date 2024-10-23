@@ -13,7 +13,8 @@ export const login= async (req:Request,res:Response)=>{
             where:{
                 email:email,
                 trangThai:'active',
-                vaiTro:'VT002'
+                vaiTro:'VT002',
+                deleted:0
             },
             raw:true
         });

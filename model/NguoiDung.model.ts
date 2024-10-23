@@ -56,6 +56,11 @@ const NguoiDung= sequelize.define("NguoiDung",{
             model: "VaiTro",
             key: "idVaiTro",
         }
+    },
+    deleted:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue: false
     }
 },{
     tableName: "NguoiDung",

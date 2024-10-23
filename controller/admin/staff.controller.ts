@@ -32,6 +32,7 @@ export const pageStaff = async(req:Request,res:Response)=>{
             replacements:{idUserCurrent}
         }
     )
+    console.log(pagination);
     res.render('admin/pages/staff/index',{
         title:'Quản lý nhân viên',
         listStaffs:listStaffs,
