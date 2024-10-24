@@ -1,8 +1,7 @@
 import { Request,Response } from 'express';//Nhúng kiểu Request và Response từ module express
-import sequelize from "../../config/database";
-import { QueryTypes } from "sequelize";
-import NguoiDung from '../../model/NguoiDung.model';
-import VaiTro from '../../model/VaiTro.model';
+import { Op } from "sequelize";
+
+import * as allMode from "../../model/index.model";//Nhúng tất cả model
 
 // Helper
 import * as isValid from '../../helper/validField.helper';
@@ -15,24 +14,29 @@ import * as paginationHelper from '../../helper/pagination.helper';
 export const pageStaff = async(req:Request,res:Response)=>{
     //Tính năng phân trang
     const idUserCurrent=res.locals.user['idNguoiDung'];
-    const pagination= await paginationHelper.paginationStaff(req,NguoiDung,4,idUserCurrent);
-    
-    const listStaffs= await sequelize.query
-    (   `SELECT NguoiDung.hoTen, NguoiDung.email, NguoiDung.sdt, 
-                NguoiDung.ngaySinh, NguoiDung.gioiTinh, NguoiDung.avatar, 
-                NguoiDung.trangThai, NguoiDung.token, VaiTro.tenVaiTro as tenVaiTro
-        FROM NguoiDung
-        JOIN VaiTro ON NguoiDung.vaiTro = VaiTro.idVaiTro
-        WHERE NguoiDung.idNguoiDung <> :idUserCurrent
-        AND NguoiDung.vaiTro IN ('VT001', 'VT003', 'VT004', 'VT005')
-        LIMIT ${pagination.limitItems} OFFSET ${pagination.skip}
-        `,
-        {
-            type:QueryTypes.SELECT,
-            replacements:{idUserCurrent}
-        }
-    )
+    const pagination= await paginationHelper.paginationStaff(req,4,idUserCurrent);
     console.log(pagination);
+    const listStaffs= await allMode.NguoiDung.findAll({
+        attributes:[
+            'hoTen', 'email', 'sdt', 
+            'ngaySinh', 'gioiTinh', 'avatar', 
+            'trangThai', 'token'
+        ],
+        include:[
+            {
+                model:allMode.VaiTro,
+                as: 'Role',
+                attributes:['tenVaiTro']
+            }
+        ],
+        where:{
+            idNguoiDung:{[Op.ne]:idUserCurrent},
+            vaiTro:{[Op.in]:['VT001', 'VT003', 'VT004', 'VT005']}
+        },
+        limit: pagination.limitItems,
+        offset: pagination.skip
+    })
+
     res.render('admin/pages/staff/index',{
         title:'Quản lý nhân viên',
         listStaffs:listStaffs,
@@ -40,14 +44,11 @@ export const pageStaff = async(req:Request,res:Response)=>{
     })
 }
 export const createAdminPage=async(req:Request, res:Response)=>{
-    const roles= await sequelize.query
-    (   `SELECT * 
-        FROM VaiTro
-        WHERE idVaiTro <> 'VT002'`,
-        {
-            type:QueryTypes.SELECT
+    const roles= await allMode.VaiTro.findAll({
+        where:{
+            idVaiTro:{[Op.ne]:'VT002'}
         }
-    )
+    });
     res.render('admin/pages/staff/create',{
         title:'Tạo tài khoản cho nhân viên',
         roles:roles
@@ -68,7 +69,7 @@ export const createAdmin=async(req:Request, res:Response)=>{
         });
         return;
     }
-    const userExist=await NguoiDung.findOne({
+    const userExist=await allMode.NguoiDung.findOne({
         where:{
             email:req.body['email'],
             trangThai:'active',
@@ -83,7 +84,7 @@ export const createAdmin=async(req:Request, res:Response)=>{
         return;
     }
     const newUser={
-        idNguoiDung:await generateNextId(NguoiDung,'ND'),
+        idNguoiDung:await generateNextId(allMode.NguoiDung,'ND'),
         hoTen:req.body['hoTen'],
         email:req.body['email'],
         sdt:req.body['sdt'],
@@ -96,7 +97,7 @@ export const createAdmin=async(req:Request, res:Response)=>{
         token:generateString.generateRandomString(30), // Tạo token ngẫu nhiên
     }
     try {
-        const createdUser = await NguoiDung.create(newUser);
+        const createdUser = await allMode.NguoiDung.create(newUser);
         res.json({
             code:200,
             message: 'Người dùng đã được tạo thành công!',
@@ -112,14 +113,16 @@ export const createAdmin=async(req:Request, res:Response)=>{
 
 export const changeStatus=async (req:Request, res:Response)=>{
     const {token,status} = req.params;
-    const [affectedRows]= await NguoiDung.update(
+    const [affectedRows]= await allMode.NguoiDung.update(
         { trangThai: status }, // Dữ liệu cần cập nhật
         { where: { token: token } } // Điều kiện cập nhật
     );
+    let page='';
+    console.log(page);
     if (affectedRows > 0) {
         req.flash("success","Cập nhật trạng thái thành công");
     }else{
         req.flash("error","Cập nhật trạng thái thất bại");
     }
-    res.redirect('/admin/management/staff');
+    res.redirect('back');
 }

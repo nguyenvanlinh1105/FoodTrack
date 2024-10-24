@@ -1,7 +1,9 @@
-import sequelize from "../config/database";
-import { QueryTypes, Model, ModelStatic } from 'sequelize';
-import { Request,Response } from 'express';
-export const paginationStaff = async (req:Request,model: ModelStatic<Model>,limitItems:number=4,idUserCurrent:string)=>{ // Hàm phân trang
+import { Op,QueryTypes, Model, ModelStatic } from 'sequelize';
+import { Request } from 'express';
+import NguoiDung from '../model/NguoiDung.model';
+
+export const paginationStaff = async (req:Request,limitItems:number=4,idUserCurrent:string)=>{ // Hàm phân trang
+    
     //Phân trang 
     const pagination={
         currentPage:1,
@@ -13,17 +15,13 @@ export const paginationStaff = async (req:Request,model: ModelStatic<Model>,limi
         pagination.currentPage=Number(req.query.page);
     }
     pagination.skip=(pagination.currentPage-1)*pagination.limitItems;// Công thức tính skip
-    const countTotal= await sequelize.query(
-        `SELECT COUNT(*) as total
-        FROM ${model.tableName}
-        WHERE idNguoiDung <> '${idUserCurrent}'
-        AND   vaiTro IN ('VT001', 'VT003', 'VT004', 'VT005')  
-        `,
-        {
-            type:QueryTypes.SELECT
+
+    const countTotal = await NguoiDung.count({
+        where: {
+            idNguoiDung: { [Op.ne]: idUserCurrent }, // idNguoiDung <> idUserCurrent
+            vaiTro: { [Op.in]: ['VT001', 'VT003', 'VT004', 'VT005'] } // vaiTro IN (...)
         }
-    );// Đếm tổng số sản phẩm
-    const totalRecords=countTotal[0]['total'];
-    pagination['totalPages']= Math.ceil(totalRecords/pagination.limitItems);// Công thức tính tổng số trang
+    });
+    pagination['totalPages']= Math.ceil(countTotal/pagination.limitItems);// Công thức tính tổng số trang
     return pagination;
 }

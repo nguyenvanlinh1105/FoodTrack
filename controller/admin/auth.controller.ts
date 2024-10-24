@@ -2,7 +2,7 @@ import { Request,Response } from 'express';//Nhúng kiểu Request và Response 
 import NguoiDung from '../../model/NguoiDung.model';
 
 //Helper
-import {hashPassword,verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
+import {verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
 
 export const loginPage= async (req:Request,res:Response)=>{
     res.render('admin/pages/auth/login',{
