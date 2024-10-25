@@ -21,7 +21,8 @@ const SanPham= sequelize.define("SanPham",{
     },
     trangThai:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        defaultValue: "active"
     },
     giaTien:{
         type:DataTypes.DECIMAL(15,2),
@@ -39,7 +40,7 @@ const SanPham= sequelize.define("SanPham",{
     },
     donViTinh:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
     },
     ngayTao:{
         type:DataTypes.DATE
@@ -48,6 +49,10 @@ const SanPham= sequelize.define("SanPham",{
         type:DataTypes.BOOLEAN,
         allowNull:false,
         defaultValue: false
+    },
+    slug: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
     }
 },{
     tableName: "SanPham",

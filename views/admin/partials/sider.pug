@@ -36,7 +36,7 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
     hr.sidebar-divider
     .sidebar-heading
         | Management Food
-    li.nav-item
+    li.nav-item(class=(title.includes('món ăn') ? 'active' : ''))
         a.nav-link.collapsed(href='/admin/management/food', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
             i.fas.fa-utensils
             span Quản lý món ăn

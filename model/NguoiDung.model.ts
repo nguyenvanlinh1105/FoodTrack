@@ -38,6 +38,7 @@ const NguoiDung= sequelize.define("NguoiDung",{
     trangThai:{
         type:DataTypes.STRING,
         allowNull:false,
+        defaultValue: "active"
     },
     ngayTao:{
         type:DataTypes.DATE

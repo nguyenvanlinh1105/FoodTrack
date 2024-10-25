@@ -24,34 +24,38 @@ block content
                     th Ngày tạo
                     th Hành động
               tbody
-                each category, index in categories
+                if(categories.length>0)
+                  each category, index in categories
+                    tr
+                      td #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
+                      td #{category.tenDanhMuc}
+                      td !{category.moTa}
+                      td #{category.ngayTao}
+                      td 
+                        a(
+                            class="btn btn-secondary btn-sm"
+                            href=`/${prefixAdmin}/accounts/detail/${category.slug}`
+                        ) Chi tiết
+                        a(
+                            class="btn btn-warning btn-sm ml-1"
+                            href=`/${prefixAdmin}/accounts/edit/${category.slug}`
+                        ) Sửa
+                        button(
+                            class="btn btn-danger btn-sm ml-1"
+                            button-delete=`/${prefixAdmin}/accounts/delete/${category.slug}`
+                        ) Xóa
+                else
                   tr
-                    td #{(index+1)}
-                    td #{category.tenDanhMuc}
-                    td !{category.moTa}
-                    td #{category.ngayTao}
-                    td 
-                      a(
-                          class="btn btn-secondary btn-sm"
-                          href=`/${prefixAdmin}/accounts/detail/`
-                      ) Chi tiết
-                      a(
-                          class="btn btn-warning btn-sm ml-1"
-                          href=`/${prefixAdmin}/accounts/edit/`
-                      ) Sửa
-                      button(
-                          class="btn btn-danger btn-sm ml-1"
-                          button-delete=`/${prefixAdmin}/accounts/remove/`
-                      ) Xóa
-
-        //- nav.ml-3
-        //-   ul(class="pagination")
-        //-     if(pagination.currentPage > 1)
-        //-       li(class="page-item")
-        //-         a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage-1}`) Trang trước  
-        //-     - for (let index = 1; index <= pagination.totalPages; index++) 
-        //-         li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
-        //-           a(class="page-link" href=`/admin/management/staff?page=${index}`) #{index}
-        //-     if(pagination.currentPage < pagination.totalPages)
-        //-       li(class="page-item")
-        //-         a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage+1}`) Trang sau
+                    td(colspan='5')
+                      p.text-center Chưa có danh mục nào
+        nav.ml-3
+          ul(class="pagination")
+            if(pagination.currentPage > 1)
+              li(class="page-item")
+                a(class="page-link" href=`/admin/management/category?page=${pagination.currentPage-1}`) Trang trước  
+            - for (let index = 1; index <= pagination.totalPages; index++) 
+                li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
+                  a(class="page-link" href=`/admin/management/category?page=${index}`) #{index}
+            if(pagination.currentPage < pagination.totalPages)
+              li(class="page-item")
+                a(class="page-link" href=`/admin/management/category?page=${pagination.currentPage+1}`) Trang sau

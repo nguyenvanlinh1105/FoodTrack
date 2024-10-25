@@ -5,5 +5,5 @@
         "removeComments":true,// xóa comment khi biên dịch sang file js
         "esModuleInterop": true,// Dùng từ khóa import thay cho require
         "outDir": "dist",// thư mục chứa file js sau khi biên dịch
-    }
+    },
 }

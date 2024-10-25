@@ -26,33 +26,38 @@ block content
                     th Giới tính
                     th Hành động
               tbody
-                each staff, index in listStaffs
+                if(listStaffs.length>0)
+                  each staff, index in listStaffs
+                    tr
+                      td #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
+                      td #{staff.hoTen}
+                      td #{staff.tenVaiTro}
+                      td #{staff.sdt}
+                      td
+                        if(staff.trangThai == "active")
+                          a(href=`/admin/management/staff/change-status/${staff.token}/inactive` class="badge badge-success"
+                                  staff-id=`` staff-status=`inactive`) Hoạt động
+                        else
+                          a(href=`/admin/management/staff/change-status/${staff.token}/active` class="badge badge-danger"
+                              staff-id=`` staff-status=`active`) Dừng hoạt động
+                      td #{staff.gioiTinh}
+                      td 
+                        a(
+                            class="btn btn-secondary btn-sm"
+                            href=`/${prefixAdmin}/accounts/detail/`
+                        ) Chi tiết
+                        a(
+                            class="btn btn-warning btn-sm ml-1"
+                            href=`/${prefixAdmin}/accounts/edit/`
+                        ) Sửa
+                        button(
+                            class="btn btn-danger btn-sm ml-1"
+                            button-delete=`/${prefixAdmin}/accounts/remove/`
+                        ) Xóa
+                else
                   tr
-                    td #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
-                    td #{staff.hoTen}
-                    td #{staff.tenVaiTro}
-                    td #{staff.sdt}
-                    td
-                      if(staff.trangThai == "active")
-                        a(href=`/admin/management/staff/change-status/${staff.token}/inactive` class="badge badge-success"
-                                staff-id=`` staff-status=`inactive`) Hoạt động
-                      else
-                        a(href=`/admin/management/staff/change-status/${staff.token}/active` class="badge badge-danger"
-                            staff-id=`` staff-status=`active`) Dừng hoạt động
-                    td #{staff.gioiTinh}
-                    td 
-                      a(
-                          class="btn btn-secondary btn-sm"
-                          href=`/${prefixAdmin}/accounts/detail/`
-                      ) Chi tiết
-                      a(
-                          class="btn btn-warning btn-sm ml-1"
-                          href=`/${prefixAdmin}/accounts/edit/`
-                      ) Sửa
-                      button(
-                          class="btn btn-danger btn-sm ml-1"
-                          button-delete=`/${prefixAdmin}/accounts/remove/`
-                      ) Xóa
+                    td(colspan='7')
+                      p.text-center Chưa có nhân viên nào
         nav.ml-3
           ul(class="pagination")
             if(pagination.currentPage > 1)

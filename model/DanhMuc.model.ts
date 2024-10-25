@@ -21,6 +21,9 @@ const DanhMuc= sequelize.define("DanhMuc",{
         type:DataTypes.BOOLEAN,
         allowNull:false,
         defaultValue: false
+    },slug: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
     }
 },{
     tableName: "DanhMuc",

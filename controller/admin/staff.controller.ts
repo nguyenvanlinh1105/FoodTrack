@@ -5,16 +5,16 @@ import * as allMode from "../../model/index.model";//Nhúng tất cả model
 
 // Helper
 import * as isValid from '../../helper/validField.helper';
-import {hashPassword,verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
+import {hashPassword} from '../../helper/hashAndVerifyPassword.helper';
 import generateNextId from '../../helper/generateNextId.helper';
 import * as generateString from '../../helper/generateRandom.helper';
-import * as paginationHelper from '../../helper/pagination.helper';
+import {paginationStaff} from '../../helper/pagination.helper';
 
 
 export const pageStaff = async(req:Request,res:Response)=>{
     //Tính năng phân trang
     const idUserCurrent=res.locals.user['idNguoiDung'];
-    const pagination= await paginationHelper.paginationStaff(req,4,idUserCurrent);
+    const pagination= await paginationStaff(req,4,idUserCurrent);
     console.log(pagination);
     const listStaffs= await allMode.NguoiDung.findAll({
         attributes:[
@@ -36,7 +36,6 @@ export const pageStaff = async(req:Request,res:Response)=>{
         limit: pagination.limitItems,
         offset: pagination.skip
     })
-
     res.render('admin/pages/staff/index',{
         title:'Quản lý nhân viên',
         listStaffs:listStaffs,

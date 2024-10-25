@@ -1,0 +1,43 @@
+extends ../../layouts/default.pug
+
+block content 
+    .form-body
+        .form-holder
+            .form-content.mt-2
+                .form-items
+                    h3 Tạo sản phẩm mới
+                    p Điền đầy đủ thông tin
+                    form.requires-validation(action="/admin/management/food/create"  method="POST" id="foodForm"  enctype="multipart/form-data")
+                        .col-md-12
+                            input.form-control(type='text', name='tenSanPham', placeholder='Tên sản phẩm', required=true)
+                            .invalid-feedback.invalid-feedback-tenSanPham-missed Trường Tên sản phẩm không thể để trống!
+                        .col-md-12
+                            input.form-control(type='text', name='giaTien', placeholder='Giá tiền', required=true)
+                            .invalid-feedback.invalid-feedback-giaTien-missed Trường Giá tiền không thể để trống!
+                        .col-md-12
+                            select.form-select.mt-3(name='idDanhMuc' required=true)
+                                option(selected=true, value='') Danh mục
+                                each category in categories 
+                                    option(value=category.idDanhMuc) #{category.tenDanhMuc}
+                        .col-md-12
+                            input.form-control.mt-3(
+                                type="number"
+                                id="soLuong"
+                                name="soLuong"
+                                placeholder='Nhập số lượng'
+                                min=1
+                            )
+                            .invalid-feedback.invalid-feedback-soLuong-missed Trường Số lượng không thể để trống!
+                        .col-md-12.mt-3
+                            textarea(
+                                    type="text"
+                                    class="form-control"
+                                    name="moTa"
+                                    rows="5"
+                                    textEditor-tinymce
+                                    placeholder="Mô tả"
+                                )
+                        .col-md-12.mt-3
+                            div(class="custom-file-container" data-upload-id="upload-images"  name="images" )
+                        .form-button.mt-3
+                            button#submit.btn.btn-primary(type='submit') Tạo món ăn

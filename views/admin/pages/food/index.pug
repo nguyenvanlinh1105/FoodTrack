@@ -1,0 +1,53 @@
+extends ../../layouts/default.pug
+block content 
+    .container-fluid.mt-4
+      .d-sm-flex.align-items-center.justify-content-between.mb-4
+          h1.h3.mb-2.text-gray-800 Bảng quản lý món ăn
+          a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='/admin/management/food/create')
+            i.fas.fa-utensils.fa-sm.text-white-50
+            |  Tạo món ăn mới
+      // Page Heading
+      p.mb-4
+        | Bảng này giúp quản lý các món ăn hiện có trong App 
+      // DataTales Example
+      .card.shadow.mb-4
+        .card-header.py-3
+          h6.m-0.font-weight-bold.text-primary Đồ ăn
+        .card-body
+          .table-responsive
+            table#dataTable.table.table-bordered(width='100%', cellspacing='0')
+              thead
+                tr
+                    th STT
+                    th Hình ảnh
+                    th Tên món ăn
+                    th Giá tiền
+                    th Số lượng
+                    th Trạng thái
+                    th Hành động
+              tbody
+                if(foods)
+                  each food, index in foods
+                    tr
+                      td= index + 1
+                      td
+                        img(src=`/uploads/foods/${food.image}`, alt=food.name, width='100px')
+                      td= food.name
+                      td= food.price
+                      td= food.quantity
+                      td
+                        if food.status
+                          span.text-success Hoạt động
+                        else
+                          span.text-danger Không hoạt động
+                      td
+                        a.btn.btn-primary.btn-sm(href=`/admin/management/food/edit/${food._id}`)
+                          i.fas.fa-edit
+                          |  Sửa
+                        a.btn.btn-danger.btn-sm(href=`/admin/management/food/delete/${food._id}`)
+                          i.fas.fa-trash
+                          |  Xóa
+                else
+                  tr
+                    td(colspan='7')
+                      p.text-center Chưa có món ăn nào

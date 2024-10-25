@@ -9,6 +9,7 @@ if (alertSuccess) {
 
 const staffForm = document.getElementById('staffForm');
 const categoryForm = document.getElementById('categoryForm');
+const foodForm = document.getElementById('foodForm');
 const arrayForm = [];
 if(staffForm ){
     arrayForm.push(staffForm);
@@ -16,6 +17,98 @@ if(staffForm ){
 if(categoryForm){
     arrayForm.push(categoryForm);
 }
+
+if(foodForm){
+    const upload = new FileUploadWithPreview.FileUploadWithPreview('upload-images',{
+        multiple:true,
+        maxFileCount:4,
+    });
+    const inputImages=foodForm.querySelector('#file-upload-with-preview-upload-images');
+    inputImages.setAttribute('name', 'images');
+
+    foodForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        if (typeof tinymce !== 'undefined') {
+            tinymce.triggerSave();
+        }//  Đồng bộ dữ liệu với textarea của tinymce
+
+        
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        upload.cachedFileArray.forEach((file, index) => {
+            formData.append('images', file);
+        });
+
+        // Ẩn tất cả thông báo lỗi trước khi kiểm tra
+        const errorAlerts = form.querySelectorAll('.invalid-feedback');
+        errorAlerts.forEach(alert => alert.classList.remove('active'));
+
+        let hasError = false; // Đánh dấu nếu có lỗi
+
+        // Kiểm tra từng trường dữ liệu
+        for (const [key, value] of Object.entries(data)) {
+            if (!value) { // Nếu trường trống
+                const errorAlert = form.querySelector(`.invalid-feedback-${key}-missed`);
+                if (errorAlert) {
+                    errorAlert.classList.add('active'); // Hiển thị thông báo lỗi
+                }
+                hasError = true;
+            }
+        }
+        if (hasError===true) return;
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+
+            if(result.code==400){
+                await Swal.fire({
+                    icon: "error",
+                    title: "Lỗi xảy ra",
+                    text: result.message,
+                });
+                location.reload();
+            }else{
+                await Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: result.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                location.reload();
+            }
+
+        } catch (error) {
+            await Swal.fire({
+                icon: "error",
+                title: "Lỗi xảy ra",
+                text: error.message,
+            });
+            location.reload();
+        }
+    });
+
+    // Lắng nghe sự kiện thay đổi input để ẩn lỗi khi nhập lại
+    const inputs = foodForm.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const errorAlert = input.closest('.col-md-12')?.querySelector('.invalid-feedback.active');
+            if (errorAlert) {
+                errorAlert.classList.remove('active');
+            }
+        });
+    });
+}
+
 
 if(arrayForm.length>0){
     arrayForm.forEach(formElement => {
@@ -25,12 +118,9 @@ if(arrayForm.length>0){
             if (typeof tinymce !== 'undefined') {
                 tinymce.triggerSave();
             }//  Đồng bộ dữ liệu với textarea của tinymce
-
             const form = event.target;
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-
-            console.log(data);
     
             // Ẩn tất cả thông báo lỗi trước khi kiểm tra
             const errorAlerts = form.querySelectorAll('.invalid-feedback');
@@ -48,11 +138,9 @@ if(arrayForm.length>0){
                     hasError = true;
                 }
             }
-    
             if (hasError===true) return;
     
             try {
-                console.log('Vào');
                 const response = await fetch(form.action, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -60,7 +148,6 @@ if(arrayForm.length>0){
                 });
                 
                 const result = await response.json();
-                console.log(result);
     
                 if(result.code==400){
                     await Swal.fire({
@@ -81,7 +168,12 @@ if(arrayForm.length>0){
                 }
     
             } catch (error) {
-                showMessage(`Có lỗi xảy ra: ${error.message}`, 'error');
+                await Swal.fire({
+                    icon: "error",
+                    title: "Lỗi xảy ra",
+                    text: error.message,
+                });
+                location.reload();
             }
         });
     
@@ -108,4 +200,6 @@ if(userAdmin){
         showLiItem.classList.toggle('show');
     })
 }
+
+ 
 
