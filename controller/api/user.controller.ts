@@ -19,16 +19,12 @@ export const login= async (req:Request,res:Response)=>{
             raw:true
         });
         if(!user){
-            res.json({
-                code:400,
-                message:'Tài khoản không tồn tại hoặc đã bị khoá',
-            })
+            res.status(404).json({message:"Tài khoản không tồn tại hoặc đã bị khoá"});
         }else{
             const isMatch=verifyPassword(matKhau,user['matKhau']);
             if(isMatch){
-                res.json({
-                    code:200,
-                    message:'Đăng nhập thành công',
+                res.status(200).json({
+                    message:"Đăng nhập thành công",
                     hoTen:user['hoTen'],
                     email:user['email'],
                     sdt:user['sdt'],
@@ -36,35 +32,22 @@ export const login= async (req:Request,res:Response)=>{
                     avatar:user['avatar']
                 })
             }else{
-                res.json({
-                    code:400,
-                    message:'Sai mật khẩu',
-                })
+                res.status(404).json({message:"Mật khẩu không chính xác"});
             }
         }
     } catch (error) {
-        res.json({
-            code:500,
-            message:'Lỗi server',
-            error:error.message,
-        })
+        res.status(500).json({message:"Lỗi server"});
     }
 }
 
 export const register=async(req:Request,res:Response)=>{
     const {hoTenNguoiDung,email,sdt,matKhau,gioiTinh}=req.body;
     if (!isValid.isValidEmail(email)) {
-        res.json({
-            code: 400,
-            message: `Email không hợp lệ`,
-        });
+        res.status(404).json({message:'Email không hợp lệ'});
         return;
     }
     if (!isValid.isValidPhone(sdt)) {
-        res.json({
-            code: 400,
-            message: `Số điện thoại không hợp lệ`,
-        });
+        res.status(404).json({message:'Số điện thoại không hợp lệ'});
         return;
     }
     try {
@@ -77,10 +60,7 @@ export const register=async(req:Request,res:Response)=>{
             raw:true
         });
         if(user){
-            res.json({
-                code:400,
-                message:'Tài khoản đã tôn tại!',
-            })
+            res.status(404).json({message:'Tài khoản đã tôn tại!'});
         }else{
             const newUser={
                 idNguoiDung:await generateNextId(NguoiDung,'ND'),
@@ -96,18 +76,10 @@ export const register=async(req:Request,res:Response)=>{
                 token:generateString.generateRandomString(30), // Tạo token ngẫu nhiên
             }
             const createdUser = await NguoiDung.create(newUser);
-            res.json({
-                code:200,
-                message: 'Đăng ký thành công!',
-
-            });
+            res.status(200).json({message: 'Đăng ký thành công!'});
         }
     } catch (error) {
-        res.json({
-            code:500,
-            message:'Lỗi server',
-            error:error.message,
-        })
+        res.status(500).json({message:'Lỗi server'});
     }
 
 }

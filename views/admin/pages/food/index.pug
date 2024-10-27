@@ -26,28 +26,44 @@ block content
                     th Trạng thái
                     th Hành động
               tbody
-                if(foods)
+                if(foods.length>0)
                   each food, index in foods
                     tr
                       td= index + 1
                       td
-                        img(src=`/uploads/foods/${food.image}`, alt=food.name, width='100px')
-                      td= food.name
-                      td= food.price
-                      td= food.quantity
+                        img.food-image(src=food.images, alt=food.name, width='100px')
+                      td #{food.tenSanPham}
+                      td #{food.giaTien}
+                      td #{food.soLuong}
                       td
-                        if food.status
-                          span.text-success Hoạt động
+                        if(food.trangThai=='active')
+                          a(href=`/admin/management/food/change-status/${food.slug}/inactive` class="badge badge-success"
+                                  food-status=`inactive`) Hoạt động
                         else
-                          span.text-danger Không hoạt động
+                          a(href=`/admin/management/food/change-status/${food.slug}/active` class="badge badge-danger"
+                              food-status=`active`) Dừng hoạt động
                       td
-                        a.btn.btn-primary.btn-sm(href=`/admin/management/food/edit/${food._id}`)
+                        a.btn.btn-secondary.btn-sm(href=`/${prefixAdmin}/management/food/detail/${food.slug}`)
+                          i.fas.fa-eye
+                          |  Chi tiết
+                        a.btn.btn-warning.btn-sm.ml-1(href=`/${prefixAdmin}/management/food/edit/${food.slug}`)
                           i.fas.fa-edit
                           |  Sửa
-                        a.btn.btn-danger.btn-sm(href=`/admin/management/food/delete/${food._id}`)
+                        a.btn.btn-danger.btn-sm.ml-1(href=`/${prefixAdmin}/management/food/delete/${food.slug}`)
                           i.fas.fa-trash
                           |  Xóa
                 else
                   tr
                     td(colspan='7')
                       p.text-center Chưa có món ăn nào
+        nav.ml-3
+          ul(class="pagination")
+            if(pagination.currentPage > 1)
+              li(class="page-item")
+                a(class="page-link" href=`/admin/management/food?page=${pagination.currentPage-1}`) Trang trước  
+            - for (let index = 1; index <= pagination.totalPages; index++) 
+                li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
+                  a(class="page-link" href=`/admin/management/food?page=${index}`) #{index}
+            if(pagination.currentPage < pagination.totalPages)
+              li(class="page-item")
+                a(class="page-link" href=`/admin/management/food?page=${pagination.currentPage+1}`) Trang sau

@@ -8,19 +8,29 @@ import generateNextId from '../../helper/generateNextId.helper';
 import { paginationGeneral } from '../../helper/pagination.helper';
 
 export const index= async(req: Request, res: Response)=>{
+    const pagination = await paginationGeneral(req,4,SanPham);
     const foods=await SanPham.findAll({
         where:{
             deleted:0,
             trangThai:'active'
         }
-        ,raw:true
+        ,raw:true,
+        limit:pagination.limitItems,
+        offset: pagination.skip
     })
     for(const food of foods){
         food['images']=JSON.parse(food['images'])[0];
+        food['giaTien']=parseFloat(food['giaTien']).toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
     }
-    console.log(foods);
     res.render('admin/pages/food/index',{
         title:'Quản lý món ăn',
+        foods:foods,
+        pagination:pagination
     })
 }
 

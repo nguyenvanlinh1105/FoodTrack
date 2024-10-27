@@ -31,19 +31,16 @@ block content
                       td #{category.tenDanhMuc}
                       td !{category.moTa}
                       td #{category.ngayTao}
-                      td 
-                        a(
-                            class="btn btn-secondary btn-sm"
-                            href=`/${prefixAdmin}/accounts/detail/${category.slug}`
-                        ) Chi tiết
-                        a(
-                            class="btn btn-warning btn-sm ml-1"
-                            href=`/${prefixAdmin}/accounts/edit/${category.slug}`
-                        ) Sửa
-                        button(
-                            class="btn btn-danger btn-sm ml-1"
-                            button-delete=`/${prefixAdmin}/accounts/delete/${category.slug}`
-                        ) Xóa
+                      td
+                        a.btn.btn-secondary.btn-sm(href=`/${prefixAdmin}/management/category/detail/${category.slug}`)
+                          i.fas.fa-eye
+                          |  Chi tiết
+                        a.btn.btn-warning.btn-sm.ml-1(href=`/${prefixAdmin}/management/category/edit/${category.slug}`)
+                          i.fas.fa-edit
+                          |  Sửa
+                        a.btn.btn-danger.btn-sm.ml-1(href=`/${prefixAdmin}/management/category/delete/${category.slug}`)
+                          i.fas.fa-trash
+                          |  Xóa 
                 else
                   tr
                     td(colspan='5')

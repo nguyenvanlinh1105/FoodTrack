@@ -11269,3 +11269,15 @@
   width: 100%;
 }
   
+.food-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* Đảm bảo ảnh vừa khung mà không bị méo */
+  border-radius: 8px; /* Bo góc cho đẹp */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+  transition: transform 0.3s; /* Hiệu ứng khi hover */
+}
+
+.food-image:hover {
+  transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}

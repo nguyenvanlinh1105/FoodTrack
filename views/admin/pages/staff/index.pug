@@ -42,18 +42,15 @@ block content
                               staff-id=`` staff-status=`active`) Dừng hoạt động
                       td #{staff.gioiTinh}
                       td 
-                        a(
-                            class="btn btn-secondary btn-sm"
-                            href=`/${prefixAdmin}/accounts/detail/`
-                        ) Chi tiết
-                        a(
-                            class="btn btn-warning btn-sm ml-1"
-                            href=`/${prefixAdmin}/accounts/edit/`
-                        ) Sửa
-                        button(
-                            class="btn btn-danger btn-sm ml-1"
-                            button-delete=`/${prefixAdmin}/accounts/remove/`
-                        ) Xóa
+                        a.btn.btn-secondary.btn-sm(href=`/${prefixAdmin}/accounts/detail/${staff.token}`)
+                          i.fas.fa-eye
+                          |  Chi tiết
+                        a.btn.btn-warning.btn-sm.ml-1(href=`/${prefixAdmin}/accounts/edit/${staff.token}`)
+                          i.fas.fa-edit
+                          |  Sửa
+                        a.btn.btn-danger.btn-sm.ml-1(href=`/${prefixAdmin}/accounts/delete/${staff.token}`)
+                          i.fas.fa-trash
+                          |  Xóa
                 else
                   tr
                     td(colspan='7')
