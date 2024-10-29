@@ -7,16 +7,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Adapter.recyclerView_ban_chay_adapter;
 
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
+import com.google.gson.JsonSyntaxException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,33 +121,49 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         listProduct = new ArrayList<>();
 
         rvBanChay = view.findViewById(R.id.recyclerView_ban_chay_homepage);
-        InitializeData();
-        GridLayoutManager layoutManager
-                = new GridLayoutManager(requireContext(), 1);
-        rvBanChay.setLayoutManager(layoutManager);
-        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), listProduct);
-        rvBanChay.setAdapter(dealAdapter);
 
 
-        //GetMonBanChay();
+//        InitializeData();
+//        GridLayoutManager layoutManager
+//                = new GridLayoutManager(requireContext(), 1);
+//        rvBanChay.setLayoutManager(layoutManager);
+//        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), listProduct);
+//        rvBanChay.setAdapter(dealAdapter);
+
+
+        GetMonBanChay();
 
     }
 
-    private void GetMonBanChay() {
+    private void GetMonBanChay(){
         APIService.API_SERVICE.getListSanphamHomePage_BanChay().enqueue(new Callback<List<SanPhamModel>>() {
             @Override
             public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
-                if(response.isSuccessful()&&response.body()!=null && !response.body().isEmpty()){
-                    List<SanPhamModel> listMonBanChay = response.body();
-                    UpdateRecyclerView(listMonBanChay);
-                }else{
-                    UseFallbackData();
+                if (response.isSuccessful() && response.body() != null) {
+                    List<SanPhamModel> listSanPham = response.body();
+                    Log.d("API_SUCCESS", "Data size: " + listSanPham.size());
+                    UpdateRecyclerView(listSanPham);
+                } else {
+                    Log.e("API_ERROR", "Response not successful: " + response.code());
+                    if (response.errorBody() != null) {
+                        try {
+                            Log.e("API_ERROR", "Error body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
-                UseFallbackData();
+                Log.e("API_ERROR", "Error: " + t.getMessage());
+                if (t instanceof JsonSyntaxException) {
+                    JsonSyntaxException jsonError = (JsonSyntaxException) t;
+                    Log.e("API_ERROR", "JSON Error: " + jsonError.getCause());
+                }
+                t.printStackTrace();
+                Toast.makeText(getContext(), "Lỗi dữ liệu: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -160,7 +180,7 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         GridLayoutManager layoutManager
                 = new GridLayoutManager(requireContext(), 1);
         rvBanChay.setLayoutManager(layoutManager);
-        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), listProduct);
+        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), data);
         rvBanChay.setAdapter(dealAdapter);
     }
 

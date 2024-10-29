@@ -18,7 +18,7 @@ import retrofit2.http.Query;
 public interface APIService {
 
   //    linkAPI root:
-    String url ="https://387b-2a09-bac5-d468-e6-00-17-34b.ngrok-free.app/";
+    String url ="https://6a35-2a09-bac5-d46f-16dc-00-247-56.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -36,10 +36,10 @@ public interface APIService {
 
     // Home_Page
     // dùng để list sản phẩm deal hời
-    @GET("sanpham/dealhoi")
+    @GET("food/bargain")
     Call<List<SanPhamModel>> getListSanphamHomePage_DealHoi();
     // dùng để list sản phẩm banchay
-    @GET("sanpham/banchay")
+    @GET("/food/bestseller")
     Call<List<SanPhamModel>> getListSanphamHomePage_BanChay();
   // dùng để list sản phẩm monmoi
     @GET("sanpham/monmoi")
