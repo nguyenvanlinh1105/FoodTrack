@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
-import com.example.foodtrack.Model.SanPhamAPIModel;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
@@ -134,8 +134,8 @@ public class fragment_product_detail_API extends Fragment {
         InitializeData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         rvProductDetail.setLayoutManager(layoutManager);
-        recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct);
-        rvProductDetail.setAdapter(dealAdapter);
+//        recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct);
+//        rvProductDetail.setAdapter(dealAdapter);
     }
 
     private void ControlButton() {

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Fragment.fragment_product_detail;
+import com.example.foodtrack.Fragment.fragment_product_detail_API;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.R;
 import com.google.android.material.card.MaterialCardView;
@@ -61,11 +62,11 @@ class recyclerView_deal_hoi_API_adapter extends RecyclerView.Adapter<recyclerVie
                 bundle.putString("description", "Mô tả món ăn/đồ uống");
 //                bundle.putInt("image", product.getImages());
                 bundle.putString("image", product.getImages());
-                fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
+                fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
                         holder.title.getText().toString(),
                         product.getGiaTien(),
-                        "Mô tả món ăn/đồ uống"
-//                        product.getImages()
+                        "Mô tả món ăn/đồ uống",
+                        product.getImages()
                 );
                 MainActivity mainActivity = (MainActivity) context;
                 if (mainActivity != null)
