@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel; // Import ChiTietDonHangAPIModel
-import com.example.foodtrack.Model.SanPhamAPIModel; // Import SanPhamAPIModel
+
+ // Import SanPhamAPIModel
 import com.example.foodtrack.R;
 
 import java.text.NumberFormat;

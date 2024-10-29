@@ -1,4 +1,4 @@
-package com.example.foodtrack.Adapter.API;
+package com.example.foodtrack.Adapter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodtrack.Activity.MainActivity;
-import com.example.foodtrack.Fragment.fragment_product_detail;
 import com.example.foodtrack.Fragment.fragment_product_detail_API;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.R;
@@ -23,7 +22,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-class recyclerView_deal_hoi_API_adapter extends RecyclerView.Adapter<recyclerView_deal_hoi_API_adapter.MyViewHolder> {
+public class recyclerView_deal_hoi_API_adapter extends RecyclerView.Adapter<recyclerView_deal_hoi_API_adapter.MyViewHolder> {
 
     Context context;
     List<SanPhamAPIModel> list;

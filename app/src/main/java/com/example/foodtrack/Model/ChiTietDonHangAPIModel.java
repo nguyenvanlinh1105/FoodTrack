@@ -1,5 +1,7 @@
 package com.example.foodtrack.Model;
 
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
+
 public class ChiTietDonHangAPIModel {
     private String idChiTietDonHang;
     private String idSanPham;

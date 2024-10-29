@@ -1,7 +1,7 @@
 package com.example.foodtrack.API;
 
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.NguoiDungModel;
-import com.example.foodtrack.Model.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +19,7 @@ import retrofit2.http.Query;
 public interface APIService {
 
   //    linkAPI root:
-    String url ="https://6a35-2a09-bac5-d46f-16dc-00-247-56.ngrok-free.app/";
+    String url ="https://ca77-2405-4802-69c1-7630-797d-e71-e718-22af.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -38,17 +38,17 @@ public interface APIService {
     // Home_Page
     // dùng để list sản phẩm deal hời
     @GET("food/bargain")
-    Call<List<SanPhamModel>> getListSanphamHomePage_DealHoi();
+    Call<List<SanPhamAPIModel>> getListSanphamHomePage_DealHoi();
     // dùng để list sản phẩm banchay
     @GET("/food/bestseller")
-    Call<List<SanPhamModel>> getListSanphamHomePage_BanChay();
+    Call<List<SanPhamAPIModel>> getListSanphamHomePage_BanChay();
   // dùng để list sản phẩm monmoi
     @GET("sanpham/monmoi")
-    Call<List<SanPhamModel>> getListSanphamHomePage_MonMoi();
+    Call<List<SanPhamAPIModel>> getListSanphamHomePage_MonMoi();
 
     // Explore
   // dùng để lấy các món ăn
-    @GET("sanpham/monan")
+    @GET("food/new")
     Call<List<SanPhamAPIModel>> getListMonAn_Explore();
     // dùng đẻ lấy các thức uống
     @GET("sanpham/douong")

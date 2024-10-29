@@ -22,6 +22,7 @@ import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.list_drink_adapter;
@@ -191,19 +192,20 @@ public class Drink_fragment extends Fragment {
 
 
     private void GetDoUong(){
-        APIService.API_SERVICE.getListDoUong_Explore().enqueue(new Callback<List<SanPhamModel>>() {
+        APIService.API_SERVICE.getListDoUong_Explore().enqueue(new Callback<List<SanPhamAPIModel>>() {
             @Override
-            public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
+            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if(response.isSuccessful()&& response.body()!=null &&!response.body().isEmpty()){
-                    List<SanPhamModel> listUongDo_explore = response.body();
-                    UpdateRecyclerView(listUongDo_explore);
+                    List<SanPhamAPIModel> listUongDo_explore = response.body();
+//                    list_drink_adapter listAdapter = new list_drink_adapter_(getContext(), arrayListDrink);
+//                    listView_drink.setAdapter(listAdapter);
                 }else{
                     UseFallbackData();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
+            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
                 UseFallbackData();
             }
         });

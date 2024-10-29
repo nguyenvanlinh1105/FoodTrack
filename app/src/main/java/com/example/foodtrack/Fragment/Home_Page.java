@@ -21,8 +21,10 @@ import android.widget.Toast;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.recyclerView_deal_hoi_API_adapter;
 import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
 import com.example.foodtrack.Adapter.viewPager_mon_moi_ban_chay_home_page_adapter;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.google.android.material.tabs.TabLayout;
@@ -211,13 +213,17 @@ public class Home_Page extends Fragment {
     }
 
     private void GetDealHoi(){
-        APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamModel>>() {
+        APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamAPIModel>>() {
             @Override
-            public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
+            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<SanPhamModel> listSanPhamDeaHoi = response.body();
+                    List<SanPhamAPIModel> listSanPhamDeaHoi = response.body();
                     Log.d("API_SUCCESS", "Data size: " + listSanPhamDeaHoi.size());
-                    UpdateRecyclerView(listSanPhamDeaHoi);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                    rvDealHoi.setLayoutManager(layoutManager);
+                    recyclerView_deal_hoi_API_adapter dealAdapter = new recyclerView_deal_hoi_API_adapter(getContext(), listSanPhamDeaHoi);
+                    rvDealHoi.setAdapter(dealAdapter);
+
                 } else {
                     UseFallbackData();
                     Log.e("API_ERROR", "Response not successful: " + response.code());
@@ -232,8 +238,9 @@ public class Home_Page extends Fragment {
                 }
             }
 
+
             @Override
-            public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
+            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
                 Log.e("API_ERROR", "Error: " + t.getMessage());
                 if (t instanceof JsonSyntaxException) {
                     JsonSyntaxException jsonError = (JsonSyntaxException) t;
