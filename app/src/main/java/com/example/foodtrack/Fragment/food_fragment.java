@@ -195,7 +195,7 @@ public class food_fragment extends Fragment {
         chatIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent chat = new Intent(getActivity(),  list_chat_user.class);
+                Intent chat = new Intent(getActivity(),list_chat_user.class);
                 startActivity(chat);
             }
         });
