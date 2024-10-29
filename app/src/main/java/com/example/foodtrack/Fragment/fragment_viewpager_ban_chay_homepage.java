@@ -14,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.foodtrack.API.APIService;
+import com.example.foodtrack.Adapter.recyclerView_ban_chay_API_adapter;
 import com.example.foodtrack.Adapter.recyclerView_ban_chay_adapter;
 
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.google.gson.JsonSyntaxException;
@@ -136,13 +138,14 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
     }
 
     private void GetMonBanChay(){
-        APIService.API_SERVICE.getListSanphamHomePage_BanChay().enqueue(new Callback<List<SanPhamModel>>() {
+        APIService.API_SERVICE.getListSanphamHomePage_BanChay().enqueue(new Callback<List<SanPhamAPIModel>>() {
             @Override
-            public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
+            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<SanPhamModel> listSanPham = response.body();
+                    List<SanPhamAPIModel> listSanPham = response.body();
                     Log.d("API_SUCCESS", "Data size: " + listSanPham.size());
-                    UpdateRecyclerView(listSanPham);
+//                    UpdateRecyclerView(listSanPham);
+                    UpdateRecyclerViewAPI(listSanPham);
                 } else {
                     Log.e("API_ERROR", "Response not successful: " + response.code());
                     if (response.errorBody() != null) {
@@ -156,7 +159,7 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
+            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
                 Log.e("API_ERROR", "Error: " + t.getMessage());
                 if (t instanceof JsonSyntaxException) {
                     JsonSyntaxException jsonError = (JsonSyntaxException) t;
@@ -181,6 +184,14 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
                 = new GridLayoutManager(requireContext(), 1);
         rvBanChay.setLayoutManager(layoutManager);
         recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), data);
+        rvBanChay.setAdapter(dealAdapter);
+    }
+
+    private void UpdateRecyclerViewAPI(List<SanPhamAPIModel> ApiData){
+        GridLayoutManager layoutManager
+                = new GridLayoutManager(requireContext(), 1);
+        rvBanChay.setLayoutManager(layoutManager);
+        recyclerView_ban_chay_API_adapter dealAdapter = new recyclerView_ban_chay_API_adapter(getContext(), ApiData);
         rvBanChay.setAdapter(dealAdapter);
     }
 

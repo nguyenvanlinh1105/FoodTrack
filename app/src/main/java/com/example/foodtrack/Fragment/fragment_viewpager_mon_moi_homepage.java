@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 
 
 import com.example.foodtrack.API.APIService;
+import com.example.foodtrack.Adapter.recyclerView_ban_chay_API_adapter;
+import com.example.foodtrack.Adapter.recyclerView_mon_moi_API_adapter;
 import com.example.foodtrack.Adapter.recyclerView_mon_moi_adapter;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
@@ -116,19 +119,21 @@ public class fragment_viewpager_mon_moi_homepage extends Fragment {
 
     }
     private void GetMonMoi() {
-        APIService.API_SERVICE.getListSanphamHomePage_MonMoi().enqueue(new Callback<List<SanPhamModel>>() {
+        APIService.API_SERVICE.getListSanphamHomePage_MonMoi().enqueue(new Callback<List<SanPhamAPIModel>>() {
             @Override
-            public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
+            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if(response.isSuccessful()&&response.body()!=null && !response.body().isEmpty()){
-                    List<SanPhamModel> listMonBanChay = response.body();
-                    UpdateRecyclerView(listMonBanChay);
+                    List<SanPhamAPIModel> listMonBanChay = response.body();
+//                    UpdateRecyclerView(listMonBanChay);
+                    UpdateRecyclerViewAPI(listMonBanChay);
+
                 }else{
                     UseFallbackData();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
+            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
                 UseFallbackData();
             }
         });
@@ -147,6 +152,14 @@ public class fragment_viewpager_mon_moi_homepage extends Fragment {
                 = new GridLayoutManager(requireContext(),1);
         rvMonMoi.setLayoutManager(layoutManager);
         recyclerView_mon_moi_adapter dealAdapter = new recyclerView_mon_moi_adapter(getContext(), listProduct);
+        rvMonMoi.setAdapter(dealAdapter);
+    }
+
+    private void UpdateRecyclerViewAPI(List<SanPhamAPIModel> ApiData){
+        GridLayoutManager layoutManager
+                = new GridLayoutManager(requireContext(), 1);
+        rvMonMoi.setLayoutManager(layoutManager);
+        recyclerView_mon_moi_API_adapter dealAdapter = new recyclerView_mon_moi_API_adapter(getContext(), ApiData);
         rvMonMoi.setAdapter(dealAdapter);
     }
 }

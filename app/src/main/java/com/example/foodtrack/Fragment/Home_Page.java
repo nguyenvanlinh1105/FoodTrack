@@ -223,6 +223,7 @@ public class Home_Page extends Fragment {
                     rvDealHoi.setLayoutManager(layoutManager);
                     recyclerView_deal_hoi_API_adapter dealAdapter = new recyclerView_deal_hoi_API_adapter(getContext(), listSanPhamDeaHoi);
                     rvDealHoi.setAdapter(dealAdapter);
+//                    Log.d("Text.....", listSanPhamDeaHoi.get(0).getImages());
 
                 } else {
                     UseFallbackData();
