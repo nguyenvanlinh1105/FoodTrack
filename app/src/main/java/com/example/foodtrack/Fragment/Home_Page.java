@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
@@ -25,7 +27,9 @@ import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.JsonSyntaxException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,16 +215,32 @@ public class Home_Page extends Fragment {
             @Override
             public void onResponse(Call<List<SanPhamModel>> call, Response<List<SanPhamModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<SanPhamModel> listSanPhamDeaHoi = response.body(); // Lấy danh sách sản phẩm
+                    List<SanPhamModel> listSanPhamDeaHoi = response.body();
+                    Log.d("API_SUCCESS", "Data size: " + listSanPhamDeaHoi.size());
                     UpdateRecyclerView(listSanPhamDeaHoi);
-                }else{
+                } else {
                     UseFallbackData();
+                    Log.e("API_ERROR", "Response not successful: " + response.code());
+                    if (response.errorBody() != null) {
+                        try {
+                            Log.e("API_ERROR", "Error body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    
                 }
             }
 
             @Override
             public void onFailure(Call<List<SanPhamModel>> call, Throwable t) {
-                UseFallbackData();
+                Log.e("API_ERROR", "Error: " + t.getMessage());
+                if (t instanceof JsonSyntaxException) {
+                    JsonSyntaxException jsonError = (JsonSyntaxException) t;
+                    Log.e("API_ERROR", "JSON Error: " + jsonError.getCause());
+                }
+                t.printStackTrace();
+                Toast.makeText(getContext(), "Lỗi dữ liệu: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

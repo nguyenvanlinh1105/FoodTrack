@@ -99,35 +99,38 @@ public class Login extends AppCompatActivity {
                     editor.apply();
 
                 }
-                Intent home = new Intent(Login.this, MainActivity.class);
-                startActivity(home);
-                finish();
+//                Intent home = new Intent(Login.this, MainActivity.class);
+//                startActivity(home);
+//                finish();
                 // comment để pass login
 
-//                if (email.isEmpty() || password.isEmpty()) {
-//                    Toast.makeText(Login.this, "Vui lòng nhập email và password trước khi nhấn đăng nhập", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    // hàm login
-//                    GetUserToLogin(userModel);
-//
-//                }
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(Login.this, "Vui lòng nhập email và password trước khi nhấn đăng nhập", Toast.LENGTH_SHORT).show();
+                } else {
+                    // hàm login
+                    GetUserToLogin(userModel);
+
+                }
 
             }
         });
 
     }
-    private void GetUserToLogin(NguoiDungModel userModel){
+    private void GetUserToLogin(NguoiDungModel userModel) {
         APIService.API_SERVICE.GetUserToLogin(userModel).enqueue(new Callback<NguoiDungModel>() {
             @Override
             public void onResponse(Call<NguoiDungModel> call, Response<NguoiDungModel> response) {
-                NguoiDungModel responseUserModel = response.body();
-                if (responseUserModel != null && responseUserModel.getCode() == 200) {
-                    Intent home = new Intent(Login.this, MainActivity.class);
-                    startActivity(home);
-                    finish();
+                if (response.code() == 200) { // Kiểm tra status code
+                    NguoiDungModel responseUserModel = response.body();
+                    if (responseUserModel != null && "Đăng nhập thành công".equals(responseUserModel.getMessage())) {
+                        Intent home = new Intent(Login.this, MainActivity.class);
+                        startActivity(home);
+                        finish();
+                    } else {
+                        Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
+                    }
                 } else {
-
-                    Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this, "Đăng nhập thất bại với mã lỗi " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -137,6 +140,7 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
 
 
 
