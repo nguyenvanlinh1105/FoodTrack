@@ -1,6 +1,7 @@
 package com.example.foodtrack.API;
 
 import com.example.foodtrack.Model.NguoiDungModel;
+import com.example.foodtrack.Model.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,14 +49,14 @@ public interface APIService {
     // Explore
   // dùng để lấy các món ăn
     @GET("sanpham/monan")
-    Call<List<SanPhamModel>> getListMonAn_Explore();
+    Call<List<SanPhamAPIModel>> getListMonAn_Explore();
     // dùng đẻ lấy các thức uống
     @GET("sanpham/douong")
-    Call<List<SanPhamModel>>getListDoUong_Explore();
+    Call<List<SanPhamAPIModel>>getListDoUong_Explore();
 
     // Tìm sản phẩm chi tiết
     @GET("sanpham/{id}")
-    Call<SanPhamModel>getChiTietSanPham(@Query("idSanPham")String idSanPham);
+    Call<SanPhamAPIModel>getChiTietSanPham(@Query("idSanPham")String idSanPham);
 
 
 }
