@@ -1,8 +1,7 @@
-package com.example.foodtrack.Adapter;
+package com.example.foodtrack.Adapter.API;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Fragment.fragment_product_detail;
-import com.example.foodtrack.Model.SanPhamModel;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.R;
 import com.google.android.material.card.MaterialCardView;
 
@@ -23,12 +22,12 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-  class recyclerView_deal_hoi_API_adapter extends RecyclerView.Adapter<recyclerView_deal_hoi_API_adapter.MyViewHolder> {
+class recyclerView_deal_hoi_API_adapter extends RecyclerView.Adapter<recyclerView_deal_hoi_API_adapter.MyViewHolder> {
 
     Context context;
-    List<SanPhamModel> list;
+    List<SanPhamAPIModel> list;
 
-    public recyclerView_deal_hoi_API_adapter(Context context, List<SanPhamModel> list) {
+    public recyclerView_deal_hoi_API_adapter(Context context, List<SanPhamAPIModel> list) {
         this.context = context;
         this.list = list;
     }
@@ -43,7 +42,7 @@ import java.util.Locale;
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        SanPhamModel product = list.get(position);
+        SanPhamAPIModel product = list.get(position);
         holder.title.setText(product.getTenSanPham());
 
         NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
@@ -60,12 +59,13 @@ import java.util.Locale;
                 bundle.putString("title",product.getTenSanPham());
                 bundle.putDouble("price",product.getGiaTien());
                 bundle.putString("description", "Mô tả món ăn/đồ uống");
-              ///  bundle.putInt("image", product.getImages());
+//                bundle.putInt("image", product.getImages());
+                bundle.putString("image", product.getImages());
                 fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
                         holder.title.getText().toString(),
                         product.getGiaTien(),
-                        "Mô tả món ăn/đồ uống",
-                        product.getImages()
+                        "Mô tả món ăn/đồ uống"
+//                        product.getImages()
                 );
                 MainActivity mainActivity = (MainActivity) context;
                 if (mainActivity != null)

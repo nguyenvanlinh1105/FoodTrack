@@ -1,7 +1,11 @@
-package com.example.foodtrack.Model;
+package com.example.foodtrack.Model.API;
+
+import com.example.foodtrack.Model.BinhLuanSanPhamModel;
+import com.example.foodtrack.Model.ChiTietDonHangModel;
+import com.example.foodtrack.Model.DanhMucModel;
+import com.example.foodtrack.Model.SanPhamYeuThichModel;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class SanPhamAPIModel {
