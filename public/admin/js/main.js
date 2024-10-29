@@ -65,28 +65,34 @@ if(foodForm){
             const response = await fetch(form.action, {
                 method: 'POST',
                 body: formData
-            });
-            
-            const result = await response.json();
-
-            if(result.code==400){
-                await Swal.fire({
-                    icon: "error",
-                    title: "Lỗi xảy ra",
-                    text: result.message,
-                });
-                location.reload();
-            }else{
-                await Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: result.message,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                location.reload();
-            }
-
+            })
+            .then(async (response) => {
+                const result = await response.json(); 
+                if (response.status === 404) {
+                    await Swal.fire({
+                        icon: "error",
+                        title: "Lỗi xảy ra",
+                        text: result.message,
+                    });
+                    location.reload();
+                } else if (response.status === 500) {
+                    await Swal.fire({
+                        icon: "error",
+                        title: "Lỗi hệ thống",
+                        text: "Đã xảy ra lỗi khi tạo danh mục.",
+                    });
+                    location.reload();
+                } else {
+                    await Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: result.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    location.reload();
+                }
+            })
         } catch (error) {
             await Swal.fire({
                 icon: "error",
@@ -113,6 +119,7 @@ if(foodForm){
 if(arrayForm.length>0){
     arrayForm.forEach(formElement => {
         formElement.addEventListener('submit', async function (event) {
+            console.log('Vào');
             event.preventDefault();
 
             if (typeof tinymce !== 'undefined') {
@@ -139,34 +146,41 @@ if(arrayForm.length>0){
                 }
             }
             if (hasError===true) return;
-    
+            console.log('Tới đây');
             try {
-                const response = await fetch(form.action, {
+                fetch(form.action, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
-                });
+                })
+                .then(async (response) => {
+                    const result = await response.json(); 
+                    if (response.status === 404) {
+                        await Swal.fire({
+                            icon: "error",
+                            title: "Lỗi xảy ra",
+                            text: result.message,
+                        });
+                        location.reload();
+                    } else if (response.status === 500) {
+                        await Swal.fire({
+                            icon: "error",
+                            title: "Lỗi hệ thống",
+                            text: "Đã xảy ra lỗi khi tạo danh mục.",
+                        });
+                        location.reload();
+                    } else {
+                        await Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: result.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        location.reload();
+                    }
+                })
                 
-                const result = await response.json();
-    
-                if(result.code==400){
-                    await Swal.fire({
-                        icon: "error",
-                        title: "Lỗi xảy ra",
-                        text: result.message,
-                    });
-                    location.reload();
-                }else{
-                    await Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: result.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    location.reload();
-                }
-    
             } catch (error) {
                 await Swal.fire({
                     icon: "error",

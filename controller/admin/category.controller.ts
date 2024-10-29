@@ -34,7 +34,6 @@ export const create=async(req: Request, res: Response)=>{
         remove: /[`~!@#$%^&*()_+\-=[\]{};':"\\|,.<>\/?]+/g,
         replacement: '-'  // Replace all non-alphanumeric characters with the replacement character
     });
-    console.log(slug);
     const dataNewCategory={
         idDanhMuc: await generateNextId(DanhMuc,'DM'),
         tenDanhMuc:tenDanhMuc,
@@ -44,15 +43,8 @@ export const create=async(req: Request, res: Response)=>{
     }
     try {
         const newCategory= await DanhMuc.create(dataNewCategory);
-        res.json({
-            code:200,
-            message: 'Danh mục đã được tạo thành công!',
-        });
+        res.status(200).json({message:'Danh mục đã được tạo thành công!'});
     } catch (error) {
-        res.json({
-            code:500,
-            message: 'Đã xảy ra lỗi khi tạo danh mục.',
-            error: error.message
-        });
+        res.status(500).json('Đã xảy ra lỗi khi tạo danh mục.');
     }
 }

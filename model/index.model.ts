@@ -1,5 +1,5 @@
 // models/index.ts
-
+import sequelize from '../config/database';
 import VaiTro from './VaiTro.model';
 import NguoiDung from './NguoiDung.model';
 
@@ -16,4 +16,4 @@ NguoiDung.belongsTo(VaiTro, {
     as: 'Role' // Alias
 });
 
-export { VaiTro, NguoiDung };
+export {sequelize,VaiTro, NguoiDung };

@@ -8,6 +8,7 @@ import * as isValid from '../../helper/validField.helper';
 
 export const login= async (req:Request,res:Response)=>{
     const {email,matKhau} = req.body;
+    console.log(email,matKhau);
     try {
         const user= await NguoiDung.findOne({
             where:{

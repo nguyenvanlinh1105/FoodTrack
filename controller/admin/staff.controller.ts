@@ -22,13 +22,6 @@ export const pageStaff = async(req:Request,res:Response)=>{
             'ngaySinh', 'gioiTinh', 'avatar', 
             'trangThai', 'token'
         ],
-        include:[
-            {
-                model:allMode.VaiTro,
-                as: 'Role',
-                attributes:['tenVaiTro']
-            }
-        ],
         where:{
             idNguoiDung:{[Op.ne]:idUserCurrent},
             vaiTro:{[Op.in]:['VT001', 'VT003', 'VT004', 'VT005']}
@@ -55,31 +48,24 @@ export const createAdminPage=async(req:Request, res:Response)=>{
 }
 export const createAdmin=async(req:Request, res:Response)=>{
     if (!isValid.isValidEmail(req.body['email'])) {
-        res.json({
-            code: 400,
-            message: `Email không hợp lệ`,
-        });
+        res.status(404).json({message:'Email không hợp lệ'});
         return;
     }
     if (!isValid.isValidPhone(req.body['sdt'])) {
-        res.json({
-            code: 400,
-            message: `Số điện thoại không hợp lệ`,
-        });
+        res.status(404).json({message:'Số điện thoại không hợp lệ'});
         return;
     }
+    
     const userExist=await allMode.NguoiDung.findOne({
         where:{
             email:req.body['email'],
             trangThai:'active',
             vaiTro:['VT001','VT003','VT004','VT005']
-        }
+        },
+        raw:true
     });
     if(userExist){
-        res.json({
-            code:400,
-            message:'Tài khoản đã tồn tại trong hệ thống'
-        })
+        res.status(404).json({message:'Tài khoản đã tồn tại trong hệ thống'});
         return;
     }
     const newUser={
@@ -97,16 +83,9 @@ export const createAdmin=async(req:Request, res:Response)=>{
     }
     try {
         const createdUser = await allMode.NguoiDung.create(newUser);
-        res.json({
-            code:200,
-            message: 'Người dùng đã được tạo thành công!',
-        });
+        res.status(200).json({message: 'Tạo tài khoản thành công!'});
     } catch (error) {
-        res.json({
-            code:500,
-            message: 'Đã xảy ra lỗi khi tạo người dùng.',
-            error: error.message
-        });
+        res.status(500).json({message: 'Đã xảy ra lỗi khi tạo tài khoản.'});
     }
 }
 

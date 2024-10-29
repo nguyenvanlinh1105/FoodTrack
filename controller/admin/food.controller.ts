@@ -67,8 +67,5 @@ export const create = async(req: Request, res: Response)=>{
         slug:slug
     }
     const newFood=await SanPham.create(dataFood);
-    res.json({
-        code: 200,
-        message: 'Thêm món ăn thành công'
-    });
+    res.status(200).json({message:'Thêm món ăn thành công'});
 }
