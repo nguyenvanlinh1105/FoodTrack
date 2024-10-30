@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ReplaceFragment(new Home_Page());
 
+//            ReplaceFragment(new fragment_product_rating());
         }
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.home) {

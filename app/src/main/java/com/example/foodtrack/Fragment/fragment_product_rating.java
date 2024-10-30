@@ -44,6 +44,11 @@ public class fragment_product_rating extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeData();
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+//        initializeData();
     }
 
     private void initializeData(){
@@ -85,6 +90,9 @@ public class fragment_product_rating extends Fragment {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         rv_product_rating.setLayoutManager(layoutManager);
+//        LinearLayoutManager layoutManager
+//                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+//        rv_product_rating.setLayoutManager(layoutManager);
 //        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
 //        rv_product_rating.setAdapter(adapter);
         ControlButton();
@@ -94,6 +102,8 @@ public class fragment_product_rating extends Fragment {
     private void Mapping(View view){
         btn_back = view.findViewById(R.id.btn_back_product_rating);
         rv_product_rating = view.findViewById(R.id.recyclerView_product_rating);
+        btn_back = (ImageView) view.findViewById(R.id.btn_back_product_rating);
+//        rv_product_rating = (RecyclerView) view.findViewById(R.id.recyclerView_product_rating);
     }
 
     private void ControlButton(){
