@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.foodtrack.Fragment.Home_Page;
+import com.example.foodtrack.Fragment.fragment_product_rating;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Fragment.checkout;
 import com.example.foodtrack.databinding.ActivityMainBinding;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             ReplaceFragment(new Home_Page());
+//            ReplaceFragment(new fragment_product_rating());
         }
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.home) {
