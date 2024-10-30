@@ -48,7 +48,6 @@ public class recyclerView_product_rating_adapter extends RecyclerView.Adapter<re
         holder.date .setText(cmt.getNgayBinhLuan().toString());
         Glide.with(context).load(user.getAvatar()).into(holder.img);
         holder.content.setText(cmt.getNoiDung());
-
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_listview_sanpham);
         holder.itemView.startAnimation(animation);
     }
