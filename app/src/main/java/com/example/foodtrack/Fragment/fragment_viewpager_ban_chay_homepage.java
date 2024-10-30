@@ -108,6 +108,26 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         product5.setSoluongBH(1230);
         listProduct.add(product6);
 
+        SanPhamModel product7 = new SanPhamModel("Chuối tươi", 30000, R.drawable.icon_food2, "Chuối sứ");
+        product2.setSoluongBH(1220);
+        listProduct.add(product2);
+
+        SanPhamModel product8 = new SanPhamModel("Pallavi Biryani", 50000, R.drawable.pallavi_biryani, "Burger phô mai cổ điển");
+        product3.setSoluongBH(1241);
+        listProduct.add(product3);
+
+        SanPhamModel product9 = new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển");
+        product4.setSoluongBH(1239);
+        listProduct.add(product4);
+
+        SanPhamModel product10 = new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Burger phô mai cổ điển");
+        product5.setSoluongBH(1230);
+        listProduct.add(product5);
+
+        SanPhamModel product11 = new SanPhamModel("Mì Carbonara", 80000, R.drawable.carbonara, "Burger phô mai cổ điển");
+        product5.setSoluongBH(1230);
+        listProduct.add(product6);
+
 
     }
 
@@ -125,15 +145,17 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         rvBanChay = view.findViewById(R.id.recyclerView_ban_chay_homepage);
 
 
-//        InitializeData();
-//        GridLayoutManager layoutManager
-//                = new GridLayoutManager(requireContext(), 1);
-//        rvBanChay.setLayoutManager(layoutManager);
-//        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), listProduct);
-//        rvBanChay.setAdapter(dealAdapter);
+        InitializeData();
+        GridLayoutManager layoutManager
+                = new GridLayoutManager(requireContext(), 1);
+        rvBanChay.setLayoutManager(layoutManager);
+        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), listProduct);
+        rvBanChay.setAdapter(dealAdapter);
 
 
-        GetMonBanChay();
+
+        // lấy dữ liệu từ api
+        //GetMonBanChay();
 
     }
 

@@ -146,16 +146,16 @@ public class Home_Page extends Fragment {
 
 
 
-//        listProduct = new ArrayList<>();
-//
-//        InitializeData();
-//        LinearLayoutManager layoutManager
-//                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-//        rvDealHoi.setLayoutManager(layoutManager);
-//        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), listProduct );
-//        rvDealHoi.setAdapter(dealAdapter);
+        listProduct = new ArrayList<>();
 
-        GetDealHoi();
+        InitializeData();
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvDealHoi.setLayoutManager(layoutManager);
+        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), listProduct );
+        rvDealHoi.setAdapter(dealAdapter);
+
+    //    GetDealHoi();
 
         tlMonMoiBanChay = view.findViewById(R.id.tabLayout_banChay_monMoi_home_page);
         vpMonMoiBanChay = view.findViewById(R.id.view_pager_mon_moi_ban_chay_home_page);
