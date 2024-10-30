@@ -33,8 +33,7 @@ public class chang_password extends AppCompatActivity {
         btn_back_phone_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent phone_verify = new Intent(chang_password.this, forgot_password.class);
-                startActivity(phone_verify);
+                finish();
             }
         });
         btn_xacNhanDoi_MK.setOnClickListener(new View.OnClickListener() {
