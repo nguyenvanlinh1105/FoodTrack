@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.http.HEAD;
+
 public class fragment_product_rating extends Fragment {
 
     private ImageView btn_back;
