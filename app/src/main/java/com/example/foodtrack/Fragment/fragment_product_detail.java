@@ -170,6 +170,8 @@ public class fragment_product_detail extends Fragment {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
                    mainActivity.ReplaceFragment(new fragment_product_rating());
+                }else{
+
                 }
             }
         });
