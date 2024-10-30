@@ -110,8 +110,8 @@ public class fragment_product_rating extends Fragment {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         rv_product_rating.setLayoutManager(layoutManager);
-        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
-        rv_product_rating.setAdapter(adapter);
+//        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
+//        rv_product_rating.setAdapter(adapter);
         ControlButton();
         return view;
     }
