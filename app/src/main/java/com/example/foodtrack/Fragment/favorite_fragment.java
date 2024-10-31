@@ -109,14 +109,14 @@ public class favorite_fragment extends Fragment {
         favoriteSubTitle.add("Classic cheesburger");
         favoriteSubTitle.add("Classic cheesburger");
 
-        favoritePrice.add(50.000);
-        favoritePrice.add(50.000);
-        favoritePrice.add(50.000);
-        favoritePrice.add(50.000);
-        favoritePrice.add(50.000);
-        favoritePrice.add(50.000);
-        favoritePrice.add(50.000);
-        favoritePrice.add(50.000);
+        favoritePrice.add(50000.0);
+        favoritePrice.add(50000.0);
+        favoritePrice.add(50000.0);
+        favoritePrice.add(50000.0);
+        favoritePrice.add(50000.0);
+        favoritePrice.add(50000.0);
+        favoritePrice.add(50000.0);
+        favoritePrice.add(50000.0);
     }
 
     @Override

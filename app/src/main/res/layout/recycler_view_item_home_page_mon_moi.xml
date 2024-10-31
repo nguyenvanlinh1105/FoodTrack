@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/F3F3F3"
+    android:background="@color/white"
     android:id="@+id/container_item_ban_chay_mon_moi"
     tools:context=".Fragment.fragment_food_list">
 
@@ -16,25 +16,30 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_product"
+            android:background="@drawable/icon_food1"
             app:cardCornerRadius="17dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/item_image_product"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/food3">
 
-                <ImageView
-                    android:id="@+id/item_image_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/background_product"
-                    android:src="@drawable/pallavi_biryani"
-                    tools:layout_editor_absoluteX="-8dp"
-                    tools:layout_editor_absoluteY="-16dp" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/item_image_product"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:background="@drawable/background_product"-->
+<!--                    android:src="@drawable/food3"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout12"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
                 <LinearLayout
-                    android:layout_width="401dp"
-                    android:layout_height="106dp"
+                    android:id="@+id/linearLayout12"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingLeft="25dp"
@@ -59,7 +64,6 @@
                         android:id="@+id/item_price_product"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="3dp"
                         android:layout_weight="1.5"
                         android:fontFamily="sans-serif-medium"
                         android:text="50.000đ"
@@ -69,8 +73,8 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="3">
+                        android:layout_weight="3"
+                        android:paddingBottom="5dp">
 
                         <ImageView
                             android:id="@+id/imageView16"
@@ -82,21 +86,16 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/description_product_item"
-                            android:layout_width="266dp"
-                            android:layout_height="54dp"
+                            android:id="@+id/textView23"
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:layout_marginEnd="24dp"
-                            android:maxLines="5"
                             android:paddingLeft="5dp"
-                            android:paddingTop="4dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="4dp"
                             android:text="Phí môi trường của dự án FoodTrack được dùng để bù đắp vào lượng carbon thải ra khi giao hàng"
-                            android:textSize="10sp"
+                            android:textSize="7sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/btn_AddToCart_banChay_monMoi"
-                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toEndOf="@+id/imageView16"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,7 +103,7 @@
                             android:id="@+id/btn_AddToCart_banChay_monMoi"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_marginEnd="40dp"
+                            android:layout_marginEnd="13dp"
                             android:background="@drawable/green_btn_bg"
                             android:text="+"
                             android:textAlignment="center"

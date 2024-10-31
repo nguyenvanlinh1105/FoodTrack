@@ -1,6 +1,9 @@
 package com.example.foodtrack.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Fragment.fragment_product_detail;
 import com.example.foodtrack.Model.SanPhamModel;
@@ -50,18 +57,32 @@ public class recyclerView_mon_moi_adapter extends RecyclerView.Adapter<recyclerV
         holder.title.setText(product.getTenSanPham());
 
         NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
-        String formattedPrice= formatter.format(product.getGiaTien());
+        String formattedPrice = formatter.format(product.getGiaTien());
         formattedPrice = formattedPrice + "vnđ";
         holder.price.setText(formattedPrice);
 
-        Glide.with(context).load(product.getImages()).into(holder.img);
+//        Glide.with(context).load(product.getImages()).into(holder.img);
+        Glide.with(context)
+                .asBitmap()
+                .load(product.getImages())
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                    }
+
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        holder.img.setBackground(new BitmapDrawable(context.getResources(), resource));
+
+                    }
+                });
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("title",holder.title.getText().toString());
-                bundle.putString("price",holder.price.getText().toString());
+                bundle.putString("title", holder.title.getText().toString());
+                bundle.putString("price", holder.price.getText().toString());
                 bundle.putString("description", "Mô tả món ăn/đồ uống");
                 bundle.putInt("image", product.getImages());
                 fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
@@ -97,7 +118,8 @@ public class recyclerView_mon_moi_adapter extends RecyclerView.Adapter<recyclerV
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         FrameLayout container;
         TextView title, price, btn_AddToCart_banChay_monMoi;
-        ImageView img;
+        ConstraintLayout img;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.item_title_product);

@@ -6,252 +6,260 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:paddingLeft="5dp"
-    android:paddingTop="5dp"
-    android:paddingRight="5dp"
-    android:paddingBottom="5dp"
-
     tools:context=".Activity.Login">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="Đăng nhập tại đây"
-        android:textAlignment="center"
-        android:textColor="@color/primary_color"
-        android:textSize="28sp"
-        android:textStyle="bold"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="297dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="116dp"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="Chào mừng trở lại, chúng tôi đã nhớ bạn!"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:drawablePadding="10dp"
-        android:id="@+id/edtMail_login"
-        android:layout_width="360dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="224dp"
-        android:background="@drawable/edittext_conner"
-        android:drawableLeft="@drawable/icon_mail24"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="text"
-        android:padding="10dp"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/edtPassword_login"
-        android:layout_width="360dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/edittext_conner"
-        android:drawableRight="@drawable/icon_hide_password"
-        android:ems="10"
-        android:hint="Mật khẩu"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/edtMail_login"
-        app:layout_constraintStart_toStartOf="@+id/edtMail_login"
-        app:layout_constraintTop_toBottomOf="@+id/edtMail_login" />
-
-    <ImageView
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_back" />
-
-    <TextView
-        android:id="@+id/btnQuenMatKhau"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="5dp"
-        android:text="Quên mật khẩu?"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/edtPassword_login"
-        app:layout_constraintTop_toBottomOf="@+id/edtPassword_login" />
-
-    <TextView
-        android:id="@+id/btn_Login_TK"
-        android:layout_width="360dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/btn_primary_conner"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        android:text="Đăng nhập"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnQuenMatKhau" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="350dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Login_TK">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_weight="1"
-            android:background="#000000" />
-
-        <!-- Text in the center -->
-
-        <!-- Right Horizontal Line -->
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:text="Đăng nhập tại đây"
+            android:textAlignment="center"
+            android:textColor="@color/primary_color"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="330dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="Chào mừng trở lại, chúng tôi đã nhớ bạn!"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <EditText
+            android:id="@+id/edtMail_login"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/edittext_conner"
+            android:drawableLeft="@drawable/icon_mail24"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <EditText
+            android:id="@+id/edtPassword_login"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_conner"
+            android:drawableRight="@drawable/icon_hide_password"
+            android:ems="10"
+            android:hint="Mật khẩu"
+            android:inputType="textPassword"
             android:paddingLeft="10dp"
+            android:paddingTop="10dp"
             android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/edtMail_login"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintStart_toStartOf="@+id/edtMail_login"
+            app:layout_constraintTop_toBottomOf="@+id/edtMail_login" />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.029"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_back" />
+
+        <TextView
+            android:id="@+id/btnQuenMatKhau"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:text="Quên mật khẩu?"
+            android:textColor="@color/black"
             android:textSize="16sp"
-            android:text="Hoặc tiếp tục với"
-            android:textColor="@color/primary_color"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_weight="1"
-            android:background="#000000" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/edtPassword_login"
+            app:layout_constraintTop_toBottomOf="@+id/edtPassword_login" />
 
         <TextView
+            android:id="@+id/btn_Login_TK"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/btn_primary_conner"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:text="Đăng nhập"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnQuenMatKhau" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="280dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Login_TK">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="1"
+                android:background="#000000" />
+
+            <!-- Text in the center -->
+
+            <!-- Right Horizontal Line -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Hoặc tiếp tục với"
+                android:textColor="@color/primary_color"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="1"
+                android:background="#000000" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bạn chưa có tài khoản?"
-            android:textSize="16sp" />
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+            app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/btnDangKi_formLogin"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bạn chưa có tài khoản?"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/btnDangKi_formLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Đăng kí ngay!"
+                android:textColor="@color/primary_color"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="200dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <!-- Biểu tượng Google -->
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/input_search_conner"
+                android:padding="10dp"
+                android:src="@drawable/icon_mail" />
+
+            <!-- Biểu tượng Facebook -->
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/input_search_conner"
+                android:padding="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/icon_facebook24" />
+
+            <!-- Biểu tượng Apple -->
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/input_search_conner"
+                android:padding="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/icon_twitter24" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cb_nho_mat_khau_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đăng kí ngay!"
-            android:layout_marginLeft="5dp"
-            android:textColor="@color/primary_color"
-            android:textSize="16sp" />
-    </LinearLayout>
+            android:layout_marginTop="8dp"
+            android:text="Nhớ mật khẩu"
+            android:textSize="16sp"
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="200dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintStart_toStartOf="@+id/edtPassword_login"
+            app:layout_constraintTop_toBottomOf="@+id/edtPassword_login" />
 
-        <!-- Biểu tượng Google -->
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/input_search_conner"
-            android:padding="10dp"
-            android:src="@drawable/icon_mail" />
-
-        <!-- Biểu tượng Facebook -->
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/input_search_conner"
-            android:padding="10dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:src="@drawable/icon_facebook24" />
-
-        <!-- Biểu tượng Apple -->
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/input_search_conner"
-            android:padding="10dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:src="@drawable/icon_twitter24" />
-
-    </LinearLayout>
-
-    <CheckBox
-        android:id="@+id/cb_nho_mat_khau_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Nhớ mật khẩu"
-        android:textSize="16sp"
-        
-        app:layout_constraintStart_toStartOf="@+id/edtPassword_login"
-        app:layout_constraintTop_toBottomOf="@+id/edtPassword_login" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

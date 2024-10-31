@@ -1,7 +1,12 @@
 package com.example.foodtrack.Fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,9 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
 import com.example.foodtrack.Model.SanPhamModel;
@@ -119,7 +128,7 @@ public class fragment_product_detail extends Fragment {
             TextView titleView = view.findViewById(R.id.title_product_details);
             TextView priceView = view.findViewById(R.id.price_product_details);
             TextView descriptionView = view.findViewById(R.id.description_product_detail);
-            ImageView imageView = view.findViewById(R.id.image_product_details);
+            LinearLayout imageView = view.findViewById(R.id.image_product_details);
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
             String formattedPrice = formatter.format(price);
@@ -128,9 +137,20 @@ public class fragment_product_detail extends Fragment {
             titleView.setText(title);
             priceView.setText(formattedPrice);
             descriptionView.setText(description);
-            imageView.setImageResource(image);
+//            imageView.setImageResource(image);
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(image)
+                    .into(new CustomTarget<Bitmap>() {
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                        }
 
-            System.out.println("Gia trong product detail: " + price);
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            imageView.setBackground(new BitmapDrawable(getContext().getResources(), resource));
+                        }
+                    });
         }
 
         ControlButton();

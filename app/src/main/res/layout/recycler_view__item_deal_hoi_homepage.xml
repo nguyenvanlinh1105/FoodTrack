@@ -14,7 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:padding="20dp">
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +45,7 @@
                 android:paddingLeft="5dp"
                 android:text="Salad trái cây"
                 android:textColor="#9F2733"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +59,7 @@
                 android:paddingLeft="5dp"
                 android:text="K.lượng: 500g"
                 android:textColor="#929292"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +74,7 @@
                 android:paddingLeft="5dp"
                 android:text="60.000 vnđ"
                 android:textColor="@color/primary_color"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="67dp" />
         </LinearLayout>

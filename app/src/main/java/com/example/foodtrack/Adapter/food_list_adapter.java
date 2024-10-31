@@ -1,6 +1,9 @@
 package com.example.foodtrack.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
@@ -24,6 +31,7 @@ import java.util.Locale;
 
 public class food_list_adapter extends ArrayAdapter<SanPhamModel> {
     private Context context;
+
     public food_list_adapter(Context context, ArrayList<SanPhamModel> arraylistFood) {
         super(context, R.layout.fragment_food_drink_item, arraylistFood);
         this.context = context;
@@ -39,16 +47,30 @@ public class food_list_adapter extends ArrayAdapter<SanPhamModel> {
 
         TextView title = view.findViewById(R.id.item_title_product);
         TextView price = view.findViewById(R.id.item_price_product);
-        ImageView img = view.findViewById(R.id.item_image_product);
+        ConstraintLayout img = view.findViewById(R.id.item_image_product);
 //        TextView description = view.findViewById(R.id.description_product_item);
         TextView addToCartBtn = view.findViewById(R.id.btn_AddToCart_food_drink);
 
         if (food != null) {
-            img.setImageResource(food.getImages());
+//            img.setImageResource(food.getImages());
+            Glide.with(context)
+                    .asBitmap()
+                    .load(food.getImages())
+                    .into(new CustomTarget<Bitmap>() {
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                        }
+
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            img.setBackground(new BitmapDrawable(context.getResources(), resource));
+
+                        }
+                    });
             title.setText(food.getTenSanPham());
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
-            String formattedPrice= formatter.format(food.getGiaTien());
+            String formattedPrice = formatter.format(food.getGiaTien());
             formattedPrice = formattedPrice + "vnđ";
             price.setText(formattedPrice);
         }
@@ -60,7 +82,7 @@ public class food_list_adapter extends ArrayAdapter<SanPhamModel> {
             }
         });
 
-        Animation animation = AnimationUtils.loadAnimation(context,R.anim.scale_listview_sanpham);
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_listview_sanpham);
         view.startAnimation(animation);
 
         return view;

@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.example.foodtrack.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class favorite_list_adapter extends BaseAdapter {
 
@@ -62,7 +64,11 @@ public class favorite_list_adapter extends BaseAdapter {
         title.setText(favoriteTitle.get(i));
         subTitle.setText(favoriteSubTitle.get(i));
         img.setImageResource(favoriteImg.get(i));
-        price.setText(String.valueOf(favoritePrice.get(i))+"vnđ");
+        
+        NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
+        String formattedPrice = formatter.format(favoritePrice.get(i));
+        formattedPrice = formattedPrice + "vnđ";
+        price.setText(formattedPrice);
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override

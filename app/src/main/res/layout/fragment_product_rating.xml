@@ -5,21 +5,40 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Fragment.fragment_product_rating">
 
-    <TextView
-        android:id="@+id/textView17"
+    <LinearLayout
+        android:id="@+id/linearLayout13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:text="2 bình luận"
-        android:textColor="@color/material_dynamic_neutral50"
-        android:textSize="12sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+        <TextView
+            android:id="@+id/tv_so_luong_binh_luan_productRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:layout_marginRight="3dp"
+            android:text="2"
+            android:textColor="@color/material_dynamic_neutral50"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:text="bình luận"
+            android:textColor="@color/material_dynamic_neutral50"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/textView16"
@@ -90,20 +109,20 @@
         android:id="@+id/recyclerView_product_rating"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <LinearLayout
-        android:id="@+id/image_if_no_order_myOrders"
+        android:id="@+id/if_no_Comment_productRating"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

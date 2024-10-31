@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.foodtrack.Adapter.recyclerView_product_rating_adapter;
 import com.example.foodtrack.Model.BinhLuanSanPhamModel;
@@ -40,9 +42,11 @@ public class fragment_product_rating extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private TextView tv_soLuongBinhLuan;
     private ImageView btn_back;
     private RecyclerView rv_product_rating;
     private List<BinhLuanSanPhamModel> binhLuanList = new ArrayList<>();
+    private LinearLayout if_no_Comment_productRating;
 
     public fragment_product_rating() {
         // Required empty public constructor
@@ -73,7 +77,7 @@ public class fragment_product_rating extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-//        initializeData();
+        initializeData();
     }
 
     private void initializeData(){
@@ -107,18 +111,29 @@ public class fragment_product_rating extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_rating, container, false);
 
         Mapping(view);
-//        LinearLayoutManager layoutManager
-//                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-//        rv_product_rating.setLayoutManager(layoutManager);
-//        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
-//        rv_product_rating.setAdapter(adapter);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        rv_product_rating.setLayoutManager(layoutManager);
+        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
+        rv_product_rating.setAdapter(adapter);
+        tv_soLuongBinhLuan.setText(String.valueOf(binhLuanList.size()));
+        if(binhLuanList.size()==0){
+            rv_product_rating.setVisibility(view.GONE);
+            if_no_Comment_productRating.setVisibility(view.VISIBLE);
+        }
+        else{
+            rv_product_rating.setVisibility(view.VISIBLE);
+            if_no_Comment_productRating.setVisibility(view.GONE);
+        }
         ControlButton();
         return view;
     }
 
     private void Mapping(View view){
         btn_back = (ImageView) view.findViewById(R.id.btn_back_product_rating);
-//        rv_product_rating = (RecyclerView) view.findViewById(R.id.recyclerView_product_rating);
+        rv_product_rating = (RecyclerView) view.findViewById(R.id.recyclerView_product_rating);
+        tv_soLuongBinhLuan = (TextView) view.findViewById(R.id.tv_so_luong_binh_luan_productRating);
+        if_no_Comment_productRating = (LinearLayout) view.findViewById(R.id.if_no_Comment_productRating);
     }
 
     private void ControlButton(){

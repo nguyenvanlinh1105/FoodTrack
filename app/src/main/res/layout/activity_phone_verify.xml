@@ -36,8 +36,8 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="344dp"
-        android:layout_height="69dp"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:maxLines="2"
@@ -83,7 +83,7 @@
 
     <EditText
         android:id="@+id/edt_VerifyCode_phoneVerify"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="60dp"
         android:layout_marginTop="48dp"
         android:background="@drawable/edittext_conner"

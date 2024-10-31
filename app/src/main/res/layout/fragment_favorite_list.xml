@@ -36,7 +36,7 @@
                android:layout_marginStart="30dp"
                android:fontFamily="sans-serif-medium"
                android:text="title"
-               android:textSize="18sp"
+               android:textSize="16sp"
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintHorizontal_bias="0.0"
                app:layout_constraintStart_toEndOf="@+id/item_image_favorite"
@@ -46,47 +46,44 @@
                android:id="@+id/item_subTitle_favorite"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_marginStart="33dp"
                android:layout_marginTop="5dp"
                android:fontFamily="sans-serif-medium"
                android:text="sub title"
-               android:textSize="14sp"
+               android:textSize="12sp"
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintHorizontal_bias="0.0"
-               app:layout_constraintStart_toEndOf="@+id/item_image_favorite"
+               app:layout_constraintStart_toStartOf="@+id/item_title_favorite"
                app:layout_constraintTop_toBottomOf="@+id/item_title_favorite" />
 
            <TextView
                android:id="@+id/price_favorite"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_marginStart="30dp"
-               android:layout_marginTop="5dp"
+               android:layout_marginTop="12dp"
                android:fontFamily="sans-serif-medium"
                android:text="price"
                android:textColor="#FF5E00"
-               android:textSize="17sp"
+               android:textSize="14sp"
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintHorizontal_bias="0.0"
-               app:layout_constraintStart_toEndOf="@+id/item_image_favorite"
+               app:layout_constraintStart_toStartOf="@+id/item_title_favorite"
                app:layout_constraintTop_toBottomOf="@+id/item_subTitle_favorite" />
 
            <LinearLayout
                android:id="@+id/deleteBtn_favorite"
-               android:layout_width="40dp"
-               android:layout_height="40dp"
+               android:layout_width="35dp"
+               android:layout_height="35dp"
                android:layout_marginEnd="3dp"
                android:background="@drawable/icon_delete_favorite_bg"
                android:gravity="center"
                android:tag="deleteBtn_favorite"
-               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintBottom_toBottomOf="@+id/price_favorite"
                app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintTop_toTopOf="parent"
-               app:layout_constraintVertical_bias="0.46">
+               app:layout_constraintTop_toTopOf="@+id/price_favorite">
 
                <ImageView
-                   android:layout_width="25dp"
-                   android:layout_height="30dp"
+                   android:layout_width="20dp"
+                   android:layout_height="25dp"
 
                    android:src="@drawable/icon_delete_favorite30"
                    tools:layout_editor_absoluteX="309dp"

@@ -53,13 +53,13 @@ public class cart extends AppCompatActivity {
 
         int totalPrice = 0;
         for (int i = 0; i < cartPrice.size(); i++) {
-            String cleanedPrice = cartPrice.get(i).replace(".", "").replace("đ", "");
+            String cleanedPrice = cartPrice.get(i).replace(".", "").replace("vnđ", "");
             totalPrice += Integer.parseInt(cleanedPrice) * cartQty.get(i);
         }
 
         NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
         String formattedNumber = formatter.format(totalPrice);
-        formattedNumber = formattedNumber + "đ";
+        formattedNumber = formattedNumber + "vnđ";
 
 
         total.setText(String.valueOf(formattedNumber));
@@ -103,12 +103,12 @@ public class cart extends AppCompatActivity {
         cartSubTitle.add("Classic com tam");
         cartSubTitle.add("Classic cheesburger");
 
-        cartPrice.add("50.000đ");
-        cartPrice.add("50.000đ");
-        cartPrice.add("80.000đ");
-        cartPrice.add("90.000đ");
-        cartPrice.add("60.000đ");
-        cartPrice.add("50.000đ");
+        cartPrice.add("50.000vnđ");
+        cartPrice.add("50.000vnđ");
+        cartPrice.add("80.000vnđ");
+        cartPrice.add("90.000vnđ");
+        cartPrice.add("60.000vnđ");
+        cartPrice.add("50.000vnđ");
 
         cartQty.add(1);
         cartQty.add(2);
@@ -145,7 +145,7 @@ public class cart extends AppCompatActivity {
                 TextView qtyTextView = view.findViewById(R.id.qty_cart);
                 int qty = Integer.parseInt(qtyTextView.getText().toString());
 
-                String cleanedPrice = cartPrice.get(i).replace(".", "").replace("đ", "");
+                String cleanedPrice = cartPrice.get(i).replace(".", "").replace("vnđ", "");
                 int pricePerItem = Integer.parseInt(cleanedPrice);
 
                 totalPrice += qty * pricePerItem;
@@ -153,7 +153,7 @@ public class cart extends AppCompatActivity {
         }
 
         NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
-        String formattedNumber = formatter.format(totalPrice) + "đ";
+        String formattedNumber = formatter.format(totalPrice) + "vnđ";
 
         total.setText(formattedNumber);
     }
