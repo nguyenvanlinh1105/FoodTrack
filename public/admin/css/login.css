@@ -17,7 +17,7 @@ html,body{
     height: 370px;
     margin-top: auto;
     margin-bottom: auto;
-    width: 400px;
+    width: 550px;
     background-color: rgba(0,0,0,0.5) !important;
 }
 
@@ -70,7 +70,8 @@ input:focus{
 .login_btn{
     color: black;
     background-color: #FFC312;
-    width: 100px;
+    width: 100%;
+    margin-top: 20px;
 }
 
 .login_btn:hover{

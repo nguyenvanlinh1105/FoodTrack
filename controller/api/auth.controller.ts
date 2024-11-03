@@ -3,9 +3,10 @@ import jwt from 'jsonwebtoken';
 
 import * as allMode from "../../model/index.model";//Nhúng tất cả model
 
-
+import { generateAccessToken,generateRefreshToken } from '../../helper/generateToken.helper';
 import {hashPassword,verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
 
+let refreshTokens: string[] = [];
 export const login= async (req:Request,res:Response)=>{
     const {email,matKhau} = req.body;
     console.log(email,matKhau);
@@ -33,30 +34,33 @@ export const login= async (req:Request,res:Response)=>{
         }else{
             const isMatch=verifyPassword(matKhau,user['matKhau']);
             if(isMatch){
-                const result = {
-                    ...user,
-                    tenVaiTro: user['Role.tenVaiTro'],
+                let result = {
+                    id:`${user['idNguoiDung']}`,
+                    role: `${user['Role.tenVaiTro']}`,
                 };
-                console.log(result['tenVaiTro']);
-                const accessToken=jwt.sign({
-                    id:result['idNguoiDung'],
-                    role:result['tenVaiTro'],
-                },process.env.ACCESS_TOKEN_SECRET,{expiresIn:'1h'});
 
-                const refreshToken=jwt.sign({
-                    id:result['idNguoiDung'],
-                    role:result['tenVaiTro'],
-                },process.env.REFRESH_TOKEN_SECRET,{expiresIn:'365d'});
+
+                const accessToken = generateAccessToken(result);
+
+                const refreshToken= generateRefreshToken(result);
                 
+                // Lưu token vào cookie
+                res.cookie("refreshToken", refreshToken, {
+                    httpOnly: true,  // Ngăn JS client đọc cookie
+                    secure: false,   // True trong production khi dùng HTTPS
+                    path: "/",
+                    sameSite: "strict", // Chống CSRF
+                });
+                refreshTokens.push(refreshToken);
                 res.status(200).json({
                     message:"Đăng nhập thành công",
-                    id:result['idNguoiDung'],
-                    hoTen:result['hoTen'],
-                    email:result['email'],
-                    sdt:result['sdt'],
-                    gioiTinh:result['gioiTinh'],
-                    avatar:result['avatar'],
-                    accessToken:accessToken
+                    id:user['idNguoiDung'],
+                    hoTen:user['hoTen'],
+                    email:user['email'],
+                    sdt:user['sdt'],
+                    gioiTinh:user['gioiTinh'],
+                    avatar:user['avatar'],
+                    accessToken:accessToken,
                 })
             }else{
                 res.status(404).json({message:"Mật khẩu không chính xác"});
@@ -64,6 +68,38 @@ export const login= async (req:Request,res:Response)=>{
         }
     } catch (error) {
         res.status(500).json({message:"Lỗi server"});
+    }
+}
+export const requestRefreshToken = (req:Request, res:Response) => {
+    const refreshToken = req.cookies.refreshToken;
+    if(!refreshToken){
+        res.status(403).json({message:"You're not authenticated"});
+        return;
+    }
+    if(!refreshTokens.includes(refreshToken)){
+        res.status(403).json({message:"Refresh token is not valid"});
+        return;
+    }
+    else{
+        
+        jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET,(err,user)=>{
+            if(err){
+                console.log(err);
+                res.status(403).json({message:'Token invalid'});
+            }else{
+                refreshTokens=refreshTokens.filter(token=>token!==refreshToken);// Lọc ra những token khác với token cần xóa để tạo mảng mới
+                const newAccessToken=generateAccessToken(user);
+                const newRefreshToken=generateRefreshToken(user);
+                refreshTokens.push(newRefreshToken);
+                res.cookie("refreshToken", newRefreshToken, {
+                    httpOnly: true,  // Ngăn JS client đọc cookie
+                    secure: false,   // True trong production khi dùng HTTPS
+                    path: "/",
+                    sameSite: "strict", // Chống CSRF
+                });
+                res.status(200).json({accessToken:newAccessToken});
+            }
+        });
     }
 }
 

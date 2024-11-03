@@ -37,12 +37,9 @@ app.use(bodyParser.json());//Nhận dữ liệu từ fetch
 app.locals.prefixAdmin= systemConfig.prefixAdmin;//Truyền biến locals cho các router và file pug sử dụng
 
 //Phần flash -> Để hiển thị thông báo (Quan trọng phải có)
-app.use(cookieParser('alert-1x2'));
+app.use(cookieParser());
 app.use(session(
     {   secret: 'some secret', // Thay thế bằng một khóa bí mật mạnh
-        resave: false,
-        cookie: { maxAge: 20*60*1000 },
-        saveUninitialized:true
     }
 ));
 app.use(flash());

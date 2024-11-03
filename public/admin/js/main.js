@@ -215,5 +215,7 @@ if(userAdmin){
     })
 }
 
- 
+function enableEmailInput() {
+    document.getElementById('email').removeAttribute('disabled'); // Bỏ thuộc tính disabled trước khi gửi
+}
 
