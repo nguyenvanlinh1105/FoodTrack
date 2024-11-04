@@ -8,4 +8,6 @@
     <color name="FFF4E9">#FFF4E9</color>
     <color name="brown">#6D3805</color>
     <color name="green">#3ABF38</color>
+    <color name="light_blue">#BBF5ED</color>
+    <color name="dark_blue">#2F5782</color>
 </resources>

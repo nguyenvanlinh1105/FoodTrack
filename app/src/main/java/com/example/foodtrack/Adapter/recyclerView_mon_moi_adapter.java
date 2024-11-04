@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Fragment.fragment_product_detail;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
+import android.widget.PopupWindow;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -101,8 +105,10 @@ public class recyclerView_mon_moi_adapter extends RecyclerView.Adapter<recyclerV
         holder.btn_AddToCart_banChay_monMoi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context.getApplicationContext(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
+//                Toast.makeText(context.getApplicationContext(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
+                CreatePopup(view);
             }
+
         });
 
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_listview_sanpham);
@@ -128,6 +134,32 @@ public class recyclerView_mon_moi_adapter extends RecyclerView.Adapter<recyclerV
             container = itemView.findViewById(R.id.container_item_ban_chay_mon_moi);
             btn_AddToCart_banChay_monMoi = itemView.findViewById(R.id.btn_AddToCart_banChay_monMoi);
         }
+    }
+
+    private void CreatePopup(View view) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        int width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+        View popupView = inflater.inflate(R.layout.popup_add_to_cart, null);
+
+        PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            }
+        });
+        int delay = 1100;
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.dismiss();
+            }
+        }, delay);
+
     }
 
 }
