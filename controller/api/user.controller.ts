@@ -3,6 +3,8 @@ import NguoiDung from '../../model/NguoiDung.model';
 
 import {hashPassword,verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
 import generateNextId from '../../helper/generateNextId.helper';
+import { generateRandomNumber } from '../../helper/generateRandom.helper';
+import emailQueue,{checkOTPAPI} from '../../helper/emailQueue.helper';
 import * as generateString from '../../helper/generateRandom.helper';
 import * as isValid from '../../helper/validField.helper';
 
@@ -82,5 +84,70 @@ export const register=async(req:Request,res:Response)=>{
     } catch (error) {
         res.status(500).json({message:'Lỗi server'});
     }
-
+}
+export const passwordForgot=async(req:Request,res:Response)=>{
+    const email=req.body['email'];
+    if(!isValid.isValidEmail(email)){
+        res.status(404).json({message:'Email không hợp lệ'});
+        return;
+    }
+    const user= await NguoiDung.findOne({
+        where:{
+            email:email,
+            trangThai:'active',
+            vaiTro:'VT002',
+            deleted:0
+        },
+        raw:true
+    })
+    if(!user){
+        res.status(404).json({message:'Tài khoản không tồn tại'});
+    }else{
+        const otp=generateRandomNumber(6);
+        const subject= 'Mã OTP lấy lại mật khẩu';
+        const html = `Mã OTP xác thực của bạn là <b style="color: greenyellow;">${otp}</b>. Mã OTP có hiệu lực trong 3 phút. Vui lòng không cung cấp mã OTP cho người khác`;
+        
+        await emailQueue.add('sendMail',{email,subject,html,otp});
+        res.status(200).json({message:'Vui lòng kiểm tra email để lấy mã OTP'});
+    }
+}
+export const otp=async(req:Request,res:Response)=>{
+    const {email,otp}=req.body;
+    if(!isValid.isValidEmail(email)){
+        res.status(404).json({message:'Email không hợp lệ'});
+        return;
+    }
+    checkOTPAPI(email,otp,req,res);
+}
+export const passwordReset=async(req:Request,res:Response)=>{
+    const {email,newPassword}=req.body;
+    if(!isValid.isValidEmail(email)){
+        res.status(404).json({message:'Email không hợp lệ'});
+        return;
+    }
+    if(!newPassword){
+        res.status(404).json({message:'Mật khẩu không hợp lệ'});
+        return
+    }
+    const user= await NguoiDung.findOne({
+        where:{
+            email:email,
+            trangThai:'active',
+            vaiTro:'VT002',
+            deleted:0
+        },
+        raw:true
+    });
+    if(!user){
+        res.status(404).json({message:'Tài khoản không tồn tại'});
+    }else{
+        await NguoiDung.update({
+            matKhau:hashPassword(newPassword)
+        },{
+            where:{
+                email:email
+            }
+        });
+        res.status(200).json({message:'Đổi mật khẩu thành công'});
+    }
 }

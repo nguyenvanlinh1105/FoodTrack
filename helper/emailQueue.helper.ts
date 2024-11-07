@@ -78,5 +78,21 @@ export const checkOTP= async (email:string,otp:string,req:Request,res: Response)
         res.redirect('back');
     }
 }
+export const checkOTPAPI= async (email:string,otp:string,req:Request,res: Response) => {
+    try {
+        const storedOtp = await redisClient.get(email);
+        if (storedOtp) {
+            if (storedOtp === otp) {
+                res.status(200).json({message:'Xác thực OTP thành công'});
+            } else {
+                res.status(404).json({message:'OTP không hợp lệ!'});
+            }
+        } else {
+            res.status(404).json({message:'OTP hết thời gian tồn tại!'});
+        }
+    } catch (error) {
+        res.status(500).json({message:'Lỗi xác thực OTP'});
+    }
+}
 export default emailQueue;
 
