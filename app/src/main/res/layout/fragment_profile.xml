@@ -21,6 +21,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.108">
 
+        <ImageView
+            android:id="@+id/btn_back_profile"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/icon_back_orange" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

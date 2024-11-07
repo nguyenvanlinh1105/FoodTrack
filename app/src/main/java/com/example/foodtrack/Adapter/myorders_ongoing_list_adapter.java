@@ -19,6 +19,7 @@ import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -45,12 +46,14 @@ public class myorders_ongoing_list_adapter extends ArrayAdapter<DonHangModel> {
         TextView price = view.findViewById(R.id.price_myOrders);
 
         if (donHang != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
             //Number format để định dạng giá tiền từ 20000 thành 20.000
             NumberFormat nf
                     = NumberFormat.getInstance(Locale.ITALY);
 
             id.setText(donHang.getIdDonHang());
-            time.setText(donHang.getNgayTao().toString());
+
+            time.setText(dateFormat.format(donHang.getNgayTao().getTime()));
 //            name.setText(donHang.getName());
             status.setText(donHang.getTinhTrang());
             qty.setText(String.valueOf(donHang.getChiTietDonHangs().size()));

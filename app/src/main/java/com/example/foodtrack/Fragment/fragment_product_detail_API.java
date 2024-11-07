@@ -1,18 +1,31 @@
 package com.example.foodtrack.Fragment;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
@@ -106,7 +119,7 @@ public class fragment_product_detail_API extends Fragment {
             TextView titleView = view.findViewById(R.id.title_product_details);
             TextView priceView = view.findViewById(R.id.price_product_details);
             TextView descriptionView = view.findViewById(R.id.description_product_detail);
-            ImageView imageView = view.findViewById(R.id.image_product_details);
+            LinearLayout imageView = view.findViewById(R.id.image_product_details);
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
             String formattedPrice = formatter.format(price) + "đ";
@@ -114,7 +127,22 @@ public class fragment_product_detail_API extends Fragment {
             titleView.setText(title);
             priceView.setText(formattedPrice);
             descriptionView.setText(description);
-            Glide.with(this).load(imageUrl).into(imageView); // Sử dụng Glide để tải ảnh từ URL
+//            Glide.with(this).load(imageUrl).into(imageView);
+            //nhớ chuyển http -> https
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(imageUrl)
+                    .into(new CustomTarget<Bitmap>() {
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                        }
+
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            imageView.setBackground(new BitmapDrawable(getContext().getResources(), resource));
+
+                        }
+                    });
         }
 
         ControlButton();
@@ -170,8 +198,40 @@ public class fragment_product_detail_API extends Fragment {
             Text_quantity_product.setText(String.valueOf(quantity));
         });
 
-        btn_AddToCart_product_detail.setOnClickListener(view ->
-                Toast.makeText(getActivity(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show()
-        );
+        btn_AddToCart_product_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(getActivity(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
+                CreatePopup(view);
+            }
+        });
+
     }
+
+    private void CreatePopup(View view) {
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        int width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+        View popupView = inflater.inflate(R.layout.popup_add_to_cart, null);
+
+        PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            }
+        });
+        int delay = 1100;
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.dismiss();
+            }
+        }, delay);
+
+    }
+
 }

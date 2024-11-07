@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
+    android:background="@color/white"
     tools:context=".Fragment.checkout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,9 +101,9 @@
                     android:src="@drawable/locate_orange_30" />
 
                 <TextView
-
+                    android:layout_marginEnd="12dp"
                     android:id="@+id/tv_address"
-                    android:layout_width="306dp"
+                    android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="16dp"
@@ -276,11 +277,10 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="12dp"
                     android:gravity="right"
-
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="231.000đ"
+                    android:text="231.000vnđ"
                     android:textColor="#6D3805"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -312,7 +312,7 @@
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="2.000đ"
+                    android:text="2.000vnđ"
                     android:textColor="#6D3805"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -344,7 +344,7 @@
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="15.000đ"
+                    android:text="15.000vnđ"
                     android:textColor="#6D3805"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -382,7 +382,7 @@
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="248.000đ"
+                    android:text="248.000vnđ"
                     android:textColor="#6D3805"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -397,7 +397,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:backgroundTint="#ff5e00"
-            android:text="Thanh toán 248.000đ"
+            android:text="Thanh toán 248.000vnđ"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -17,6 +17,7 @@ import com.example.foodtrack.Model.Order;
 import com.example.foodtrack.Fragment.fragment_rating_comment;
 import com.example.foodtrack.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class myorders_history_list_adapter extends ArrayAdapter<Order> {
@@ -42,8 +43,9 @@ public class myorders_history_list_adapter extends ArrayAdapter<Order> {
         TextView price = view.findViewById(R.id.price_myOrders);
 
         if (order != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
             id.setText(order.getId());
-            time.setText(order.getCreatedAt());
+            time.setText(dateFormat.format(order.getCreatedAt().getTime()));
             name.setText(order.getName());
             img.setImageResource(order.getImg());
             status.setText(order.getStatus());

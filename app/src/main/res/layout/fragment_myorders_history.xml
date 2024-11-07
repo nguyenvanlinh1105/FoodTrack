@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Fragment.fragment_myorders_ongoing">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -98,12 +99,10 @@
                     android:id="@+id/imageView15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:src="@drawable/selected_orange"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.863"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_dangDen_myOrder" />
+                    app:layout_constraintEnd_toEndOf="@+id/btn_lichSu_myOrders"
+                    app:layout_constraintStart_toStartOf="@+id/btn_lichSu_myOrders"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_lichSu_myOrders" />
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -119,8 +118,8 @@
         <ListView
             android:id="@+id/listview_myorders"
             android:paddingTop="30dp"
-            android:layout_width="380dp"
-            android:layout_height="552dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

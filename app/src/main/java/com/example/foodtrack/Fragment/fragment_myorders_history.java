@@ -20,6 +20,7 @@ import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.myorders_history_list_adapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,7 +92,7 @@ public class fragment_myorders_history extends Fragment {
         for (int i = 0; i < 6; i++)
             orderId.add("Order: #000" + i);
         for (int i = 0; i < 6; i++)
-            time.add("22-9-2024, 12:00 p.m");
+            time.add(String.valueOf(new Date()));
 
         name.add("Cheesecake việt quất");
         name.add("Cơm tấm");
@@ -134,7 +135,7 @@ public class fragment_myorders_history extends Fragment {
 
 
         for (int i = 0; i < orderId.size(); i++) {
-            arrayListOrder.add(new Order(orderId.get(i), time.get(i), name.get(i), orderStatus.get(i), img.get(i), status.get(i), price.get(i), qty.get(i)));
+            arrayListOrder.add(new Order(orderId.get(i), new Date(), name.get(i), orderStatus.get(i), img.get(i), status.get(i), price.get(i), qty.get(i)));
         }
     }
 
