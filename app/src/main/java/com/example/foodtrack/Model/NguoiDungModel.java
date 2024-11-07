@@ -20,7 +20,18 @@ public class NguoiDungModel {
     private String nguoiCapNhat;
     private String thongTinUser;
     private vaiTroModel vaitro;
+
+    private String otp ;
     // Default constructor
+
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
 
     public NguoiDungModel() {
     }

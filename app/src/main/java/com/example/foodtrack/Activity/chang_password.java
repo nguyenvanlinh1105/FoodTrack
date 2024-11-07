@@ -13,11 +13,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.foodtrack.API.APIService;
+import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class chang_password extends AppCompatActivity {
     ImageView btn_back_phone_verify;
     TextView btn_xacNhanDoi_MK;
+    public  String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +38,15 @@ public class chang_password extends AppCompatActivity {
         });
         btn_back_phone_verify = findViewById(R.id.btn_back_phone_verify);
         btn_xacNhanDoi_MK = findViewById(R.id.btn_XacNhan_doiMK_changePassword);
+
+        TextView edtmatkhau = findViewById(R.id.edt_confirm_chang_password);
+
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+             email = bundle.getString("email");
+
+        }
         btn_back_phone_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,10 +56,61 @@ public class chang_password extends AppCompatActivity {
         btn_xacNhanDoi_MK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(chang_password.this, "Bạn đã cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
-                Intent firstPage = new Intent(chang_password.this, first_page.class);
-                startActivity(firstPage);
-                finish();
+                //Toast.makeText(chang_password.this, "Bạn đã cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
+//                Intent firstPage = new Intent(chang_password.this, first_page.class);
+//                startActivity(firstPage);
+//                finish();
+
+                String matkhau = edtmatkhau.getText().toString().trim();
+
+                NguoiDungModel user = new NguoiDungModel();
+                user.setMatKhau(matkhau);
+                user.setEmail(email);
+                PostEmailAndPassToReset(user);
+
+            }
+        });
+    }
+    private void PostEmailAndPassToReset(NguoiDungModel user){
+        APIService.API_SERVICE.PostToResetPass(user).enqueue(new Callback<NguoiDungModel>() {
+            @Override
+            public void onResponse(Call<NguoiDungModel> call, Response<NguoiDungModel> response) {
+                if(response.isSuccessful()){
+                    NguoiDungModel nguoiDungModel = response.body();
+                    NguoiDungModel userModel = new NguoiDungModel();
+                    userModel.setEmail(email);
+                    userModel.setMatKhau(nguoiDungModel.getMatKhau());
+                    GetUserToLogin(userModel);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NguoiDungModel> call, Throwable t) {
+
+            }
+        });
+    }
+    public void GetUserToLogin(NguoiDungModel userModel) {
+        APIService.API_SERVICE.GetUserToLogin(userModel).enqueue(new Callback<NguoiDungModel>() {
+            @Override
+            public void onResponse(Call<NguoiDungModel> call, Response<NguoiDungModel> response) {
+                if (response.code() == 200) { // Kiểm tra status code
+                    NguoiDungModel responseUserModel = response.body();
+                    if (responseUserModel != null && "Đăng nhập thành công".equals(responseUserModel.getMessage())) {
+                        Intent home = new Intent(chang_password.this, MainActivity.class);
+                        startActivity(home);
+                        finish();
+                    } else {
+                        Toast.makeText(chang_password.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(chang_password.this, "Đăng nhập thất bại với mã lỗi " + response.code(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NguoiDungModel> call, Throwable t) {
+                Toast.makeText(chang_password.this, "Đăng nhập thất bại, thử lại bằng email và password", Toast.LENGTH_LONG).show();
             }
         });
     }

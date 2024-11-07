@@ -19,7 +19,7 @@ import retrofit2.http.Query;
 public interface APIService {
 
   //    linkAPI root:
-    String url ="https://ca77-2405-4802-69c1-7630-797d-e71-e718-22af.ngrok-free.app/";
+    String url ="https://3aa1-2a09-bac5-d46a-16d2-00-246-bf.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -57,6 +57,17 @@ public interface APIService {
     // Tìm sản phẩm chi tiết
     @GET("sanpham/{id}")
     Call<SanPhamAPIModel>getChiTietSanPham(@Query("idSanPham")String idSanPham);
+
+    @POST("/user/password/forgot")
+    Call<NguoiDungModel>PostEmailToLogin(@Body NguoiDungModel userModel);
+
+    @POST("/user/password/otp")
+    Call<NguoiDungModel>PostEmailandOPTLogin(@Body NguoiDungModel userModel);
+
+    @POST("/user/password/reset")
+    Call<NguoiDungModel>PostToResetPass(@Body NguoiDungModel userModel);
+
+
 
 
 }
