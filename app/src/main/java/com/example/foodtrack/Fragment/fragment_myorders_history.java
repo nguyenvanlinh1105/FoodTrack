@@ -54,7 +54,7 @@ public class fragment_myorders_history extends Fragment {
     LinearLayout imageIfEmpty;
     ImageView chatIcon;
     ImageView backBtn;
-    TextView toOngoing, rateBtn;
+    TextView toOngoing, rateBtn, toDonHuy;
 
     public fragment_myorders_history() {
         // Required empty public constructor
@@ -157,6 +157,7 @@ public class fragment_myorders_history extends Fragment {
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_history);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         toOngoing = (TextView) view.findViewById(R.id.btn_dangDen_myOrder);
+        toDonHuy =(TextView) view.findViewById(R.id.btn_donHuy_myOrders);
         imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
         rateBtn = (TextView) view.findViewById(R.id.ratingBtn_item_myOrders);
     }
@@ -189,6 +190,17 @@ public class fragment_myorders_history extends Fragment {
                 }
             }
         });
+
+        toDonHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_myorders_donhuy());
+                }
+            }
+        });
+
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

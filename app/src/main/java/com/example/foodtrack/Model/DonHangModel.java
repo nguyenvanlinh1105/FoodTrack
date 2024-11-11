@@ -9,6 +9,16 @@ public class DonHangModel {
     private String idNguoiDung;
     private String tinhTrang;
     private Date ngayTao;
+    private Date ngayHuyDonhang;
+
+    public Date getNgayHuyDonhang() {
+        return ngayHuyDonhang;
+    }
+
+    public void setNgayHuyDonhang(Date ngayHuyDonhang) {
+        this.ngayHuyDonhang = ngayHuyDonhang;
+    }
+
     private Timestamp thoiGianCapNhat;
     // Navigation properties
     private NguoiDungModel nguoiDung;

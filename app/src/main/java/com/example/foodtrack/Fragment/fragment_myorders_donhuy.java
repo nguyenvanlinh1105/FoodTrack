@@ -18,11 +18,13 @@ import android.widget.TextView;
 
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.myorders_donHuy_list_adapter;
 import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter;
 import com.example.foodtrack.Model.ChiTietDonHangModel;
 import com.example.foodtrack.Model.DonHangModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
+import com.example.foodtrack.fragment_myorders_mualai_details;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,10 +32,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_myorders_ongoing#newInstance} factory method to
+ * Use the {@link fragment_myorders_donhuy#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_myorders_ongoing extends Fragment {
+public class fragment_myorders_donhuy extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,9 +46,9 @@ public class fragment_myorders_ongoing extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
     ImageView backBtn, imageViewTranslate;
-    TextView toLichSu;
-    TextView toDonHuy;
+    TextView toLichSu, toGoing;
     ImageView chatIcon;
     ListView listview_myorders_ongoing;
     LinearLayout imageIfEmpty;
@@ -63,8 +65,7 @@ public class fragment_myorders_ongoing extends Fragment {
     ArrayList<Integer> qty = new ArrayList<>();
 
     ArrayList<DonHangModel> arrayListOrder = new ArrayList<>();
-
-    public fragment_myorders_ongoing() {
+    public fragment_myorders_donhuy() {
         // Required empty public constructor
     }
 
@@ -74,11 +75,11 @@ public class fragment_myorders_ongoing extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_myorders_ongoing.
+     * @return A new instance of fragment myorders_donhuy.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_myorders_ongoing newInstance(String param1, String param2) {
-        fragment_myorders_ongoing fragment = new fragment_myorders_ongoing();
+    public static fragment_myorders_donhuy newInstance(String param1, String param2) {
+        fragment_myorders_donhuy fragment = new fragment_myorders_donhuy();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -96,7 +97,6 @@ public class fragment_myorders_ongoing extends Fragment {
         initializeData();
     }
 
-
     private void initializeData() {
         List<SanPhamModel> sanPhamList = createSampleProducts();
 
@@ -106,8 +106,8 @@ public class fragment_myorders_ongoing extends Fragment {
     private List<SanPhamModel> createSampleProducts() {
         List<SanPhamModel> sanPhamList = new ArrayList<>();
 
-        sanPhamList.add(new SanPhamModel("Cheesecake việt quất", 20000, R.drawable.dessert_ico, ""));
-        sanPhamList.add(new SanPhamModel("Cơm tấm", 30000, R.drawable.com_tam, ""));
+        sanPhamList.add(new SanPhamModel("Trà đào cam xả", 20000, R.drawable.drink1, ""));
+        sanPhamList.add(new SanPhamModel("Mỳ spaghetti ", 30000, R.drawable.com_tam, ""));
 
         return sanPhamList;
     }
@@ -115,11 +115,12 @@ public class fragment_myorders_ongoing extends Fragment {
     private ArrayList<DonHangModel> createSampleOrders(List<SanPhamModel> sanPhamList) {
         ArrayList<DonHangModel> donHangList = new ArrayList<>();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             DonHangModel donHang = new DonHangModel();
             donHang.setIdDonHang("Order: #000" + i);
             donHang.setNgayTao(new Date());
-            donHang.setTinhTrang("Đang giao hàng");
+            donHang.setNgayHuyDonhang(new Date());
+            donHang.setTinhTrang("Đã hủy");
 
             List<ChiTietDonHangModel> chiTietDonHangs = new ArrayList<>();
             ChiTietDonHangModel chiTietDonHang = new ChiTietDonHangModel();
@@ -139,11 +140,9 @@ public class fragment_myorders_ongoing extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_myorders_ongoing, container, false);
+        View view = inflater.inflate(R.layout.fragment_myorders_donhuy, container, false);
 
         Mapping(view);
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_shipper);
-        imageViewTranslate.startAnimation(animation);
         checkIfListEmpty();
         ControlButton();
         return view;
@@ -152,13 +151,13 @@ public class fragment_myorders_ongoing extends Fragment {
     public void Mapping(View view) {
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing);
         toLichSu = (TextView) view.findViewById(R.id.btn_lichSu_myOrders);
-        toDonHuy = (TextView) view.findViewById(R.id.btn_donHuy_myOrders);
+        toGoing = (TextView) view.findViewById(R.id.btn_dangDen_myOrder);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
         imageViewTranslate = (ImageView) view.findViewById(R.id.imageViewTranslate);
 
         listview_myorders_ongoing = (ListView) view.findViewById(R.id.listview_myorders);
-        myorders_ongoing_list_adapter listAdapter = new myorders_ongoing_list_adapter(getContext(), arrayListOrder);
+        myorders_donHuy_list_adapter listAdapter = new myorders_donHuy_list_adapter(getContext(), arrayListOrder);
         listview_myorders_ongoing.setAdapter(listAdapter);
 
     }
@@ -182,12 +181,22 @@ public class fragment_myorders_ongoing extends Fragment {
             }
         });
 
-        toDonHuy.setOnClickListener((new View.OnClickListener() {
+        toGoing.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_donhuy());
+                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
+                }
+            }
+        }));
+
+        toLichSu.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_myorders_history());
                 }
             }
         }));
@@ -206,7 +215,7 @@ public class fragment_myorders_ongoing extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing_details());
+                    mainActivity.ReplaceFragment(new fragment_myorders_mualai_details());
                 }
 
             }
@@ -224,4 +233,5 @@ public class fragment_myorders_ongoing extends Fragment {
             imageIfEmpty.setVisibility(View.GONE);
         }
     }
+
 }

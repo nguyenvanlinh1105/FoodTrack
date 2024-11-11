@@ -75,10 +75,10 @@
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.244"
+                    app:layout_constraintHorizontal_bias="0.101"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.571" />
 
                 <TextView
                     android:id="@+id/btn_lichSu_myOrders"
@@ -90,10 +90,25 @@
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.615"
+                    app:layout_constraintHorizontal_bias="0.258"
                     app:layout_constraintStart_toEndOf="@+id/btn_dangDen_myOrder"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/btn_donHuy_myOrders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Đã hủy"
+                    android:textColor="#6D3805"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.807"
+                    app:layout_constraintStart_toEndOf="@+id/btn_dangDen_myOrder"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.571" />
 
                 <ImageView
                     android:id="@+id/imageView15"
