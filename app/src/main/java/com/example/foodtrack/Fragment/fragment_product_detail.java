@@ -110,11 +110,11 @@ public class fragment_product_detail extends Fragment {
     private void InitializeData() {
         listProduct = new ArrayList<>();
         listProduct.add(new SanPhamModel("Cơm tấm", 70.000, R.drawable.com_tam,"Cơm tấm bì nướng"));
-        listProduct.add(new SanPhamModel("Chuối tươi", 30.000, R.drawable.icon_food2, "Chuối sứ"));
+        listProduct.add(new SanPhamModel("Chuối tươi", 30.000, R.drawable.spaghetti, "Chuối sứ"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.gnocchi_tomato, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.chicken, "Burger phô mai cổ điển"));
         listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.dessert_ico, "Burger phô mai cổ điển"));
     }
 
     @Override
@@ -133,29 +133,29 @@ public class fragment_product_detail extends Fragment {
             TextView titleView = view.findViewById(R.id.title_product_details);
             TextView priceView = view.findViewById(R.id.price_product_details);
             TextView descriptionView = view.findViewById(R.id.description_product_detail);
-            LinearLayout imageView = view.findViewById(R.id.image_product_details);
+            ImageView imageView = view.findViewById(R.id.image_product_details);
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
             String formattedPrice = formatter.format(price);
-            formattedPrice = formattedPrice + "đ";
+            formattedPrice = formattedPrice + "vnđ";
 
             titleView.setText(title);
             priceView.setText(formattedPrice);
             descriptionView.setText(description);
-//            imageView.setImageResource(image);
-            Glide.with(getContext())
-                    .asBitmap()
-                    .load(image)
-                    .into(new CustomTarget<Bitmap>() {
-                        @Override
-                        public void onLoadCleared(@Nullable Drawable placeholder) {
-                        }
-
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            imageView.setBackground(new BitmapDrawable(getContext().getResources(), resource));
-                        }
-                    });
+            imageView.setImageResource(image);
+//            Glide.with(getContext())
+//                    .asBitmap()
+//                    .load(image)
+//                    .into(new CustomTarget<Bitmap>() {
+//                        @Override
+//                        public void onLoadCleared(@Nullable Drawable placeholder) {
+//                        }
+//
+//                        @Override
+//                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                            imageView.setBackground(new BitmapDrawable(getContext().getResources(), resource));
+//                        }
+//                    });
         }
 
         ControlButton();
@@ -175,7 +175,7 @@ public class fragment_product_detail extends Fragment {
         rvProductDetail = (RecyclerView) view.findViewById(R.id.recyclerView_product_detail);
         InitializeData();
         LinearLayoutManager layoutManager
-                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         rvProductDetail.setLayoutManager(layoutManager);
         recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct );
         rvProductDetail.setAdapter(dealAdapter);
@@ -217,10 +217,10 @@ public class fragment_product_detail extends Fragment {
             @Override
             public void onClick(View view) {
                 quantity = Integer.valueOf(Text_quantity_product.getText().toString());
-                if(quantity>0){
+                if(quantity>1){
                     quantity--;
                 }else{
-                    quantity =0;
+                    quantity = 1;
                 }
                 Text_quantity_product.setText(String.valueOf(quantity));
             }

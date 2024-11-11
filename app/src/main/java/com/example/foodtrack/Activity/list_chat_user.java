@@ -1,6 +1,7 @@
 package com.example.foodtrack.Activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -18,13 +19,18 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.foodtrack.Fragment.fragment_chat_user_shop;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.list_chat_user_adapter;
+import com.example.foodtrack.SocketManager;
 import com.example.foodtrack.databinding.ActivityListChatUserBinding;
 import com.example.foodtrack.databinding.ActivityMainBinding;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-public class list_chat_user extends AppCompatActivity {
+import io.socket.client.IO;
+import io.socket.client.Socket;
 
+public class list_chat_user extends AppCompatActivity {
+    Socket mSocket;
     ActivityListChatUserBinding binding;
 
     ArrayList<String> tenNguoiGui_list_chat = new ArrayList<>();
@@ -48,12 +54,19 @@ public class list_chat_user extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         initializeData();
         Mapping();
+
+        mSocket = SocketManager.getInstance().getSocket();
+
         list_chat_user_adapter listAdapter = new list_chat_user_adapter(getApplicationContext(), tenNguoiGui_list_chat, ava_nguoiGui_list_chat, noiDung_list_chat, number_list_chat);
         listview_chat_user.setAdapter(listAdapter);
         ControlButton();
+
     }
+
+
 
     private void initializeData() {
         tenNguoiGui_list_chat.add("FoodTrack");

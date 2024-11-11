@@ -4,13 +4,35 @@ import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.foodtrack.Adapter.recyclerView_ban_chay_adapter;
+import com.example.foodtrack.Adapter.recyclerView_chat_user_shop_adapter;
+import com.example.foodtrack.Model.TestChat.TinNhanModel;
 import com.example.foodtrack.R;
+import com.example.foodtrack.SocketManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +50,15 @@ public class fragment_chat_user_shop extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ImageView backBtn;
+    private ImageView btn_back, btn_send, btn_add;
+//    private ArrayList listChat;
+    private List<TinNhanModel> listChat;
+//    private ArrayAdapter adapterChat;
+    private recyclerView_chat_user_shop_adapter adapterChat;
+    private Socket mSocket;
+    private TextView edt_chat;
+    private RecyclerView rv_chat;
+
 
     public fragment_chat_user_shop() {
         // Required empty public constructor
@@ -66,19 +96,109 @@ public class fragment_chat_user_shop extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_user_shop, container, false);
         Mapping(view);
+        ControlSocket();
+
+        listChat = new ArrayList();
+        GridLayoutManager layoutManager
+                = new GridLayoutManager(requireContext(), 1);
+        rv_chat.setLayoutManager(layoutManager);
+        adapterChat = new recyclerView_chat_user_shop_adapter(requireActivity(), listChat);
+        rv_chat.setAdapter(adapterChat);
+
+
+
         ControlButton();
         return view;
     }
 
     private void Mapping(View view){
-        backBtn = (ImageView) view.findViewById(R.id.btn_back_chat_user);
+        btn_back = (ImageView) view.findViewById(R.id.btn_back_chat_user);
+        btn_send = (ImageView) view.findViewById(R.id.btn_send_chat_user_shop);
+        btn_add = (ImageView) view.findViewById(R.id.btn_add_user_chat_user_shop);
+        edt_chat = (TextView) view.findViewById(R.id.edt_content_chat_user_shop);
+        rv_chat = (RecyclerView) view.findViewById(R.id.lv_chat_user_shop);
     }
 
+    private void ControlSocket() {
+        mSocket = SocketManager.getInstance().getSocket();
+        mSocket.on("server-send-chat", onRetrieveListChat);
+        mSocket.on("server-send-reply", onRetrieveResult);
+    }
+    private Emitter.Listener onRetrieveListChat = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            requireActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject obj = (JSONObject) args[0];
+                    try {
+                        String idChat = String.valueOf(obj.getInt("idChat"));
+                        String tenNguoiDung = obj.getString("username");
+                        String noiDung = obj.getString("noiDungChat");
+                        listChat.add(new TinNhanModel(idChat,tenNguoiDung,noiDung));
+                        adapterChat.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onRetrieveResult = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            requireActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject obj = (JSONObject) args[0];
+                    try {
+                        boolean exist = obj.getBoolean("ketqua");
+                        if (exist) {
+                            Toast.makeText(getContext(), "Tài khoản đã tồn tại", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Thêm tài khoản thành công", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+        }
+    };
+
     private void ControlButton(){
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(edt_chat.getText().toString().isEmpty()){
+                    Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mSocket.emit("client-register-user", edt_chat.getText().toString().trim());
+//                    Toast.makeText(getContext(), "Nội dung: " + edt_chat.getText().toString().trim(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(edt_chat.getText().toString().isEmpty()){
+                    Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mSocket.emit("client-send-chat", edt_chat.getText().toString().trim());
+                    edt_chat.setText("");
+                }
             }
         });
     }

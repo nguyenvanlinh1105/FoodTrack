@@ -122,7 +122,7 @@ public class fragment_product_detail_API extends Fragment {
             LinearLayout imageView = view.findViewById(R.id.image_product_details);
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
-            String formattedPrice = formatter.format(price) + "đ";
+            String formattedPrice = formatter.format(price) + "vnđ";
 
             titleView.setText(title);
             priceView.setText(formattedPrice);
@@ -160,7 +160,7 @@ public class fragment_product_detail_API extends Fragment {
 
         rvProductDetail = view.findViewById(R.id.recyclerView_product_detail);
         InitializeData();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         rvProductDetail.setLayoutManager(layoutManager);
 //        recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct);
 //        rvProductDetail.setAdapter(dealAdapter);

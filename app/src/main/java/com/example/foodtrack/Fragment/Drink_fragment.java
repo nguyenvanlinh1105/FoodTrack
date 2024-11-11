@@ -203,7 +203,6 @@ public class Drink_fragment extends Fragment {
                     UseFallbackData();
                 }
             }
-
             @Override
             public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
                 UseFallbackData();

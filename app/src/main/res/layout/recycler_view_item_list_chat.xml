@@ -8,7 +8,9 @@
     android:padding="15dp">
 
     <LinearLayout
-        android:id="@+id/left_list_chat"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:id="@+id/layout_left_list_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/chat_receiver_bg"
@@ -24,7 +26,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/right_list_chat"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:id="@+id/layout_right_list_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/chat_sender_bg"

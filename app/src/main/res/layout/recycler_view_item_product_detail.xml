@@ -3,69 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_card_view_product_detail_rv"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="120dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="20dp">
+    android:layout_marginBottom="7dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp">
-
-        <LinearLayout
+  <androidx.cardview.widget.CardView
+      android:layout_width="62dp"
+      android:layout_height="62dp"
+      app:cardCornerRadius="15dp">
+        <ImageView
+            android:id="@+id/image_item_product_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:src="@drawable/drink1"
+            android:scaleType="fitXY"/>
+  </androidx.cardview.widget.CardView>
 
-
-                <ImageView
-                    android:id="@+id/img_deal_hoi_item"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/icon_food2" />
-
-            <TextView
-                android:id="@+id/title_deal_hoi_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingLeft="5dp"
-                android:text="Salad trái cây"
-                android:textColor="#9F2733"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/don_vi_tinh_deal_hoi_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingLeft="20dp"
-                android:text="K.lượng: 500g"
-                android:textColor="#929292"
-                android:textSize="8sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
-            <TextView
-                android:id="@+id/price_deal_hoi_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:paddingLeft="5dp"
-                android:text="60.000 vnđ"
-                android:textColor="@color/primary_color"
-                android:textSize="10sp"
-
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="67dp" />
-        </LinearLayout>
-    </FrameLayout>
 
 
 </FrameLayout>

@@ -18,13 +18,15 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.R;
+import com.example.foodtrack.SocketManager;
 
+import io.socket.client.Socket;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Register extends AppCompatActivity {
-
+    private Socket mSocket;
     private EditText edt_hoTen_signin,edt_Mail_signin,edt_SDT_signin,edt_Password_signin,edt_confirmPassword_signin;
 
     @Override
@@ -38,6 +40,9 @@ public class Register extends AppCompatActivity {
             return insets;
         });
         InitView();
+
+        mSocket = SocketManager.getInstance().getSocket();
+
         ImageView btn_back = findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +73,7 @@ public class Register extends AppCompatActivity {
 
                 String gioiTinh = "Nam";
 
-                Log.d("MatKhau",password);
+//                Log.d("MatKhau",password);
 
                 NguoiDungModel userModel = new NguoiDungModel();
                 userModel.setHoTenNguoiDung(hoTen);
@@ -77,6 +82,14 @@ public class Register extends AppCompatActivity {
                 userModel.setMatKhau(password);
                 userModel.setGioiTinh(gioiTinh);
                 PostUserToSingin(userModel);
+
+                if(edt_hoTen_signin.getText().toString().isEmpty()){
+                    Toast.makeText(Register.this, "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mSocket.emit("client-register-user", edt_hoTen_signin.getText().toString().trim());
+//                    Toast.makeText(getContext(), "Nội dung: " + edt_chat.getText().toString().trim(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

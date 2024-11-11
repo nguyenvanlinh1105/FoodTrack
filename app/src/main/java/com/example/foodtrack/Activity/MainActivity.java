@@ -25,8 +25,12 @@ import com.example.foodtrack.Fragment.food_fragment;
 import com.example.foodtrack.Fragment.profile_fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+import java.net.URISyntaxException;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
+
+public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
 
     @Override

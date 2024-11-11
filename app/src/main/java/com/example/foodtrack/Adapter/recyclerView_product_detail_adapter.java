@@ -39,17 +39,14 @@ public class recyclerView_product_detail_adapter extends RecyclerView.Adapter<re
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         SanPhamModel product = list.get(position);
-        holder.title.setText(product.getTenSanPham());
-        holder.price.setText(String.valueOf(product.getGiaTien())+"vnđ");
-        Glide.with(context).load(product.getImages()).into(holder.img);
-        if (position % 2 == 0)
-            holder.main.setBackgroundResource(R.drawable.input_conner);
-        else
-            //holder.main.setBackground(null);
-            holder.main.setBackgroundResource(R.drawable.input_search_conner);
-
-
-
+//        holder.title.setText(product.getTenSanPham());
+//        holder.price.setText(String.valueOf(product.getGiaTien())+"vnđ");
+        if (product.getImages() != 0) {
+            Glide.with(context).load(product.getImages()).into(holder.img);
+        } else {
+            // Gán ảnh mặc định nếu images là null
+            holder.img.setImageResource(R.drawable.drink1);
+        }
     }
 
     @Override
@@ -58,16 +55,16 @@ public class recyclerView_product_detail_adapter extends RecyclerView.Adapter<re
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        FrameLayout main;
-        TextView title, price;
+        //        FrameLayout main;
+//        TextView title, price;
         ImageView img;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.title_deal_hoi_item);
-            price = itemView.findViewById(R.id.price_deal_hoi_item);
-            img = itemView.findViewById(R.id.img_deal_hoi_item);
-            main = itemView.findViewById(R.id.main_card_view_product_detail_rv);
+//            title = itemView.findViewById(R.id.title_deal_hoi_item);
+//            price = itemView.findViewById(R.id.price_deal_hoi_item);
+            img = itemView.findViewById(R.id.image_item_product_detail);
+//            main = itemView.findViewById(R.id.main_card_view_product_detail_rv);
 
         }
     }

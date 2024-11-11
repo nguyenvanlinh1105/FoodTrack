@@ -31,6 +31,7 @@
                 app:cardCornerRadius="20dp">
 
                 <ImageView
+                    android:scaleType="fitXY"
                     android:id="@+id/img_deal_hoi_item"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
