@@ -110,6 +110,8 @@ public class Register extends AppCompatActivity {
             @Override
             public void onResponse(Call<NguoiDungModel> call, Response<NguoiDungModel> response) {
                 Intent login = new Intent(Register.this, Login.class);
+                login.putExtra("currentUsername",userModel.getHoTenNguoiDung());
+                Toast.makeText(Register.this, userModel.getHoTenNguoiDung(), Toast.LENGTH_SHORT).show();
                 startActivity(login);
                 finish();
             }

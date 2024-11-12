@@ -1,10 +1,13 @@
 package com.example.foodtrack.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -23,6 +26,7 @@ import com.example.foodtrack.Model.TestChat.TinNhanModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.SocketManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,9 +55,9 @@ public class fragment_chat_user_shop extends Fragment {
     private String mParam2;
 
     private ImageView btn_back, btn_send, btn_add;
-//    private ArrayList listChat;
+    //    private ArrayList listChat;
     private List<TinNhanModel> listChat;
-//    private ArrayAdapter adapterChat;
+    //    private ArrayAdapter adapterChat;
     private recyclerView_chat_user_shop_adapter adapterChat;
     private Socket mSocket;
     private TextView edt_chat;
@@ -96,22 +100,23 @@ public class fragment_chat_user_shop extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_user_shop, container, false);
         Mapping(view);
-        ControlSocket();
+
 
         listChat = new ArrayList();
-        GridLayoutManager layoutManager
-                = new GridLayoutManager(requireContext(), 1);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rv_chat.setLayoutManager(layoutManager);
-        adapterChat = new recyclerView_chat_user_shop_adapter(requireActivity(), listChat);
+        SharedPreferences sharedUsername = requireContext().getSharedPreferences("currentUser", Context.MODE_PRIVATE);
+        adapterChat = new recyclerView_chat_user_shop_adapter(requireActivity(), listChat, sharedUsername);
         rv_chat.setAdapter(adapterChat);
 
-
+        ControlSocket();
 
         ControlButton();
         return view;
     }
 
-    private void Mapping(View view){
+    private void Mapping(View view) {
         btn_back = (ImageView) view.findViewById(R.id.btn_back_chat_user);
         btn_send = (ImageView) view.findViewById(R.id.btn_send_chat_user_shop);
         btn_add = (ImageView) view.findViewById(R.id.btn_add_user_chat_user_shop);
@@ -124,26 +129,32 @@ public class fragment_chat_user_shop extends Fragment {
         mSocket.on("server-send-chat", onRetrieveListChat);
         mSocket.on("server-send-reply", onRetrieveResult);
     }
+
     private Emitter.Listener onRetrieveListChat = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            requireActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+            requireActivity().runOnUiThread(() -> {
+                listChat.clear();
+                try {
                     JSONObject obj = (JSONObject) args[0];
-                    try {
-                        String idChat = String.valueOf(obj.getInt("idChat"));
-                        String tenNguoiDung = obj.getString("username");
-                        String noiDung = obj.getString("noiDungChat");
-                        listChat.add(new TinNhanModel(idChat,tenNguoiDung,noiDung));
-                        adapterChat.notifyDataSetChanged();
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                    JSONArray arrayChat = obj.getJSONArray("chat");
+                    Log.d("arrayChat", arrayChat.toString());
+                    for (int i = 0; i < arrayChat.length(); i++) {
+                        JSONObject objChat = arrayChat.getJSONObject(i);
+                        String idChat = String.valueOf(objChat.getInt("idChat"));
+                        String tenNguoiDung = objChat.getString("username");
+                        String noiDung = objChat.getString("noiDungChat");
+                        listChat.add(new TinNhanModel(idChat, tenNguoiDung, noiDung));
                     }
+                    adapterChat.notifyDataSetChanged();
+                    rv_chat.scrollToPosition(listChat.size() - 1);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             });
         }
     };
+
 
     private Emitter.Listener onRetrieveResult = new Emitter.Listener() {
         @Override
@@ -168,7 +179,7 @@ public class fragment_chat_user_shop extends Fragment {
         }
     };
 
-    private void ControlButton(){
+    private void ControlButton() {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,27 +187,15 @@ public class fragment_chat_user_shop extends Fragment {
             }
         });
 
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(edt_chat.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    mSocket.emit("client-register-user", edt_chat.getText().toString().trim());
-//                    Toast.makeText(getContext(), "Nội dung: " + edt_chat.getText().toString().trim(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(edt_chat.getText().toString().isEmpty()){
+                String message = edt_chat.getText().toString().trim();
+                if (message.isEmpty()) {
                     Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    mSocket.emit("client-send-chat", edt_chat.getText().toString().trim());
+                } else {
+                    mSocket.emit("client-send-chat", message);
                     edt_chat.setText("");
                 }
             }

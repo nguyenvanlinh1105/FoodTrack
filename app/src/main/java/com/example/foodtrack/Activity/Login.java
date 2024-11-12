@@ -31,13 +31,17 @@ public class Login extends AppCompatActivity {
     TextView btnLogin_TK;
     TextView edit_mail, edit_password;
     CheckBox cb_nho_mat_khau_login ;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences, sharedUsername;
+    String currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
+        //có cái này để lưu vào sharedPreferences, tới lúc chat thì biết đâu là currentUser
+        currentUser = getIntent().getStringExtra("currentUsername");
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -53,9 +57,16 @@ public class Login extends AppCompatActivity {
         cb_nho_mat_khau_login = findViewById(R.id.cb_nho_mat_khau_login);
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
 
+        sharedUsername = getSharedPreferences("currentUser", MODE_PRIVATE);
+
+        if(currentUser == null){
+            currentUser = sharedUsername.getString("currentUser", "");
+        }
+
         edit_mail.setText(sharedPreferences.getString("email",""));
         edit_password.setText(sharedPreferences.getString("password",""));
         cb_nho_mat_khau_login.setChecked(sharedPreferences.getBoolean("checked",false));
+
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +108,13 @@ public class Login extends AppCompatActivity {
                     editor.apply();
 
                 }
+
+                //test chat nè
+                SharedPreferences.Editor currentUserEditor = sharedUsername.edit();
+                currentUserEditor.putString("currentUser", currentUser);
+                currentUserEditor.apply();
+
+
                 Intent home = new Intent(Login.this, MainActivity.class);
                 startActivity(home);
                 finish();
