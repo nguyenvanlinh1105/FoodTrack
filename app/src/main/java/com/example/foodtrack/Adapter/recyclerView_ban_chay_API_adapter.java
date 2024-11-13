@@ -98,12 +98,12 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
                 Bundle bundle = new Bundle();
                 bundle.putString("title", holder.title.getText().toString());
                 bundle.putDouble("price", product.getGiaTien());
-                bundle.putString("description", "Mô tả món ăn/đồ uống");
+                bundle.putString("description", product.getMoTa());
                 bundle.putString("image", product.getImages());
                 fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
                         holder.title.getText().toString(),
                         product.getGiaTien(),
-                        "Mô tả món ăn/đồ uống",
+                        product.getMoTa(),
                         product.getImages()
                 );
                 MainActivity mainActivity = (MainActivity) context;
@@ -133,7 +133,7 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         FrameLayout container;
-        TextView title, price, btn_AddToFavorite_banChay_monMoi;
+        TextView title, price, btn_AddToFavorite_banChay_monMoi, description;
         ConstraintLayout img;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -141,6 +141,7 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
             title = itemView.findViewById(R.id.item_title_product);
             price = itemView.findViewById(R.id.item_price_product);
             img = itemView.findViewById(R.id.item_image_product);
+            description = itemView.findViewById(R.id.item_description_product);
             container = itemView.findViewById(R.id.container_item_ban_chay_mon_moi);
             btn_AddToFavorite_banChay_monMoi = itemView.findViewById(R.id.btn_add_to_yeuThich_banChay);
         }

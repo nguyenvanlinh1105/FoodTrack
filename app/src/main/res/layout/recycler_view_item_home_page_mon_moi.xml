@@ -69,6 +69,16 @@
                         android:text="50.000đ"
                         android:textColor="#6D3805"
                         android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/item_description_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.5"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="50.000đ"
+                        android:visibility="gone"
+                        android:textColor="#6D3805"
+                        android:textSize="18sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"

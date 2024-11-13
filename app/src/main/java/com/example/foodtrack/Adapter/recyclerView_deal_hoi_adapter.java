@@ -59,12 +59,12 @@ public class recyclerView_deal_hoi_adapter extends RecyclerView.Adapter<recycler
                 Bundle bundle = new Bundle();
                 bundle.putString("title",product.getTenSanPham());
                 bundle.putDouble("price",product.getGiaTien());
-                bundle.putString("description", "Mô tả món ăn/đồ uống");
+                bundle.putString("description", product.getMoTa());
                 bundle.putInt("image", product.getImages());
                 fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
                         holder.title.getText().toString(),
                         product.getGiaTien(),
-                        "Mô tả món ăn/đồ uống",
+                        product.getMoTa(),
                         product.getImages()
                 );
                 MainActivity mainActivity = (MainActivity) context;

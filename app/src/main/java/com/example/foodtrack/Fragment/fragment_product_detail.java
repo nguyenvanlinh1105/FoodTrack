@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.Model.SanPhamYeuThichModel;
@@ -71,8 +72,8 @@ public class fragment_product_detail extends Fragment {
     private int quantity;
     private TextView btn_AddToCart_product_detail;
 
-    private List<SanPhamModel> listProduct;
-    private RecyclerView rvProductDetail;
+    private List<SanPhamModel> listProduct, listDealHoi;
+    private RecyclerView rvProductDetail, rvDealHoi;
 
     public fragment_product_detail() {
         // Required empty public constructor
@@ -109,12 +110,30 @@ public class fragment_product_detail extends Fragment {
 
     private void InitializeData() {
         listProduct = new ArrayList<>();
-        listProduct.add(new SanPhamModel("Cơm tấm", 70.000, R.drawable.com_tam,"Cơm tấm bì nướng"));
-        listProduct.add(new SanPhamModel("Chuối tươi", 30.000, R.drawable.spaghetti, "Chuối sứ"));
-        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.gnocchi_tomato, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.chicken, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
-        listProduct.add(new SanPhamModel("Burger phô mai", 30.000, R.drawable.dessert_ico, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Cơm tấm sườn", 70000.0, R.drawable.com_tam,"Hạt cơm tấm dẻo thơm ăn kèm sườn nướng tươi ngon vừa ra lò"));
+        listProduct.add(new SanPhamModel("Chuối sứ", 30000.0, R.drawable.icon_food2, "Chuối sứ vàng ươm tươi ngon đây bà con ơi"));
+        listProduct.add(new SanPhamModel("Gnocchi sốt cà chua", 30000.0, R.drawable.gnocchi_tomato, "Gnocchi hòa cùng sốt cà chua nhà làm mang chút vị chua thanh mát, kết hợp với mùi thơm từ húng tây và tiêu đen xay mịn"));
+        listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 30000.0, R.drawable.chicken, "Cơm nóng ăn kèm gà chiên tẩm sốt chua ngọt ngoài giòn trong mềm, thấm đẫm gia vị"));
+        listProduct.add(new SanPhamModel("Burger phô mai", 30000.0, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listProduct.add(new SanPhamModel("Cheesecake việt quất", 30000.0, R.drawable.dessert_ico, "Cheesecake béo ngậy cùng mứt việt quất chua ngọt vừa phải"));
+    }
+
+    private void InitializeDataDealHoi(){
+        listDealHoi = new ArrayList<>();
+        listDealHoi.add(new SanPhamModel("Salad trái cây", 70000, R.drawable.icon_food1, "Salad cổ điển cùng trái cây tươi trong ngày"));
+        listDealHoi.add(new SanPhamModel("Mì Carbonara", 90000, R.drawable.carbonara, "Carbonara béo ngậy hòa cùng chút mặn đến từ thịt xông khói"));
+        listDealHoi.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listDealHoi.add(new SanPhamModel("Gnocchi sốt cà chua", 80000, R.drawable.gnocchi_tomato, "Gnocchi tươi nấu cùng sốt cà chua nhà làm"));
+        listDealHoi.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Cơm nóng ăn kèm gà rán tẩm sốt chua ngọt bí truyền"));
+        listDealHoi.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listDealHoi.add(new SanPhamModel("Mì Spaghetti", 90000, R.drawable.spaghetti, "Sợi mì spaghetti tươi ngon nấu cùng sốt cà chua nguyên chất"));
+        listDealHoi.add(new SanPhamModel("Salad trái cây", 70000, R.drawable.icon_food1, "Salad cổ điển cùng trái cây tươi trong ngày"));
+        listDealHoi.add(new SanPhamModel("Mì Carbonara", 90000, R.drawable.carbonara, "Carbonara béo ngậy hòa cùng chút mặn đến từ thịt xông khói"));
+        listDealHoi.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listDealHoi.add(new SanPhamModel("Gnocchi sốt cà chua", 80000, R.drawable.gnocchi_tomato, "Gnocchi tươi nấu cùng sốt cà chua nhà làm"));
+        listDealHoi.add(new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Cơm nóng ăn kèm gà rán tẩm sốt chua ngọt bí truyền"));
+        listDealHoi.add(new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển"));
+        listDealHoi.add(new SanPhamModel("Mì Spaghetti", 90000, R.drawable.spaghetti, "Sợi mì spaghetti tươi ngon nấu cùng sốt cà chua nguyên chất"));
     }
 
     @Override
@@ -177,8 +196,16 @@ public class fragment_product_detail extends Fragment {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         rvProductDetail.setLayoutManager(layoutManager);
-        recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct );
-        rvProductDetail.setAdapter(dealAdapter);
+        recyclerView_product_detail_adapter recAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct );
+        rvProductDetail.setAdapter(recAdapter);
+
+        rvDealHoi = view.findViewById(R.id.recyclerView_deal_hoi_product_detail);
+        InitializeDataDealHoi();
+        LinearLayoutManager layoutDealManager
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvDealHoi.setLayoutManager(layoutDealManager);
+        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), listDealHoi );
+        rvDealHoi.setAdapter(dealAdapter);
     }
 
     private void ControlButton() {
@@ -240,6 +267,8 @@ public class fragment_product_detail extends Fragment {
                 CreatePopupAddToCart(view);
             }
         });
+
+
 
     }
 
