@@ -2,7 +2,6 @@ import { Request,Response,NextFunction } from "express";
 import streamUpload from '../helper/streamUpload.helper';
 
 export const uploadSingle= async (req:Request,res:Response,next:NextFunction)=>{
-    
     if(req["file"]){
       const uploadToCloudinary= async (buffer)=>{
           let result= await streamUpload(buffer);
@@ -14,7 +13,6 @@ export const uploadSingle= async (req:Request,res:Response,next:NextFunction)=>{
     else{
       next();
     } 
-
 }
 export const uploadFields=async(req:Request,res:Response,next:NextFunction)=>{
   if(req['files']){

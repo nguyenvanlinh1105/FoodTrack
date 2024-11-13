@@ -227,3 +227,49 @@ export const passwordReset=async(req:Request,res:Response)=>{
         return res.redirect('back');
     }
 }
+
+export const profilePage= async(req:Request,res:Response)=>{
+    const user={
+        ...res.locals.user,
+        tenVaitro:res.locals.user['Role.tenVaiTro']
+    }
+    const roles=await allMode.VaiTro.findAll({
+        where:{
+            idVaiTro:['VT001','VT003','VT004','VT005']
+        },
+        raw:true
+    })
+    res.render('admin/pages/auth/profile',{
+        title:'Trang cá nhân',
+        user:user,
+        roles:roles
+    })
+}
+
+export const profileUpdate = async(req:Request,res:Response)=>{
+    const { password, 'password-confirm': passwordConfirm,...otherData} = req.body;
+    const token=res.locals.user.token;
+    if ((password && !passwordConfirm) || (!password && passwordConfirm)) {
+        req.flash('error', 'Vui lòng nhập cả mật khẩu và xác nhận mật khẩu.');
+        return res.redirect('back');
+    }
+
+    if (password && passwordConfirm && password !== passwordConfirm) {
+        req.flash('error', 'Mật khẩu và xác nhận mật khẩu không khớp.');
+        return res.redirect('back');
+    }
+    const updatedData = {
+        ...otherData,
+        ...(password ? { password: hashPassword(password) } : {}) // Chỉ thêm password nếu password tồn tại
+    };
+    console.log(updatedData);
+    await allMode.NguoiDung.update(updatedData, {
+        where:{
+            token: token,
+            trangThai:'active',
+            deleted:0,
+        }
+    });
+    req.flash('success','Cập nhật thông tin thành công');
+    res.redirect('/admin/dashboard');
+}

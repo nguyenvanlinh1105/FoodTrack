@@ -22,7 +22,7 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
     hr.sidebar-divider
     .sidebar-heading
         | Management Customer
-    li.nav-item
+    li.nav-item(class=(title.includes('khách hàng') ? 'active' : ''))
         a.nav-link.collapsed(href='/admin/management/customer', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
             i.fas.fa-user
             span Quản lý khách hàng

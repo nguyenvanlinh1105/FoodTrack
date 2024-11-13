@@ -219,3 +219,43 @@ function enableEmailInput() {
     document.getElementById('email').removeAttribute('disabled'); // Bỏ thuộc tính disabled trước khi gửi
 }
 
+$(document).ready(function() {
+    var table = $('#dataTable').DataTable({
+        language: {
+            emptyTable: "Chưa có dữ liệu",
+            zeroRecords: "Không tìm thấy",
+            search: "",
+            searchPlaceholder: 'Tìm kiếm',
+            loadingRecords: "Loading...",
+        },
+        "width": "100%",
+        lengthChange: false,      // Bỏ phần thay đổi số lượng bản ghi hiển thị
+        paging: false,            // Bật phân trang
+        pageLength: 4,            // Giới hạn tối đa 4 bản ghi mỗi trang
+        info: false,              // Bỏ phần số thông tin bảng ghi
+        searching: true,          // Giữ lại chức năng tìm kiếm
+        ordering: true,           // Giữ lại chức năng sắp xếp
+        stateSave: true,          // Lưu lại trạng thái
+        columnDefs: [
+            { 
+                targets: -1,       // Cột cuối cùng (target: -1)
+                orderable: false   // Tắt tính năng sắp xếp cho cột cuối cùng
+            }
+        ]
+    });
+});
+
+const uploadImage=document.querySelector('[upload-image]');
+console.log(uploadImage);
+if(uploadImage){
+    const inputImage=uploadImage.querySelector('[upload-image-input]');
+    const previewImage=uploadImage.querySelector('[upload-image-preview]');
+    if (inputImage && previewImage){
+        inputImage.addEventListener('change',(e)=>{
+            const [file]=inputImage.files;
+            if(file){
+                previewImage.src=URL.createObjectURL(file);
+            }
+        })
+    }
+}

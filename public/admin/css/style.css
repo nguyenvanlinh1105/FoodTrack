@@ -11281,3 +11281,71 @@
 .food-image:hover {
   transform: scale(1.05); /* Phóng to nhẹ khi hover */
 }
+
+a.btn-table:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+    transition: all 0.3s ease-in-out;
+}
+
+#dataTable {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+#dataTable th, #dataTable td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+#dataTable thead th {
+  background-color: #ff5e00 ;
+  color: #ffffff;
+  border-top: none;
+}
+#dataTable tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+#dataTable tbody tr:hover {
+  background-color: #f1f1f1;
+}
+/* Style search box and pagination */
+.dataTables_wrapper .dataTables_filter input {
+  border-radius: 4px;
+  padding: 6px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  padding: 0.5em 1em;
+  margin: 0 2px;
+  border-radius: 4px;
+  color: #007bff;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: #007bff;
+  color: #ffffff !important;
+}
+.dataTables_wrapper .dataTables_info {
+  font-size: 0.9rem;
+  color: #333;
+}
+.dataTables_wrapper .dataTables_length select {
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* Hide default DataTables sort icons */
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc:after {
+    display: none;
+}
+
+#thumbnailPreview{
+  width: 300px;
+  height:auto;
+  margin-top:15px;
+  border:1px solid #ddd;
+  border-radius: 5px;
+}
+

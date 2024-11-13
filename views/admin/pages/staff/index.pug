@@ -18,51 +18,56 @@ block content
             table#dataTable.table.table-bordered(width='100%', cellspacing='0')
               thead
                 tr
-                    th STT
-                    th Họ tên
-                    th Vai trò 
-                    th Điện thoại
-                    th Trạng thái
-                    th Giới tính
-                    th Hành động
+                    th.text-center STT
+                    th.text-center Họ tên
+                    th.text-center Vai trò 
+                    th.text-center Điện thoại
+                    th.text-center Trạng thái
+                    th.text-center Giới tính
+                    th.text-center Hành động
               tbody
                 if(listStaffs.length>0)
                   each staff, index in listStaffs
                     tr
-                      td #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
+                      td.text-center #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
                       td #{staff.hoTen}
-                      td #{staff.tenVaiTro}
-                      td #{staff.sdt}
-                      td
+                      td.text-center #{staff.tenVaiTro}
+                      td.text-center #{staff.sdt}
+                      td.text-center
                         if(staff.trangThai == "active")
                           a(href=`/admin/management/staff/change-status/${staff.token}/inactive` class="badge badge-success"
                                   staff-id=`` staff-status=`inactive`) Hoạt động
                         else
                           a(href=`/admin/management/staff/change-status/${staff.token}/active` class="badge badge-danger"
                               staff-id=`` staff-status=`active`) Dừng hoạt động
-                      td #{staff.gioiTinh}
-                      td 
-                        a.btn.btn-secondary.btn-sm(href=`/${prefixAdmin}/accounts/detail/${staff.token}`)
-                          i.fas.fa-eye
-                          |  Chi tiết
-                        a.btn.btn-warning.btn-sm.ml-1(href=`/${prefixAdmin}/accounts/edit/${staff.token}`)
-                          i.fas.fa-edit
-                          |  Sửa
-                        a.btn.btn-danger.btn-sm.ml-1(href=`/${prefixAdmin}/accounts/delete/${staff.token}`)
-                          i.fas.fa-trash
-                          |  Xóa
+                      td.text-center #{staff.gioiTinh}
+                      td.text-center(style="display: flex; justify-content: space-between; align-items: center;")
+                          a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/accounts/detail/${staff.token}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                              i.fas.fa-eye(style="margin-right: 5px;")
+                              |  Chi tiết
+                          a.btn.btn-warning.btn-sm.btn-table(href=`/${prefixAdmin}/accounts/edit/${staff.token}`, style="flex: 1; padding: 5px 10px; background-color: #ffc107; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                              i.fas.fa-edit(style="margin-right: 5px;")
+                              |  Sửa
+                          a.btn.btn-danger.btn-sm.btn-table(href=`/${prefixAdmin}/accounts/delete/${staff.token}`, style="flex: 1; padding: 5px 10px; background-color: #dc3545; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center;")
+                              i.fas.fa-trash(style="margin-right: 5px;")
+                              |  Xóa
                 else
                   tr
                     td(colspan='7')
                       p.text-center Chưa có nhân viên nào
         nav.ml-3
-          ul(class="pagination")
-            if(pagination.currentPage > 1)
-              li(class="page-item")
-                a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage-1}`) Trang trước  
-            - for (let index = 1; index <= pagination.totalPages; index++) 
+          div(style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; margin-right:20px")
+            span
+              | Trang #{pagination.currentPage} trong tổng số #{pagination.totalPages} trang
+            ul(class="pagination" style="margin-top: 10px;")
+              if(pagination.currentPage > 1)
+                li(class="page-item")
+                  a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage-1}`) Trang trước
+              - for (let index = 1; index <= pagination.totalPages; index++) 
                 li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
                   a(class="page-link" href=`/admin/management/staff?page=${index}`) #{index}
-            if(pagination.currentPage < pagination.totalPages)
-              li(class="page-item")
-                a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage+1}`) Trang sau
+              if(pagination.currentPage < pagination.totalPages)
+                li(class="page-item")
+                  a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage+1}`) Trang sau
+
+      

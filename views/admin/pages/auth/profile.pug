@@ -1,0 +1,100 @@
+extends ../../layouts/default.pug
+
+block content 
+    .container-fluid.mt-4
+        .d-sm-flex.align-items-center.justify-content-between.mb-4
+            h1.h3.mb-2.text-gray-800 Thông tin cá nhân
+        // Page Heading
+        p.mb-4
+            | Thông tin cá nhân của Admin
+            .row
+                // Column
+                .col-lg-4.col-xlg-3.col-md-5
+                    .card
+                        .card-body
+                            center.m-t-30
+                                if(user.avatar)
+                                    img.img-profile.rounded-circle(src=`${user.avatar}` style="width:350px")
+                                else
+                                    if(user.gioiTinh==='Nam')
+                                        img.img-profile.rounded-circle(src='/admin/images/undraw_profile.svg')
+                                    else
+                                        img.img-profile.rounded-circle(src='/admin/images/undraw_profile_3.svg')
+                                h4.card-title.mt-3 #{user.hoTen}
+                        div
+                            hr
+                        .card-body
+                            small.text-muted Email 
+                            h6 #{user.email}
+                            small.text-muted.p-t-30.db Số điện thoại
+                            h6 #{user.sdt}
+                            small.text-muted.p-t-30.db Địa chỉ
+                            h6 48 Cao Thắng
+                            .map-box
+                                iframe(src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.7805804229524!2d108.21105927495516!3d16.07687208460371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421847f0d1243f%3A0xfe9e3527761db501!2zNDggQ2FvIFRo4bqvbmcsIFRoYW5oIELDrG5oLCBI4bqjaSBDaMOidSwgxJDDoCBO4bq1bmcgNTUwMDAwLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1731312904725!5m2!1svi!2s" width="350" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade")
+                            small.text-muted.p-t-30.db Liên lạc qua
+                            br
+                            button.btn.btn-circle.btn-secondary
+                                i.fab.fa-facebook-square
+                            button.btn.btn-circle.btn-secondary
+                                i.fab.fa-instagram-square
+                            button.btn.btn-circle.btn-secondary
+                                i.fab.fa-twitter-square
+                // Column end
+                // Column start
+                .col-lg-8.col-xlg-9.col-md-7
+                    .card
+                        .card-body
+                            form.form-horizontal.form-material(action="/admin/profile"  method='post' enctype="multipart/form-data")
+                                .form-group
+                                    label.col-md-12 Họ tên
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Họ tên', name='hoTen', value=user.hoTen)
+                                .form-group
+                                    label.col-md-12(for='example-email') Email
+                                    .col-md-12
+                                        input#example-email.form-control.form-control-line(type='email', placeholder='email', name='email', value=user.email, readonly='')
+                                .form-group
+                                    label.col-md-12 Mật khẩu mới
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='password', name='password')
+                                .form-group
+                                    label.col-md-12 Nhập lại mật khẩu
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='password', name='password-confirm')
+                                .form-group
+                                    label.col-md-12 Số điện thoại
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Số điện thoại', name='sdt', value=user.sdt)
+                                .form-group
+                                    label.col-md-12 Ngày sinh
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='date', placeholder='Ngày sinh', name='ngaySinh', value=user.ngaySinh)
+                                .form-group
+                                    label.col-sm-12 Ngày sinh
+                                    .col-sm-12
+                                        select.form-control.form-control-line(name='gioiTinh')
+                                            option(value='Nam' selected=(user.gioiTinh == "Nam")) Nam
+                                            option(value='Nữ' selected=(user.gioiTinh == "Nữ") ) Nữ
+                                .form-group 
+                                    label.col-md-12 Vai trò
+                                    .col-md-12
+                                        select.form-control.form-control-line(name='vaiTro')
+                                            each role in roles
+                                                option(value=role.idVaiTro selected=(user.vaiTro==role.idVaiTro)) #{role.tenVaiTro}
+                                div(class="form-group" upload-image)
+                                    label.col-md-12 Avatar
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='file', placeholder='Avatar', name='avatar', accept='image/*' upload-image-input)
+                                    img(
+                                        id="thumbnailPreview"
+                                        class="mt-2 ml-3"
+                                        src=""
+                                        alt=""
+                                        upload-image-preview
+                                    )
+                                // Column end
+                                .form-group
+                                    .col-sm-12
+                                        button.btn.btn-success(type='submit')
+                                            | Cập nhật thông tin

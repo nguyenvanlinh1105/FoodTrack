@@ -15,7 +15,6 @@ export const pageStaff = async(req:Request,res:Response)=>{
     //Tính năng phân trang
     const idUserCurrent=res.locals.user['idNguoiDung'];
     const pagination= await paginationStaff(req,4,idUserCurrent);
-    console.log(pagination);
     const listStaffs= await allMode.NguoiDung.findAll({
         attributes:[
             'hoTen', 'email', 'sdt', 
@@ -24,11 +23,21 @@ export const pageStaff = async(req:Request,res:Response)=>{
         ],
         where:{
             idNguoiDung:{[Op.ne]:idUserCurrent},
-            vaiTro:{[Op.in]:['VT001', 'VT003', 'VT004', 'VT005']}
+            vaiTro:{[Op.in]:['VT001', 'VT003', 'VT004', 'VT005']},
+            deleted:0
         },
+        include: [{
+            model: allMode.VaiTro,
+            as: 'Role',
+            attributes: ['tenVaiTro'] // Lấy tên vai trò
+        }],
         limit: pagination.limitItems,
-        offset: pagination.skip
+        offset: pagination.skip,
+        raw:true
     })
+    for(const staff of listStaffs){
+        staff['tenVaiTro']=staff['Role.tenVaiTro'];
+    }
     res.render('admin/pages/staff/index',{
         title:'Quản lý nhân viên',
         listStaffs:listStaffs,

@@ -87,6 +87,7 @@ export const register=async(req:Request,res:Response)=>{
 }
 export const passwordForgot=async(req:Request,res:Response)=>{
     const email=req.body['email'];
+    console.log(email);
     if(!isValid.isValidEmail(email)){
         res.status(404).json({message:'Email không hợp lệ'});
         return;
@@ -120,12 +121,13 @@ export const otp=async(req:Request,res:Response)=>{
     checkOTPAPI(email,otp,req,res);
 }
 export const passwordReset=async(req:Request,res:Response)=>{
-    const {email,newPassword}=req.body;
+    const {email,matKhau}=req.body;
+    console.log(email,matKhau);
     if(!isValid.isValidEmail(email)){
         res.status(404).json({message:'Email không hợp lệ'});
         return;
     }
-    if(!newPassword){
+    if(!matKhau){
         res.status(404).json({message:'Mật khẩu không hợp lệ'});
         return
     }
@@ -142,12 +144,12 @@ export const passwordReset=async(req:Request,res:Response)=>{
         res.status(404).json({message:'Tài khoản không tồn tại'});
     }else{
         await NguoiDung.update({
-            matKhau:hashPassword(newPassword)
+            matKhau:hashPassword(matKhau)
         },{
             where:{
                 email:email
             }
         });
-        res.status(200).json({message:'Đổi mật khẩu thành công'});
+        res.status(200).json({matKhau:matKhau,message:'Đổi mật khẩu thành công'});
     }
 }

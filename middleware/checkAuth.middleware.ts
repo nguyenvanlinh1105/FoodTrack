@@ -1,5 +1,5 @@
 import { Express,Request,Response,NextFunction } from "express";
-import NguoiDung from "../model/NguoiDung.model";
+import * as allModel from "../model/index.model";//Nhúng tất cả model
 
 const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
     if(!req.cookies.token){
@@ -7,14 +7,19 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
         res.redirect('/admin/login');
     }else{
         const token=req.cookies.token;
-        const userExist= await NguoiDung.findOne({
+        const userExist= await allModel.NguoiDung.findOne({
             where:{
                 token:token,
                 trangThai:'active',
                 deleted:0
             },
+            include: [{
+                model: allModel.VaiTro,
+                as: 'Role',
+                attributes: ['tenVaiTro'] // Lấy tên vai trò
+            }],
             attributes: { 
-                exclude: ['matKhau', 'token'] // Loại bỏ các trường không cần lấy
+                exclude: ['matKhau'] // Loại bỏ các trường không cần lấy
             },
             raw:true
         })

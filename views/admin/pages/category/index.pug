@@ -27,32 +27,35 @@ block content
                 if(categories.length>0)
                   each category, index in categories
                     tr
-                      td #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
+                      td.text-center #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
                       td #{category.tenDanhMuc}
                       td !{category.moTa}
-                      td #{category.ngayTao}
-                      td
-                        a.btn.btn-secondary.btn-sm(href=`/${prefixAdmin}/management/category/detail/${category.slug}`)
-                          i.fas.fa-eye
-                          |  Chi tiết
-                        a.btn.btn-warning.btn-sm.ml-1(href=`/${prefixAdmin}/management/category/edit/${category.slug}`)
-                          i.fas.fa-edit
-                          |  Sửa
-                        a.btn.btn-danger.btn-sm.ml-1(href=`/${prefixAdmin}/management/category/delete/${category.slug}`)
-                          i.fas.fa-trash
-                          |  Xóa 
+                      td.text-center #{category.ngayTao}
+                      td.text-center(style="display: flex; justify-content: space-between; align-items: center; height:65.6px")
+                          a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/category/detail/${category.token}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                              i.fas.fa-eye(style="margin-right: 5px;")
+                              |  Chi tiết
+                          a.btn.btn-warning.btn-sm.btn-table(href=`/${prefixAdmin}/category/edit/${category.token}`, style="flex: 1; padding: 5px 10px; background-color: #ffc107; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                              i.fas.fa-edit(style="margin-right: 5px;")
+                              |  Sửa
+                          a.btn.btn-danger.btn-sm.btn-table(href=`/${prefixAdmin}/category/delete/${category.token}`, style="flex: 1; padding: 5px 10px; background-color: #dc3545; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center;")
+                              i.fas.fa-trash(style="margin-right: 5px;")
+                              |  Xóa
                 else
                   tr
                     td(colspan='5')
                       p.text-center Chưa có danh mục nào
         nav.ml-3
-          ul(class="pagination")
-            if(pagination.currentPage > 1)
-              li(class="page-item")
-                a(class="page-link" href=`/admin/management/category?page=${pagination.currentPage-1}`) Trang trước  
-            - for (let index = 1; index <= pagination.totalPages; index++) 
+          div(style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; margin-right:20px")
+            span
+              | Trang #{pagination.currentPage} trong tổng số #{pagination.totalPages} trang
+            ul(class="pagination" style="margin-top: 10px;")
+              if(pagination.currentPage > 1)
+                li(class="page-item")
+                  a(class="page-link" href=`/admin/management/category?page=${pagination.currentPage-1}`) Trang trước
+              - for (let index = 1; index <= pagination.totalPages; index++) 
                 li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
                   a(class="page-link" href=`/admin/management/category?page=${index}`) #{index}
-            if(pagination.currentPage < pagination.totalPages)
-              li(class="page-item")
-                a(class="page-link" href=`/admin/management/category?page=${pagination.currentPage+1}`) Trang sau
+              if(pagination.currentPage < pagination.totalPages)
+                li(class="page-item")
+                  a(class="page-link" href=`/admin/management/category?page=${pagination.currentPage+1}`) Trang sau
