@@ -90,7 +90,7 @@ public class fragment_myorders_history extends Fragment {
 
     private void initializeData() {
         for (int i = 0; i < 6; i++)
-            orderId.add("Order: #000" + i);
+            orderId.add("Mã đơn hàng: #000" + i);
         for (int i = 0; i < 6; i++)
             time.add(String.valueOf(new Date()));
 
