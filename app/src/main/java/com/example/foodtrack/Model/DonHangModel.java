@@ -8,8 +8,10 @@ public class DonHangModel {
     private String idDonHang;
     private String idNguoiDung;
     private String tinhTrang;
+    private String idDiaChi;
     private Date ngayTao;
     private Date ngayHuyDonhang;
+
 
     public Date getNgayHuyDonhang() {
         return ngayHuyDonhang;
@@ -62,6 +64,14 @@ public class DonHangModel {
 
     public void setThoiGianCapNhat(Timestamp thoiGianCapNhat) {
         this.thoiGianCapNhat = thoiGianCapNhat;
+    }
+
+    public String getIdDiaChi() {
+        return idDiaChi;
+    }
+
+    public void setIdDiaChi(String idDiaChi) {
+        this.idDiaChi = idDiaChi;
     }
 
     public NguoiDungModel getNguoiDung() {

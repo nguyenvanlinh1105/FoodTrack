@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_card_view_product_detail_rv"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_card_view_product_detail_rv"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginBottom="7dp">
 
-  <androidx.cardview.widget.CardView
-      android:layout_width="62dp"
-      android:layout_height="62dp"
-      app:cardCornerRadius="15dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        app:cardCornerRadius="15dp">
+
         <ImageView
             android:id="@+id/image_item_product_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/drink1"
-            android:scaleType="fitXY"/>
-  </androidx.cardview.widget.CardView>
+            android:scaleType="fitXY"
+            android:src="@drawable/drink1" />
 
+    </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/tv_item_ten_mon_product_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_item_gia_mon_product_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_item_mo_ta_product_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
 </FrameLayout>

@@ -74,9 +74,10 @@
         android:layout_below="@+id/constraintLayout7"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:visibility="gone">
+       >
     </androidx.recyclerview.widget.RecyclerView>
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_above="@+id/linearLayout10"

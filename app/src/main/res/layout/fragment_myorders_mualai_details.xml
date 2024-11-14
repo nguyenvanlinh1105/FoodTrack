@@ -356,7 +356,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_huy_myOrders_detail"
+                android:id="@+id/btn_mua_lai_myOrders_detail"
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"

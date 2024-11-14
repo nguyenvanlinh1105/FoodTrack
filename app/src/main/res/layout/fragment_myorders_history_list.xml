@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:text="Order: "
+            android:text="Mã đơn hàng: "
             android:textColor="@color/primary_color"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,13 +32,13 @@
             android:id="@+id/time_item_myOrders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="108dp"
+            android:layout_marginStart="20dp"
             android:fontFamily="sans-serif-medium"
             android:text="22-9-2024, 12:00 p.m"
             android:textColor="@color/brown"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/item_id_myOrders"
+            app:layout_constraintTop_toTopOf="@+id/item_id_myOrders" />
 
         <TextView
             android:id="@+id/name_item_myOrders"

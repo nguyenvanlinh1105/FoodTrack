@@ -2,12 +2,14 @@ package com.example.foodtrack.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,12 +56,14 @@ public class recyclerView_chat_user_shop_adapter extends RecyclerView.Adapter<re
     Socket mSocket;
     String currentUser;
 
-    public recyclerView_chat_user_shop_adapter(Activity activity, List<TinNhanModel> list) {
+    public recyclerView_chat_user_shop_adapter(Activity activity, List<TinNhanModel> list, SharedPreferences sharedPreferences) {
         this.activity = activity;
         this.list = list;
-
         this.mSocket = SocketManager.getInstance().getSocket();
-        mSocket.on("server-send-current-user", onRetrieveCurrentUser);
+        this.currentUser = sharedPreferences.getString("currentUser", "");
+
+//        mSocket.on("server-send-current-user", onRetrieveCurrentUser);
+//        mSocket.on("server-send-chat", onRetrieveListChat);
 
     }
 
@@ -75,39 +79,17 @@ public class recyclerView_chat_user_shop_adapter extends RecyclerView.Adapter<re
 
         TinNhanModel chat = list.get(position);
 
-        if(Objects.equals(chat.getTenNguoiDung(), currentUser)){
-            Toast.makeText(activity, currentUser, Toast.LENGTH_SHORT).show();
+        Log.d("ListSize", "Size of list: " + list.size());
+        if (Objects.equals(chat.getTenNguoiDung(), currentUser)) {
             holder.layout_left.setVisibility(View.GONE);
             holder.layout_right.setVisibility(View.VISIBLE);
             holder.chat_right.setText(chat.getNoiDungChat());
-        }
-        else {
-            Toast.makeText(activity, "chat.getTenNguoiDung: " + chat.getTenNguoiDung(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(activity, "currentUser: " + currentUser, Toast.LENGTH_SHORT).show();
+        } else {
             holder.layout_right.setVisibility(View.GONE);
             holder.layout_left.setVisibility(View.VISIBLE);
             holder.chat_left.setText(chat.getNoiDungChat());
         }
     }
-
-    private final Emitter.Listener onRetrieveCurrentUser = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject obj = (JSONObject) args[0];
-                    try {
-                        currentUser = obj.getString("username");
-                        notifyDataSetChanged();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-    };
-
 
     @Override
     public int getItemCount() {

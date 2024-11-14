@@ -117,7 +117,7 @@ public class fragment_myorders_ongoing extends Fragment {
 
         for (int i = 0; i < 2; i++) {
             DonHangModel donHang = new DonHangModel();
-            donHang.setIdDonHang("Order: #000" + i);
+            donHang.setIdDonHang("Mã đơn hàng: #000" + i);
             donHang.setNgayTao(new Date());
             donHang.setTinhTrang("Đang giao hàng");
 

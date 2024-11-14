@@ -90,8 +90,7 @@
                     android:textColor="#6D3805"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.287"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_donHuy_myOrders"
                     app:layout_constraintStart_toEndOf="@+id/btn_dangDen_myOrder"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
@@ -100,15 +99,14 @@
                     android:id="@+id/btn_donHuy_myOrders"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="48dp"
                     android:fontFamily="sans-serif-medium"
                     android:text="Đã hủy"
                     android:textColor="#6D3805"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_lichSu_myOrders"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.842"
-                    app:layout_constraintStart_toEndOf="@+id/btn_dangDen_myOrder"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/btn_lichSu_myOrders"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <ImageView
@@ -122,6 +120,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/btn_dangDen_myOrder" />
 
                 <ImageView
+                    android:id="@+id/imageView17"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:src="@drawable/underlined_light_gray"
