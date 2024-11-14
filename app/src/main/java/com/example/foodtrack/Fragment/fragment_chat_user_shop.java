@@ -196,7 +196,9 @@ public class fragment_chat_user_shop extends Fragment {
                     Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    mSocket.emit("client-send-chat", edt_chat.getText().toString().trim());
+                    String message=edt_chat.getText().toString().trim();
+
+                    mSocket.emit("client-send-chat", message);
                     edt_chat.setText("");
                 }
             }

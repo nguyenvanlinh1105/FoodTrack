@@ -121,6 +121,7 @@ public class Login extends AppCompatActivity {
                 if (response.code() == 200) { // Kiểm tra status code
                     NguoiDungModel responseUserModel = response.body();
                     if (responseUserModel != null && "Đăng nhập thành công".equals(responseUserModel.getMessage())) {
+                        
                         Intent home = new Intent(Login.this, MainActivity.class);
                         startActivity(home);
                         finish();
