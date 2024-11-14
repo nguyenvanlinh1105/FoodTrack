@@ -10,9 +10,19 @@ public class DonHangAPIModel {
     private String tinhTrang;
     private Date ngayTao;
     private Timestamp thoiGianCapNhat;
+    private String trangThaiDat;
+
     // Navigation properties
     private NguoiDungModel nguoiDung;
     private List<ChiTietDonHangAPIModel> chiTietDonHangs;
+
+    public String getTrangThaiDat() {
+        return trangThaiDat;
+    }
+
+    public void setTrangThaiDat(String trangThaiDat) {
+        this.trangThaiDat = trangThaiDat;
+    }
 
     public String getIdDonHang() {
         return idDonHang;

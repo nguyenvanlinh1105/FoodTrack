@@ -1,7 +1,11 @@
 package com.example.foodtrack.API;
 
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
+import com.example.foodtrack.Model.DonHangAPIModel;
+import com.example.foodtrack.Model.DonHangModel;
 import com.example.foodtrack.Model.NguoiDungModel;
+import com.example.foodtrack.Model.Order;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -66,6 +70,37 @@ public interface APIService {
 
     @POST("/user/password/reset")
     Call<NguoiDungModel>PostToResetPass(@Body NguoiDungModel userModel);
+
+
+
+  // lấy đơn hàng đang giao
+    @GET("")
+    Call<List<DonHangAPIModel>> GetDonHangDangGiao();
+    //Lấy tất cả sản phẩm đã mua - history
+    @GET("")
+    Call<List<Order>> GetSanPhamDaMua();
+
+    //lấy đơn hàng đã hủy
+    @GET("")
+    Call<List<DonHangAPIModel>> GetDonHangDaHuy();
+
+    // lấy danh sách sản phẩm yêu thích
+    @GET("")
+    Call<List<SanPhamAPIModel>> getDsSanPhamYeuThich();
+
+    // thêm sản phẩm vào đơn hàng
+    Call<DonHangAPIModel> PostToBuyProduct(@Body ChiTietDonHangAPIModel product);
+
+    //  đặt hàng:set trangThaiDat==datHang;
+    Call<DonHangAPIModel> PostToOrder(@Body DonHangAPIModel donHang);
+
+    // hủy đặt hàng set trangThaiDat==huyDatHang;
+    Call<DonHangAPIModel> PostToCancleOrder(@Body DonHangAPIModel donHang);
+
+    //  đặt hàng:set trangThaiDat==datHang;
+    Call<DonHangAPIModel> PostToAgainOrder(@Body DonHangAPIModel donHang);
+
+
 
 
 

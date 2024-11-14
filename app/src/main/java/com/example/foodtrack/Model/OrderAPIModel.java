@@ -1,11 +1,14 @@
 package com.example.foodtrack.Model;
 
+import java.util.Date;
+
 public class OrderAPIModel {
-    protected String id, createdAt, status, name, price;
+    protected String id, status, name, price;
     protected int  rateStat, qty;
     protected String img;
+    protected Date createdAt;
 
-    public OrderAPIModel(String id, String createdAt, String name, String status, String img, int rateStat, String price, int qty) {
+    public OrderAPIModel(String id, Date createdAt, String name, String status, String img, int rateStat, String price, int qty) {
         this.id = id;
         this.createdAt = createdAt;
         this.name = name;
@@ -24,11 +27,11 @@ public class OrderAPIModel {
         this.id = id;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

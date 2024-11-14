@@ -2,7 +2,6 @@ package com.example.foodtrack.Model;
 
 public class ChiTietDonHangModel {
     private String idChiTietDonHang;
-    private String idUser;
     private String idSanPham;
     private String idDonHang;
     private String nhanVienXuLy;

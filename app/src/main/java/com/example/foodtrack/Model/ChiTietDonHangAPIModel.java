@@ -4,9 +4,11 @@ import com.example.foodtrack.Model.API.SanPhamAPIModel;
 
 public class ChiTietDonHangAPIModel {
     private String idChiTietDonHang;
+    private String idUser;
     private String idSanPham;
     private String idDonHang;
     private String nhanVienXuLy;
+
     private int soLuongDat;
 
     // Navigation properties
@@ -19,6 +21,14 @@ public class ChiTietDonHangAPIModel {
 
     public void setIdChiTietDonHang(String idChiTietDonHang) {
         this.idChiTietDonHang = idChiTietDonHang;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getIdSanPham() {

@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
     TextView btnLogin_TK;
     TextView edit_mail, edit_password;
     CheckBox cb_nho_mat_khau_login ;
-    SharedPreferences sharedPreferences, sharedUsername;
+    SharedPreferences sharedPreferences, sharedUsername, shareUserResponseLogin;
     String currentUser;
 
     @Override
@@ -58,6 +58,8 @@ public class Login extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
 
         sharedUsername = getSharedPreferences("currentUser", MODE_PRIVATE);
+
+        shareUserResponseLogin = getSharedPreferences("shareUserResponseLogin",MODE_PRIVATE);
 
         if(currentUser == null){
             currentUser = sharedUsername.getString("currentUser", "");
@@ -139,7 +141,15 @@ public class Login extends AppCompatActivity {
                 if (response.code() == 200) { // Kiểm tra status code
                     NguoiDungModel responseUserModel = response.body();
                     if (responseUserModel != null && "Đăng nhập thành công".equals(responseUserModel.getMessage())) {
-                        
+
+                        SharedPreferences.Editor editorResponseLogin = shareUserResponseLogin.edit();
+                        editorResponseLogin.putInt("idUser",responseUserModel.getIdUser());
+                        editorResponseLogin.putString("hoTenNguoiDung",responseUserModel.getHoTenNguoiDung());
+                        editorResponseLogin.putString("diaChi",responseUserModel.getDiaChi());
+                        editorResponseLogin.putString("sdt", responseUserModel.getSdt());
+                        editorResponseLogin.apply();
+
+
                         Intent home = new Intent(Login.this, MainActivity.class);
                         startActivity(home);
                         finish();
