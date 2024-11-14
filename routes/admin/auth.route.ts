@@ -19,5 +19,5 @@ router.post('/password/otp',authController.otp);
 router.get('/password/reset',authController.passwordResetPage);
 router.post('/password/reset',authController.passwordReset);
 router.get('/profile',checkAuthMiddleware,authController.profilePage);
-router.post('/profile',checkAuthMiddleware,upload.single("avatar"),uploadCloud.uploadSingle,authController.profileUpdate);
+router.patch('/profile',checkAuthMiddleware,upload.single("avatar"),uploadCloud.uploadSingle,authController.profileUpdate);
 export default router;

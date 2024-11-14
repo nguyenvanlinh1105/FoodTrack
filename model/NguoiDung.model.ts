@@ -62,6 +62,9 @@ const NguoiDung= sequelize.define("NguoiDung",{
         type:DataTypes.BOOLEAN,
         allowNull:false,
         defaultValue: false
+    },
+    diaChi:{
+        type:DataTypes.TEXT
     }
 },{
     tableName: "NguoiDung",

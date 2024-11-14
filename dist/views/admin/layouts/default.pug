@@ -1,0 +1,47 @@
+include ../mixins/show-alert.pug
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i', rel='stylesheet')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO', crossorigin='anonymous')
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer")
+
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/file-upload-with-preview/6.1.2/style.min.css" )
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.css")
+
+    link(rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css")
+    link(rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css")
+
+    link(rel="icon" type="image/x-icon" href="/admin/images/icon.jpg")
+    link(rel='stylesheet', type='text/css', href='/admin/css/style.css')
+    title #{title}
+  body#page-top
+    +alertSuccess(3000)
+    +alertError(3000)
+    #wrapper
+      include ../partials/sider
+      #content-wrapper.d-flex.flex-column
+        #content
+          include ../partials/header
+          block content
+        include ../partials/footer
+
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+    script(src="/tinymce/tinymce.min.js")
+    script(src="/admin/js/tinymce-config.js")
+    
+    script(src="https://www.google.com/recaptcha/api.js" async defer)
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/file-upload-with-preview/6.1.2/index.iife.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js")
+
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js")
+    script(src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js")
+    script(src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js")
+    script(src='/admin/js/main.js' defer)

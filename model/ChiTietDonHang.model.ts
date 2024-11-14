@@ -16,15 +16,6 @@ const ChiTietDonHang= sequelize.define("ChiTietDonHang",{
             key: "idSanPham"
         }
     },
-    nhanVienXuLy:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        primaryKey:true,
-        references:{
-            model: "NguoiDung",
-            key: "idNguoiDung"
-        }
-    },
     idDonHang:{
         type:DataTypes.STRING,
         allowNull:false,

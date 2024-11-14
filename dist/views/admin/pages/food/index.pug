@@ -1,0 +1,72 @@
+extends ../../layouts/default.pug
+block content 
+    .container-fluid.mt-4
+      .d-sm-flex.align-items-center.justify-content-between.mb-4
+          h1.h3.mb-2.text-gray-800 Bảng quản lý món ăn
+          a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='/admin/management/food/create')
+            i.fas.fa-utensils.fa-sm.text-white-50
+            |  Tạo món ăn mới
+      // Page Heading
+      p.mb-4
+        | Bảng này giúp quản lý các món ăn hiện có trong App 
+      // DataTales Example
+      .card.shadow.mb-4
+        .card-header.py-3
+          h6.m-0.font-weight-bold.text-primary Đồ ăn
+        .card-body
+          .table-responsive
+            table#dataTable.table.table-bordered(width='100%', cellspacing='0')
+              thead
+                tr
+                    th STT
+                    th Hình ảnh
+                    th Tên món ăn
+                    th Giá tiền
+                    th Số lượng
+                    th Trạng thái
+                    th Hành động
+              tbody
+                if(foods.length>0)
+                  each food, index in foods
+                    tr
+                      td.text-center #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
+                      td.text-center
+                        img.food-image(src=food.images, alt=food.name, width='100px')
+                      td #{food.tenSanPham}
+                      td.text-center #{food.giaTien}
+                      td.text-center #{food.soLuong}
+                      td.text-center
+                        if(food.trangThai=='active')
+                          a(href=`/admin/management/food/change-status/${food.slug}/inactive` class="badge badge-success"
+                                  food-status=`inactive`) Hoạt động
+                        else
+                          a(href=`/admin/management/food/change-status/${food.slug}/active` class="badge badge-danger"
+                              food-status=`active`) Dừng hoạt động
+                      td.text-center(style="display: flex; justify-content: space-between; align-items: center; height:125.6px")
+                        a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/food/detail/${food.slug}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                            i.fas.fa-eye(style="margin-right: 5px;")
+                            |  Chi tiết
+                        a.btn.btn-warning.btn-sm.btn-table(href=`/${prefixAdmin}/food/edit/${food.slug}`, style="flex: 1; padding: 5px 10px; background-color: #ffc107; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                            i.fas.fa-edit(style="margin-right: 5px;")
+                            |  Sửa
+                        a.btn.btn-danger.btn-sm.btn-table(href=`/${prefixAdmin}/food/delete/${food.slug}`, style="flex: 1; padding: 5px 10px; background-color: #dc3545; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center;")
+                            i.fas.fa-trash(style="margin-right: 5px;")
+                            |  Xóa
+                else
+                  tr
+                    td(colspan='7')
+                      p.text-center Chưa có món ăn nào
+        nav.ml-3
+          div(style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; margin-right:20px")
+            span
+              | Trang #{pagination.currentPage} trong tổng số #{pagination.totalPages} trang
+            ul(class="pagination" style="margin-top: 10px;")
+              if(pagination.currentPage > 1)
+                li(class="page-item")
+                  a(class="page-link" href=`/admin/management/food?page=${pagination.currentPage-1}`) Trang trước
+              - for (let index = 1; index <= pagination.totalPages; index++) 
+                li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
+                  a(class="page-link" href=`/admin/management/food?page=${index}`) #{index}
+              if(pagination.currentPage < pagination.totalPages)
+                li(class="page-item")
+                  a(class="page-link" href=`/admin/management/food?page=${pagination.currentPage+1}`) Trang sau

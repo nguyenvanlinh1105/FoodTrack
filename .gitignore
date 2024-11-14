@@ -1,5 +1,3 @@
 /node_modules
 .env
 Note-kien-thuc-moi
-/routes/api/auth.route.ts
-/controller/api/auth.controller.ts

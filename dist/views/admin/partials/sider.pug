@@ -1,0 +1,42 @@
+ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion
+    a.sidebar-brand.d-flex.align-items-center.justify-content-center(href='/admin/dashboard')
+        .sidebar-brand-icon.rotate-n-15
+            i.fas.fa-user
+        .sidebar-brand-text.mx-3
+            | Admin Food Track
+            sup 2
+    hr.sidebar-divider
+    .sidebar-heading
+        | Dashboard
+    li.nav-item(class=(title === 'Trang chủ' ? 'active' : ''))
+        a.nav-link(href='/admin/dashboard')
+            i.fas.fa-fw.fa-tachometer-alt-average
+            span Trang chủ
+    hr.sidebar-divider
+    .sidebar-heading
+        | Management Staff
+    li.nav-item(class=(title.includes('nhân viên') ? 'active' : ''))
+        a.nav-link.collapsed(href='/admin/management/staff', data-toggle='collapse', data-target='#collapseTwo', aria-expanded='true', aria-controls='collapseTwo')
+            i.fas.fa-user-check
+            span Quản lý nhân viên
+    hr.sidebar-divider
+    .sidebar-heading
+        | Management Customer
+    li.nav-item(class=(title.includes('khách hàng') ? 'active' : ''))
+        a.nav-link.collapsed(href='/admin/management/customer', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
+            i.fas.fa-user
+            span Quản lý khách hàng
+    hr.sidebar-divider
+    .sidebar-heading
+        | Management Category
+    li.nav-item(class=(title.includes('danh mục') ? 'active' : ''))
+        a.nav-link.collapsed(href='/admin/management/category', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
+            i.fas.fa-list-1-2
+            span Quản lý danh mục
+    hr.sidebar-divider
+    .sidebar-heading
+        | Management Food
+    li.nav-item(class=(title.includes('món ăn') ? 'active' : ''))
+        a.nav-link.collapsed(href='/admin/management/food', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
+            i.fas.fa-utensils
+            span Quản lý món ăn

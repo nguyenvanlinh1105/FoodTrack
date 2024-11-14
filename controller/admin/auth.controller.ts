@@ -1,12 +1,13 @@
 import { Request,Response } from 'express';//Nhúng kiểu Request và Response từ module express
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import * as allMode from "../../model/index.model";//Nhúng tất cả model
+import * as allModel from "../../model/index.model";//Nhúng tất cả model
 
 //Helper
 import {hashPassword, verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
 import emailQueue,{checkOTP} from '../../helper/emailQueue.helper';
 import { generateRandomNumber } from '../../helper/generateRandom.helper';
+import getMapEmbedUrl from '../../helper/getMapEmbedUrl.helper';
 
 export const loginPage= async (req:Request,res:Response)=>{
     res.render('admin/pages/auth/login',{
@@ -17,7 +18,7 @@ export const loginPage= async (req:Request,res:Response)=>{
 export const login =async (req:Request,res:Response)=>{
     const {email,password} = req.body;
     try {
-        const user= await allMode.NguoiDung.findOne({
+        const user= await allModel.NguoiDung.findOne({
             where:{
                 email:email,
                 trangThai:'active',
@@ -26,7 +27,7 @@ export const login =async (req:Request,res:Response)=>{
             },
             include: [
                 {
-                    model: allMode.VaiTro,
+                    model: allModel.VaiTro,
                     as: 'Role',
                     attributes: ['tenVaiTro'] // Lấy thuộc tính tenVaiTro
                 }
@@ -94,7 +95,7 @@ export const passwordForgot=async(req:Request,res:Response)=>{
         );
         const data=response.data;
         if (data.success) {
-            const user= await allMode.NguoiDung.findOne({
+            const user= await allModel.NguoiDung.findOne({
                 where:{
                     email:email,
                     trangThai:'active',
@@ -195,7 +196,7 @@ export const passwordReset=async(req:Request,res:Response)=>{
         );
         const data=response.data;
         if (data.success) {
-            const user= await allMode.NguoiDung.findOne({
+            const user= await allModel.NguoiDung.findOne({
                 where:{
                     email:email,
                     trangThai:'active',
@@ -208,7 +209,7 @@ export const passwordReset=async(req:Request,res:Response)=>{
                 req.flash('error','Tài khoản không tồn tại');
                 return res.redirect('back');
             }else{
-                await allMode.NguoiDung.update({
+                await allModel.NguoiDung.update({
                     matKhau:hashPassword(newPassword)
                 },{
                     where:{
@@ -231,9 +232,9 @@ export const passwordReset=async(req:Request,res:Response)=>{
 export const profilePage= async(req:Request,res:Response)=>{
     const user={
         ...res.locals.user,
-        tenVaitro:res.locals.user['Role.tenVaiTro']
+        tenVaiTro:res.locals.user['Role.tenVaiTro']
     }
-    const roles=await allMode.VaiTro.findAll({
+    const roles=await allModel.VaiTro.findAll({
         where:{
             idVaiTro:['VT001','VT003','VT004','VT005']
         },
@@ -247,7 +248,7 @@ export const profilePage= async(req:Request,res:Response)=>{
 }
 
 export const profileUpdate = async(req:Request,res:Response)=>{
-    const { password, 'password-confirm': passwordConfirm,...otherData} = req.body;
+    const { password, 'password-confirm': passwordConfirm,diaChi,...otherData} = req.body;
     const token=res.locals.user.token;
     if ((password && !passwordConfirm) || (!password && passwordConfirm)) {
         req.flash('error', 'Vui lòng nhập cả mật khẩu và xác nhận mật khẩu.');
@@ -258,12 +259,21 @@ export const profileUpdate = async(req:Request,res:Response)=>{
         req.flash('error', 'Mật khẩu và xác nhận mật khẩu không khớp.');
         return res.redirect('back');
     }
+    console.log(otherData);
     const updatedData = {
         ...otherData,
-        ...(password ? { password: hashPassword(password) } : {}) // Chỉ thêm password nếu password tồn tại
+        ...(password ? { matKhau: hashPassword(password) } : {}) // Chỉ thêm password nếu password tồn tại
     };
-    console.log(updatedData);
-    await allMode.NguoiDung.update(updatedData, {
+    if (diaChi) {
+        const mapEmbedUrl = await getMapEmbedUrl(diaChi);
+        if (mapEmbedUrl) {
+            updatedData['diaChi'] = mapEmbedUrl;
+        } else {
+            req.flash('error', 'Không thể cập nhật địa chỉ. Vui lòng kiểm tra lại.');
+            return res.redirect('back');
+        }
+    }
+    await allModel.NguoiDung.update(updatedData, {
         where:{
             token: token,
             trangThai:'active',

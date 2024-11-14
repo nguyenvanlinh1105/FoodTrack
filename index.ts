@@ -4,6 +4,7 @@ import cors from "cors" //Nhúng cors vào dự án
 dotenv.config();//Thêm config cho dotenv
 import path from "path";//Nhúng path
 import bodyParser from'body-parser';//Nhúng body-parser từ module body-parser
+import methodOverride from 'method-override';//Nhúng method-override từ module method-override
 
 import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
@@ -45,7 +46,7 @@ app.use(session(
 app.use(flash());
 
 app.use(express.json());
-
+app.use(methodOverride('_method'));
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 //Middleware để truyền biến messages vào tất cả các view

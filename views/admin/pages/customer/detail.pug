@@ -1,0 +1,80 @@
+extends ../../layouts/default.pug
+
+block content 
+    .container-fluid.mt-4
+        .d-sm-flex.align-items-center.justify-content-between.mb-4
+            h1.h3.mb-2.text-gray-800 Thông tin cá nhân
+        // Page Heading
+        p.mb-4
+            | Thông tin cá nhân của Khách hàng
+            .row
+                // Column
+                .col-lg-4.col-xlg-3.col-md-5
+                    .card
+                        .card-body
+                            center.m-t-30
+                                if(customer.avatar)
+                                    img.img-profile.rounded-circle(src=`${customer.avatar}` style="width:350px")
+                                else
+                                    if(customer.gioiTinh==='Nam')
+                                        img.img-profile.rounded-circle(src='/admin/images/undraw_profile.svg')
+                                    else
+                                        img.img-profile.rounded-circle(src='/admin/images/undraw_profile_3.svg')
+                                h4.card-title.mt-3 #{customer.hoTen}
+                                h6.card-subtitle Khách hàng
+                        div
+                            hr
+                        .card-body
+                            small.text-muted Email 
+                            h6 #{customer.email}
+                            small.text-muted.p-t-30.db Số điện thoại
+                            h6 #{customer.sdt}
+                            small.text-muted.p-t-30.db Địa chỉ
+                            h6 48 Cao Thắng
+                            .map-box
+                                iframe(src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.7805804229524!2d108.21105927495516!3d16.07687208460371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421847f0d1243f%3A0xfe9e3527761db501!2zNDggQ2FvIFRo4bqvbmcsIFRoYW5oIELDrG5oLCBI4bqjaSBDaMOidSwgxJDDoCBO4bq1bmcgNTUwMDAwLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1731312904725!5m2!1svi!2s" width="350" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade")
+                // Column end
+                // Column start
+                .col-lg-8.col-xlg-9.col-md-7
+                    .card
+                        .card-body
+                            form.form-horizontal.form-material()
+                                .form-group
+                                    label.col-md-12 Họ tên
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Họ tên', name='hoTen', value=customer.hoTen readonly)
+                                .form-group
+                                    label.col-md-12(for='example-email') Email
+                                    .col-md-12
+                                        input#example-email.form-control.form-control-line(type='email', placeholder='email', name='email', value=customer.email, readonly)
+                                .form-group
+                                    label.col-md-12 Số điện thoại
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Số điện thoại', name='sdt', value=customer.sdt readonly)
+                                .form-group
+                                    label.col-md-12 Ngày sinh
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='date', placeholder='Ngày sinh', name='ngaySinh', value=customer.ngaySinh readonly)
+                                .form-group
+                                    label.col-sm-12 Giới tính
+                                    .col-sm-12
+                                        select.form-control.form-control-line(name='gioiTinh' disabled)
+                                            option(value='Nam' selected=(customer.gioiTinh == "Nam")) Nam
+                                            option(value='Nữ' selected=(customer.gioiTinh == "Nữ") ) Nữ
+                                .form-group
+                                    label.col-md-12 Địa chỉ
+                                    .col-md-12
+                                        textarea.form-control.form-control-line(name='diaChi' placeholder='Nhập địa chỉ' rows='3' readonly)= customer.diaChi
+                                .form-group
+                                    label.col-md-12 Số lượng đơn hàng đã đặt
+                                    .col-md-12
+                                        p.form-control.form-control-static(style='font-weight: bold;')= customer.soLuongDonHang || '0 đơn hàng'
+                                .form-group
+                                    label.col-md-12 Tổng tiền cho các đơn hàng
+                                    .col-md-12
+                                        p.form-control.form-control-static(style='font-weight: bold;') #{customer.tongTienDonHang}
+                                .form-group
+                                    label.col-md-12 Ngày tạo tài khoản
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='date', placeholder='Ngày tạo tài khoản', name='ngayTao', value=customer.ngayTao readonly)
+                                // Column end
