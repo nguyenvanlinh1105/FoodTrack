@@ -117,18 +117,18 @@ public class Login extends AppCompatActivity {
                 currentUserEditor.apply();
 
 
-                Intent home = new Intent(Login.this, MainActivity.class);
-                startActivity(home);
-                finish();
+//                Intent home = new Intent(Login.this, MainActivity.class);
+//                startActivity(home);
+//                finish();
                 // comment để pass login
 
-//                if (email.isEmpty() || password.isEmpty()) {
-//                    Toast.makeText(Login.this, "Vui lòng nhập email và password trước khi nhấn đăng nhập", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    // hàm login
-//                    GetUserToLogin(userModel);
-//
-//                }
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(Login.this, "Vui lòng nhập email và password trước khi nhấn đăng nhập", Toast.LENGTH_SHORT).show();
+                } else {
+                    // hàm login
+                    GetUserToLogin(userModel);
+
+                }
 
             }
         });

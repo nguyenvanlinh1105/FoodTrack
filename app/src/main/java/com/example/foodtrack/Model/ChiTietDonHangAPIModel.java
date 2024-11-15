@@ -3,10 +3,10 @@ package com.example.foodtrack.Model;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 
 public class ChiTietDonHangAPIModel {
-    private String idChiTietDonHang;
-    private String idUser;
-    private String idSanPham;
     private String idDonHang;
+    private String idChiTietDonHang;
+    private int idUser;
+    private String idSanPham;
     private String nhanVienXuLy;
 
     private int soLuongDat;
@@ -23,11 +23,11 @@ public class ChiTietDonHangAPIModel {
         this.idChiTietDonHang = idChiTietDonHang;
     }
 
-    public String getIdUser() {
+    public int getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(String idUser) {
+    public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 

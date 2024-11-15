@@ -1,6 +1,7 @@
 package com.example.foodtrack.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -27,16 +28,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Fragment.fragment_product_detail;
 import com.example.foodtrack.Fragment.fragment_product_detail_API;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
+import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyclerView_mon_moi_API_adapter.MyViewHolder> {
 
@@ -117,6 +125,22 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
             @Override
             public void onClick(View view) {
 //                Toast.makeText(context.getApplicationContext(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
+
+                ChiTietDonHangAPIModel ctdh = new ChiTietDonHangAPIModel();
+
+                ctdh.setIdSanPham(product.getIdSanPham());
+                ctdh.setSoLuongDat(1);
+                // Lấy idUser từ SharedPreferences
+                SharedPreferences sharedPreferences = context.getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+                int idUser = sharedPreferences.getInt("idUser", -1); // -1 là giá trị mặc định nếu không tìm thấy
+                if (idUser != -1) {
+                    ctdh.setIdUser(idUser);
+                } else {
+                    Toast.makeText(context, "Không tìm thấy ID người dùng", Toast.LENGTH_SHORT).show();
+                }
+
+                PostSanPhamToGioHang(ctdh);
+
                 CreatePopup(view);
             }
 
@@ -171,6 +195,28 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
             }
         }, delay);
 
+    }
+
+
+    private void PostSanPhamToGioHang(ChiTietDonHangAPIModel ctdh){
+        APIService.API_SERVICE.PostToBuyProduct(ctdh).enqueue(new Callback<ChiTietDonHangAPIModel>() {
+            @Override
+            public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
+                ChiTietDonHangAPIModel ctdh = response.body();
+                if (response.isSuccessful() && response.body() != null && !response.body().getIdDonHang().isEmpty()) {
+
+
+
+                } else {
+                    Toast.makeText(context, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChiTietDonHangAPIModel> call, Throwable t) {
+
+            }
+        });
     }
 
 }

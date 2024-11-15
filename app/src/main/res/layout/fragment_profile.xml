@@ -17,16 +17,32 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.108">
+        app:layout_constraintVertical_bias="0.301">
 
-        <ImageView
-            android:id="@+id/btn_back_profile"
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/icon_back_orange" />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <ImageView
+               android:id="@+id/btn_back_profile"
+               android:layout_width="20sp"
+               android:layout_height="20sp"
+               android:layout_marginTop="30dp"
+               android:src="@drawable/icon_back_orange" />
+
+           <TextView
+               android:id="@+id/txt_tenKH_profile"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Xin chào, Nguyễn Văn Linh"
+               android:textAlignment="center"
+               android:textColor="#F99C32"
+               android:textSize="22sp"
+               android:textStyle="bold" />
+       </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -59,9 +75,9 @@
             android:id="@+id/capNhatHoSo_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10sp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginBottom="10sp">
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -99,9 +115,9 @@
             android:id="@+id/doiMatKhau_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10sp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginBottom="10sp">
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -178,10 +194,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:layout_marginBottom="10sp"
-            >
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -218,9 +233,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10sp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginBottom="10sp">
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/imageView7"
@@ -307,9 +322,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10sp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginBottom="10sp">
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -350,9 +365,9 @@
             android:id="@+id/ngonNgu_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10sp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginBottom="10sp">
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/imageView10"
@@ -404,9 +419,9 @@
             android:id="@+id/dangXuat_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10sp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginBottom="10sp">
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/imageView12"
