@@ -6,6 +6,9 @@ import DonHang from './DonHang.model';
 import SanPham from './SanPham.model';
 import ChiTietDonHang from './ChiTietDonHang.model';
 import DanhMuc from './DanhMuc.model';
+import PhongChat from './PhongChat.model';
+import ChiTietPhongChat from './ChiTietPhongChat.model';
+import TinNhan from './TinNhan.model';
 
 // Define associations
 VaiTro.hasMany(NguoiDung, {
@@ -69,4 +72,42 @@ DanhMuc.hasMany(SanPham, {
     as: 'Products' // Alias
 });
 
-export {sequelize,VaiTro, NguoiDung,DonHang,  ChiTietDonHang, SanPham,DanhMuc};
+PhongChat.hasMany(TinNhan, {
+    foreignKey: 'idPhongChat',
+    sourceKey: 'idPhongChat',
+    as: 'Messages', // Alias cho tin nhắn
+});
+
+
+//Phần chat
+TinNhan.belongsTo(PhongChat, {
+    foreignKey: 'idPhongChat',
+    targetKey: 'idPhongChat',
+    as: 'Room', // Alias cho phòng chat
+});
+
+PhongChat.hasMany(ChiTietPhongChat, {
+    foreignKey: 'idPhongChat',
+    sourceKey: 'idPhongChat',
+    as: 'Participants', // Alias cho danh sách người tham gia
+});
+
+ChiTietPhongChat.belongsTo(PhongChat, {
+    foreignKey: 'idPhongChat',
+    targetKey: 'idPhongChat',
+    as: 'Room', // Alias cho phòng chat
+});
+
+NguoiDung.hasMany(ChiTietPhongChat, {
+    foreignKey: 'idNguoiDung',
+    sourceKey: 'idNguoiDung',
+    as: 'RoomDetails', // Alias cho chi tiết phòng chat
+});
+
+ChiTietPhongChat.belongsTo(NguoiDung, {
+    foreignKey: 'idNguoiDung',
+    targetKey: 'idNguoiDung',
+    as: 'User', // Alias cho người dùng
+});
+
+export {sequelize,VaiTro, NguoiDung,DonHang,  ChiTietDonHang, SanPham,DanhMuc,PhongChat,ChiTietPhongChat,TinNhan};
