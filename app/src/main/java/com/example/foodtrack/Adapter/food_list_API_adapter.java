@@ -1,6 +1,7 @@
 package com.example.foodtrack.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,7 +27,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
@@ -34,8 +37,14 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class food_list_API_adapter extends ArrayAdapter<SanPhamAPIModel> {
     private Context context;
+
+    SharedPreferences sharedPreferencesDonHang ;
     public food_list_API_adapter(Context context, ArrayList<SanPhamAPIModel> arraylistFood) {
         super(context, R.layout.fragment_food_drink_item, arraylistFood);
         this.context = context;
@@ -48,7 +57,7 @@ public class food_list_API_adapter extends ArrayAdapter<SanPhamAPIModel> {
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_food_drink_item, parent, false);
         }
-
+        sharedPreferencesDonHang = context.getSharedPreferences("sharedPreferencesDonHang",Context.MODE_PRIVATE);
         TextView title = view.findViewById(R.id.item_title_product);
         TextView price = view.findViewById(R.id.item_price_product);
         ConstraintLayout img = view.findViewById(R.id.item_image_product);
@@ -93,6 +102,27 @@ public class food_list_API_adapter extends ArrayAdapter<SanPhamAPIModel> {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(getContext(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
+                ChiTietDonHangAPIModel ctdh = new ChiTietDonHangAPIModel();
+
+
+                ctdh.setIdSanPham(food.getIdSanPham());
+                ctdh.setSoLuongDat(5);
+                String idDonHang= sharedPreferencesDonHang.getString("idDonHang","");
+                if(idDonHang !=null){
+                    ctdh.setIdDonHang(idDonHang);
+                }
+                // Lấy idUser từ SharedPreferences
+                SharedPreferences sharedPreferences = context.getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+                String idUser = sharedPreferences.getString("idUser", "-1"); // -1 là giá trị mặc định nếu không tìm thấy
+                if (idUser != "-1") {
+                    ctdh.setIdUser(idUser);
+                    PostSanPhamToGioHang(ctdh);
+                } else {
+                    Toast.makeText(context, "Không tìm thấy ID người dùng", Toast.LENGTH_SHORT).show();
+                }
+
+
+
                 CreatePopup(view);
             }
         });
@@ -127,6 +157,34 @@ public class food_list_API_adapter extends ArrayAdapter<SanPhamAPIModel> {
             }
         }, delay);
 
+    }
+
+
+    private void PostSanPhamToGioHang(ChiTietDonHangAPIModel ctdh){
+        APIService.API_SERVICE.PostToBuyProduct(ctdh).enqueue(new Callback<ChiTietDonHangAPIModel>() {
+            @Override
+            public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
+                ChiTietDonHangAPIModel ctdh = response.body();
+                if (response.isSuccessful() && response.body() != null ) {
+                    SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
+                    if(ctdh.getIdDonHang()==null){
+                        Toast.makeText(context, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+                    }else{
+                        editorResponseDonHang.putString("idDonHang",ctdh.getIdDonHang());
+                    }
+
+                    Toast.makeText(context,ctdh.getIdDonHang()+"",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(context, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChiTietDonHangAPIModel> call, Throwable t) {
+
+            }
+        });
     }
 
 }

@@ -145,17 +145,17 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         rvBanChay = view.findViewById(R.id.recyclerView_ban_chay_homepage);
 
 
-        InitializeData();
-        GridLayoutManager layoutManager
-                = new GridLayoutManager(requireContext(), 1);
-        rvBanChay.setLayoutManager(layoutManager);
-        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), listProduct);
-        rvBanChay.setAdapter(dealAdapter);
+//        InitializeData();
+//        GridLayoutManager layoutManager
+//                = new GridLayoutManager(requireContext(), 1);
+//        rvBanChay.setLayoutManager(layoutManager);
+//        recyclerView_ban_chay_adapter dealAdapter = new recyclerView_ban_chay_adapter(getContext(), listProduct);
+//        rvBanChay.setAdapter(dealAdapter);
 
 
 
         // lấy dữ liệu từ api
-        //GetMonBanChay();
+        GetMonBanChay();
 
     }
 

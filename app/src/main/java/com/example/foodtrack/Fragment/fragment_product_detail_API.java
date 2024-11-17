@@ -1,6 +1,7 @@
 package com.example.foodtrack.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,9 +27,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
@@ -37,12 +40,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class fragment_product_detail_API extends Fragment {
+    private static final String ARG_ID ="idSanPham";
     private static final String ARG_TITLE = "title";
     private static final String ARG_PRICE = "price";
     private static final String ARG_DESCRIPTION = "description";
     private static final String ARG_IMAGE = "image";
 
+    private static String idSanPham;
     private static String title;
     private static String price;
     private static String description;
@@ -62,13 +71,17 @@ public class fragment_product_detail_API extends Fragment {
     private List<SanPhamAPIModel> listProduct;
     private RecyclerView rvProductDetail;
 
+    SharedPreferences sharedPreferencesDonHang ;
+
+
     public fragment_product_detail_API() {
         // Required empty public constructor
     }
 
-    public static fragment_product_detail_API newInstance(String title, Double price, String description, String image) {
+    public static fragment_product_detail_API newInstance(String idSanPham,String title, Double price, String description, String image) {
         fragment_product_detail_API fragment = new fragment_product_detail_API();
         Bundle args = new Bundle();
+        args.putString(ARG_ID,idSanPham);
         args.putString(ARG_TITLE, title);
         args.putDouble(ARG_PRICE, price);
         args.putString(ARG_DESCRIPTION, description);
@@ -80,11 +93,15 @@ public class fragment_product_detail_API extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferencesDonHang = getContext().getSharedPreferences("dataDonHangResponse", getContext().MODE_PRIVATE);
+        quantity = 1;
         if (getArguments() != null) {
+            idSanPham  = getArguments().getString(ARG_ID);
             title = getArguments().getString(ARG_TITLE);
             price = String.valueOf(getArguments().getDouble(ARG_PRICE));
             description = getArguments().getString(ARG_DESCRIPTION);
             image = getArguments().getString(ARG_IMAGE); // Lấy giá trị image từ URL
+
         }
     }
 
@@ -202,6 +219,24 @@ public class fragment_product_detail_API extends Fragment {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(getActivity(), "Thêm sản phẩm vào giỏ hàng thành công", Toast.LENGTH_LONG).show();
+                ChiTietDonHangAPIModel ctdh = new ChiTietDonHangAPIModel();
+
+
+                ctdh.setIdSanPham(idSanPham);
+                ctdh.setSoLuongDat(quantity);
+                String idDonHang= sharedPreferencesDonHang.getString("idDonHang","");
+                if(idDonHang !=null){
+                    ctdh.setIdDonHang(idDonHang);
+                }
+                // Lấy idUser từ SharedPreferences
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+                String idUser = sharedPreferences.getString("idUser", "-1"); // -1 là giá trị mặc định nếu không tìm thấy
+                if (idUser != "-1") {
+                    ctdh.setIdUser(idUser);
+                    PostSanPhamToGioHang(ctdh);
+                } else {
+                    Toast.makeText(getContext(), "Không tìm thấy ID người dùng", Toast.LENGTH_SHORT).show();
+                }
                 CreatePopup(view);
             }
         });
@@ -232,6 +267,33 @@ public class fragment_product_detail_API extends Fragment {
             }
         }, delay);
 
+    }
+
+    private void PostSanPhamToGioHang(ChiTietDonHangAPIModel ctdh){
+        APIService.API_SERVICE.PostToBuyProduct(ctdh).enqueue(new Callback<ChiTietDonHangAPIModel>() {
+            @Override
+            public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
+                ChiTietDonHangAPIModel ctdh = response.body();
+                if (response.isSuccessful() && response.body() != null ) {
+                    SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
+                    if(ctdh.getIdDonHang()==null){
+                        Toast.makeText(getContext(), "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+                    }else{
+                        editorResponseDonHang.putString("idDonHang",ctdh.getIdDonHang());
+                    }
+
+                    Toast.makeText(getContext(),ctdh.getIdDonHang()+"",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(getContext(), "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChiTietDonHangAPIModel> call, Throwable t) {
+
+            }
+        });
     }
 
 }

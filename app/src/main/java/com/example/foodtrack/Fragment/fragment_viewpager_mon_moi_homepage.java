@@ -107,15 +107,15 @@ public class fragment_viewpager_mon_moi_homepage extends Fragment {
         listProduct = new ArrayList<>();
 
         rvMonMoi = view.findViewById(R.id.recyclerView_mon_moi_homepage);
-        InitializeData();
-        GridLayoutManager layoutManager
-                = new GridLayoutManager(requireContext(),1);
-        rvMonMoi.setLayoutManager(layoutManager);
-        recyclerView_mon_moi_adapter dealAdapter = new recyclerView_mon_moi_adapter(getContext(), listProduct);
-        rvMonMoi.setAdapter(dealAdapter);
+//        InitializeData();
+//        GridLayoutManager layoutManager
+//                = new GridLayoutManager(requireContext(),1);
+//        rvMonMoi.setLayoutManager(layoutManager);
+//        recyclerView_mon_moi_adapter dealAdapter = new recyclerView_mon_moi_adapter(getContext(), listProduct);
+//        rvMonMoi.setAdapter(dealAdapter);
 
 
-        //GetMonMoi();
+        GetMonMoi();
 
     }
     private void GetMonMoi() {

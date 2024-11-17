@@ -51,6 +51,7 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
 
     Context context;
     List<SanPhamAPIModel> list;
+    SharedPreferences sharedPreferencesDonHang;
 
     public recyclerView_mon_moi_API_adapter(Context context, List<SanPhamAPIModel> list) {
         this.context = context;
@@ -61,6 +62,8 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_home_page_mon_moi, parent, false);
+
+        sharedPreferencesDonHang = context.getSharedPreferences("dataDonHangResponse", context.MODE_PRIVATE);
         return new recyclerView_mon_moi_API_adapter.MyViewHolder(item);
     }
 
@@ -104,11 +107,13 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
+                bundle.putString("idSanPham",product.getIdSanPham());
                 bundle.putString("title", holder.title.getText().toString());
                 bundle.putString("price", holder.price.getText().toString());
                 bundle.putString("description", "Mô tả món ăn/đồ uống");
                 bundle.putString("image", product.getImages());
                 fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
+                        product.getIdSanPham(),
                         holder.title.getText().toString(),
                         product.getGiaTien(),
                         "Mô tả món ăn/đồ uống",
@@ -128,18 +133,24 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
 
                 ChiTietDonHangAPIModel ctdh = new ChiTietDonHangAPIModel();
 
+
                 ctdh.setIdSanPham(product.getIdSanPham());
-                ctdh.setSoLuongDat(1);
+                ctdh.setSoLuongDat(5);
+                String idDonHang= sharedPreferencesDonHang.getString("idDonHang","");
+                if(idDonHang !=null){
+                    ctdh.setIdDonHang(idDonHang);
+                }
                 // Lấy idUser từ SharedPreferences
                 SharedPreferences sharedPreferences = context.getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
-                int idUser = sharedPreferences.getInt("idUser", -1); // -1 là giá trị mặc định nếu không tìm thấy
-                if (idUser != -1) {
+                String idUser = sharedPreferences.getString("idUser", "-1"); // -1 là giá trị mặc định nếu không tìm thấy
+                if (idUser != "-1") {
                     ctdh.setIdUser(idUser);
+                    PostSanPhamToGioHang(ctdh);
                 } else {
                     Toast.makeText(context, "Không tìm thấy ID người dùng", Toast.LENGTH_SHORT).show();
                 }
 
-                PostSanPhamToGioHang(ctdh);
+
 
                 CreatePopup(view);
             }
@@ -203,9 +214,15 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
             @Override
             public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
                 ChiTietDonHangAPIModel ctdh = response.body();
-                if (response.isSuccessful() && response.body() != null && !response.body().getIdDonHang().isEmpty()) {
+                if (response.isSuccessful() && response.body() != null ) {
+                    SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
+                    if(ctdh.getIdDonHang()==null){
+                        Toast.makeText(context, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+                    }else{
+                        editorResponseDonHang.putString("idDonHang",ctdh.getIdDonHang());
+                    }
 
-
+                    Toast.makeText(context,ctdh.getIdDonHang()+"",Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(context, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();

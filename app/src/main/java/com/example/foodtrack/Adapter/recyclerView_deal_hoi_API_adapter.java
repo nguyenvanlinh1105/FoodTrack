@@ -68,12 +68,14 @@ public class recyclerView_deal_hoi_API_adapter extends RecyclerView.Adapter<recy
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
+                bundle.putString("idSanPham", product.getIdSanPham());
                 bundle.putString("title",product.getTenSanPham());
                 bundle.putDouble("price",product.getGiaTien());
                 bundle.putString("description", product.getMoTa());
 //                bundle.putInt("image", product.getImages());
                 bundle.putString("image", product.getImages());
                 fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
+                        product.getIdSanPham(),
                         holder.title.getText().toString(),
                         product.getGiaTien(),
                         product.getMoTa(),

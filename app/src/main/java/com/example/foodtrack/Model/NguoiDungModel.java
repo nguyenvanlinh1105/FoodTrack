@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class NguoiDungModel {
     private int code;
     private  String message ;
-    private int idUser;
+    private String idUser;
     private String hoTenNguoiDung;
     private String email;
     private String diaChi;
@@ -52,11 +52,11 @@ public class NguoiDungModel {
         this.message = message;
     }
 
-    public int getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 

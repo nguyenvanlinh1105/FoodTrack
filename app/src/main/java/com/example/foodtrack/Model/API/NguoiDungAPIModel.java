@@ -8,7 +8,7 @@ public class NguoiDungAPIModel {
     private int code;
     private  String message ;
     private int idUser;
-    private String hoTenNguoiDung;
+    private String hoTen;
     private String email;
     private String diaChi;
     private String sdt;
@@ -51,11 +51,11 @@ public class NguoiDungAPIModel {
     }
 
     public String getHoTenNguoiDung() {
-        return hoTenNguoiDung;
+        return hoTen;
     }
 
     public void setHoTenNguoiDung(String hoTenNguoiDung) {
-        this.hoTenNguoiDung = hoTenNguoiDung;
+        this.hoTen = hoTenNguoiDung;
     }
 
     public String getEmail() {

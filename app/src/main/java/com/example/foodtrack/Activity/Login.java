@@ -55,6 +55,8 @@ public class Login extends AppCompatActivity {
         btnQuenMatkhau = findViewById(R.id.btnQuenMatKhau);
         btnLogin_TK = findViewById(R.id.btn_Login_TK);
         cb_nho_mat_khau_login = findViewById(R.id.cb_nho_mat_khau_login);
+
+
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
 
         sharedUsername = getSharedPreferences("currentUser", MODE_PRIVATE);
@@ -117,18 +119,18 @@ public class Login extends AppCompatActivity {
                 currentUserEditor.apply();
 
 
-//                Intent home = new Intent(Login.this, MainActivity.class);
-//                startActivity(home);
-//                finish();
+                Intent home = new Intent(Login.this, MainActivity.class);
+                startActivity(home);
+                finish();
                 // comment để pass login
 
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(Login.this, "Vui lòng nhập email và password trước khi nhấn đăng nhập", Toast.LENGTH_SHORT).show();
-                } else {
-                    // hàm login
-                    GetUserToLogin(userModel);
-
-                }
+//                if (email.isEmpty() || password.isEmpty()) {
+//                    Toast.makeText(Login.this, "Vui lòng nhập email và password trước khi nhấn đăng nhập", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    // hàm login
+//                    GetUserToLogin(userModel);
+//
+//                }
 
             }
         });
@@ -143,7 +145,7 @@ public class Login extends AppCompatActivity {
                     if (responseUserModel != null && "Đăng nhập thành công".equals(responseUserModel.getMessage())) {
 
                         SharedPreferences.Editor editorResponseLogin = shareUserResponseLogin.edit();
-                        editorResponseLogin.putInt("idUser",responseUserModel.getIdUser());
+                        editorResponseLogin.putString("idUser",responseUserModel.getIdUser());
                         editorResponseLogin.putString("hoTenNguoiDung",responseUserModel.getHoTenNguoiDung());
                         editorResponseLogin.putString("diaChi",responseUserModel.getDiaChi());
                         editorResponseLogin.putString("sdt", responseUserModel.getSdt());
