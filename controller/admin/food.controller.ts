@@ -3,6 +3,8 @@ import slugify from 'slugify';
 import dayjs from 'dayjs';
 import DanhMuc from '../../model/DanhMuc.model';
 import SanPham from '../../model/SanPham.model';
+import * as allModel from '../../model/index.model';
+
 
 import generateNextId from '../../helper/generateNextId.helper';
 import { paginationGeneral } from '../../helper/pagination.helper';
@@ -68,4 +70,96 @@ export const create = async(req: Request, res: Response)=>{
     }
     const newFood=await SanPham.create(dataFood);
     res.status(200).json({message:'Thêm món ăn thành công'});
+}
+
+export const detail= async(req: Request, res: Response)=>{
+    const food = await allModel.SanPham.findOne({
+        where: {
+            slug: req.params.slug
+        },
+        include: [{
+            model: allModel.DanhMuc,
+            as: 'Category', // Sử dụng alias đã định nghĩa
+            attributes: ['tenDanhMuc'] // Chỉ lấy cột 'tenDanhMuc'
+        }],
+        raw: true,
+    });
+    const categories = await DanhMuc.findAll({
+        where:{
+            deleted:0
+        },
+        raw:true
+    })
+    food['images']=JSON.parse(food['images'])[0];
+    food['tenDanhMuc']=food['Category.tenDanhMuc'];
+    delete food['Category.tenDanhMuc'];
+    food['giaTien']=parseFloat(food['giaTien']).toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+    food['ngayTao']=dayjs(food['ngayTao']).format('YYYY-MM-DD');
+    res.render('admin/pages/food/detail',{
+        title:'Chi tiết món ăn',
+        food:food,
+        categories:categories
+    })
+}
+
+export const editPage= async(req: Request, res: Response)=>{
+    (req.session as any).previousPage = req.headers.referer;
+    const food = await allModel.SanPham.findOne({
+        where: {
+            slug: req.params.slug
+        },
+        include: [{
+            model: allModel.DanhMuc,
+            as: 'Category', // Sử dụng alias đã định nghĩa
+            attributes: ['tenDanhMuc'] // Chỉ lấy cột 'tenDanhMuc'
+        }],
+        raw: true,
+    });
+    const categories = await DanhMuc.findAll({
+        where:{
+            deleted:0
+        },
+        raw:true
+    })
+    food['images']=JSON.parse(food['images']);
+    food['tenDanhMuc']=food['Category.tenDanhMuc'];
+    delete food['Category.tenDanhMuc'];
+    food['giaTien']=parseFloat(food['giaTien']);
+    food['ngayTao']=dayjs(food['ngayTao']).format('YYYY-MM-DD');
+    res.render('admin/pages/food/edit',{
+        title:'Chỉnh sửa món ăn',
+        food:food,
+        categories:categories
+    })
+}
+
+export const edit = async(req: Request, res: Response)=>{
+    if(req.body.images){
+        console.log("Có");
+        req.body.images=JSON.stringify(req.body.images);
+    }
+    await SanPham.update(req.body,{
+        where:{
+            slug:req.params.slug
+        }
+    });
+    req.flash('success','Cập nhật món ăn thành công');
+    const previousPage = (req.session as any).previousPage || '/admin/management/food';  // Default trang nếu không có session
+    res.redirect(previousPage);
+}
+
+export const deleteFood=async(req: Request, res: Response)=>{
+    await SanPham.update({
+        deleted:1
+    },{
+        where:{
+            slug:req.params.slug
+        }
+    });
+    res.status(200).json({message:'Xóa món ăn thành công'});
 }

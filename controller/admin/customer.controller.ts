@@ -44,7 +44,6 @@ export const changeStatus=async (req:Request, res:Response)=>{
 }
 
 export const detailCustomerPage = async (req:Request, res:Response) => {
-    (req.session as any).previousPage = req.headers.referer;
     const token = req.params.token;
     const data = await allModel.NguoiDung.findOne({
         where: {

@@ -11,7 +11,7 @@ export const bargain= async (req: Request, res: Response) => {
         raw:true,
         order:[['giaTien','ASC']],
         limit:20,
-        attributes:['slug','tenSanPham','giaTien','images','soLuong']
+        attributes:['idSanPham','slug','tenSanPham','giaTien','images','soLuong']
     })
     if(foods.length==0){
         res.status(404).json({message:"Không có món ăn nào"});
@@ -33,7 +33,7 @@ export const bestseller= async (req: Request, res: Response) => {
         raw:true,
         order:[['soLuong','DESC']],
         limit:20,
-        attributes:['slug','tenSanPham','giaTien','images','soLuong']
+        attributes:['idSanPham','slug','tenSanPham','giaTien','images','soLuong']
     })
     if(foods.length==0){
         res.status(404).json({message:"Không có món ăn nào"});
@@ -55,7 +55,7 @@ export const newFood= async (req: Request, res: Response) => {
         raw:true,
         order:[['ngayTao','ASC']],
         limit:20,
-        attributes:['slug','tenSanPham','giaTien','images','soLuong']
+        attributes:['idSanPham','slug','tenSanPham','giaTien','images','soLuong']
     })
     if(foods.length==0){
         res.status(404).json({message:"Không có món ăn nào"});
@@ -75,7 +75,7 @@ export const listFood= async (req: Request, res: Response) => {
             trangThai:'active',
         },
         raw:true,
-        attributes:['slug','tenSanPham','giaTien','images','soLuong']
+        attributes:['idSanPham','slug','tenSanPham','giaTien','images','soLuong']
     })
     if(foods.length==0){
         res.status(404).json({message:"Không có món ăn nào"});

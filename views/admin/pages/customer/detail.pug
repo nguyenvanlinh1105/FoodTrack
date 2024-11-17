@@ -3,7 +3,7 @@ extends ../../layouts/default.pug
 block content 
     .container-fluid.mt-4
         .d-sm-flex.align-items-center.justify-content-between.mb-4
-            h1.h3.mb-2.text-gray-800 Thông tin cá nhân
+            h1.h3.mb-2.text-gray-800 <strong>Thông tin cá nhân</strong>
         // Page Heading
         p.mb-4
             | Thông tin cá nhân của Khách hàng
@@ -44,9 +44,9 @@ block content
                                     .col-md-12
                                         input.form-control.form-control-line(type='text', placeholder='Họ tên', name='hoTen', value=customer.hoTen readonly)
                                 .form-group
-                                    label.col-md-12(for='example-email') Email
+                                    label.col-md-12 Email
                                     .col-md-12
-                                        input#example-email.form-control.form-control-line(type='email', placeholder='email', name='email', value=customer.email, readonly)
+                                        input.form-control.form-control-line(type='email', placeholder='email', name='email', value=customer.email, readonly)
                                 .form-group
                                     label.col-md-12 Số điện thoại
                                     .col-md-12

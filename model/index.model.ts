@@ -5,6 +5,7 @@ import NguoiDung from './NguoiDung.model';
 import DonHang from './DonHang.model';
 import SanPham from './SanPham.model';
 import ChiTietDonHang from './ChiTietDonHang.model';
+import DanhMuc from './DanhMuc.model';
 
 // Define associations
 VaiTro.hasMany(NguoiDung, {
@@ -32,8 +33,6 @@ DonHang.belongsTo(NguoiDung, {
 });
 
 
-
-
 DonHang.hasMany(ChiTietDonHang, {
     foreignKey: 'idDonHang', // Foreign key in ChiTietDonHang referring to DonHang
     sourceKey: 'idDonHang',
@@ -58,6 +57,16 @@ ChiTietDonHang.belongsTo(SanPham, {
     as: 'Product'  // Alias để sử dụng trong truy vấn
 });
 
+SanPham.belongsTo(DanhMuc, {
+    foreignKey: 'idDanhMuc',
+    targetKey: 'idDanhMuc',
+    as: 'Category' // Alias
+});
 
+DanhMuc.hasMany(SanPham, {
+    foreignKey: 'idDanhMuc',
+    sourceKey: 'idDanhMuc',
+    as: 'Products' // Alias
+});
 
-export {sequelize,VaiTro, NguoiDung,DonHang,  ChiTietDonHang, SanPham};
+export {sequelize,VaiTro, NguoiDung,DonHang,  ChiTietDonHang, SanPham,DanhMuc};

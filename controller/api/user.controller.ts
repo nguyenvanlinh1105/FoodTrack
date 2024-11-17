@@ -21,6 +21,7 @@ export const login= async (req:Request,res:Response)=>{
             },
             raw:true
         });
+        console.log(user);
         if(!user){
             res.status(404).json({message:"Tài khoản không tồn tại hoặc đã bị khoá"});
         }else{
@@ -28,11 +29,13 @@ export const login= async (req:Request,res:Response)=>{
             if(isMatch){
                 res.status(200).json({
                     message:"Đăng nhập thành công",
-                    hoTen:user['hoTen'],
+                    idUser:user['idNguoiDung'],
+                    hoTenNguoiDung:user['hoTen'],
                     email:user['email'],
                     sdt:user['sdt'],
                     gioiTinh:user['gioiTinh'],
-                    avatar:user['avatar']
+                    avatar:user['avatar'],
+                    diaChi:user['diaChi'],
                 })
             }else{
                 res.status(404).json({message:"Mật khẩu không chính xác"});

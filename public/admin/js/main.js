@@ -354,3 +354,102 @@ if(deleteCustomerButtons.length >0){
         })
     })
 }
+
+
+const deleteCategoryButtons=document.querySelectorAll('[btn-delete-category]');
+if(deleteCategoryButtons.length >0){
+    deleteCategoryButtons.forEach((button)=>{
+        button.addEventListener('click',async (e)=>{
+            e.preventDefault();
+            Swal.fire({
+                title: 'Bạn có muốn xóa danh mục này ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#28A745',
+                cancelButtonColor: '#d33',
+                focusConfirm: false
+            }).then((result) => {
+                if(result.isConfirmed){
+                    const slug=button.getAttribute('btn-delete-category');
+                    console.log(slug);
+                    fetch(`/admin/management/category/delete/${slug}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(async (response) => response.json())
+                    .then(async (data) => {
+                        await Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        location.reload();
+                    })
+                    .catch( async (error) => {
+                        await Swal.fire({
+                            icon: "error",
+                            title: "Lỗi xảy ra",
+                            text: error.message,
+                        });
+                        location.reload();
+                    });
+                }
+            })
+        })
+    })
+}
+
+const deleteFoodButtons=document.querySelectorAll('[btn-delete-food]');
+if(deleteFoodButtons.length >0){
+    deleteFoodButtons.forEach((button)=>{
+        button.addEventListener('click',async (e)=>{
+            e.preventDefault();
+            Swal.fire({
+                title: 'Bạn có muốn xóa món ăn này ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#28A745',
+                cancelButtonColor: '#d33',
+                focusConfirm: false
+            }).then((result) => {
+                if(result.isConfirmed){
+                    const slug=button.getAttribute('btn-delete-food');
+                    console.log(slug);
+                    fetch(`/admin/management/food/delete/${slug}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(async (response) => response.json())
+                    .then(async (data) => {
+                        await Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        location.reload();
+                    })
+                    .catch( async (error) => {
+                        await Swal.fire({
+                            icon: "error",
+                            title: "Lỗi xảy ra",
+                            text: error.message,
+                        });
+                        location.reload();
+                    });
+                }
+            })
+        })
+    })
+}

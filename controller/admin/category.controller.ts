@@ -48,3 +48,62 @@ export const create=async(req: Request, res: Response)=>{
         res.status(500).json('Đã xảy ra lỗi khi tạo danh mục.');
     }
 }
+
+export const detailPage=async(req: Request, res: Response)=>{
+    const slug=req.params.slug;
+    const category=await DanhMuc.findOne({
+        where:{
+            slug:slug,
+            deleted:0,
+        },
+        raw:true
+    })
+    res.render('admin/pages/category/detail',{
+        title:'Chi tiết danh mục',
+        category:category
+    })
+}
+
+export const editPage = async(req: Request, res: Response)=>{
+    (req.session as any).previousPage = req.headers.referer;
+    const slug=req.params.slug;
+    const category=await DanhMuc.findOne({
+        where:{
+            slug:slug,
+            deleted:0,
+        },
+        raw:true
+    })
+    res.render('admin/pages/category/edit',{
+        title:'Chỉnh sửa danh mục',
+        category:category
+    })
+}
+export const edit=async(req: Request, res: Response)=>{
+    const slug=req.params.slug;
+    const {tenDanhMuc,moTa,ngayTao}=req.body;
+    await DanhMuc.update({
+        tenDanhMuc:tenDanhMuc,
+        moTa:moTa,
+        ngayTao:ngayTao
+    },{
+        where:{
+            slug:slug
+        }
+    });
+    req.flash('success','Danh mục đã được cập nhật thành công!');
+    const previousPage = (req.session as any).previousPage || '/admin/management/category';  // Default trang nếu không có session
+    res.redirect(previousPage);
+}
+
+export const deleteCategory=async(req: Request, res: Response)=>{
+    const slug=req.params.slug;
+    await DanhMuc.update({
+        deleted:1
+    },{
+        where:{
+            slug:slug
+        }
+    });
+    res.status(200).json({message:'Xóa danh mục thành công'});
+}

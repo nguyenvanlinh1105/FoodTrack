@@ -16,7 +16,7 @@ const DonHang= sequelize.define("DonHang",{
         }
     },
     tinhTrang:{
-        type:DataTypes.ENUM('pending','confirm','deliver','finish','cancel'),
+        type:DataTypes.STRING,
         allowNull:false
     },
     thoiGianHoanThanh:{
@@ -30,6 +30,12 @@ const DonHang= sequelize.define("DonHang",{
         type:DataTypes.BOOLEAN,
         allowNull:false,
         defaultValue: false
+    },
+    ghiChu:{
+        type:DataTypes.STRING,
+    },
+    diaChi:{
+        type:DataTypes.STRING,
     }
 },{
     tableName: "DonHang",
