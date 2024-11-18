@@ -11,24 +11,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.foodtrack.Fragment.Home_Page;
-import com.example.foodtrack.Fragment.fragment_product_rating;
+import com.example.foodtrack.Fragment.fragment_product_detail;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Fragment.checkout;
 import com.example.foodtrack.databinding.ActivityMainBinding;
 import com.example.foodtrack.Fragment.favorite_fragment;
 import com.example.foodtrack.Fragment.food_fragment;
-import com.example.foodtrack.Fragment.profile_fragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.net.URISyntaxException;
-
-import io.socket.client.IO;
-import io.socket.client.Socket;
+import com.example.foodtrack.Fragment.fragment_profile;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -66,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 ReplaceFragment(new favorite_fragment());
 
             } else if (item.getItemId() == R.id.account) {
-                ReplaceFragment(new profile_fragment());
+                ReplaceFragment(new fragment_profile());
             }
             return true;
         });
@@ -97,7 +89,15 @@ public class MainActivity extends AppCompatActivity {
     public void ReplaceFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.frameLayout, fragment);
+        if (fragment instanceof fragment_product_detail) {
+            ft.setCustomAnimations(
+                    R.anim.anim_slide_up_product_detail,
+                    R.anim.anim_fade_out_product_detail,
+                    R.anim.anim_fade_in_product_detail,
+                    R.anim.anim_slide_down_product_detail
+            );
+        }
+        ft.add(R.id.frameLayout, fragment);
         ft.addToBackStack(null);
         ft.commit();
     }

@@ -110,7 +110,7 @@ public class fragment_product_detail extends Fragment {
 
     private void InitializeData() {
         listProduct = new ArrayList<>();
-        listProduct.add(new SanPhamModel("Cơm tấm sườn", 70000.0, R.drawable.com_tam,"Hạt cơm tấm dẻo thơm ăn kèm sườn nướng tươi ngon vừa ra lò"));
+        listProduct.add(new SanPhamModel("Cơm tấm sườn", 70000.0, R.drawable.com_tam, "Hạt cơm tấm dẻo thơm ăn kèm sườn nướng tươi ngon vừa ra lò"));
         listProduct.add(new SanPhamModel("Chuối sứ", 30000.0, R.drawable.icon_food2, "Chuối sứ vàng ươm tươi ngon đây bà con ơi"));
         listProduct.add(new SanPhamModel("Gnocchi sốt cà chua", 30000.0, R.drawable.gnocchi_tomato, "Gnocchi hòa cùng sốt cà chua nhà làm mang chút vị chua thanh mát, kết hợp với mùi thơm từ húng tây và tiêu đen xay mịn"));
         listProduct.add(new SanPhamModel("Cơm gà sốt chua ngọt", 30000.0, R.drawable.chicken, "Cơm nóng ăn kèm gà chiên tẩm sốt chua ngọt ngoài giòn trong mềm, thấm đẫm gia vị"));
@@ -118,7 +118,7 @@ public class fragment_product_detail extends Fragment {
         listProduct.add(new SanPhamModel("Cheesecake việt quất", 30000.0, R.drawable.dessert_ico, "Cheesecake béo ngậy cùng mứt việt quất chua ngọt vừa phải"));
     }
 
-    private void InitializeDataDealHoi(){
+    private void InitializeDataDealHoi() {
         listDealHoi = new ArrayList<>();
         listDealHoi.add(new SanPhamModel("Salad trái cây", 70000, R.drawable.icon_food1, "Salad cổ điển cùng trái cây tươi trong ngày"));
         listDealHoi.add(new SanPhamModel("Mì Carbonara", 90000, R.drawable.carbonara, "Carbonara béo ngậy hòa cùng chút mặn đến từ thịt xông khói"));
@@ -176,27 +176,41 @@ public class fragment_product_detail extends Fragment {
 //                        }
 //                    });
         }
-
+        requireActivity().getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            // Kiểm tra nếu fragment này không còn trong back stack
+            if (!isAdded()) {
+                // Thực hiện các thao tác cần thiết khi back
+                animateExitTransition();
+            }
+        });
         ControlButton();
         return view;
+    }
+
+    private void animateExitTransition() {
+        View rootView = getView();
+        if (rootView != null) {
+            rootView.setAlpha(1f);
+            rootView.animate().alpha(0f).setDuration(300).start();
+        }
     }
 
     private void Mapping(View view) {
         btn_back_product_detail = (ImageView) view.findViewById(R.id.btn_back_product_detail);
         btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_comment_product_details);
-        btn_favorite_check_product_detail =(ImageView) view.findViewById(R.id.btn_favorite_check_product_detail);
+        btn_favorite_check_product_detail = (ImageView) view.findViewById(R.id.btn_favorite_check_product_detail);
         btn_plus_product_detail = (ImageView) view.findViewById(R.id.btn_plus_product_detail);
         btn_minus_product_detail = (ImageView) view.findViewById(R.id.btn_minus_product_detail);
         Text_quantity_product = (TextView) view.findViewById(R.id.Text_quantity_product);
         btn_rating_product_details = (ImageView) view.findViewById(R.id.button_rating_comment_product_details);
-        btn_AddToCart_product_detail = (TextView)view.findViewById(R.id.btn_AddToCart_product_detail);
+        btn_AddToCart_product_detail = (TextView) view.findViewById(R.id.btn_AddToCart_product_detail);
 
         rvProductDetail = (RecyclerView) view.findViewById(R.id.recyclerView_product_detail);
         InitializeData();
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         rvProductDetail.setLayoutManager(layoutManager);
-        recyclerView_product_detail_adapter recAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct );
+        recyclerView_product_detail_adapter recAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct);
         rvProductDetail.setAdapter(recAdapter);
 
         rvDealHoi = view.findViewById(R.id.recyclerView_deal_hoi_product_detail);
@@ -204,7 +218,7 @@ public class fragment_product_detail extends Fragment {
         LinearLayoutManager layoutDealManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         rvDealHoi.setLayoutManager(layoutDealManager);
-        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), listDealHoi );
+        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), listDealHoi);
         rvDealHoi.setAdapter(dealAdapter);
     }
 
@@ -221,20 +235,18 @@ public class fragment_product_detail extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                   mainActivity.ReplaceFragment(new fragment_product_rating());
-                }else{
-
+                    mainActivity.ReplaceFragment(new fragment_product_rating());
                 }
             }
         });
         btn_favorite_check_product_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isFavorite){
+                if (!isFavorite) {
                     btn_favorite_check_product_detail.setImageResource(R.drawable.icon_fill_heart_48);
                     isFavorite = true;
-                    CreatePopupAddToFavorite(view);
-                }else{
+//                    CreatePopupAddToFavorite(view);
+                } else {
                     btn_favorite_check_product_detail.setImageResource(R.drawable.icon_heart_48);
                     isFavorite = false;
                 }
@@ -244,9 +256,9 @@ public class fragment_product_detail extends Fragment {
             @Override
             public void onClick(View view) {
                 quantity = Integer.valueOf(Text_quantity_product.getText().toString());
-                if(quantity>1){
+                if (quantity > 1) {
                     quantity--;
-                }else{
+                } else {
                     quantity = 1;
                 }
                 Text_quantity_product.setText(String.valueOf(quantity));
@@ -267,7 +279,6 @@ public class fragment_product_detail extends Fragment {
                 CreatePopupAddToCart(view);
             }
         });
-
 
 
     }

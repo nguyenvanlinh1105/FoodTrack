@@ -348,6 +348,38 @@
                     android:textColor="#6D3805"
                     android:textSize="16sp" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Ghi chú"
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:layout_weight="1"
+                    android:id="@+id/tv_ghi_chu"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
+                    android:gravity="right"
+                    android:background="@android:color/transparent"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Ghi chú của bạn"
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

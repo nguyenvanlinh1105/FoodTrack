@@ -56,17 +56,17 @@ public class chang_password extends AppCompatActivity {
         btn_xacNhanDoi_MK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(chang_password.this, "Bạn đã cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
-//                Intent firstPage = new Intent(chang_password.this, first_page.class);
-//                startActivity(firstPage);
-//                finish();
+                Toast.makeText(chang_password.this, "Bạn đã cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                Intent firstPage = new Intent(chang_password.this, first_page.class);
+                startActivity(firstPage);
+                finish();
 
-                String matkhau = edtmatkhau.getText().toString().trim();
-
-                NguoiDungModel user = new NguoiDungModel();
-                user.setMatKhau(matkhau);
-                user.setEmail(email);
-                PostEmailAndPassToReset(user);
+//                String matkhau = edtmatkhau.getText().toString().trim();
+//
+//                NguoiDungModel user = new NguoiDungModel();
+//                user.setMatKhau(matkhau);
+//                user.setEmail(email);
+//                PostEmailAndPassToReset(user);
 
             }
         });

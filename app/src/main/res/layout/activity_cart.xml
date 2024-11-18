@@ -2,10 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/main"
     tools:context=".Activity.cart">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -141,7 +141,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+
                 android:layout_marginTop="20dp">
 
                 <TextView
@@ -167,6 +167,31 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="Ghi chú"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:padding="8dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="right"
+                    android:hint="Nhập ghi chú ở đây..."
+                    android:textSize="14sp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/btn_dat_don_cart"

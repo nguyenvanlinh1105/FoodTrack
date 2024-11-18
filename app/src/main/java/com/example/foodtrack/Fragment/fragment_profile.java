@@ -16,20 +16,19 @@ import android.widget.TextView;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.chang_password;
 import com.example.foodtrack.Activity.first_page;
-import com.example.foodtrack.Activity.forgot_password;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Activity.edit_profile;
 
-public class profile_fragment extends Fragment {
+public class fragment_profile extends Fragment {
 
-    ConstraintLayout toEditHoSo, toMyOrders, doiMatKhau_profile, dangXuat_profile, btn_card_profile;
+    ConstraintLayout toEditHoSo, toMyOrders, doiMatKhau_profile, dangXuat_profile, btn_card_profile, chiTietNhom_profile;
     ImageView chatIcon;
     TextView txt_tenKH_profile;
 
     SharedPreferences shareUserResponseLogin;
 
-    public profile_fragment() {
+    public fragment_profile() {
         // Required empty public constructor
     }
 
@@ -56,6 +55,7 @@ public class profile_fragment extends Fragment {
         btn_card_profile = view.findViewById(R.id.btn_card_profile);
         dangXuat_profile = view.findViewById(R.id.dangXuat_profile);
         txt_tenKH_profile = view.findViewById(R.id.txt_tenKH_profile);
+        chiTietNhom_profile = view.findViewById(R.id.chiTietNhom_profile);
     }
 
     public void LoadUserInfo() {
@@ -115,6 +115,16 @@ public class profile_fragment extends Fragment {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new fragment_myCard());
+                }
+            }
+        });
+
+        chiTietNhom_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_chi_tiet_nhom_thuc_hien());
                 }
             }
         });
