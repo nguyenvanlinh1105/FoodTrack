@@ -34,6 +34,7 @@ import com.example.foodtrack.R;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import android.widget.PopupWindow;
@@ -46,7 +47,7 @@ import retrofit2.Response;
 public class list_drink_API_adapter extends ArrayAdapter<SanPhamAPIModel> {
     private Context context;
     SharedPreferences sharedPreferencesDonHang ;
-    public list_drink_API_adapter(Context context, ArrayList<SanPhamAPIModel> arrayListDrink) {
+    public list_drink_API_adapter(Context context, List<SanPhamAPIModel> arrayListDrink) {
         super(context, R.layout.fragment_food_drink_item, arrayListDrink);
         this.context = context;
     }

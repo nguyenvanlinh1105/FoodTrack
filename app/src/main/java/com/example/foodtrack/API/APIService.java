@@ -73,6 +73,11 @@ public interface APIService {
 
 
 
+
+    //lấy tất cả sản phẩm trong dơn hàng hiện tại :)
+  @GET("")
+  Call<List<SanPhamAPIModel>>GetSanPhamGioHang(@Query ("idDonHang") String idDonHang);
+
   // lấy đơn hàng đang giao
     @GET("")
     Call<List<DonHangAPIModel>> GetDonHangDangGiao();

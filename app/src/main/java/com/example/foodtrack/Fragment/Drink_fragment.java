@@ -21,6 +21,7 @@ import android.content.Intent;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.list_drink_API_adapter;
 import com.example.foodtrack.Adapter.recyclerView_deal_hoi_adapter;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
@@ -137,10 +138,10 @@ public class Drink_fragment extends Fragment {
         btn_DoAn_food = view.findViewById(R.id.btn_DoAn_food);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
 
-        InitializeData();
-        list_drink_adapter listAdapter = new list_drink_adapter(getContext(), arrayListDrink);
-        listView_drink.setAdapter(listAdapter);
-       // GetDoUong();
+//        InitializeData();
+//        list_drink_adapter listAdapter = new list_drink_adapter(getContext(), arrayListDrink);
+//        listView_drink.setAdapter(listAdapter);
+        GetDoUong();
 
 
         // Thiết lập sự kiện cho từng item trong ListView
@@ -197,8 +198,8 @@ public class Drink_fragment extends Fragment {
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if(response.isSuccessful()&& response.body()!=null &&!response.body().isEmpty()){
                     List<SanPhamAPIModel> listUongDo_explore = response.body();
-//                    list_drink_adapter listAdapter = new list_drink_adapter_(getContext(), arrayListDrink);
-//                    listView_drink.setAdapter(listAdapter);
+                    list_drink_API_adapter listAdapter = new list_drink_API_adapter(getContext(), listUongDo_explore);
+                    listView_drink.setAdapter(listAdapter);
                 }else{
                     UseFallbackData();
                 }
@@ -210,11 +211,12 @@ public class Drink_fragment extends Fragment {
         });
     }
     private void UseFallbackData() {
-        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct
-        UpdateRecyclerView(arrayListDrink);
+        InitializeData();
+        list_drink_adapter listAdapter = new list_drink_adapter(getContext(), arrayListDrink);
+        listView_drink.setAdapter(listAdapter);
     }
 
-    private void UpdateRecyclerView(List<SanPhamModel> data) {
+    private void UpdateRecyclerView(List<SanPhamAPIModel> data) {
         list_drink_adapter listAdapter = new list_drink_adapter(getContext(), arrayListDrink);
         listView_drink.setAdapter(listAdapter);
     }

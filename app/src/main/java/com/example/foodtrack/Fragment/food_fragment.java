@@ -20,6 +20,8 @@ import android.content.Intent;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.list_drink_API_adapter;
+import com.example.foodtrack.Adapter.list_drink_adapter;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.R;
@@ -146,10 +148,10 @@ public class food_fragment extends Fragment {
     private void Mapping(View view){
         listView_food = (ListView) view.findViewById(R.id.listView_food);
         btn_DoUong_food = view.findViewById(R.id.btn_DoUong_food );
-
-        InitializeData();
-        food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
-        listView_food.setAdapter(listAdapter);
+//
+//        InitializeData();
+//        food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
+//        listView_food.setAdapter(listAdapter);
 
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
 
@@ -206,8 +208,8 @@ public class food_fragment extends Fragment {
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if(response.isSuccessful()&& response.body()!=null &&!response.body().isEmpty()){
                         List<SanPhamAPIModel> listMonAn_explore = response.body();
-//                    list_drink_adapter listAdapter = new list_drink_adapter_(getContext(), arrayListDrink);
-//                    listView_drink.setAdapter(listAdapter);
+                    list_drink_API_adapter listAdapter = new list_drink_API_adapter(getContext(), listMonAn_explore);
+                    listView_food.setAdapter(listAdapter);
                 }else{
                     UseFallbackData();
                 }
