@@ -25,6 +25,7 @@ import com.example.foodtrack.Adapter.recyclerView_chat_user_shop_adapter;
 import com.example.foodtrack.Model.TestChat.TinNhanModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.SocketManager;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -195,7 +196,12 @@ public class fragment_chat_user_shop extends Fragment {
                 if (message.isEmpty()) {
                     Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
                 } else {
-                    mSocket.emit("client-send-chat", message);
+                    SharedPreferences shared = getActivity().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+                    TinNhanModel tinNhan = new TinNhanModel(shared.getString("hoTenNguoiDung", ""), message, shared.getString("gioiTinh", ""));
+                    Gson gson = new Gson();
+                    String jsonTinNhan = gson.toJson(tinNhan);
+                    mSocket.emit("client-send-chat", tinNhan.toString());
+                    Log.d("tinNhanModel", tinNhan.toString());
                     edt_chat.setText("");
                 }
             }

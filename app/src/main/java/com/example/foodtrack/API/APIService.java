@@ -23,7 +23,7 @@ import retrofit2.http.Query;
 public interface APIService {
 
   //    linkAPI root:
-    String url ="https://3dc4-2a09-bac5-d5c9-e6-00-17-337.ngrok-free.app/";
+    public static String url ="https://63cf-2a09-bac1-7ae0-10-00-17-32a.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))

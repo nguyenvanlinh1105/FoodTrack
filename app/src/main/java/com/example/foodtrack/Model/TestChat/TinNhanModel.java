@@ -1,22 +1,24 @@
 package com.example.foodtrack.Model.TestChat;
 
 public class TinNhanModel {
-    private String idTinNhan;
     private String tenNguoiDung;
     private String noiDungChat;
+    private String gioiTinh;
+//    private
 
-    public TinNhanModel(String idTinNhan, String tenNguoiDung, String noiDungChat) {
-        this.idTinNhan = idTinNhan;
+    public TinNhanModel(String tenNguoiDung, String noiDungChat, String gioiTinh) {
         this.tenNguoiDung = tenNguoiDung;
         this.noiDungChat = noiDungChat;
+        this.gioiTinh = gioiTinh;
     }
 
-    public String getIdTinNhan() {
-        return idTinNhan;
+
+    public String getGioiTinh() {
+        return gioiTinh;
     }
 
-    public void setIdTinNhan(String idTinNhan) {
-        this.idTinNhan = idTinNhan;
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
     }
 
     public String getTenNguoiDung() {

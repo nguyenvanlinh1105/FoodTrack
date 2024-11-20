@@ -110,7 +110,7 @@ public class cart extends AppCompatActivity {
         }
     }
 
-    private void updateTotalPrice() {
+    public void updateTotalPrice() {
         if (listView_cart != null) {
             int totalPrice = 0;
             for (int i = 0; i < listView_cart.getCount(); i++) {
