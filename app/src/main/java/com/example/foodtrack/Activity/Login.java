@@ -118,10 +118,10 @@ public class Login extends AppCompatActivity {
                 currentUserEditor.putString("currentUser", currentUser);
                 currentUserEditor.apply();
 
-
-                Intent home = new Intent(Login.this, MainActivity.class);
-                startActivity(home);
-                finish();
+//
+//                Intent home = new Intent(Login.this, MainActivity.class);
+//                startActivity(home);
+//                finish();
                 // comment để pass login
 
                 if (email.isEmpty() || password.isEmpty()) {
@@ -149,6 +149,8 @@ public class Login extends AppCompatActivity {
                         editorResponseLogin.putString("hoTenNguoiDung",responseUserModel.getHoTenNguoiDung());
                         editorResponseLogin.putString("diaChi",responseUserModel.getDiaChi());
                         editorResponseLogin.putString("sdt", responseUserModel.getSdt());
+                        editorResponseLogin.putString("gioiTinh", responseUserModel.getGioiTinh());
+
                         editorResponseLogin.apply();
 
 

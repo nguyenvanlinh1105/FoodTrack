@@ -41,7 +41,7 @@ public class Register extends AppCompatActivity {
         });
         InitView();
 
-        mSocket = SocketManager.getInstance().getSocket();
+//        mSocket = SocketManager.getInstance().getSocket();
 
         ImageView btn_back = findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
