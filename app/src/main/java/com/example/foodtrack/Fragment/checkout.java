@@ -11,9 +11,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.cart;
+import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +39,7 @@ public class checkout extends Fragment {
 
     private ImageView backBtn;
     private Button payBtn;
+
 
     private LinearLayout tienMat, applePay, icon_check_tien_mat, icon_check_applePay;
 
@@ -99,6 +106,11 @@ public class checkout extends Fragment {
 
                 if (payBtn.getText().toString().equals("Xác nhận đặt đơn")) {
                     mainActivity.ReplaceFragment(new fragment_confirm_payment());
+
+                    DonHangAPIModel donHang = new DonHangAPIModel();
+
+
+                    PostDataToOder(donHang);
                     cart.ToFinishActivity.finish();
                 } else {
                     mainActivity.ReplaceFragment(new fragment_choosing_payment());
@@ -123,6 +135,20 @@ public class checkout extends Fragment {
                 icon_check_applePay.setBackgroundResource(R.drawable.icon_check_50);
                 icon_check_tien_mat.setBackground(null);
                 payBtn.setText("Thanh toán 248.000đ");
+            }
+        });
+    }
+
+    private void PostDataToOder(DonHangAPIModel donhang){
+        APIService.API_SERVICE.PostToOrder(donhang).enqueue(new Callback<DonHangAPIModel>() {
+            @Override
+            public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<DonHangAPIModel> call, Throwable t) {
+
             }
         });
     }

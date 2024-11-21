@@ -97,11 +97,11 @@ public interface APIService {
     // thêm sản phẩm vào đơn hàng
     Call<ChiTietDonHangAPIModel> PostToBuyProduct(@Body ChiTietDonHangAPIModel product);
 
-    //  đặt hàng:set trangThaiDat==datHang;
+    //  đặt hàng:set trangThaiDat==1;
     @POST("")
     Call<DonHangAPIModel> PostToOrder(@Body DonHangAPIModel donHang);
 
-    // hủy đặt hàng set trangThaiDat==huyDatHang;
+    // hủy đặt hàng set trangThaiDat==0;
     Call<DonHangAPIModel> PostToCancleOrder(@Body DonHangAPIModel donHang);
 
     //  đặt hàng:set trangThaiDat==datHang;
