@@ -64,6 +64,8 @@ public class fragment_chat_user_shop extends Fragment {
     private TextView edt_chat;
     private RecyclerView rv_chat;
 
+    private SharedPreferences shared;
+
 
     public fragment_chat_user_shop() {
         // Required empty public constructor
@@ -102,13 +104,12 @@ public class fragment_chat_user_shop extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat_user_shop, container, false);
         Mapping(view);
 
-
         listChat = new ArrayList();
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rv_chat.setLayoutManager(layoutManager);
-        SharedPreferences sharedUsername = requireContext().getSharedPreferences("currentUser", Context.MODE_PRIVATE);
-        adapterChat = new recyclerView_chat_user_shop_adapter(requireActivity(), listChat, sharedUsername);
+        shared = getActivity().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+        adapterChat = new recyclerView_chat_user_shop_adapter(requireActivity(), listChat, shared);
         rv_chat.setAdapter(adapterChat);
 
         ControlSocket();
@@ -127,7 +128,13 @@ public class fragment_chat_user_shop extends Fragment {
 
     private void ControlSocket() {
         mSocket = SocketManager.getInstance().getSocket();
-        mSocket.on("server-send-chat", onRetrieveListChat);
+        if (mSocket != null) {
+            Log.d("SocketStatus", "Socket initialized successfully");
+        } else {
+            Log.d("SocketStatus", "Socket is null");
+        }
+//        mSocket.on("", shared.getString("idPhongChat"));
+        mSocket.on("SEND_TO_CLIENT", onRetrieveListChat);
         mSocket.on("server-send-reply", onRetrieveResult);
     }
 
@@ -138,16 +145,26 @@ public class fragment_chat_user_shop extends Fragment {
                 listChat.clear();
                 try {
                     JSONObject obj = (JSONObject) args[0];
-                    JSONArray arrayChat = obj.getJSONArray("chat");
-                    Log.d("arrayChat", arrayChat.toString());
-                    for (int i = 0; i < arrayChat.length(); i++) {
-                        JSONObject objChat = arrayChat.getJSONObject(i);
-                        String idChat = String.valueOf(objChat.getInt("idChat"));
-                        String tenNguoiDung = objChat.getString("username");
-                        String noiDung = objChat.getString("noiDungChat");
-                        listChat.add(new TinNhanModel(idChat, tenNguoiDung, noiDung));
-                    }
+                    Log.d("objectChat", "objChat" + obj.toString());
+//                        JSONObject objChat = arrayChat.getJSONObject(i);
+                    String idUser = String.valueOf(obj.getString("id"));
+                    String idPhongChat = String.valueOf(shared.getString("idPhongChat", ""));
+                    String tenNguoiDung = obj.getString("username");
+                    String noiDung = String.valueOf(obj.getString("message"));
+                    String gioiTinh = obj.getString("gioiTinh");
+                    listChat.add(new TinNhanModel(idPhongChat, idUser, "linh", noiDung, "nam"));
+
+                    listChat.add(new TinNhanModel("PC001", "NV02", "linh", "noiDung", "nam"));
                     adapterChat.notifyDataSetChanged();
+//                    Log.d("jsonTinNhan", "call: " + listChat);
+                    for (TinNhanModel tinNhan : listChat) {
+                        Log.d("ListChat", "Tin nhắn: " + tinNhan.toString());
+                    }
+                    Log.d("idUser ", idUser);
+                    Log.d("noiDung ", noiDung);
+
+
+
                     rv_chat.scrollToPosition(listChat.size() - 1);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -184,7 +201,7 @@ public class fragment_chat_user_shop extends Fragment {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requireActivity().getSupportFragmentManager().popBackStack();
+                requireActivity().finish();
             }
         });
 
@@ -196,13 +213,17 @@ public class fragment_chat_user_shop extends Fragment {
                 if (message.isEmpty()) {
                     Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
                 } else {
-                    SharedPreferences shared = getActivity().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
-                    TinNhanModel tinNhan = new TinNhanModel(shared.getString("hoTenNguoiDung", ""), message, shared.getString("gioiTinh", ""));
+//                    shared = getActivity().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+                    TinNhanModel tinNhan = new TinNhanModel(shared.getString("idPhongChat", ""), shared.getString("idUser", ""), shared.getString("hoTenNguoiDung", ""), message, shared.getString("gioiTinh", ""));
                     Gson gson = new Gson();
                     String jsonTinNhan = gson.toJson(tinNhan);
-                    mSocket.emit("client-send-chat", tinNhan.toString());
-                    Log.d("tinNhanModel", tinNhan.toString());
+                    mSocket.emit("CLIENT_SEND_MESSAGE", jsonTinNhan);
+                    listChat.add(tinNhan);
+                    adapterChat.notifyDataSetChanged();
+                    rv_chat.scrollToPosition(listChat.size() - 1);
+//                    Log.d("tinNhanModel", jsonTinNhan);
                     edt_chat.setText("");
+
                 }
             }
         });

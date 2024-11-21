@@ -27,6 +27,7 @@ import com.example.foodtrack.Adapter.viewPager_mon_moi_ban_chay_home_page_adapte
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
+import com.example.foodtrack.SocketManager;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.JsonSyntaxException;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.socket.client.Socket;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,6 +56,8 @@ public class Home_Page extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Socket mSocket;
 
     private TextView btn_DoUong_homepage, btn_DoAn_homepage;
     private ImageView chatIcon, imageViewRotate1, imageViewRotate2, imageViewRotate_DealHoi;
@@ -206,6 +210,11 @@ public class Home_Page extends Fragment {
             public void onClick(View view) {
                 Intent chat = new Intent(getActivity(), list_chat_user.class);
                 startActivity(chat);
+//                MainActivity mainActivity = (MainActivity) getActivity();
+//                if (mainActivity != null) {
+//                    mainActivity.ReplaceFragment(new fragment_chat_user_shop());
+//                    mSocket = SocketManager.getInstance().getSocket();
+//                }
             }
         });
 

@@ -134,7 +134,6 @@ public class Login extends AppCompatActivity {
 
             }
         });
-
     }
     public void GetUserToLogin(NguoiDungModel userModel) {
         APIService.API_SERVICE.GetUserToLogin(userModel).enqueue(new Callback<NguoiDungModel>() {
@@ -150,6 +149,10 @@ public class Login extends AppCompatActivity {
                         editorResponseLogin.putString("diaChi",responseUserModel.getDiaChi());
                         editorResponseLogin.putString("sdt", responseUserModel.getSdt());
                         editorResponseLogin.putString("gioiTinh", responseUserModel.getGioiTinh());
+
+                        editorResponseLogin.putString("idPhongChat", responseUserModel.getIdPhongChat());
+
+
 
                         editorResponseLogin.apply();
 

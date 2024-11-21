@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class NguoiDungModel {
     private int code;
-    private  String message ;
+    private String message;
     private String idUser;
     private String hoTenNguoiDung;
     private String email;
@@ -21,9 +21,19 @@ public class NguoiDungModel {
     private String thongTinUser;
     private vaiTroModel vaitro;
 
-    private String otp ;
+    private String idPhongChat;
+
+    private String otp;
     // Default constructor
 
+
+    public String getIdPhongChat() {
+        return idPhongChat;
+    }
+
+    public void setIdPhongChat(String idPhongChat) {
+        this.idPhongChat = idPhongChat;
+    }
 
     public String getOtp() {
         return otp;
@@ -91,7 +101,7 @@ public class NguoiDungModel {
     public void setSdt(String sdt) {
         this.sdt = sdt;
     }
-    
+
     public LocalDateTime getNgaySinh() {
         return ngaySinh;
     }

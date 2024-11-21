@@ -60,9 +60,12 @@ public class list_chat_user extends AppCompatActivity {
 
 //        mSocket = SocketManager.getInstance().getSocket();
 
-        list_chat_user_adapter listAdapter = new list_chat_user_adapter(getApplicationContext(), tenNguoiGui_list_chat, ava_nguoiGui_list_chat, noiDung_list_chat, number_list_chat);
-        listview_chat_user.setAdapter(listAdapter);
+//        list_chat_user_adapter listAdapter = new list_chat_user_adapter(getApplicationContext(), tenNguoiGui_list_chat, ava_nguoiGui_list_chat, noiDung_list_chat, number_list_chat);
+//        listview_chat_user.setAdapter(listAdapter);
         ControlButton();
+
+        ReplaceFragment(new fragment_chat_user_shop());
+        mSocket = SocketManager.getInstance().getSocket();
 
     }
 

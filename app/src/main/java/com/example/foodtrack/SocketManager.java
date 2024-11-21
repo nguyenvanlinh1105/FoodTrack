@@ -1,5 +1,7 @@
 package com.example.foodtrack;
 
+import android.util.Log;
+
 import com.example.foodtrack.API.APIService;
 
 import java.net.URISyntaxException;
@@ -13,8 +15,10 @@ public class SocketManager {
     private APIService api;
 
     private SocketManager() {
+        String apiLink = api.url;
+//        Log.d("apiLink", apiLink);
         try {
-            mSocket = IO.socket("https://63cf-2a09-bac1-7ae0-10-00-17-32a.ngrok-free.app");
+            mSocket = IO.socket(apiLink);
             mSocket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();

@@ -54,17 +54,14 @@ public class recyclerView_chat_user_shop_adapter extends RecyclerView.Adapter<re
     Activity activity;
     List<TinNhanModel> list;
     Socket mSocket;
-    String currentUser;
+    String currentIdUser;
+
 
     public recyclerView_chat_user_shop_adapter(Activity activity, List<TinNhanModel> list, SharedPreferences sharedPreferences) {
         this.activity = activity;
         this.list = list;
         this.mSocket = SocketManager.getInstance().getSocket();
-        this.currentUser = sharedPreferences.getString("currentUser", "");
-
-//        mSocket.on("server-send-current-user", onRetrieveCurrentUser);
-//        mSocket.on("server-send-chat", onRetrieveListChat);
-
+        this.currentIdUser = sharedPreferences.getString("idUser", "");
     }
 
     @NonNull
@@ -77,10 +74,11 @@ public class recyclerView_chat_user_shop_adapter extends RecyclerView.Adapter<re
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+        Log.d("currentIdUser", "idUser: " + currentIdUser);
+
         TinNhanModel chat = list.get(position);
 
-        Log.d("ListSize", "Size of list: " + list.size());
-        if (Objects.equals(chat.getTenNguoiDung(), currentUser)) {
+        if (Objects.equals(chat.getIdUser(), currentIdUser)) {
             holder.layout_left.setVisibility(View.GONE);
             holder.layout_right.setVisibility(View.VISIBLE);
             holder.chat_right.setText(chat.getNoiDungChat());
