@@ -142,23 +142,24 @@ public class fragment_chat_user_shop extends Fragment {
         @Override
         public void call(Object... args) {
             requireActivity().runOnUiThread(() -> {
-                listChat.clear();
                 try {
                     JSONObject obj = (JSONObject) args[0];
                     Log.d("objectChat", "objChat" + obj.toString());
 //                        JSONObject objChat = arrayChat.getJSONObject(i);
                     String idUser = String.valueOf(obj.getString("id"));
                     String idPhongChat = String.valueOf(shared.getString("idPhongChat", ""));
-                    String tenNguoiDung = obj.getString("username");
+               //     String tenNguoiDung = obj.getString("username");
                     String noiDung = String.valueOf(obj.getString("message"));
-                    String gioiTinh = obj.getString("gioiTinh");
-                    listChat.add(new TinNhanModel(idPhongChat, idUser, "linh", noiDung, "nam"));
+              //      String gioiTinh = obj.getString("gioiTinh");
+                    TinNhanModel tinNhan =new TinNhanModel(idPhongChat, idUser, "linh", noiDung, "nam");
 
-                    listChat.add(new TinNhanModel("PC001", "NV02", "linh", "noiDung", "nam"));
+
+                    listChat.add(tinNhan);
+
                     adapterChat.notifyDataSetChanged();
-//                    Log.d("jsonTinNhan", "call: " + listChat);
-                    for (TinNhanModel tinNhan : listChat) {
-                        Log.d("ListChat", "Tin nhắn: " + tinNhan.toString());
+                    Log.d("jsonTinNhan", "call: " + listChat);
+                    for (TinNhanModel tinNhans : listChat) {
+                        Log.d("ListChat", "Tin nhắn: " + tinNhans.toString());
                     }
                     Log.d("idUser ", idUser);
                     Log.d("noiDung ", noiDung);
