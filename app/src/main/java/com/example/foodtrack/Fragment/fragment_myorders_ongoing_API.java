@@ -160,10 +160,23 @@ public class fragment_myorders_ongoing_API extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing_details());
+                    DonHangAPIModel selectedOrder = arrayListOrder.get(i);
+                    String id  = selectedOrder.getIdDonHang();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("idDonHang",id);
+
+                    // Tạo fragment mới và gán Bundle
+                    fragment_myorders_ongoing_details detailsFragment = new fragment_myorders_ongoing_details();
+                    detailsFragment.setArguments(bundle);
+
+                    // Chuyển sang fragment mới
+                    mainActivity.ReplaceFragment(detailsFragment);
                 }
             }
         });
+
+
+
     }
 
     private void checkIfListEmpty() {

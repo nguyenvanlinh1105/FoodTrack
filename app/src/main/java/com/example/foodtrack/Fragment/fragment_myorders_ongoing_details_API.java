@@ -26,6 +26,7 @@ public class fragment_myorders_ongoing_details_API extends Fragment {
     private ImageView btn_back_myorders_ongoing_detail;
     private LinearLayout ll_list_myorders_details;
     private ArrayList<ChiTietDonHangAPIModel> arrayChiTietDonHangAPI = new ArrayList<>(); // Đổi tên danh sách
+    private String idDonHang="DH001";
 
     public fragment_myorders_ongoing_details_API() {
         // Required empty public constructor
@@ -75,6 +76,12 @@ public class fragment_myorders_ongoing_details_API extends Fragment {
         btn_back_myorders_ongoing_detail = view.findViewById(R.id.btn_back_myorders_ongoing_detail);
         displayOrderDetails();
         ControlButton();
+
+        // Lấy dữ liệu từ Bundle
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            idDonHang = bundle.getString("idDonHang");
+        }
         return view;
     }
 
