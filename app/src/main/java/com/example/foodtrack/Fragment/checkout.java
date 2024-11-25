@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
@@ -39,6 +40,14 @@ public class checkout extends Fragment {
 
     private ImageView backBtn;
     private Button payBtn;
+
+    private TextView tv_total_amount; // tổng tiền phải trả :
+    private TextView tv_service_fee;
+    private TextView tv_shipping_fee;
+    private TextView tv_ghi_chu;
+    private TextView tv_total_price;// thành tiền
+
+
 
 
     private LinearLayout tienMat, applePay, icon_check_tien_mat, icon_check_applePay;

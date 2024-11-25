@@ -8,6 +8,16 @@ public class SanPhamYeuThichModel {
     private String idSanPham;
     private Timestamp ngayCapNhat;
 
+    private boolean  isLove;
+
+    public boolean isLove() {
+        return isLove;
+    }
+
+    public void setLove(boolean love) {
+        isLove = love;
+    }
+
     // Navigation properties
     private NguoiDungModel nguoiDung;
     private SanPhamModel sanPham;

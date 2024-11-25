@@ -44,6 +44,7 @@ public class cart extends AppCompatActivity {
     private ImageView backBtn;
     private TextView total;
     private TextView datDonBtn;
+    private Double tongTien;
 
     public static Activity ToFinishActivity;
 
@@ -139,6 +140,10 @@ public class cart extends AppCompatActivity {
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<SanPhamAPIModel> listSanPham = response.body();
+                    for (SanPhamAPIModel sp:listSanPham
+                         ) {
+                        tongTien += sp.getGiaTien();
+                    }
                     UpdateRecyclerView(listSanPham);
                 } else {
                     UseFallbackData();

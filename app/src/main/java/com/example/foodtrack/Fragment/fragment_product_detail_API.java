@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class fragment_product_detail_API extends Fragment {
-    private static final String ARG_ID ="idSanPham";
+    private static final String ARG_ID = "idSanPham";
     private static final String ARG_TITLE = "title";
     private static final String ARG_PRICE = "price";
     private static final String ARG_DESCRIPTION = "description";
@@ -58,6 +59,7 @@ public class fragment_product_detail_API extends Fragment {
     private static String description;
     private static String image; // Thay đổi kiểu dữ liệu thành String
 
+    String idUser;
     boolean isFavorite = false;
 
     private ImageView btn_back_product_detail;
@@ -72,17 +74,17 @@ public class fragment_product_detail_API extends Fragment {
     private List<SanPhamAPIModel> listProduct;
     private RecyclerView rvProductDetail;
 
-    SharedPreferences sharedPreferencesDonHang ;
+    SharedPreferences sharedPreferencesDonHang;
 
 
     public fragment_product_detail_API() {
         // Required empty public constructor
     }
 
-    public static fragment_product_detail_API newInstance(String idSanPham,String title, Double price, String description, String image) {
+    public static fragment_product_detail_API newInstance(String idSanPham, String title, Double price, String description, String image) {
         fragment_product_detail_API fragment = new fragment_product_detail_API();
         Bundle args = new Bundle();
-        args.putString(ARG_ID,idSanPham);
+        args.putString(ARG_ID, idSanPham);
         args.putString(ARG_TITLE, title);
         args.putDouble(ARG_PRICE, price);
         args.putString(ARG_DESCRIPTION, description);
@@ -97,7 +99,7 @@ public class fragment_product_detail_API extends Fragment {
         sharedPreferencesDonHang = getContext().getSharedPreferences("dataDonHangResponse", getContext().MODE_PRIVATE);
         quantity = 1;
         if (getArguments() != null) {
-            idSanPham  = getArguments().getString(ARG_ID);
+            idSanPham = getArguments().getString(ARG_ID);
             title = getArguments().getString(ARG_TITLE);
             price = String.valueOf(getArguments().getDouble(ARG_PRICE));
             description = getArguments().getString(ARG_DESCRIPTION);
@@ -157,12 +159,13 @@ public class fragment_product_detail_API extends Fragment {
 
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            imageView.setBackground(new BitmapDrawable(getContext().getResources(), resource));
+                            imageView.setImageDrawable(new BitmapDrawable(getContext().getResources(), resource));
 
                         }
                     });
         }
 
+        GetTrangThaiYeuThich(idUser,idSanPham);
         ControlButton();
         return view;
     }
@@ -176,6 +179,10 @@ public class fragment_product_detail_API extends Fragment {
         Text_quantity_product = view.findViewById(R.id.Text_quantity_product);
         btn_AddToCart_product_detail = view.findViewById(R.id.btn_AddToCart_product_detail);
 
+
+        // Lấy idUser từ SharedPreferences
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+        idUser = sharedPreferences.getString("idUser", "-1"); // -1 là giá trị mặc định nếu không tìm thấy
         rvProductDetail = view.findViewById(R.id.recyclerView_product_detail);
         InitializeData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
@@ -197,16 +204,22 @@ public class fragment_product_detail_API extends Fragment {
         btn_favorite_check_product_detail.setOnClickListener(view -> {
             if (!isFavorite) {
 
-               // ThemSanPhamYeuThichModel(sanPhamYT);
+                SanPhamYeuThichModel model = new SanPhamYeuThichModel();
+                model.setIdNguoiDung(idUser);
+                model.setIdSanPham(idSanPham);
+                ThemSanPhamYeuThichModel(model);
                 btn_favorite_check_product_detail.setImageResource(R.drawable.icon_fill_heart_48);
                 isFavorite = true;
 
             } else {
+                SanPhamYeuThichModel model = new SanPhamYeuThichModel();
+                model.setIdNguoiDung(idUser);
+                model.setIdSanPham(idSanPham);
+                BoSanPhamYeuThichModel(model);
                 btn_favorite_check_product_detail.setImageResource(R.drawable.icon_heart_48);
                 isFavorite = false;
             }
         });
-
         btn_minus_product_detail.setOnClickListener(view -> {
             quantity = Integer.parseInt(Text_quantity_product.getText().toString());
             if (quantity > 0) quantity--;
@@ -228,13 +241,12 @@ public class fragment_product_detail_API extends Fragment {
 
                 ctdh.setIdSanPham(idSanPham);
                 ctdh.setSoLuongDat(quantity);
-                String idDonHang= sharedPreferencesDonHang.getString("idDonHang","");
-                if(idDonHang !=null){
+                String idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
+                if (idDonHang != null) {
                     ctdh.setIdDonHang(idDonHang);
                 }
-                // Lấy idUser từ SharedPreferences
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
-                String idUser = sharedPreferences.getString("idUser", "-1"); // -1 là giá trị mặc định nếu không tìm thấy
+
+
                 if (idUser != "-1") {
                     ctdh.setIdUser(idUser);
                     PostSanPhamToGioHang(ctdh);
@@ -273,20 +285,20 @@ public class fragment_product_detail_API extends Fragment {
 
     }
 
-    private void PostSanPhamToGioHang(ChiTietDonHangAPIModel ctdh){
+    private void PostSanPhamToGioHang(ChiTietDonHangAPIModel ctdh) {
         APIService.API_SERVICE.PostToBuyProduct(ctdh).enqueue(new Callback<ChiTietDonHangAPIModel>() {
             @Override
             public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
                 ChiTietDonHangAPIModel ctdh = response.body();
-                if (response.isSuccessful() && response.body() != null ) {
+                if (response.isSuccessful() && response.body() != null) {
                     SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
-                    if(ctdh.getIdDonHang()==null){
+                    if (ctdh.getIdDonHang() == null) {
                         Toast.makeText(getContext(), "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
-                    }else{
-                        editorResponseDonHang.putString("idDonHang",ctdh.getIdDonHang());
+                    } else {
+                        editorResponseDonHang.putString("idDonHang", ctdh.getIdDonHang());
                     }
 
-                    Toast.makeText(getContext(),ctdh.getIdDonHang()+"",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), ctdh.getIdDonHang() + "", Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(getContext(), "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
@@ -300,7 +312,21 @@ public class fragment_product_detail_API extends Fragment {
         });
     }
 
-    private void ThemSanPhamYeuThichModel(SanPhamYeuThichModel model){
+    private void ThemSanPhamYeuThichModel(SanPhamYeuThichModel model) {
+        APIService.API_SERVICE.ThemSanPhamYeuThichModel(model).enqueue(new Callback<SanPhamYeuThichModel>() {
+            @Override
+            public void onResponse(Call<SanPhamYeuThichModel> call, Response<SanPhamYeuThichModel> response) {
+                ///
+            }
+
+            @Override
+            public void onFailure(Call<SanPhamYeuThichModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void BoSanPhamYeuThichModel(SanPhamYeuThichModel model) {
         APIService.API_SERVICE.ThemSanPhamYeuThichModel(model).enqueue(new Callback<SanPhamYeuThichModel>() {
             @Override
             public void onResponse(Call<SanPhamYeuThichModel> call, Response<SanPhamYeuThichModel> response) {
@@ -313,5 +339,36 @@ public class fragment_product_detail_API extends Fragment {
             }
         });
     }
+
+    private void GetTrangThaiYeuThich(String idNguoiDung , String idSanPham){
+        APIService.API_SERVICE.GetTrangThaiYeuThich(idNguoiDung, idSanPham).enqueue(new Callback<SanPhamYeuThichModel>() {
+            @Override
+            public void onResponse(Call<SanPhamYeuThichModel> call, Response<SanPhamYeuThichModel> response) {
+                if(response.isSuccessful()){
+
+                    Log.d("isLove",response.body().isLove()+"");
+                    if(response.body().isLove()==true){
+                        btn_favorite_check_product_detail.setImageResource(R.drawable.icon_fill_heart_48);
+                        isFavorite = true;
+                    }else{
+                        btn_favorite_check_product_detail.setImageResource(R.drawable.icon_heart_48);
+                        isFavorite = false;
+                    }
+
+
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SanPhamYeuThichModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+
 
 }

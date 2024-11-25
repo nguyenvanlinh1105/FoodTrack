@@ -28,14 +28,14 @@ public interface APIService {
 
 
   //    linkAPI root:
-    public static String url ="https://c474-42-112-227-154.ngrok-free.app/";
+    public static String url ="https://9985-42-112-227-154.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
 
-    // hàm này dùng để login , gửi email và pass word , api trả về code và message.
+    // hàm này dùng để login , gửi email và pass word
     @POST("user/login")
     Call<NguoiDungAPIModel> GetUserToLogin(@Body NguoiDungAPIModel userModel);
 
@@ -122,8 +122,16 @@ public interface APIService {
 
 
     // thêm sản phẩm yêu thích :
-   @POST("")
+   @POST("food/love")
     Call<SanPhamYeuThichModel> ThemSanPhamYeuThichModel(@Body SanPhamYeuThichModel model);
+  // bỏ sản phẩm yêu thích :
+  @POST("")
+  Call<SanPhamYeuThichModel> BoSanPhamYeuThichModel(@Body SanPhamYeuThichModel model);
+
+  @GET("food/detail")
+  Call<SanPhamYeuThichModel> GetTrangThaiYeuThich(@Query("idNguoiDung")String idNguoiDung, @Query("idSanPham") String idSanPham);
+
+
 
   @GET("")
   Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDangGiao();

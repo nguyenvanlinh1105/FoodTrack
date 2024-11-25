@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +106,7 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
                 bundle.putDouble("price", product.getGiaTien());
                 bundle.putString("description", product.getMoTa());
                 bundle.putString("image", product.getImages());
+                Log.d("image",product.getImages());
 
                 // Tạo Fragment chi tiết sản phẩm và truyền thông tin qua Bundle
                 fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(

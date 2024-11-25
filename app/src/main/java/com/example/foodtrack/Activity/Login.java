@@ -3,6 +3,7 @@ package com.example.foodtrack.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -100,6 +101,8 @@ public class Login extends AppCompatActivity {
         btnLogin_TK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 String email = edit_mail.getText().toString().trim();
                 String password = edit_password.getText().toString().trim();
                 NguoiDungAPIModel userModel = new NguoiDungAPIModel();
