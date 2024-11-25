@@ -28,12 +28,15 @@ public class SanPhamAPIModel {
     private List<SanPhamYeuThichModel> sanPhamYeuThichs;
 
 
+
+
     public SanPhamAPIModel(String tenSanPham, double giaTien, String images, String moTa) {
         this.tenSanPham = tenSanPham;
         this.giaTien = giaTien;
         this.images = images;
         this.moTa = moTa;
     }
+
 
     public String getIdSanPham() {
         return idSanPham;

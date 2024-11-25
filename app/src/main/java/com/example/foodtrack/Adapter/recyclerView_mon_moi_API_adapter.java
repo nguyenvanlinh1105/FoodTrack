@@ -216,9 +216,10 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
                 if (response.isSuccessful() && response.body() != null ) {
                     SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
                     if(ctdh.getIdDonHang()==null){
-                        Toast.makeText(context, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(context, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
                     }else{
                         editorResponseDonHang.putString("idDonHang",ctdh.getIdDonHang());
+                        editorResponseDonHang.apply();
                     }
 
                     Toast.makeText(context,ctdh.getIdDonHang()+"",Toast.LENGTH_LONG).show();

@@ -106,6 +106,12 @@ public class fragment_product_detail_API extends Fragment {
             image = getArguments().getString(ARG_IMAGE); // Lấy giá trị image từ URL
 
         }
+
+
+        // reset đơn hàng
+//        SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
+//        editorResponseDonHang.putString("idDonHang", null);
+//        editorResponseDonHang.apply();
     }
 
     private void InitializeData() {
@@ -242,6 +248,7 @@ public class fragment_product_detail_API extends Fragment {
                 ctdh.setIdSanPham(idSanPham);
                 ctdh.setSoLuongDat(quantity);
                 String idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
+             //   Log.d("idDonHang",idDonHang);
                 if (idDonHang != null) {
                     ctdh.setIdDonHang(idDonHang);
                 }
@@ -286,22 +293,25 @@ public class fragment_product_detail_API extends Fragment {
     }
 
     private void PostSanPhamToGioHang(ChiTietDonHangAPIModel ctdh) {
+
         APIService.API_SERVICE.PostToBuyProduct(ctdh).enqueue(new Callback<ChiTietDonHangAPIModel>() {
             @Override
             public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
                 ChiTietDonHangAPIModel ctdh = response.body();
                 if (response.isSuccessful() && response.body() != null) {
                     SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
-                    if (ctdh.getIdDonHang() == null) {
-                        Toast.makeText(getContext(), "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
-                    } else {
+                    if (ctdh.getIdDonHang()!=null) {
                         editorResponseDonHang.putString("idDonHang", ctdh.getIdDonHang());
+                        editorResponseDonHang.apply();
+                    } else {
+
                     }
 
-                    Toast.makeText(getContext(), ctdh.getIdDonHang() + "", Toast.LENGTH_LONG).show();
+                //    Toast.makeText(getContext(), ctdh.getIdDonHang() + "", Toast.LENGTH_LONG).show();
 
                 } else {
-                    Toast.makeText(getContext(), "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getContext(), "Thêm vào giỏ hàng thất bại, vui lòng thủ lại nhé", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -316,7 +326,7 @@ public class fragment_product_detail_API extends Fragment {
         APIService.API_SERVICE.ThemSanPhamYeuThichModel(model).enqueue(new Callback<SanPhamYeuThichModel>() {
             @Override
             public void onResponse(Call<SanPhamYeuThichModel> call, Response<SanPhamYeuThichModel> response) {
-                ///
+
             }
 
             @Override
@@ -327,7 +337,7 @@ public class fragment_product_detail_API extends Fragment {
     }
 
     private void BoSanPhamYeuThichModel(SanPhamYeuThichModel model) {
-        APIService.API_SERVICE.ThemSanPhamYeuThichModel(model).enqueue(new Callback<SanPhamYeuThichModel>() {
+        APIService.API_SERVICE.BoSanPhamYeuThichModel(model).enqueue(new Callback<SanPhamYeuThichModel>() {
             @Override
             public void onResponse(Call<SanPhamYeuThichModel> call, Response<SanPhamYeuThichModel> response) {
 
@@ -372,3 +382,9 @@ public class fragment_product_detail_API extends Fragment {
 
 
 }
+
+
+
+
+
+

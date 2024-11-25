@@ -137,6 +137,8 @@ public class favorite_fragment extends Fragment {
         listView_favorite.setAdapter(listAdapter);
 
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
+
+
     }
 
     private void ControlButton() {

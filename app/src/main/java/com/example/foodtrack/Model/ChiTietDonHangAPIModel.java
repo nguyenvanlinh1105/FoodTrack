@@ -8,13 +8,9 @@ public class ChiTietDonHangAPIModel {
     private String idUser;
     private String idSanPham;
     private String nhanVienXuLy;
-
-
-
     private int soLuongDat;
-
     // Navigation properties
-    private DonHangModel donHang;
+ //   private DonHangModel donHang;
     private SanPhamAPIModel sanPham;
 
     public String getIdChiTietDonHang() {
@@ -65,13 +61,13 @@ public class ChiTietDonHangAPIModel {
         this.soLuongDat = soLuongDat;
     }
 
-    public DonHangModel getDonHang() {
-        return donHang;
-    }
+   // public DonHangModel getDonHang() {
+//        return donHang;
+//    }
 
-    public void setDonHang(DonHangModel donHang) {
-        this.donHang = donHang;
-    }
+    //public void setDonHang(DonHangModel donHang) {
+//        this.donHang = donHang;
+//    }
 
     public SanPhamAPIModel getSanPham() {
         return sanPham;

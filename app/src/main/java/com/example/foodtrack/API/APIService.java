@@ -28,7 +28,7 @@ public interface APIService {
 
 
   //    linkAPI root:
-    public static String url ="https://9985-42-112-227-154.ngrok-free.app/";
+    public static String url ="https://8a0f-42-112-227-154.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -79,22 +79,26 @@ public interface APIService {
 
 
 
-    //lấy tất cả sản phẩm trong dơn hàng hiện tại :)
-  @GET("")
+
+
+
+
+    //lấy tất cả sản phẩm trong dơn hàng hiện tại :đang
+  @GET("order/detail")
   Call<List<SanPhamAPIModel>>GetSanPhamGioHang(@Query ("idDonHang") String idDonHang);
 
-  // lấy đơn hàng đang giao
+  // lấy đơn hàng đang giao: chưa
     @GET("")
     Call<List<DonHangAPIModel>> GetDonHangDangGiao();
-    //Lấy tất cả sản phẩm đã mua - history
+    //Lấy tất cả sản phẩm đã mua - history: đang
     @GET("")
     Call<List<SanPhamAPIModel>> GetSanPhamDaMua();
 
-    //lấy đơn hàng đã hủy
+    //lấy đơn hàng đã hủy: chưa
     @GET("")
     Call<List<DonHangAPIModel>> GetDonHangDaHuy();
 
-    // lấy danh sách sản phẩm yêu thích
+    // lấy danh sách sản phẩm yêu thích: chưa
     @GET("")
     Call<List<SanPhamAPIModel>> getDsSanPhamYeuThich();
 
@@ -121,11 +125,11 @@ public interface APIService {
     Call<BinhLuanSanPhamModel> guiBinhLuan (@Body BinhLuanSanPhamModel binhLuanSanPhamModel);
 
 
-    // thêm sản phẩm yêu thích :
+    // thêm sản phẩm yêu thích : rồi
    @POST("food/love")
     Call<SanPhamYeuThichModel> ThemSanPhamYeuThichModel(@Body SanPhamYeuThichModel model);
-  // bỏ sản phẩm yêu thích :
-  @POST("")
+  // bỏ sản phẩm yêu thích : rồi
+  @POST("food/unlove")
   Call<SanPhamYeuThichModel> BoSanPhamYeuThichModel(@Body SanPhamYeuThichModel model);
 
   @GET("food/detail")
@@ -138,6 +142,11 @@ public interface APIService {
 
    @POST("")
   Call<NguoiDungAPIModel> ChangInfoUser(@Body NguoiDungAPIModel nguoiDungAPIModel);
+
+
+
+
+
 
 }
 

@@ -153,6 +153,7 @@ public class food_fragment extends Fragment {
 //        food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
 //        listView_food.setAdapter(listAdapter);
 
+        GetMonAn();
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
 
         listView_food.setOnItemClickListener(new AdapterView.OnItemClickListener() {
