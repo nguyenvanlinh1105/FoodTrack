@@ -137,7 +137,7 @@ public class fragment_product_detail_API extends Fragment {
             TextView titleView = view.findViewById(R.id.title_product_details);
             TextView priceView = view.findViewById(R.id.price_product_details);
             TextView descriptionView = view.findViewById(R.id.description_product_detail);
-            LinearLayout imageView = view.findViewById(R.id.image_product_details);
+            ImageView imageView = view.findViewById(R.id.image_product_details);
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
             String formattedPrice = formatter.format(price) + "vnđ";

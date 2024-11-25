@@ -80,7 +80,6 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
         if (imageUrl.startsWith("http://")) {
             imageUrl = imageUrl.replace("http://", "https://");
         }
-
         Glide.with(context)
                 .asBitmap()
                 .load(imageUrl)

@@ -147,7 +147,7 @@ public class Login extends AppCompatActivity {
                         SharedPreferences.Editor editorResponseLogin = shareUserResponseLogin.edit();
                         editorResponseLogin.putString("avatar",responseUserModel.getAvatar());
                         editorResponseLogin.putString("email",responseUserModel.getEmail());
-                        editorResponseLogin.putString("ngaySinh", responseUserModel.getNgaySinh().toString());
+                        editorResponseLogin.putString("ngaySinh", responseUserModel.getNgaySinh());
                         editorResponseLogin.putString("idUser",responseUserModel.getIdUser());
                         editorResponseLogin.putString("hoTenNguoiDung",responseUserModel.getHoTenNguoiDung());
                         editorResponseLogin.putString("diaChi",responseUserModel.getDiaChi());
