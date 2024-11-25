@@ -122,36 +122,36 @@ public class fragment_myorders_ongoing_details extends Fragment {
     }
 
     private void GetOrderDetails() {
-        APIService.API_SERVICE.GetChiTietDonHangDangGiao().enqueue(new Callback<List<ChiTietDonHangAPIModel>>() {
-            @Override
-            public void onResponse(Call<List<ChiTietDonHangAPIModel>> call, Response<List<ChiTietDonHangAPIModel>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    List<ChiTietDonHangAPIModel> listChiTietDonHang = response.body();
-
-                    arrayChiTietDonHangAPI.clear();
-                    for (ChiTietDonHangAPIModel apiItem : listChiTietDonHang) {
-                        ChiTietDonHangAPIModel chiTietDonHang = new ChiTietDonHangAPIModel();
-                        SanPhamAPIModel sanPham = new SanPhamAPIModel(apiItem.getSanPham().getTenSanPham(), apiItem.getSanPham().getGiaTien(), apiItem.getSanPham().getImages(), apiItem.getSanPham().getMoTa());
-                        chiTietDonHang.setSanPham(sanPham);
-                        chiTietDonHang.setSoLuongDat(apiItem.getSoLuongDat());
-                        chiTietDonHang.setIdChiTietDonHang(apiItem.getIdChiTietDonHang());
-                        arrayChiTietDonHangAPI.add(chiTietDonHang);
-                    }
-
-                    // Hiển thị dữ liệu từ API
-                    displayOrderDetailsAPI();
-                } else {
-                    // Sử dụng dữ liệu tĩnh khi không có phản hồi API
-                    UseFallbackData();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ChiTietDonHangAPIModel>> call, Throwable t) {
-                // Sử dụng dữ liệu tĩnh khi API thất bại
-                UseFallbackData();
-            }
-        });
+//        APIService.API_SERVICE.GetChiTietDonHangDangGiao().enqueue(new Callback<List<ChiTietDonHangAPIModel>>() {
+//            @Override
+//            public void onResponse(Call<List<ChiTietDonHangAPIModel>> call, Response<List<ChiTietDonHangAPIModel>> response) {
+//                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+//                    List<ChiTietDonHangAPIModel> listChiTietDonHang = response.body();
+//
+//                    arrayChiTietDonHangAPI.clear();
+//                    for (ChiTietDonHangAPIModel apiItem : listChiTietDonHang) {
+//                        ChiTietDonHangAPIModel chiTietDonHang = new ChiTietDonHangAPIModel();
+//                        SanPhamAPIModel sanPham = new SanPhamAPIModel(apiItem.getSanPham().getTenSanPham(), apiItem.getSanPham().getGiaTien(), apiItem.getSanPham().getImages(), apiItem.getSanPham().getMoTa());
+//                        chiTietDonHang.setSanPham(sanPham);
+//                        chiTietDonHang.setSoLuongDat(apiItem.getSoLuongDat());
+//                        chiTietDonHang.setIdChiTietDonHang(apiItem.getIdChiTietDonHang());
+//                        arrayChiTietDonHangAPI.add(chiTietDonHang);
+//                    }
+//
+//                    // Hiển thị dữ liệu từ API
+//                    displayOrderDetailsAPI();
+//                } else {
+//                    // Sử dụng dữ liệu tĩnh khi không có phản hồi API
+//                    UseFallbackData();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<ChiTietDonHangAPIModel>> call, Throwable t) {
+//                // Sử dụng dữ liệu tĩnh khi API thất bại
+//                UseFallbackData();
+//            }
+//        });
     }
 
     private void UseFallbackData() {

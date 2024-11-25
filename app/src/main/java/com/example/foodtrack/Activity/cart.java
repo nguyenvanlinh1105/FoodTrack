@@ -139,6 +139,8 @@ public class cart extends AppCompatActivity {
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<SanPhamAPIModel> listSanPham = response.body();
+
+
                     UpdateRecyclerView(listSanPham);
                 } else {
                     UseFallbackData();

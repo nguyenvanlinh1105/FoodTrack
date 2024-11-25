@@ -30,13 +30,18 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Adapter.food_list_adapter;
+import com.example.foodtrack.Adapter.list_drink_API_adapter;
+import com.example.foodtrack.Adapter.recyclerView_deal_hoi_API_adapter;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.Model.SanPhamYeuThichModel;
 import com.example.foodtrack.R;
+import com.google.gson.JsonSyntaxException;
 
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +77,7 @@ public class fragment_product_detail_API extends Fragment {
     private TextView btn_AddToCart_product_detail;
 
     private List<SanPhamAPIModel> listProduct;
-    private RecyclerView rvProductDetail;
+    private RecyclerView rvProductDetail, rvDealHoi;
 
     SharedPreferences sharedPreferencesDonHang;
 
@@ -171,6 +176,8 @@ public class fragment_product_detail_API extends Fragment {
                     });
         }
 
+        GetMonAnBenPhai();
+        GetDealHoi();
         GetTrangThaiYeuThich(idUser,idSanPham);
         ControlButton();
         return view;
@@ -190,11 +197,13 @@ public class fragment_product_detail_API extends Fragment {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
         idUser = sharedPreferences.getString("idUser", "-1"); // -1 là giá trị mặc định nếu không tìm thấy
         rvProductDetail = view.findViewById(R.id.recyclerView_product_detail);
-        InitializeData();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        rvProductDetail.setLayoutManager(layoutManager);
-//        recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct);
-//        rvProductDetail.setAdapter(dealAdapter);
+//        InitializeData();
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+//        rvProductDetail.setLayoutManager(layoutManager);
+////        recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct);
+////        rvProductDetail.setAdapter(dealAdapter);
+
+        rvDealHoi = view.findViewById(R.id.recyclerView_deal_hoi_product_detail);
     }
 
     private void ControlButton() {
@@ -264,6 +273,74 @@ public class fragment_product_detail_API extends Fragment {
             }
         });
 
+    }
+
+    private void GetMonAnBenPhai(){
+        APIService.API_SERVICE.getListMonAn_Explore().enqueue(new Callback<List<SanPhamAPIModel>>() {
+            @Override
+            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
+                if(response.isSuccessful()&& response.body()!=null &&!response.body().isEmpty()){
+                    List<SanPhamAPIModel> listMonAn_explore = response.body();
+                    recyclerView_product_detail_adapter listAdapter = new recyclerView_product_detail_adapter(getContext(), listMonAn_explore);
+                    rvProductDetail.setAdapter(listAdapter);
+                }else{
+//                    UseFallbackData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
+//                UseFallbackData();
+            }
+        });
+    }
+//    private void UseFallbackData() {
+//        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct
+//        UpdateRecyclerView(arraylistFood);
+//    }
+//
+//    private void UpdateRecyclerView(List<SanPhamModel> data) {
+//        food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
+//        listView_food.setAdapter(listAdapter);
+//    }
+
+    private void GetDealHoi(){
+        APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamAPIModel>>() {
+            @Override
+            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<SanPhamAPIModel> listSanPhamDeaHoi = response.body();
+                    Log.d("API_SUCCESS", "Data size: " + listSanPhamDeaHoi.size());
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                    rvDealHoi.setLayoutManager(layoutManager);
+                    recyclerView_deal_hoi_API_adapter dealAdapter = new recyclerView_deal_hoi_API_adapter(getContext(), listSanPhamDeaHoi);
+                    rvDealHoi.setAdapter(dealAdapter);
+
+                } else {
+                    Log.e("API_ERROR", "Response not successful: " + response.code());
+                    if (response.errorBody() != null) {
+                        try {
+                            Log.e("API_ERROR", "Error body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
+                Log.e("API_ERROR", "Error: " + t.getMessage());
+                if (t instanceof JsonSyntaxException) {
+                    JsonSyntaxException jsonError = (JsonSyntaxException) t;
+                    Log.e("API_ERROR", "JSON Error: " + jsonError.getCause());
+                }
+                t.printStackTrace();
+                Toast.makeText(getContext(), "Lỗi dữ liệu: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void CreatePopup(View view) {
@@ -377,10 +454,6 @@ public class fragment_product_detail_API extends Fragment {
             }
         });
     }
-
-
-
-
 }
 
 
