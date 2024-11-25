@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 public class NguoiDungAPIModel {
     private int code;
     private  String message ;
-    private int idUser;
+    private String idUser;
     private String hoTen;
     private String email;
     private String diaChi;
     private String sdt;
-    private LocalDateTime ngaySinh;
+    private String ngaySinh;
     private String matKhau;
     private String gioiTinh;
     private String avatar;
@@ -22,6 +22,24 @@ public class NguoiDungAPIModel {
     private String nguoiCapNhat;
     private String thongTinUser;
     private vaiTroModel vaitro;
+
+    private String idPhongChat;
+
+    public String getHoTen() {
+        return hoTen;
+    }
+
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
+    }
+
+    public String getIdPhongChat() {
+        return idPhongChat;
+    }
+
+    public void setIdPhongChat(String idPhongChat) {
+        this.idPhongChat = idPhongChat;
+    }
 
     public NguoiDungAPIModel() {
     }
@@ -42,11 +60,11 @@ public class NguoiDungAPIModel {
         this.message = message;
     }
 
-    public int getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
@@ -82,11 +100,11 @@ public class NguoiDungAPIModel {
         this.sdt = sdt;
     }
 
-    public LocalDateTime getNgaySinh() {
+    public String getNgaySinh() {
         return ngaySinh;
     }
 
-    public void setNgaySinh(LocalDateTime ngaySinh) {
+    public void setNgaySinh(String ngaySinh) {
         this.ngaySinh = ngaySinh;
     }
 

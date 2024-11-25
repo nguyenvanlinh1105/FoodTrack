@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.foodtrack.API.APIService;
+import com.example.foodtrack.Model.API.NguoiDungAPIModel;
 import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.R;
 
@@ -101,7 +102,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String email = edit_mail.getText().toString().trim();
                 String password = edit_password.getText().toString().trim();
-                NguoiDungModel userModel = new NguoiDungModel();
+                NguoiDungAPIModel userModel = new NguoiDungAPIModel();
                 userModel.setEmail(email);
                 userModel.setMatKhau(password);
                 if(cb_nho_mat_khau_login.isChecked()){
@@ -135,15 +136,18 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-    public void GetUserToLogin(NguoiDungModel userModel) {
-        APIService.API_SERVICE.GetUserToLogin(userModel).enqueue(new Callback<NguoiDungModel>() {
+    public void GetUserToLogin(NguoiDungAPIModel userModel) {
+        APIService.API_SERVICE.GetUserToLogin(userModel).enqueue(new Callback<NguoiDungAPIModel>() {
             @Override
-            public void onResponse(Call<NguoiDungModel> call, Response<NguoiDungModel> response) {
+            public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
                 if (response.code() == 200) { // Kiểm tra status code
-                    NguoiDungModel responseUserModel = response.body();
+                    NguoiDungAPIModel responseUserModel = response.body();
                     if (responseUserModel != null && "Đăng nhập thành công".equals(responseUserModel.getMessage())) {
 
                         SharedPreferences.Editor editorResponseLogin = shareUserResponseLogin.edit();
+                        editorResponseLogin.putString("avatar",responseUserModel.getAvatar());
+                        editorResponseLogin.putString("email",responseUserModel.getEmail());
+                        editorResponseLogin.putString("ngaySinh", responseUserModel.getNgaySinh().toString());
                         editorResponseLogin.putString("idUser",responseUserModel.getIdUser());
                         editorResponseLogin.putString("hoTenNguoiDung",responseUserModel.getHoTenNguoiDung());
                         editorResponseLogin.putString("diaChi",responseUserModel.getDiaChi());
@@ -169,7 +173,7 @@ public class Login extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<NguoiDungModel> call, Throwable t) {
+            public void onFailure(Call<NguoiDungAPIModel> call, Throwable t) {
                 Toast.makeText(Login.this, "Đăng nhập thất bại, thử lại bằng email và password", Toast.LENGTH_LONG).show();
             }
         });

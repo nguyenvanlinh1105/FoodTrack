@@ -115,6 +115,7 @@ public class fragment_myorders_ongoing_details extends Fragment {
         View view = inflater.inflate(R.layout.fragment_myorders_ongoing_details, container, false);
         Mapping(view);
 //        displayOrderDetails();
+
         GetOrderDetails();
         ControlButton();
         return view;

@@ -69,9 +69,8 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         SanPhamAPIModel product = list.get(position);
-//        Log.d("Product", "Product Title: " + product.getTitle());
-        holder.title.setText(product.getTenSanPham());
 
+        holder.title.setText(product.getTenSanPham());
         NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
         String formattedPrice = formatter.format(product.getGiaTien());
         formattedPrice = formattedPrice + "vnđ";
@@ -82,11 +81,6 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
             imageUrl = imageUrl.replace("http://", "https://");
         }
 
-//        Glide.with(context)
-//                .load(imageUrl)
-//                .placeholder(R.drawable.icon_food2)
-//                .error(R.drawable.icon_food1)
-//                .into(holder.img);
         Glide.with(context)
                 .asBitmap()
                 .load(imageUrl)
@@ -98,64 +92,69 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         holder.img.setBackground(new BitmapDrawable(context.getResources(), resource));
-
                     }
                 });
 
+        // Khi click vào item, chuyển sang fragment chi tiết sản phẩm
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Tạo Bundle chứa thông tin sản phẩm
                 Bundle bundle = new Bundle();
-                bundle.putString("idSanPham",product.getIdSanPham());
-                bundle.putString("title", holder.title.getText().toString());
+                bundle.putString("idSanPham", product.getIdSanPham());
+                bundle.putString("title", product.getTenSanPham());
                 bundle.putDouble("price", product.getGiaTien());
                 bundle.putString("description", product.getMoTa());
                 bundle.putString("image", product.getImages());
+
+                // Tạo Fragment chi tiết sản phẩm và truyền thông tin qua Bundle
                 fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
                         product.getIdSanPham(),
-                        holder.title.getText().toString(),
+                        product.getTenSanPham(),
                         product.getGiaTien(),
                         product.getMoTa(),
                         product.getImages()
                 );
-                MainActivity mainActivity = (MainActivity) context;
-                if (mainActivity != null)
-                    mainActivity.ReplaceFragment(productDetailsFragment);
 
+                // Truyền Bundle vào Fragment
+                productDetailsFragment.setArguments(bundle);
+
+                // Chuyển fragment
+                MainActivity mainActivity = (MainActivity) context;
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(productDetailsFragment);
+                }
             }
         });
 
         holder.btn_AddToFavorite_banChay_monMoi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(context.getApplicationContext(), "Thêm sản phẩm vào mục yêu thích thành công", Toast.LENGTH_LONG).show();
-
                 ChiTietDonHangAPIModel ctdh = new ChiTietDonHangAPIModel();
-
-
                 ctdh.setIdSanPham(product.getIdSanPham());
                 ctdh.setSoLuongDat(5);
-                String idDonHang= sharedPreferencesDonHang.getString("idDonHang","");
-                if(idDonHang !=null){
+                String idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
+                if (idDonHang != null) {
                     ctdh.setIdDonHang(idDonHang);
                 }
-                // Lấy idUser từ SharedPreferences
+
                 SharedPreferences sharedPreferences = context.getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
-                String idUser = sharedPreferences.getString("idUser", "-1"); // -1 là giá trị mặc định nếu không tìm thấy
-                if (idUser != "-1") {
+                String idUser = sharedPreferences.getString("idUser", "-1");
+                if (!idUser.equals("-1")) {
                     ctdh.setIdUser(idUser);
                     PostSanPhamToGioHang(ctdh);
                 } else {
                     Toast.makeText(context, "Không tìm thấy ID người dùng", Toast.LENGTH_SHORT).show();
                 }
+
                 CreatePopup(view);
             }
         });
 
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_listview_sanpham);
         holder.itemView.startAnimation(animation);
-
     }
+
 
     @Override
     public int getItemCount() {

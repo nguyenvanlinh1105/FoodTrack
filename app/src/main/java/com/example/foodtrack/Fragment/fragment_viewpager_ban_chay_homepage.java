@@ -166,7 +166,7 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     List<SanPhamAPIModel> listSanPham = response.body();
                     Log.d("API_SUCCESS", "Data size: " + listSanPham.size());
-//                    UpdateRecyclerView(listSanPham);
+//
                     UpdateRecyclerViewAPI(listSanPham);
                 } else {
                     Log.e("API_ERROR", "Response not successful: " + response.code());

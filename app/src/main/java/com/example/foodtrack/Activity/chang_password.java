@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.foodtrack.API.APIService;
+import com.example.foodtrack.Model.API.NguoiDungAPIModel;
 import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.R;
 
@@ -77,7 +78,7 @@ public class chang_password extends AppCompatActivity {
             public void onResponse(Call<NguoiDungModel> call, Response<NguoiDungModel> response) {
                 if(response.isSuccessful()){
                     NguoiDungModel nguoiDungModel = response.body();
-                    NguoiDungModel userModel = new NguoiDungModel();
+                    NguoiDungAPIModel userModel = new NguoiDungAPIModel();
                     userModel.setEmail(email);
                     userModel.setMatKhau(nguoiDungModel.getMatKhau());
                     GetUserToLogin(userModel);
@@ -90,12 +91,12 @@ public class chang_password extends AppCompatActivity {
             }
         });
     }
-    public void GetUserToLogin(NguoiDungModel userModel) {
-        APIService.API_SERVICE.GetUserToLogin(userModel).enqueue(new Callback<NguoiDungModel>() {
+    public void GetUserToLogin(NguoiDungAPIModel userModel) {
+        APIService.API_SERVICE.GetUserToLogin(userModel).enqueue(new Callback<NguoiDungAPIModel>() {
             @Override
-            public void onResponse(Call<NguoiDungModel> call, Response<NguoiDungModel> response) {
+            public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
                 if (response.code() == 200) { // Kiểm tra status code
-                    NguoiDungModel responseUserModel = response.body();
+                    NguoiDungAPIModel responseUserModel = response.body();
                     if (responseUserModel != null && "Đăng nhập thành công".equals(responseUserModel.getMessage())) {
                         Intent home = new Intent(chang_password.this, MainActivity.class);
                         startActivity(home);
@@ -109,7 +110,7 @@ public class chang_password extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<NguoiDungModel> call, Throwable t) {
+            public void onFailure(Call<NguoiDungAPIModel> call, Throwable t) {
                 Toast.makeText(chang_password.this, "Đăng nhập thất bại, thử lại bằng email và password", Toast.LENGTH_LONG).show();
             }
         });

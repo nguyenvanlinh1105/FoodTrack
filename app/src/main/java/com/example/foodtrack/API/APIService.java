@@ -28,7 +28,7 @@ public interface APIService {
 
 
   //    linkAPI root:
-    public static String url ="https://6c8e-42-112-227-154.ngrok-free.app/";
+    public static String url ="https://c474-42-112-227-154.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -37,7 +37,7 @@ public interface APIService {
 
     // hàm này dùng để login , gửi email và pass word , api trả về code và message.
     @POST("user/login")
-    Call<NguoiDungModel> GetUserToLogin(@Body NguoiDungModel userModel);
+    Call<NguoiDungAPIModel> GetUserToLogin(@Body NguoiDungAPIModel userModel);
 
     // hàm này dùng để singin đăng kí tài khoản , api trả về ....
     @POST("user/register")
@@ -125,9 +125,11 @@ public interface APIService {
    @POST("")
     Call<SanPhamYeuThichModel> ThemSanPhamYeuThichModel(@Body SanPhamYeuThichModel model);
 
+  @GET("")
+  Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDangGiao();
 
    @POST("")
-  Call<NguoiDungAPIModel>
+  Call<NguoiDungAPIModel> ChangInfoUser(@Body NguoiDungAPIModel nguoiDungAPIModel);
 
 }
 

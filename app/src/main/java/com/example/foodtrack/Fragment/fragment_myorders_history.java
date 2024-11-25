@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.myorders_history_list_adapter;
 
@@ -47,7 +48,7 @@ public class fragment_myorders_history extends Fragment {
     ArrayList<String>  price = new ArrayList<>();
     ArrayList<Integer> qty = new ArrayList<>();
 
-    ArrayList<Order> arrayListOrder = new ArrayList<>();
+    ArrayList<SanPhamModel> arrayListOrder = new ArrayList<>();
 
     ListView listview_myorders_history;
     LinearLayout imageIfEmpty;
@@ -134,7 +135,7 @@ public class fragment_myorders_history extends Fragment {
 
 
         for (int i = 0; i < orderId.size(); i++) {
-            arrayListOrder.add(new Order(orderId.get(i), new Date(), name.get(i), orderStatus.get(i), img.get(i), status.get(i), price.get(i), qty.get(i)));
+           // arrayListOrder.add(new SanPhamModel(orderId.get(i), new Date(), name.get(i), orderStatus.get(i), img.get(i), status.get(i), price.get(i), qty.get(i)));
         }
     }
 

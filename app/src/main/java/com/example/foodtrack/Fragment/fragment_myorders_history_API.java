@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.Adapter.myorders_history_list_adapter_api;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.R;
 
 import java.text.ParseException;
@@ -29,7 +30,7 @@ public class fragment_myorders_history_API extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ArrayList<OrderAPIModel> arrayListOrder = new ArrayList<>();
+    ArrayList<SanPhamAPIModel> arrayListOrder = new ArrayList<>();
     ListView listview_myorders_history;
     LinearLayout imageIfEmpty;
     ImageView chatIcon;
@@ -81,7 +82,7 @@ public class fragment_myorders_history_API extends Fragment {
         for (int i = 0; i < orderIds.length; i++) {
             try {
                 Date createdAt = dateFormat.parse(times[i]);
-                arrayListOrder.add(new OrderAPIModel(orderIds[i], createdAt, names[i], statuses[i] == 0 ? "Pending" : "Delivered", imgLinks[i], statuses[i], prices[i], quantities[i]));
+               // arrayListOrder.add(new OrderAPIModel(orderIds[i], createdAt, names[i], statuses[i] == 0 ? "Pending" : "Delivered", imgLinks[i], statuses[i], prices[i], quantities[i]));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

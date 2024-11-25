@@ -197,7 +197,7 @@ public class fragment_product_detail_API extends Fragment {
         btn_favorite_check_product_detail.setOnClickListener(view -> {
             if (!isFavorite) {
 
-                ThemSanPhamYeuThichModel(sanPhamYT);
+               // ThemSanPhamYeuThichModel(sanPhamYT);
                 btn_favorite_check_product_detail.setImageResource(R.drawable.icon_fill_heart_48);
                 isFavorite = true;
 

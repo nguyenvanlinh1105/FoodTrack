@@ -66,6 +66,8 @@ public class cart extends AppCompatActivity {
         Mapping();
 
         String idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
+
+
         if (idDonHang != null && !idDonHang.isEmpty()) {
             GetMonAn(idDonHang);
         } else {

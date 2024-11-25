@@ -128,13 +128,13 @@ public class fragment_viewpager_mon_moi_homepage extends Fragment {
                     UpdateRecyclerViewAPI(listMonBanChay);
 
                 }else{
-                    UseFallbackData();
+                   // UseFallbackData();
                 }
             }
 
             @Override
             public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
-                UseFallbackData();
+              //  UseFallbackData();
             }
         });
     }
@@ -142,7 +142,7 @@ public class fragment_viewpager_mon_moi_homepage extends Fragment {
     private void UseFallbackData() {
         // Khởi tạo dữ liệu giả lập
         listProduct = new ArrayList<>();
-        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct
+       // InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct
         UpdateRecyclerView(listProduct);
     }
 
