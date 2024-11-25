@@ -148,7 +148,9 @@ public class food_fragment extends Fragment {
     private void Mapping(View view){
         listView_food = (ListView) view.findViewById(R.id.listView_food);
         btn_DoUong_food = view.findViewById(R.id.btn_DoUong_food );
-//
+
+        GetMonAn();
+
 //        InitializeData();
 //        food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
 //        listView_food.setAdapter(listAdapter);

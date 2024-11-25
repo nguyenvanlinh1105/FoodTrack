@@ -5,19 +5,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Fragment.fragment_product_detail;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
@@ -28,7 +26,7 @@ public class recyclerView_product_detail_adapter extends RecyclerView.Adapter<re
     Context context;
     List<SanPhamModel> list;
 
-    public recyclerView_product_detail_adapter(Context context, List<SanPhamModel> list) {
+    public recyclerView_product_detail_adapter(Context context, List<SanPhamAPIModel> list) {
         this.context = context;
         this.list = list;
     }
