@@ -13,22 +13,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.foodtrack.Activity.MainActivity;
-import com.example.foodtrack.Model.Order;
 import com.example.foodtrack.Fragment.fragment_rating_comment;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.DonHangModel;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class myorders_history_list_adapter extends ArrayAdapter<Order> {
-    public myorders_history_list_adapter(Context context, ArrayList<Order> arrayListOrder) {
+public class myorders_history_list_adapter extends ArrayAdapter<SanPhamModel> {
+    public myorders_history_list_adapter(Context context, ArrayList<SanPhamModel> arrayListOrder) {
         super(context, R.layout.fragment_myorders_history_list, arrayListOrder);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        Order order = getItem(position);
+        SanPhamModel order = getItem(position);
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_myorders_history_list, parent, false);
         }
@@ -44,15 +46,15 @@ public class myorders_history_list_adapter extends ArrayAdapter<Order> {
 
         if (order != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
-            id.setText(order.getId());
-            time.setText(dateFormat.format(order.getCreatedAt().getTime()));
-            name.setText(order.getName());
-            img.setImageResource(order.getImg());
-            status.setText(order.getStatus());
-            price.setText(order.getPrice());
-            qty.setText(String.valueOf(order.getQty()));
+            id.setText(order.getIdSanPham());
+            time.setText(dateFormat.format(order.getNgayTao().getTime()));
+            name.setText(order.getTenSanPham());
+            img.setImageResource(order.getImages());
+            status.setText(order.getTrangThai());
+            price.setText(order.getGiaTien()+"");
+            qty.setText(String.valueOf(order.getSoluongBH()));
 
-            if (order.getRateStat() == 0) {
+            if (order.getTrangThaiBinhLuan()== 0) {
                 ratingBtn.setText("Đánh giá ngay");
                 ratingBtn.setTextColor(Color.parseColor("#FFFFFF"));
                 ratingBtn.setBackgroundResource(R.drawable.less_radius_btn_bg_orange);

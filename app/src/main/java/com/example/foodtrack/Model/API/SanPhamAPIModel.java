@@ -20,6 +20,7 @@ public class SanPhamAPIModel {
     private int soluongBH;
     private String donViTinh;
     private Timestamp ngayTao;
+    private int trangThaiBinhLuan;
 
     private DanhMucModel danhMuc;
     private List<ChiTietDonHangModel> chiTietDonHangs;
@@ -144,5 +145,13 @@ public class SanPhamAPIModel {
     public void setSanPhamYeuThichs(List<SanPhamYeuThichModel> sanPhamYeuThichs) {
         this.sanPhamYeuThichs = sanPhamYeuThichs;
     }
+
+    public int getTrangThaiBinhLuan() {
+        return trangThaiBinhLuan;
     }
+
+    public void setTrangThaiBinhLuan(int trangThaiBinhLuan) {
+        this.trangThaiBinhLuan = trangThaiBinhLuan;
+    }
+}
 

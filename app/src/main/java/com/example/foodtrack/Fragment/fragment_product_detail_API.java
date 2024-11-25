@@ -33,6 +33,7 @@ import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
+import com.example.foodtrack.Model.SanPhamYeuThichModel;
 import com.example.foodtrack.R;
 
 import java.text.NumberFormat;
@@ -195,8 +196,11 @@ public class fragment_product_detail_API extends Fragment {
 
         btn_favorite_check_product_detail.setOnClickListener(view -> {
             if (!isFavorite) {
+
+                ThemSanPhamYeuThichModel(sanPhamYT);
                 btn_favorite_check_product_detail.setImageResource(R.drawable.icon_fill_heart_48);
                 isFavorite = true;
+
             } else {
                 btn_favorite_check_product_detail.setImageResource(R.drawable.icon_heart_48);
                 isFavorite = false;
@@ -291,6 +295,20 @@ public class fragment_product_detail_API extends Fragment {
 
             @Override
             public void onFailure(Call<ChiTietDonHangAPIModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void ThemSanPhamYeuThichModel(SanPhamYeuThichModel model){
+        APIService.API_SERVICE.ThemSanPhamYeuThichModel(model).enqueue(new Callback<SanPhamYeuThichModel>() {
+            @Override
+            public void onResponse(Call<SanPhamYeuThichModel> call, Response<SanPhamYeuThichModel> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<SanPhamYeuThichModel> call, Throwable t) {
 
             }
         });

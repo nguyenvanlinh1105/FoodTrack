@@ -2,7 +2,6 @@ package com.example.foodtrack.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -20,11 +19,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
-import com.example.foodtrack.Model.ChiTietDonHangModel;
 import com.example.foodtrack.Model.DonHangAPIModel;
-import com.example.foodtrack.Model.DonHangModel;
-import com.example.foodtrack.Model.Order;
-import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.text.NumberFormat;

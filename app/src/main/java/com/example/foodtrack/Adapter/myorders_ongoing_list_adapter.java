@@ -1,7 +1,6 @@
 package com.example.foodtrack.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.annotation.Nullable;
 
 import com.example.foodtrack.Model.ChiTietDonHangModel;
 import com.example.foodtrack.Model.DonHangModel;
-import com.example.foodtrack.Model.Order;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,23 +20,22 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.Activity.MainActivity;
-import com.example.foodtrack.Model.Order;
 import com.example.foodtrack.Fragment.fragment_rating_comment;
-import com.example.foodtrack.Model.OrderAPIModel;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class myorders_history_list_adapter_api extends ArrayAdapter<OrderAPIModel> {
-    public myorders_history_list_adapter_api(Context context, ArrayList<OrderAPIModel> arrayListOrder) {
+public class myorders_history_list_adapter_api extends ArrayAdapter<SanPhamAPIModel> {
+    public myorders_history_list_adapter_api(Context context, ArrayList<SanPhamAPIModel> arrayListOrder) {
         super(context, R.layout.fragment_myorders_history_list, arrayListOrder);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        OrderAPIModel order = getItem(position);
+        SanPhamAPIModel order = getItem(position);
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_myorders_history_list, parent, false);
         }
@@ -51,11 +51,11 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<OrderAPIMode
 
         if (order != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
-            id.setText(order.getId());
-            time.setText(dateFormat.format(order.getCreatedAt().getTime()));
-            name.setText(order.getName());
+            id.setText(order.getIdSanPham());
+            time.setText(dateFormat.format(order.getNgayTao().getTime()));
+            name.setText(order.getTenSanPham());
            // img.setImageResource(order.getImg());
-            String imageUrl = order.getImg();
+            String imageUrl = order.getImages();
             if (imageUrl.startsWith("http://")) {
                 imageUrl = imageUrl.replace("http://", "https://");
             }
@@ -74,11 +74,11 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<OrderAPIMode
 
                         }
                     });
-            status.setText(order.getStatus());
-            price.setText(order.getPrice());
-            qty.setText(String.valueOf(order.getQty()));
+            status.setText(order.getTrangThai());
+            price.setText(order.getGiaTien()+"");
+            qty.setText(String.valueOf(order.getSoluongBH()));
 
-            if (order.getRateStat() == 0) {
+            if (order.getTrangThaiBinhLuan() == 0) {
                 ratingBtn.setText("Đánh giá ngay");
                 ratingBtn.setTextColor(Color.parseColor("#FFFFFF"));
                 ratingBtn.setBackgroundResource(R.drawable.less_radius_btn_bg_orange);
@@ -96,7 +96,13 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<OrderAPIMode
                 if (ratingBtn.getText() == "Đánh giá ngay") {
                     MainActivity mainActivity = (MainActivity)getContext();
                     if (mainActivity != null) {
-                        mainActivity.ReplaceFragment(new fragment_rating_comment());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("idSanPham",order.getIdSanPham());
+
+                        fragment_rating_comment fragment = new fragment_rating_comment();
+                        fragment.setArguments(bundle); // Truyền Bundle vào Fragment
+
+                        mainActivity.ReplaceFragment(fragment);
                     }
                 }
             }
@@ -105,5 +111,7 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<OrderAPIMode
 
 
     }
+
+
 
 }

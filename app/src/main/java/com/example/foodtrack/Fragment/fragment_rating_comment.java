@@ -1,6 +1,7 @@
 package com.example.foodtrack.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,48 +15,33 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Model.BinhLuanSanPhamModel;
 import com.example.foodtrack.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragment_rating_comment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class fragment_rating_comment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    // Biến nhận dữ liệu từ Bundle
+    private String idSanPham;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    // Các view trong Fragment
     private ImageView btn_back;
     private TextView btn_GuiCamNhan;
     private EditText textArea_Comment;
 
-
     public fragment_rating_comment() {
-        // Required empty public constructor
+        // Constructor rỗng bắt buộc
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_rating_comment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragment_rating_comment newInstance(String param1, String param2) {
+    public static fragment_rating_comment newInstance(String idSanPham) {
         fragment_rating_comment fragment = new fragment_rating_comment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("idSanPham", idSanPham);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,27 +50,27 @@ public class fragment_rating_comment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            idSanPham = getArguments().getString("idSanPham");
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rating_comment, container, false);
-        Mapping(view);
-        ControlButton();
+        initViews(view);   // Khởi tạo các thành phần giao diện
+        setListeners();    // Gán sự kiện cho các nút
         return view;
     }
 
-    private void Mapping(View view){
-        btn_back = (ImageView) view.findViewById(R.id.btn_back_rating_comment);
-        btn_GuiCamNhan = (TextView) view.findViewById(R.id.btn_GuiCamNhan);
-        textArea_Comment = (EditText) view.findViewById(R.id.textArea_Comment);
+    // Ánh xạ các thành phần giao diện
+    private void initViews(View view) {
+        btn_back = view.findViewById(R.id.btn_back_rating_comment);
+        btn_GuiCamNhan = view.findViewById(R.id.btn_GuiCamNhan);
+        textArea_Comment = view.findViewById(R.id.textArea_Comment);
     }
 
-    private void ControlButton(){
+    // Thiết lập sự kiện cho các nút
+    private void setListeners() {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,40 +81,66 @@ public class fragment_rating_comment extends Fragment {
         btn_GuiCamNhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String commentText = textArea_Comment.getText().toString().trim();
+                if (commentText.isEmpty()) {
+                    textArea_Comment.setError("Vui lòng nhập bình luận!");
+                    return;
+                }
+
+                // Reset ô nhập bình luận
                 textArea_Comment.setText("");
-                CreatePopup(view);
 
+                // Tạo đối tượng bình luận
+                BinhLuanSanPhamModel binhLuanSanPhamModel = new BinhLuanSanPhamModel();
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+                binhLuanSanPhamModel.setIdNguoiDung(sharedPreferences.getString("idUser", ""));
+                binhLuanSanPhamModel.setIdSanPham(idSanPham);
+                binhLuanSanPhamModel.setNoiDung(commentText);
 
+                // Gửi bình luận qua API
+                guiBinhLuan(binhLuanSanPhamModel, view);
             }
         });
     }
 
-    private void CreatePopup(View view){
+    // Tạo popup xác nhận gửi bình luận
+    private void showPopup(View view) {
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_submit_cmt, null);
 
-        int width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true;
-        View popupView = inflater.inflate(R.layout.popup_submit_cmt, null) ;
+        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-        PopupWindow popupWindow = new PopupWindow(popupView ,width, height, focusable);
-
-        view.post(new Runnable(){
+        TextView btnOk = popupView.findViewById(R.id.btn_ok_popup_submit_cmt);
+        btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-            }
-        });
-        TextView okBtn;
-        okBtn = (TextView) popupView.findViewById(R.id.btn_ok_popup_submit_cmt);
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 popupWindow.dismiss();
                 MainActivity mainActivity = (MainActivity) getActivity();
-                if(mainActivity!=null){
+                if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new fragment_myorders_history());
                 }
+            }
+        });
+    }
+
+    // Gửi bình luận qua API
+    private void guiBinhLuan(BinhLuanSanPhamModel binhLuanSanPhamModel, View view) {
+        APIService.API_SERVICE.guiBinhLuan(binhLuanSanPhamModel).enqueue(new Callback<BinhLuanSanPhamModel>() {
+            @Override
+            public void onResponse(Call<BinhLuanSanPhamModel> call, Response<BinhLuanSanPhamModel> response) {
+                if (response.isSuccessful()) {
+                    showPopup(view);
+                } else {
+                    // Xử lý khi phản hồi không thành công
+                    textArea_Comment.setError("Có lỗi xảy ra. Vui lòng thử lại!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BinhLuanSanPhamModel> call, Throwable t) {
+                // Xử lý khi gọi API thất bại
+                textArea_Comment.setError("Không thể kết nối đến máy chủ!");
             }
         });
     }

@@ -1,12 +1,14 @@
 package com.example.foodtrack.API;
 
+import android.content.SharedPreferences;
+
+import com.example.foodtrack.Model.API.NguoiDungAPIModel;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.BinhLuanSanPhamModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.DonHangAPIModel;
-import com.example.foodtrack.Model.DonHangModel;
 import com.example.foodtrack.Model.NguoiDungModel;
-import com.example.foodtrack.Model.Order;
-import com.example.foodtrack.Model.SanPhamModel;
+import com.example.foodtrack.Model.SanPhamYeuThichModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -22,8 +24,10 @@ import retrofit2.http.Query;
 
 public interface APIService {
 
+
+
   //    linkAPI root:
-    public static String url ="https://a1c2-2405-4802-b279-aa10-b45c-5bd-fcb6-9be3.ngrok-free.app/";
+    public static String url ="https://6c8e-42-112-227-154.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -83,7 +87,7 @@ public interface APIService {
     Call<List<DonHangAPIModel>> GetDonHangDangGiao();
     //Lấy tất cả sản phẩm đã mua - history
     @GET("")
-    Call<List<Order>> GetSanPhamDaMua();
+    Call<List<SanPhamAPIModel>> GetSanPhamDaMua();
 
     //lấy đơn hàng đã hủy
     @GET("")
@@ -108,9 +112,18 @@ public interface APIService {
     Call<DonHangAPIModel> PostToAgainOrder(@Body DonHangAPIModel donHang);
 
 
+    // gửi bình luận
+    @POST("")
+    Call<BinhLuanSanPhamModel> guiBinhLuan (@Body BinhLuanSanPhamModel binhLuanSanPhamModel);
 
 
+    // thêm sản phẩm yêu thích :
+   @POST("")
+    Call<SanPhamYeuThichModel> ThemSanPhamYeuThichModel(@Body SanPhamYeuThichModel model);
 
+
+   @POST("")
+  Call<NguoiDungAPIModel>
 
 }
 
