@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Adapter.recyclerView_ban_chay_adapter;
 import com.example.foodtrack.Adapter.recyclerView_chat_user_shop_adapter;
 import com.example.foodtrack.Model.TestChat.TinNhanModel;
@@ -31,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,9 @@ import java.util.List;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -103,15 +108,16 @@ public class fragment_chat_user_shop extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_user_shop, container, false);
         Mapping(view);
-
-        listChat = new ArrayList();
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        rv_chat.setLayoutManager(layoutManager);
         shared = getActivity().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
-        adapterChat = new recyclerView_chat_user_shop_adapter(requireActivity(), listChat, shared);
-        rv_chat.setAdapter(adapterChat);
+        listChat = new ArrayList();
+//        LinearLayoutManager layoutManager
+//                = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+//        rv_chat.setLayoutManager(layoutManager);
 
+//        adapterChat = new recyclerView_chat_user_shop_adapter(requireActivity(), listChat, shared);
+//        rv_chat.setAdapter(adapterChat);
+        GetListChat(shared.getString("idPhongChat", ""));
+        Log.d("idPhongChat", shared.getString("idPhongChat", ""));
         ControlSocket();
 
         ControlButton();
@@ -141,92 +147,107 @@ public class fragment_chat_user_shop extends Fragment {
     private Emitter.Listener onRetrieveListChat = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            requireActivity().runOnUiThread(() -> {
-                try {
-                    JSONObject obj = (JSONObject) args[0];
-                    Log.d("objectChat", "objChat" + obj.toString());
-//                        JSONObject objChat = arrayChat.getJSONObject(i);
-                    String idUser = String.valueOf(obj.getString("id"));
-                    String idPhongChat = String.valueOf(shared.getString("idPhongChat", ""));
-               //     String tenNguoiDung = obj.getString("username");
-                    String noiDung = String.valueOf(obj.getString("message"));
-              //      String gioiTinh = obj.getString("gioiTinh");
-                    TinNhanModel tinNhan =new TinNhanModel(idPhongChat, idUser, "linh", noiDung, "nam");
-
-
-                    listChat.add(tinNhan);
-
-                    adapterChat.notifyDataSetChanged();
-                    Log.d("jsonTinNhan", "call: " + listChat);
-                    for (TinNhanModel tinNhans : listChat) {
-                        Log.d("ListChat", "Tin nhắn: " + tinNhans.toString());
-                    }
-                    Log.d("idUser ", idUser);
-                    Log.d("noiDung ", noiDung);
-
-
-
-                    rv_chat.scrollToPosition(listChat.size() - 1);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-    };
-
-
-    private Emitter.Listener onRetrieveResult = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            requireActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject obj = (JSONObject) args[0];
+            if (isAdded() && getActivity() != null) {
+                requireActivity().runOnUiThread(() -> {
                     try {
-                        boolean exist = obj.getBoolean("ketqua");
-                        if (exist) {
-                            Toast.makeText(getContext(), "Tài khoản đã tồn tại", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Thêm tài khoản thành công", Toast.LENGTH_SHORT).show();
-                        }
+                        JSONObject obj = (JSONObject) args[0];
+                        Log.d("objectChat", "objChat" + obj.toString());
 
+                        String idUser = obj.getString("id");
+                        String idPhongChat = shared.getString("idPhongChat", "");
+                        String noiDung = obj.getString("message");
+
+                        TinNhanModel tinNhan = new TinNhanModel(idPhongChat, idUser, "linh", noiDung, "nam");
+                        listChat.add(tinNhan);
+
+                        adapterChat.notifyDataSetChanged();
+                        rv_chat.scrollToPosition(listChat.size() - 1);
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+        }
+    };
+
+        ;
+
+
+        private Emitter.Listener onRetrieveResult = new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject obj = (JSONObject) args[0];
+                        try {
+                            boolean exist = obj.getBoolean("ketqua");
+                            if (exist) {
+                                Toast.makeText(getContext(), "Tài khoản đã tồn tại", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "Thêm tài khoản thành công", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+            }
+        };
+
+        private void ControlButton() {
+            btn_back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    requireActivity().finish();
+                }
+            });
+
+
+            btn_send.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String message = edt_chat.getText().toString().trim();
+                    if (message.isEmpty()) {
+                        Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
+                    } else {
+//                    shared = getActivity().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+                        TinNhanModel tinNhan = new TinNhanModel(shared.getString("idPhongChat", ""), shared.getString("idUser", ""), shared.getString("hoTenNguoiDung", ""), message, shared.getString("gioiTinh", ""));
+                        Gson gson = new Gson();
+                        String jsonTinNhan = gson.toJson(tinNhan);
+                        mSocket.emit("CLIENT_SEND_MESSAGE", jsonTinNhan);
+                        listChat.add(tinNhan);
+                        adapterChat.notifyDataSetChanged();
+                        rv_chat.scrollToPosition(listChat.size() - 1);
+//                    Log.d("tinNhanModel", jsonTinNhan);
+                        edt_chat.setText("");
+
                     }
                 }
             });
         }
-    };
 
-    private void ControlButton() {
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requireActivity().finish();
-            }
-        });
+        private void GetListChat(String idPhongChat) {
+            APIService.API_SERVICE.getDsChat(idPhongChat).enqueue(new Callback<List<TinNhanModel>>() {
+                @Override
+                public void onResponse(Call<List<TinNhanModel>> call, Response<List<TinNhanModel>> response) {
+//                List<TinNhanModel> dsChat = response.body();
+                    listChat = response.body();
+                    LinearLayoutManager layoutManager
+                            = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                    Log.d("listChat", listChat.toString());
+                    rv_chat.setLayoutManager(layoutManager);
+                    shared = getActivity().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+                    adapterChat = new recyclerView_chat_user_shop_adapter(requireActivity(), listChat, shared);
+                    rv_chat.setAdapter(adapterChat);
+                }
 
-
-        btn_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String message = edt_chat.getText().toString().trim();
-                if (message.isEmpty()) {
-                    Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
-                } else {
-//                    shared = getActivity().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
-                    TinNhanModel tinNhan = new TinNhanModel(shared.getString("idPhongChat", ""), shared.getString("idUser", ""), shared.getString("hoTenNguoiDung", ""), message, shared.getString("gioiTinh", ""));
-                    Gson gson = new Gson();
-                    String jsonTinNhan = gson.toJson(tinNhan);
-                    mSocket.emit("CLIENT_SEND_MESSAGE", jsonTinNhan);
-                    listChat.add(tinNhan);
-                    adapterChat.notifyDataSetChanged();
-                    rv_chat.scrollToPosition(listChat.size() - 1);
-//                    Log.d("tinNhanModel", jsonTinNhan);
-                    edt_chat.setText("");
+                @Override
+                public void onFailure(Call<List<TinNhanModel>> call, Throwable t) {
 
                 }
-            }
-        });
+            });
+        }
     }
-}

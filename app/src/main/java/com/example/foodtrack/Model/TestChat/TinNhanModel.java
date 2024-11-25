@@ -16,6 +16,13 @@ public class TinNhanModel {
         this.gioiTinh = gioiTinh;
     }
 
+
+    public TinNhanModel(String idUser,String tenNguoiDung, String noiDungChat) {
+        this.idUser = idUser;
+        this.tenNguoiDung = tenNguoiDung;
+        this.noiDungChat = noiDungChat;
+    }
+
     public String getIdPhongChat() {
         return idPhongChat;
     }
@@ -51,10 +58,8 @@ public class TinNhanModel {
     @Override
     public String toString() {
         return "TinNhan{" +
-                "idUser='" + idUser + '\'' +
-                ", tenNguoiDung='" + tenNguoiDung + '\'' +
-                ", noiDung='" + noiDungChat + '\'' +
-                ", gioiTinh='" + gioiTinh + '\'' +
+                "idUser='" + getIdUser() + '\'' +
+                ", noiDung='" + getNoiDungChat() + '\'' +
                 '}';
     }
 

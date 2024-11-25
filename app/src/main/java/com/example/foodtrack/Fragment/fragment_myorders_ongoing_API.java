@@ -22,7 +22,10 @@ import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter;
 import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter_api;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
+import com.example.foodtrack.Model.ChiTietDonHangModel;
 import com.example.foodtrack.Model.DonHangAPIModel;
+import com.example.foodtrack.Model.DonHangModel;
+import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
 import java.util.ArrayList;
@@ -43,7 +46,8 @@ public class fragment_myorders_ongoing_API extends Fragment {
     ListView listview_myorders_ongoing;
     LinearLayout imageIfEmpty;
 
-    ArrayList<DonHangAPIModel> arrayListOrder = new ArrayList<>();
+    ArrayList<DonHangModel> arrayListOrder = new ArrayList<>();
+    ArrayList<DonHangAPIModel> arrayListOrderAPI = new ArrayList<>();
 
     public fragment_myorders_ongoing_API() {
         // Required empty public constructor
@@ -65,34 +69,35 @@ public class fragment_myorders_ongoing_API extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        initializeData();
+//        initializeData();
+//        getOrders();
     }
 
     private void initializeData() {
-        List<SanPhamAPIModel> sanPhamList = createSampleProducts();
+        List<SanPhamModel> sanPhamList = createSampleProducts();
         arrayListOrder = createSampleOrders(sanPhamList);
     }
 
-    private List<SanPhamAPIModel> createSampleProducts() {
-        List<SanPhamAPIModel> sanPhamList = new ArrayList<>();
+    private List<SanPhamModel> createSampleProducts() {
+        List<SanPhamModel> sanPhamList = new ArrayList<>();
 
-        sanPhamList.add(new SanPhamAPIModel("Cheesecake việt quất", 20000, "R.drawable.dessert_ico", ""));
-        sanPhamList.add(new SanPhamAPIModel("Cơm tấm", 30000, "R.drawable.com_tam", ""));
+        sanPhamList.add(new SanPhamModel("Cheesecake việt quất", 20000, R.drawable.dessert_ico, ""));
+        sanPhamList.add(new SanPhamModel("Cơm tấm", 30000, R.drawable.com_tam, ""));
 
         return sanPhamList;
     }
 
-    private ArrayList<DonHangAPIModel> createSampleOrders(List<SanPhamAPIModel> sanPhamList) {
-        ArrayList<DonHangAPIModel> donHangList = new ArrayList<>();
+    private ArrayList<DonHangModel> createSampleOrders(List<SanPhamModel> sanPhamList) {
+        ArrayList<DonHangModel> donHangList = new ArrayList<>();
 
         for (int i = 0; i < 2; i++) {
-            DonHangAPIModel donHang = new DonHangAPIModel();
+            DonHangModel donHang = new DonHangModel();
             donHang.setIdDonHang("Order: #000" + i);
             donHang.setNgayTao(new Date());
             donHang.setTinhTrang("Đang giao hàng");
 
-            List<ChiTietDonHangAPIModel> chiTietDonHangs = new ArrayList<>();
-            ChiTietDonHangAPIModel chiTietDonHang = new ChiTietDonHangAPIModel();
+            List<ChiTietDonHangModel> chiTietDonHangs = new ArrayList<>();
+            ChiTietDonHangModel chiTietDonHang = new ChiTietDonHangModel();
             chiTietDonHang.setSanPham(sanPhamList.get(i));
             chiTietDonHang.setSoLuongDat(i + 1);
             chiTietDonHangs.add(chiTietDonHang);
@@ -125,7 +130,7 @@ public class fragment_myorders_ongoing_API extends Fragment {
         imageViewTranslate = (ImageView) view.findViewById(R.id.imageViewTranslate);
 
         listview_myorders_ongoing = (ListView) view.findViewById(R.id.listview_myorders);
-        myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), arrayListOrder);
+        myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), arrayListOrderAPI);
         listview_myorders_ongoing.setAdapter(listAdapter);
     }
 
@@ -159,22 +164,25 @@ public class fragment_myorders_ongoing_API extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 MainActivity mainActivity = (MainActivity) getActivity();
+
                 if (mainActivity != null) {
-                    DonHangAPIModel selectedOrder = arrayListOrder.get(i);
-                    String id  = selectedOrder.getIdDonHang();
+                    DonHangAPIModel selectedOrder = arrayListOrderAPI.get(i);
+                    String id = selectedOrder.getIdDonHang();
+                    String tinhTrang = selectedOrder.getTinhTrang();
                     Bundle bundle = new Bundle();
-                    bundle.putString("idDonHang",id);
+                    bundle.putString("idDonHang", id);
+                    bundle.putString("tinhTrang", tinhTrang);
 
-                    // Tạo fragment mới và gán Bundle
-                    fragment_myorders_ongoing_details detailsFragment = new fragment_myorders_ongoing_details();
-                    detailsFragment.setArguments(bundle);
+                    fragment_myorders_ongoing_details detailsFragment = fragment_myorders_ongoing_details.newInstance(
+                            id,
+                            tinhTrang
+                    );
 
-                    // Chuyển sang fragment mới
+
                     mainActivity.ReplaceFragment(detailsFragment);
                 }
             }
         });
-
 
 
     }

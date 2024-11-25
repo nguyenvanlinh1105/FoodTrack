@@ -9,6 +9,7 @@ import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.Model.SanPhamYeuThichModel;
+import com.example.foodtrack.Model.TestChat.TinNhanModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -111,6 +112,9 @@ public interface APIService {
     //  đặt hàng:set trangThaiDat==datHang;
     Call<DonHangAPIModel> PostToAgainOrder(@Body DonHangAPIModel donHang);
 
+  //lấy danh sách chat
+  @GET("chat")
+  Call<List<TinNhanModel>> getDsChat(@Query("idPhongChat")String idPhongChat);
 
     // gửi bình luận
     @POST("")

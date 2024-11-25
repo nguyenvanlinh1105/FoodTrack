@@ -133,9 +133,8 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
 
                 ChiTietDonHangAPIModel ctdh = new ChiTietDonHangAPIModel();
 
-
                 ctdh.setIdSanPham(product.getIdSanPham());
-                ctdh.setSoLuongDat(5);
+                ctdh.setSoLuongDat(1);
                 String idDonHang= sharedPreferencesDonHang.getString("idDonHang","");
                 if(idDonHang !=null){
                     ctdh.setIdDonHang(idDonHang);

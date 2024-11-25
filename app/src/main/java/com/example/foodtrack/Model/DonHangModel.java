@@ -7,7 +7,7 @@ import java.util.List;
 public class DonHangModel {
     private String idDonHang;
     private String idNguoiDung;
-    private String tinhTrang;
+    private String tinhTrang; //Trạng thái
     private String idDiaChi;
     private Date ngayTao;
     private Date ngayHuyDonhang;

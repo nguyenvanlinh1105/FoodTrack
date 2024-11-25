@@ -7,7 +7,7 @@ import java.util.List;
 public class DonHangAPIModel {
     private String idDonHang;
     private String idNguoiDung;
-    private String tinhTrang;
+    private String tinhTrang; //Trạng thái
     private Date ngayTao;
     private Timestamp thoiGianCapNhat;
 
