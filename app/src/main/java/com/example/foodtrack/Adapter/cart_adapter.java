@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.example.foodtrack.Activity.cart;
 import com.example.foodtrack.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class cart_adapter extends BaseAdapter {
 
@@ -59,8 +61,9 @@ public class cart_adapter extends BaseAdapter {
             view = inflater.inflate(R.layout.fragment_cart_item, viewGroup, false);
         }
 
+
+
         TextView title = (TextView) view.findViewById(R.id.item_title_cart);
-        TextView subTitle = (TextView) view.findViewById(R.id.item_subTitle_cart);
         ImageView img = (ImageView) view.findViewById(R.id.item_image_cart);
         TextView price = (TextView) view.findViewById(R.id.price_cart);
         TextView  qty = (TextView)view.findViewById(R.id.qty_cart);
@@ -68,10 +71,13 @@ public class cart_adapter extends BaseAdapter {
         TextView btn_plus_cart = (TextView)view.findViewById(R.id.btn_plus_cart);
         TextView btn_minus_cart = (TextView)view.findViewById(R.id.btn_minus_cart);
 
+        NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
+        String formattedPrice = formatter.format(cartPrice.get(i));
+        formattedPrice = formattedPrice + "vnđ";
+
         title.setText(cartTitle.get(i));
-        subTitle.setText(cartSubTitle.get(i));
         img.setImageResource(cartImg.get(i));
-        price.setText(cartPrice.get(i));
+        price.setText(formattedPrice);
         qty.setText(String.valueOf(cartQty.get(i)));
 
         btn_plus_cart.setOnClickListener(new View.OnClickListener() {

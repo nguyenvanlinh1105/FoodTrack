@@ -116,10 +116,11 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ListView
-            android:id="@+id/listView_favorite"
+        <GridView
+            android:id="@+id/gv_favorite"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:numColumns="2"
             android:layout_marginTop="1dp"
             android:scrollbars="none"
             android:divider="@color/white"

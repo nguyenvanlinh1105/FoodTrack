@@ -15,7 +15,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class favorite_list_adapter extends BaseAdapter {
+public class
+favorite_list_adapter extends BaseAdapter {
 
 
     Context context;
