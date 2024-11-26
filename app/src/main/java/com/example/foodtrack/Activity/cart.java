@@ -42,9 +42,9 @@ public class cart extends AppCompatActivity {
 
     private ListView listView_cart;
     private ImageView backBtn;
-    private TextView total;
+    public TextView total;
     private TextView datDonBtn;
-    private double tongTien =0;
+    public double tongTien =0;
 
     public static Activity ToFinishActivity;
 
@@ -135,14 +135,14 @@ public class cart extends AppCompatActivity {
         }
     }
 
-    private void GetDsSanPhamOrder(String idDonHang) {
+    public  void GetDsSanPhamOrder(String idDonHang) {
         APIService.API_SERVICE.GetSanPhamGioHang(idDonHang).enqueue(new Callback<List<SanPhamAPIModel>>() {
             @Override
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     List<SanPhamAPIModel> listSanPham = response.body();
                     for (SanPhamAPIModel sp : listSanPham) {
-                        tongTien += Double.valueOf(sp.getGiaTien());
+                        tongTien += Double.valueOf(sp.getGiaTien())*Integer.valueOf(sp.getSoLuongDat());
                         NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
                         String formattedPrice = numberFormat.format(tongTien);
 

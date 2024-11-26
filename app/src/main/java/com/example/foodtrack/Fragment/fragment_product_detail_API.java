@@ -201,11 +201,13 @@ public class fragment_product_detail_API extends Fragment {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
         idUser = sharedPreferences.getString("idUser", "-1"); // -1 là giá trị mặc định nếu không tìm thấy
         rvProductDetail = view.findViewById(R.id.recyclerView_product_detail);
+
+
 //        InitializeData();
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
 //        rvProductDetail.setLayoutManager(layoutManager);
-////        recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct);
-////        rvProductDetail.setAdapter(dealAdapter);
+//        recyclerView_product_detail_adapter dealAdapter = new recyclerView_product_detail_adapter(getContext(), listProduct);
+//        rvProductDetail.setAdapter(dealAdapter);
 
         rvDealHoi = view.findViewById(R.id.recyclerView_deal_hoi_product_detail);
     }
@@ -216,6 +218,7 @@ public class fragment_product_detail_API extends Fragment {
         btn_rating_product_details.setOnClickListener(view -> {
             MainActivity mainActivity = (MainActivity) getActivity();
             if (mainActivity != null) {
+
                 mainActivity.ReplaceFragment(new fragment_product_rating());
             }
         });
@@ -285,6 +288,8 @@ public class fragment_product_detail_API extends Fragment {
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if(response.isSuccessful()&& response.body()!=null &&!response.body().isEmpty()){
                     List<SanPhamAPIModel> listMonAn_explore = response.body();
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+                    rvProductDetail.setLayoutManager(layoutManager);
                     recyclerView_product_detail_adapter_api listAdapter = new recyclerView_product_detail_adapter_api(getContext(), listMonAn_explore);
                     rvProductDetail.setAdapter(listAdapter);
                 }else{

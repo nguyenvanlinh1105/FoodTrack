@@ -2,12 +2,14 @@ package com.example.foodtrack.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.foodtrack.API.APIService;
@@ -112,10 +114,10 @@ public class cart_adapter_api extends BaseAdapter {
         holder.btn_XoaCTDH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                removeProductByModel(model);
                 XoaSanPhamGioHang(model);
             }
         });
-
 
         return convertView;
     }
@@ -150,16 +152,14 @@ public class cart_adapter_api extends BaseAdapter {
         ImageView btn_XoaCTDH;
     }
 
-    public void XoaSanPhamGioHang(ChiTietDonHangAPIModel model) {
+    private void XoaSanPhamGioHang(ChiTietDonHangAPIModel model) {
         APIService.API_SERVICE.XoaSanPhamGioHang(model).enqueue(new Callback<ChiTietDonHangAPIModel>() {
             @Override
             public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
                 if (response.isSuccessful()) {
-                    // Nếu xóa thành công, bạn có thể loại bỏ sản phẩm khỏi danh sách
-                    removeProductByModel(model);
-                    // Cập nhật lại giao diện người dùng
-                    activityCart.updateTotalPrice();  // Cập nhật tổng tiền nếu cần
-                    notifyDataSetChanged();  // Cập nhật lại danh sách trong Adapter
+//
+//                    activityCart.updateTotalPrice();
+//                    notifyDataSetChanged();
                 } else {
                     // Xử lý lỗi nếu xóa không thành công
                 }
@@ -176,11 +176,18 @@ public class cart_adapter_api extends BaseAdapter {
         // Loại bỏ sản phẩm từ danh sách nếu cần
         for (int i = 0; i < arrayListSanPham.size(); i++) {
             if (arrayListSanPham.get(i).getIdSanPham().equals(model.getIdSanPham())) {
+                activityCart.tongTien -= Double.valueOf(arrayListSanPham.get(i).getGiaTien()) * Integer.valueOf(arrayListSanPham.get(i).getSoLuongDat());
+                NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
+                String formattedPrice = numberFormat.format(activityCart.tongTien);
+                activityCart.total.setText(formattedPrice+" vnđ");
                 arrayListSanPham.remove(i);
                 break;
             }
         }
+
+
         notifyDataSetChanged();  // Cập nhật lại Adapter sau khi xóa
+
     }
 
 }

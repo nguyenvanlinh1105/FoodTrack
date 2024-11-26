@@ -144,8 +144,8 @@ public interface APIService {
   Call<NguoiDungAPIModel> ChangInfoUser(@Body NguoiDungAPIModel nguoiDungAPIModel);
 
 
-   // xóa sản phẩm trong dơn hàng: rôồi
-  @DELETE("order/cancel")
+   // xóa sản phẩm trong dơn hàng: rôồi: đang lỗi
+  @POST("order/cancel")
   Call<ChiTietDonHangAPIModel> XoaSanPhamGioHang(@Body ChiTietDonHangAPIModel model);
 
 

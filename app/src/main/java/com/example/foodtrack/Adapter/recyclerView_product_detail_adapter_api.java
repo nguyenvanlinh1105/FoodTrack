@@ -37,7 +37,6 @@ public class recyclerView_product_detail_adapter_api extends RecyclerView.Adapte
         this.productList = productList;
     }
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -73,7 +72,7 @@ public class recyclerView_product_detail_adapter_api extends RecyclerView.Adapte
 
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        holder.img.setBackground(new BitmapDrawable(context.getResources(), resource));
+                        holder.img.setImageDrawable(new BitmapDrawable(context.getResources(), resource));
 
                     }
                 });
