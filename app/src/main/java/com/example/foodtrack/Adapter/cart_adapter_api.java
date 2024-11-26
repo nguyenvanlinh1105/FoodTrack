@@ -1,6 +1,7 @@
 package com.example.foodtrack.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.cart;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
+import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class cart_adapter_api extends BaseAdapter {
 
@@ -22,11 +32,18 @@ public class cart_adapter_api extends BaseAdapter {
     LayoutInflater inflater;
     cart activityCart;
 
+    SharedPreferences userResponse ;
+    SharedPreferences donHangResponse ;
+
     public cart_adapter_api(Context context, List<SanPhamAPIModel> arrayListSanPham, cart activityCart) {
         this.context = context;
         this.arrayListSanPham = arrayListSanPham;
         this.activityCart = activityCart;
         inflater = LayoutInflater.from(context);
+
+        // Khởi tạo SharedPreferences sau khi context đã được truyền vào
+        userResponse = context.getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+        donHangResponse = context.getSharedPreferences("dataDonHangResponse", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -58,6 +75,8 @@ public class cart_adapter_api extends BaseAdapter {
             holder.qty = convertView.findViewById(R.id.qty_cart);
             holder.btn_plus_cart = convertView.findViewById(R.id.btn_plus_cart);
             holder.btn_minus_cart = convertView.findViewById(R.id.btn_minus_cart);
+            holder.btn_XoaCTDH = convertView.findViewById(R.id.btn_XoaCTDH);
+
 
             convertView.setTag(holder);
         } else {
@@ -69,8 +88,12 @@ public class cart_adapter_api extends BaseAdapter {
         // Set data to views
         holder.title.setText(product.getTenSanPham());
         holder.subTitle.setText(product.getMoTa());
-        holder.price.setText(product.getGiaTien() + "đ");
-        holder.qty.setText(String.valueOf(product.getSoluongBH()));
+        double giaTien = product.getGiaTien();
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
+        String formattedPrice = numberFormat.format(giaTien);
+
+        holder.price.setText(formattedPrice + " vnđ");
+        holder.qty.setText(String.valueOf(product.getSoLuongDat()));
 
         Glide.with(context)
                 .load(product.getImages())
@@ -79,6 +102,20 @@ public class cart_adapter_api extends BaseAdapter {
         // Handle button actions
         holder.btn_plus_cart.setOnClickListener(view -> updateQuantity(i, holder.qty, 1));
         holder.btn_minus_cart.setOnClickListener(view -> updateQuantity(i, holder.qty, -1));
+
+        String idUser = userResponse.getString("idUser","-1");
+        String idDonHang = donHangResponse.getString("idDonHang","");
+        ChiTietDonHangAPIModel model = new ChiTietDonHangAPIModel();
+        model.setIdDonHang(idDonHang);
+        model.setIdSanPham(product.getIdSanPham());
+
+        holder.btn_XoaCTDH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                XoaSanPhamGioHang(model);
+            }
+        });
+
 
         return convertView;
     }
@@ -110,5 +147,40 @@ public class cart_adapter_api extends BaseAdapter {
         TextView qty;
         TextView btn_plus_cart;
         TextView btn_minus_cart;
+        ImageView btn_XoaCTDH;
     }
+
+    public void XoaSanPhamGioHang(ChiTietDonHangAPIModel model) {
+        APIService.API_SERVICE.XoaSanPhamGioHang(model).enqueue(new Callback<ChiTietDonHangAPIModel>() {
+            @Override
+            public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
+                if (response.isSuccessful()) {
+                    // Nếu xóa thành công, bạn có thể loại bỏ sản phẩm khỏi danh sách
+                    removeProductByModel(model);
+                    // Cập nhật lại giao diện người dùng
+                    activityCart.updateTotalPrice();  // Cập nhật tổng tiền nếu cần
+                    notifyDataSetChanged();  // Cập nhật lại danh sách trong Adapter
+                } else {
+                    // Xử lý lỗi nếu xóa không thành công
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChiTietDonHangAPIModel> call, Throwable t) {
+                // Xử lý lỗi khi không kết nối được với API
+            }
+        });
+    }
+
+    private void removeProductByModel(ChiTietDonHangAPIModel model) {
+        // Loại bỏ sản phẩm từ danh sách nếu cần
+        for (int i = 0; i < arrayListSanPham.size(); i++) {
+            if (arrayListSanPham.get(i).getIdSanPham().equals(model.getIdSanPham())) {
+                arrayListSanPham.remove(i);
+                break;
+            }
+        }
+        notifyDataSetChanged();  // Cập nhật lại Adapter sau khi xóa
+    }
+
 }

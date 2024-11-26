@@ -19,6 +19,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -28,7 +29,7 @@ public interface APIService {
 
 
   //    linkAPI root:
-    public static String url ="https://8a0f-42-112-227-154.ngrok-free.app/";
+    public static String url ="https://0856-42-116-118-17.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -63,10 +64,6 @@ public interface APIService {
     @GET("sanpham/douong")
     Call<List<SanPhamAPIModel>>getListDoUong_Explore();
 
-    // Tìm sản phẩm chi tiết
-    @GET("sanpham/{id}")
-    Call<SanPhamAPIModel>getChiTietSanPham(@Query("idSanPham")String idSanPham);
-
     @POST("/user/password/forgot")
     Call<NguoiDungModel>PostEmailToLogin(@Body NguoiDungModel userModel);
 
@@ -83,14 +80,15 @@ public interface APIService {
 
 
 
-    //lấy tất cả sản phẩm trong dơn hàng hiện tại :đang
+
+    //lấy tất cả sản phẩm trong dơn hàng hiện tại :ròi
   @GET("order/detail")
   Call<List<SanPhamAPIModel>>GetSanPhamGioHang(@Query ("idDonHang") String idDonHang);
 
   // lấy đơn hàng đang giao: chưa
     @GET("")
     Call<List<DonHangAPIModel>> GetDonHangDangGiao();
-    //Lấy tất cả sản phẩm đã mua - history: đang
+    //Lấy tất cả sản phẩm đã mua - history: histori chưa
     @GET("")
     Call<List<SanPhamAPIModel>> GetSanPhamDaMua();
 
@@ -98,15 +96,15 @@ public interface APIService {
     @GET("")
     Call<List<DonHangAPIModel>> GetDonHangDaHuy();
 
-    // lấy danh sách sản phẩm yêu thích: chưa
-    @GET("")
-    Call<List<SanPhamAPIModel>> getDsSanPhamYeuThich();
+    // lấy danh sách sản phẩm yêu thích: roi
+    @GET("food/love/list")
+    Call<List<SanPhamAPIModel>> getDsSanPhamYeuThich(@Query("idNguoiDung") String idNguoiDung);
 
     @POST("order/new")
-    // thêm sản phẩm vào đơn hàng
+    // thêm sản phẩm vào đơn hàng : roi
     Call<ChiTietDonHangAPIModel> PostToBuyProduct(@Body ChiTietDonHangAPIModel product);
 
-    //  đặt hàng:set trangThaiDat==1;
+    //  đặt hàng:set trangThaiDat==1 ròi
     @POST("")
     Call<DonHangAPIModel> PostToOrder(@Body DonHangAPIModel donHang);
 
@@ -116,11 +114,11 @@ public interface APIService {
     //  đặt hàng:set trangThaiDat==datHang;
     Call<DonHangAPIModel> PostToAgainOrder(@Body DonHangAPIModel donHang);
 
-  //lấy danh sách chat
+  //lấy danh sách chat: roi
   @GET("chat")
   Call<List<TinNhanModel>> getDsChat(@Query("idPhongChat")String idPhongChat);
 
-    // gửi bình luận
+    // gửi bình luận: chua
     @POST("")
     Call<BinhLuanSanPhamModel> guiBinhLuan (@Body BinhLuanSanPhamModel binhLuanSanPhamModel);
 
@@ -136,14 +134,19 @@ public interface APIService {
   Call<SanPhamYeuThichModel> GetTrangThaiYeuThich(@Query("idNguoiDung")String idNguoiDung, @Query("idSanPham") String idSanPham);
 
 
-
+// chưa 
   @GET("")
   Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDangGiao();
 
+
+  // chưa
    @POST("")
   Call<NguoiDungAPIModel> ChangInfoUser(@Body NguoiDungAPIModel nguoiDungAPIModel);
 
 
+   // xóa sản phẩm trong dơn hàng: rôồi
+  @DELETE("order/cancel")
+  Call<ChiTietDonHangAPIModel> XoaSanPhamGioHang(@Body ChiTietDonHangAPIModel model);
 
 
 

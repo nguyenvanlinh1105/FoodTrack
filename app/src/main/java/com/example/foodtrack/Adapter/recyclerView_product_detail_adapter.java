@@ -26,7 +26,7 @@ public class recyclerView_product_detail_adapter extends RecyclerView.Adapter<re
     Context context;
     List<SanPhamModel> list;
 
-    public recyclerView_product_detail_adapter(Context context, List<SanPhamAPIModel> list) {
+    public recyclerView_product_detail_adapter(Context context, List<SanPhamModel> list) {
         this.context = context;
         this.list = list;
     }

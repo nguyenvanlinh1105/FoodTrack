@@ -44,6 +44,7 @@ public class cart extends AppCompatActivity {
     private ImageView backBtn;
     private TextView total;
     private TextView datDonBtn;
+    private double tongTien =0;
 
     public static Activity ToFinishActivity;
 
@@ -87,13 +88,14 @@ public class cart extends AppCompatActivity {
             cart_adapter listAdapter = new cart_adapter(this, cartTitle, cartImg, cartSubTitle, cartPrice, cartQty, this);
             listView_cart.setAdapter(listAdapter);
         }
+        total.setText(tongTien+ " vnđ");
     }
 
     private void initializeData() {
         cartTitle.add("Burger phô mai");
         cartImg.add(R.drawable.double_cheese);
         cartSubTitle.add("Classic cheesburger");
-        cartPrice.add("50.000vnđ");
+        cartPrice.add("50.000 vnđ");
         cartQty.add(1);
 
         // Thêm dữ liệu mẫu khác tại đây
@@ -137,25 +139,31 @@ public class cart extends AppCompatActivity {
         APIService.API_SERVICE.GetSanPhamGioHang(idDonHang).enqueue(new Callback<List<SanPhamAPIModel>>() {
             @Override
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     List<SanPhamAPIModel> listSanPham = response.body();
+                    for (SanPhamAPIModel sp : listSanPham) {
+                        tongTien += Double.valueOf(sp.getGiaTien());
+                        NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
+                        String formattedPrice = numberFormat.format(tongTien);
 
-
+                        total.setText(formattedPrice+" vnđ");
+                    }
                     UpdateRecyclerView(listSanPham);
                 } else {
                     UseFallbackData();
                 }
+
             }
 
             @Override
             public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
-                UseFallbackData();
+             //   UseFallbackData();
             }
         });
     }
 
     private void UseFallbackData() {
-        initializeData();
+       // initializeData();
         UpdateRecyclerView(new ArrayList<>());
     }
 

@@ -25,6 +25,7 @@ public class favorite_list_adapter extends BaseAdapter {
     ArrayList<Double> favoritePrice;
     LayoutInflater inflater;
 
+
     public favorite_list_adapter(Context context, ArrayList<String> title, ArrayList<Integer> img, ArrayList<String> subTitle, ArrayList<Double> price) {
         this.context = context;
         this.favoriteTitle = title;

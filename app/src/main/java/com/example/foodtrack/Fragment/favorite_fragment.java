@@ -1,5 +1,7 @@
 package com.example.foodtrack.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 
@@ -14,12 +16,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.FavoriteListAdapterAPI;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.SanPhamYeuThichModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.favorite_list_adapter;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,7 +90,7 @@ public class favorite_fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        initializeData();
+
     }
 
     private void initializeData() {
@@ -129,12 +141,18 @@ public class favorite_fragment extends Fragment {
     }
 
     public void Mapping(View view) {
+
         underlined = (TextView) view.findViewById(R.id.underlined_favorite);
         underlined.setPaintFlags(underlined.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
         listView_favorite = (ListView) view.findViewById(R.id.listView_favorite);
-        favorite_list_adapter listAdapter = new favorite_list_adapter(getContext(), favoriteTitle, favoriteImg, favoriteSubTitle, favoritePrice);
-        listView_favorite.setAdapter(listAdapter);
+
+ //       initializeData();
+//        favorite_list_adapter listAdapter = new favorite_list_adapter(getContext(), favoriteTitle, favoriteImg, favoriteSubTitle, favoritePrice);
+//        listView_favorite.setAdapter(listAdapter);
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+        String idUser = sharedPreferences.getString("idUser","");
+        getDsSanPhamYeuThich(idUser);
 
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
 
@@ -168,6 +186,23 @@ public class favorite_fragment extends Fragment {
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(productDetailsFragment);
                 }
+            }
+        });
+    }
+
+
+    private void getDsSanPhamYeuThich (String idNguoiDung){
+        APIService.API_SERVICE.getDsSanPhamYeuThich(idNguoiDung).enqueue(new Callback<List<SanPhamAPIModel>>() {
+            @Override
+            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
+                List<SanPhamAPIModel> listSanPham= response.body();
+                FavoriteListAdapterAPI listAdapter = new FavoriteListAdapterAPI(getContext(),listSanPham);
+        listView_favorite.setAdapter(listAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
+
             }
         });
     }

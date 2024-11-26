@@ -21,11 +21,13 @@ public class SanPhamAPIModel {
     private String donViTinh;
     private Timestamp ngayTao;
     private int trangThaiBinhLuan;
+    private int soLuongDat;
 
     private DanhMucModel danhMuc;
     private List<ChiTietDonHangModel> chiTietDonHangs;
     private List<BinhLuanSanPhamModel> binhLuans;
     private List<SanPhamYeuThichModel> sanPhamYeuThichs;
+
 
 
 
@@ -37,6 +39,13 @@ public class SanPhamAPIModel {
         this.moTa = moTa;
     }
 
+    public int getSoLuongDat() {
+        return soLuongDat;
+    }
+
+    public void setSoLuongDat(int soLuongDat) {
+        this.soLuongDat = soLuongDat;
+    }
 
     public String getIdSanPham() {
         return idSanPham;

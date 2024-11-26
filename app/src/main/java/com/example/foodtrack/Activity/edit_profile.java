@@ -68,11 +68,43 @@ public class edit_profile extends AppCompatActivity {
         luuBtn_editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Lấy thông tin từ các trường
+                String hoTen = edt_HoTen.getText().toString();
+                String sdt = edt_sdt.getText().toString();
+                String email = edt_email.getText().toString();
+                String gioiTinh = edt_gioiTinh.getText().toString();
+                String ngaySinh = edt_ngaySinh.getText().toString();
+                String diaChi = edt_diaChi.getText().toString();
 
+                // Kiểm tra và xử lý thông tin (tuỳ chọn)
+                if (hoTen.isEmpty() || sdt.isEmpty() || email.isEmpty() || gioiTinh.isEmpty() || ngaySinh.isEmpty() || diaChi.isEmpty()) {
+                    Toast.makeText(edit_profile.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                Toast.makeText(edit_profile.this, "Lưu thay đổi thành công", Toast.LENGTH_SHORT).show();
+                // Hiển thị thông tin cho mục đích debug (có thể thay đổi theo yêu cầu)
+                Toast.makeText(edit_profile.this,
+                        "Họ Tên: " + hoTen + "\n" +
+                                "SĐT: " + sdt + "\n" +
+                                "Email: " + email + "\n" +
+                                "Giới Tính: " + gioiTinh + "\n" +
+                                "Ngày Sinh: " + ngaySinh + "\n" +
+                                "Địa Chỉ: " + diaChi,
+                        Toast.LENGTH_LONG).show();
+
+                // Gửi thông tin tới API hoặc xử lý khác
+                NguoiDungAPIModel nguoiDung = new NguoiDungAPIModel();
+                nguoiDung.setHoTen(hoTen);
+                nguoiDung.setSdt(sdt);
+                nguoiDung.setEmail(email);
+                nguoiDung.setGioiTinh(gioiTinh);
+                nguoiDung.setNgaySinh(ngaySinh);
+                nguoiDung.setDiaChi(diaChi);
+
+                ChangInfoUser(nguoiDung);
             }
         });
+
         imgCalendar.setOnClickListener(v -> showDatePickerDialog());
     }
 

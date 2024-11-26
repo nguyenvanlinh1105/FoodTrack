@@ -34,6 +34,7 @@ import com.example.foodtrack.Adapter.food_list_adapter;
 import com.example.foodtrack.Adapter.list_drink_API_adapter;
 import com.example.foodtrack.Adapter.recyclerView_deal_hoi_API_adapter;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter;
+import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter_api;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
@@ -177,6 +178,9 @@ public class fragment_product_detail_API extends Fragment {
         }
 
         GetMonAnBenPhai();
+
+
+       // deal hời
         GetDealHoi();
         GetTrangThaiYeuThich(idUser,idSanPham);
         ControlButton();
@@ -281,7 +285,7 @@ public class fragment_product_detail_API extends Fragment {
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if(response.isSuccessful()&& response.body()!=null &&!response.body().isEmpty()){
                     List<SanPhamAPIModel> listMonAn_explore = response.body();
-                    recyclerView_product_detail_adapter listAdapter = new recyclerView_product_detail_adapter(getContext(), listMonAn_explore);
+                    recyclerView_product_detail_adapter_api listAdapter = new recyclerView_product_detail_adapter_api(getContext(), listMonAn_explore);
                     rvProductDetail.setAdapter(listAdapter);
                 }else{
 //                    UseFallbackData();
@@ -294,15 +298,6 @@ public class fragment_product_detail_API extends Fragment {
             }
         });
     }
-//    private void UseFallbackData() {
-//        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct
-//        UpdateRecyclerView(arraylistFood);
-//    }
-//
-//    private void UpdateRecyclerView(List<SanPhamModel> data) {
-//        food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
-//        listView_food.setAdapter(listAdapter);
-//    }
 
     private void GetDealHoi(){
         APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamAPIModel>>() {
