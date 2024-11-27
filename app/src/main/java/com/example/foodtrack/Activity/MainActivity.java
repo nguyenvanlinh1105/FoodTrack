@@ -37,15 +37,24 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String fragmentToLoad = intent.getStringExtra("fragmentToLoad");
+        String ghiChu = intent.getStringExtra("ghiChu");
+
         if (fragmentToLoad != null) {
             if (fragmentToLoad.equals("cartFragment")) {
-                ReplaceFragment(new checkout());
+                checkout checkoutFragment = new checkout();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("ghiChu", ghiChu);
+
+                checkoutFragment.setArguments(bundle);
+
+                ReplaceFragment(checkoutFragment);
             }
         } else {
+            // Nếu không có fragmentToLoad, thay thế với Home_Page
             ReplaceFragment(new Home_Page());
-
-//            ReplaceFragment(new fragment_product_rating());
         }
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.home) {
                 ReplaceFragment(new Home_Page());

@@ -46,8 +46,7 @@ public class checkout extends Fragment {
     private TextView tv_shipping_fee;
     private TextView tv_ghi_chu;
     private TextView tv_total_price;// thành tiền
-
-
+    String textGhiChu;
 
 
     private LinearLayout tienMat, applePay, icon_check_tien_mat, icon_check_applePay;
@@ -81,6 +80,10 @@ public class checkout extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // Lấy ghiChu từ bundle
+        if (getArguments() != null) {
+            textGhiChu = getArguments().getString("ghiChu");
+        }
     }
 
     @Override
@@ -88,6 +91,7 @@ public class checkout extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout, container, false);
         Mapping(view);
+        tv_ghi_chu.setText(textGhiChu);
         ControlButton();
         return view;
     }
@@ -99,6 +103,8 @@ public class checkout extends Fragment {
         applePay = (LinearLayout) view.findViewById(R.id.apple_pay_checkout);
         icon_check_applePay = (LinearLayout) view.findViewById(R.id.icon_check_applePay_checkout);
         icon_check_tien_mat = (LinearLayout) view.findViewById(R.id.icon_check_tien_mat_checkout);
+
+        tv_ghi_chu = view.findViewById(R.id.tv_ghi_chu);
     }
 
     private void ControlButton() {

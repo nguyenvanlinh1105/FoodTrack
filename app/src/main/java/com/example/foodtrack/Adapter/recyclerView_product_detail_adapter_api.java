@@ -43,10 +43,7 @@ public class recyclerView_product_detail_adapter_api extends RecyclerView.Adapte
         View item = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_view_item_product_detail, parent, false);
 
-        for (SanPhamAPIModel sp: productList
-             ) {
-            Log.d("snph",sp.getTenSanPham());
-        }
+
         return new MyViewHolder(item);
     }
 

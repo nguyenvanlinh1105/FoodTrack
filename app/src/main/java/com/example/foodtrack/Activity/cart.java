@@ -45,6 +45,8 @@ public class cart extends AppCompatActivity {
     public TextView total;
     private TextView datDonBtn;
     public double tongTien =0;
+    private TextView edt_ghiChu;
+    public String textGhiChu;
 
     public static Activity ToFinishActivity;
 
@@ -83,6 +85,7 @@ public class cart extends AppCompatActivity {
         listView_cart = findViewById(R.id.listView_cart);
         total = findViewById(R.id.total_cart);
         datDonBtn = findViewById(R.id.btn_dat_don_cart);
+        edt_ghiChu = findViewById(R.id.edt_ghiChu);
 
         if (listView_cart != null) {
             cart_adapter listAdapter = new cart_adapter(this, cartTitle, cartImg, cartSubTitle, cartPrice, cartQty, this);
@@ -107,8 +110,10 @@ public class cart extends AppCompatActivity {
         }
         if (datDonBtn != null) {
             datDonBtn.setOnClickListener(view -> {
+                textGhiChu = edt_ghiChu.getText().toString();
                 Intent thanhToan = new Intent(cart.this, MainActivity.class);
                 thanhToan.putExtra("fragmentToLoad", "cartFragment");
+                thanhToan.putExtra("ghiChu",textGhiChu);
                 startActivity(thanhToan);
             });
         }

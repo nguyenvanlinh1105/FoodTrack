@@ -218,10 +218,18 @@ public class fragment_product_detail_API extends Fragment {
         btn_rating_product_details.setOnClickListener(view -> {
             MainActivity mainActivity = (MainActivity) getActivity();
             if (mainActivity != null) {
+                fragment_product_rating ratingFragment = new fragment_product_rating();
 
-                mainActivity.ReplaceFragment(new fragment_product_rating());
+                Bundle bundle = new Bundle();
+                bundle.putString("idSanPham", idSanPham);
+
+                // Đặt bundle vào fragment
+                ratingFragment.setArguments(bundle);
+
+                mainActivity.ReplaceFragment(ratingFragment);
             }
         });
+
 
         btn_favorite_check_product_detail.setOnClickListener(view -> {
             if (!isFavorite) {

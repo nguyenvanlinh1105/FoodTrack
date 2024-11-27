@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.foodtrack.Adapter.recyclerView_product_rating_adapter;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.BinhLuanSanPhamModel;
 import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.R;
@@ -48,6 +50,8 @@ public class fragment_product_rating extends Fragment {
     private List<BinhLuanSanPhamModel> binhLuanList = new ArrayList<>();
     private LinearLayout if_no_Comment_productRating;
 
+    private String idSanPham;
+
     public fragment_product_rating() {
         
     }
@@ -77,7 +81,15 @@ public class fragment_product_rating extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        initializeData();
+
+        // Lấy idSanPham từ bundle
+        if (getArguments() != null) {
+            idSanPham = getArguments().getString("idSanPham");
+        }
+  //      Log.d("fragment_product_rating", "idSanPham: " + idSanPham);
+     //   initializeData();
+
+       LayCommentSanPham(idSanPham);
     }
 
     private void initializeData(){
@@ -111,6 +123,8 @@ public class fragment_product_rating extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_rating, container, false);
 
         Mapping(view);
+
+
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         rv_product_rating.setLayoutManager(layoutManager);
@@ -143,5 +157,8 @@ public class fragment_product_rating extends Fragment {
                 requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
+    }
+    private void LayCommentSanPham(String idSanPham){
+
     }
 }

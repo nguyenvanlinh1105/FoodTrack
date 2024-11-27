@@ -139,9 +139,10 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/back"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
 
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
                 <TextView
@@ -172,7 +173,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:background="@color/FFF4E9">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -182,15 +184,17 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:padding="8dp"
+                    android:id="@+id/edt_ghiChu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:gravity="right"
                     android:hint="Nhập ghi chú ở đây..."
-                    android:textSize="14sp"
-                    android:layout_marginLeft="50dp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:padding="8dp"
+                    android:textAlignment="textStart"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
