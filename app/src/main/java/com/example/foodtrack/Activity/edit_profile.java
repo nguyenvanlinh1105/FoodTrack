@@ -88,11 +88,7 @@ public class edit_profile extends AppCompatActivity {
         btn_doiAnh = findViewById(R.id.btn_doiAnh);
         img_avt = findViewById(R.id.img_avt);
 
-        if(mUri==null){
 
-        }else{
-            btn_doiAnh.setText("Lưu thay đổi");
-        }
 
         luuBtn_editProfile = (TextView) findViewById(R.id.luuBtn_editProfile);
     }
@@ -104,25 +100,24 @@ public class edit_profile extends AppCompatActivity {
                 finish();
             }
         });
+        img_avt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickRequestPermission();
+            }
+        });
         btn_doiAnh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(btn_doiAnh.getText().toString()=="Đổi hình đại diện"){
-                    onClickRequestPermission();
-                }else{
-                    RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
-
-                    String realPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
-                    File file = new File(realPath);
-                    RequestBody requestBodyAvt = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
-                    MultipartBody.Part multipartBodyAvt = MultipartBody.Part.createFormData("img", file.getName(), requestBodyAvt);
-
-
-                APIService.API_SERVICE.ChangInfoUser(bodyIdNguoiDung,multipartBodyAvt).enqueue(new Callback<NguoiDungAPIModel>() {
+                RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
+                String realPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
+                File file = new File(realPath);
+                RequestBody requestBodyAvt = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                MultipartBody.Part multipartBodyAvt = MultipartBody.Part.createFormData("img", file.getName(), requestBodyAvt);
+                APIService.API_SERVICE.ChangInfoUser(bodyIdNguoiDung, multipartBodyAvt).enqueue(new Callback<NguoiDungAPIModel>() {
                     @Override
                     public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             NguoiDungAPIModel model = response.body();
                             edt_HoTen.setText(model.getHoTenNguoiDung());
                             edt_sdt.setText(model.getSdt());
@@ -152,7 +147,7 @@ public class edit_profile extends AppCompatActivity {
                                     });
 
 
-                        }else{
+                        } else {
 
                         }
                     }
@@ -162,8 +157,6 @@ public class edit_profile extends AppCompatActivity {
 
                     }
                 });
-
-                }
             }
         });
 
@@ -296,7 +289,17 @@ public class edit_profile extends AppCompatActivity {
         APIService.API_SERVICE.UpdateInfo(model).enqueue(new Callback<NguoiDungAPIModel>() {
             @Override
             public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
+                if(response.isSuccessful()){
+                    NguoiDungAPIModel model = response.body();
+                    edt_HoTen.setText(model.getHoTenNguoiDung());
+                    edt_sdt.setText(model.getSdt());
+                    edt_email.setText(model.getEmail());
+                    edt_gioiTinh.setText(model.getGioiTinh());
+                    edt_ngaySinh.setText(model.getNgaySinh());
+                    edt_diaChi.setText(model.getDiaChi());
+                }else{
 
+                }
             }
 
             @Override
@@ -359,6 +362,11 @@ public class edit_profile extends AppCompatActivity {
                     }
                     Uri uri = data.getData();// kết quả nhận được khi chọn ảnh
                     mUri = uri;
+                    if(mUri==null){
+
+                    }else{
+                        btn_doiAnh.setText("Lưu thay đổi");
+                    }
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                         img_avt.setImageBitmap(bitmap);
