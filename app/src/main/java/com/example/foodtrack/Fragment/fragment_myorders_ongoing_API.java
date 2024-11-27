@@ -16,8 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.list_drink_API_adapter;
 import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter;
 import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter_api;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
@@ -32,6 +34,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class fragment_myorders_ongoing_API extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -41,7 +47,7 @@ public class fragment_myorders_ongoing_API extends Fragment {
     private String mParam2;
 
     ImageView backBtn, imageViewTranslate;
-    TextView toLichSu;
+    TextView toLichSu, toDonHuy;
     ImageView chatIcon;
     ListView listview_myorders_ongoing;
     LinearLayout imageIfEmpty;
@@ -62,6 +68,12 @@ public class fragment_myorders_ongoing_API extends Fragment {
         return fragment;
     }
 
+
+    private void initializeData() {
+        List<SanPhamModel> sanPhamList = createSampleProducts();
+        arrayListOrder = createSampleOrders(sanPhamList);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,14 +81,9 @@ public class fragment_myorders_ongoing_API extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-//        initializeData();
-//        getOrders();
+
     }
 
-    private void initializeData() {
-        List<SanPhamModel> sanPhamList = createSampleProducts();
-        arrayListOrder = createSampleOrders(sanPhamList);
-    }
 
     private List<SanPhamModel> createSampleProducts() {
         List<SanPhamModel> sanPhamList = new ArrayList<>();
@@ -118,6 +125,7 @@ public class fragment_myorders_ongoing_API extends Fragment {
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_shipper);
         imageViewTranslate.startAnimation(animation);
         checkIfListEmpty();
+        GetOrders();
         ControlButton();
         return view;
     }
@@ -125,14 +133,41 @@ public class fragment_myorders_ongoing_API extends Fragment {
     public void Mapping(View view) {
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing);
         toLichSu = (TextView) view.findViewById(R.id.btn_lichSu_myOrders);
+        toDonHuy = (TextView)view.findViewById(R.id.btn_donHuy_myOrders);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
         imageViewTranslate = (ImageView) view.findViewById(R.id.imageViewTranslate);
 
         listview_myorders_ongoing = (ListView) view.findViewById(R.id.listview_myorders);
-        myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), arrayListOrderAPI);
+
+    }
+
+    private void GetOrders() {
+        APIService.API_SERVICE.GetDonHangDangGiao().enqueue(new Callback<List<DonHangAPIModel>>() {
+            @Override
+            public void onResponse(Call<List<DonHangAPIModel>> call, Response<List<DonHangAPIModel>> response) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    List<DonHangAPIModel> listDonHang = response.body();
+                    myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), listDonHang);
+                    listview_myorders_ongoing.setAdapter(listAdapter);
+                } else {
+                    UseFallbackData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DonHangAPIModel>> call, Throwable t) {
+                UseFallbackData();
+            }
+        });
+    }
+
+    private void UseFallbackData() {
+        initializeData();
+        myorders_ongoing_list_adapter listAdapter = new myorders_ongoing_list_adapter(getContext(), arrayListOrder);
         listview_myorders_ongoing.setAdapter(listAdapter);
     }
+
 
     public void ControlButton() {
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +183,16 @@ public class fragment_myorders_ongoing_API extends Fragment {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new fragment_myorders_history_API());
+                }
+            }
+        });
+
+        toDonHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_myorders_donhuy());
                 }
             }
         });
@@ -169,13 +214,17 @@ public class fragment_myorders_ongoing_API extends Fragment {
                     DonHangAPIModel selectedOrder = arrayListOrderAPI.get(i);
                     String id = selectedOrder.getIdDonHang();
                     String tinhTrang = selectedOrder.getTinhTrang();
+                    String ghiChu = selectedOrder.getGhiChu();
+
                     Bundle bundle = new Bundle();
                     bundle.putString("idDonHang", id);
                     bundle.putString("tinhTrang", tinhTrang);
+                    bundle.putString("ghiChu", ghiChu);
 
                     fragment_myorders_ongoing_details detailsFragment = fragment_myorders_ongoing_details.newInstance(
                             id,
-                            tinhTrang
+                            tinhTrang,
+                            ghiChu
                     );
 
 

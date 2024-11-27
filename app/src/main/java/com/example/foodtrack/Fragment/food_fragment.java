@@ -55,6 +55,7 @@ public class food_fragment extends Fragment {
     ListView listView_food;
     TextView btn_DoUong_food;
     ImageView chatIcon;
+
     public food_fragment() {
         // Required empty public constructor
         ImageView chatIcon;    }
@@ -155,32 +156,9 @@ public class food_fragment extends Fragment {
 //        food_list_adapter listAdapter = new food_list_adapter(getContext(), arraylistFood);
 //        listView_food.setAdapter(listAdapter);
 
-        GetMonAn();
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
 
-        listView_food.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Bundle bundle = new Bundle();
-                bundle.putString("title", foodTitle.get(position));
-                bundle.putDouble("price", foodPrice.get(position));
-                bundle.putString("description", foodDescription.get(position));
-                bundle.putInt("image", foodImg.get(position));
 
-                fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
-                        foodTitle.get(position),
-                        foodPrice.get(position),
-                        foodDescription.get(position),
-                        foodImg.get(position)
-                );
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(productDetailsFragment);
-                }
-
-
-            }
-        });
     }
 
     private void ControlButton(){
@@ -213,6 +191,31 @@ public class food_fragment extends Fragment {
                         List<SanPhamAPIModel> listMonAn_explore = response.body();
                     list_drink_API_adapter listAdapter = new list_drink_API_adapter(getContext(), listMonAn_explore);
                     listView_food.setAdapter(listAdapter);
+
+                    listView_food.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("idSanPham", listMonAn_explore.get(position).getIdSanPham());
+                            bundle.putString("title", foodTitle.get(position));
+                            bundle.putDouble("price", foodPrice.get(position));
+                            bundle.putString("description", foodDescription.get(position));
+                            bundle.putInt("image", foodImg.get(position));
+
+                            fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
+                                    listMonAn_explore.get(position).getIdSanPham(),
+                                    foodTitle.get(position),
+                                    foodPrice.get(position),
+                                    foodDescription.get(position),
+                                    String.valueOf(foodImg.get(position))
+                            );
+                            MainActivity mainActivity = (MainActivity) getActivity();
+                            if (mainActivity != null) {
+                                mainActivity.ReplaceFragment(productDetailsFragment);
+                            }
+                        }
+                    });
+
                 }else{
                     UseFallbackData();
                 }
@@ -227,6 +230,28 @@ public class food_fragment extends Fragment {
     private void UseFallbackData() {
         InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct
         UpdateRecyclerView(arraylistFood);
+
+        listView_food.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Bundle bundle = new Bundle();
+                bundle.putString("title", foodTitle.get(position));
+                bundle.putDouble("price", foodPrice.get(position));
+                bundle.putString("description", foodDescription.get(position));
+                bundle.putInt("image", foodImg.get(position));
+
+                fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
+                        foodTitle.get(position),
+                        foodPrice.get(position),
+                        foodDescription.get(position),
+                        foodImg.get(position)
+                );
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(productDetailsFragment);
+                }
+            }
+        });
     }
 
     private void UpdateRecyclerView(List<SanPhamModel> data) {

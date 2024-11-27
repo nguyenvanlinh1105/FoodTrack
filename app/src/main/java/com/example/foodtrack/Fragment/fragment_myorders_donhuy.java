@@ -8,27 +8,30 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.Adapter.myorders_donHuy_list_adapter;
-import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter;
+import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter_api;
 import com.example.foodtrack.Model.ChiTietDonHangModel;
+import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.DonHangModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
-import com.example.foodtrack.fragment_myorders_mualai_details;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,18 +56,9 @@ public class fragment_myorders_donhuy extends Fragment {
     ListView listview_myorders_ongoing;
     LinearLayout imageIfEmpty;
 
-
-    ArrayList<String> orderId = new ArrayList<>();
-    ArrayList<String> time = new ArrayList<>();
-    ArrayList<String> name = new ArrayList<>();
-    ArrayList<Integer> img = new ArrayList<>();
-    ArrayList<String> rate = new ArrayList<>();
-    ArrayList<Integer> status = new ArrayList<>();
-    ArrayList<String> orderStatus = new ArrayList<>();
-    ArrayList<String> price = new ArrayList<>();
-    ArrayList<Integer> qty = new ArrayList<>();
-
+    ArrayList<DonHangAPIModel> arrayListOrderAPI = new ArrayList<>();
     ArrayList<DonHangModel> arrayListOrder = new ArrayList<>();
+
     public fragment_myorders_donhuy() {
         // Required empty public constructor
     }
@@ -144,8 +138,35 @@ public class fragment_myorders_donhuy extends Fragment {
 
         Mapping(view);
         checkIfListEmpty();
+        GetOrders();
         ControlButton();
         return view;
+    }
+
+    private void GetOrders() {
+        APIService.API_SERVICE.GetDonHangDaHuy().enqueue(new Callback<List<DonHangAPIModel>>() {
+            @Override
+            public void onResponse(Call<List<DonHangAPIModel>> call, Response<List<DonHangAPIModel>> response) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    List<DonHangAPIModel> listDonHang = response.body();
+                    myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), listDonHang);
+                    listview_myorders_ongoing.setAdapter(listAdapter);
+                } else {
+                    UseFallbackData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DonHangAPIModel>> call, Throwable t) {
+                UseFallbackData();
+            }
+        });
+    }
+
+    private void UseFallbackData() {
+        initializeData();
+        myorders_donHuy_list_adapter listAdapter = new myorders_donHuy_list_adapter(getContext(), arrayListOrder);
+        listview_myorders_ongoing.setAdapter(listAdapter);
     }
 
     public void Mapping(View view) {
@@ -157,8 +178,7 @@ public class fragment_myorders_donhuy extends Fragment {
         imageViewTranslate = (ImageView) view.findViewById(R.id.imageViewTranslate);
 
         listview_myorders_ongoing = (ListView) view.findViewById(R.id.listview_myorders);
-        myorders_donHuy_list_adapter listAdapter = new myorders_donHuy_list_adapter(getContext(), arrayListOrder);
-        listview_myorders_ongoing.setAdapter(listAdapter);
+
 
     }
 
@@ -191,17 +211,6 @@ public class fragment_myorders_donhuy extends Fragment {
             }
         }));
 
-//        toLichSu.setOnClickListener((new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                MainActivity mainActivity = (MainActivity) getActivity();
-//                if (mainActivity != null) {
-//                    mainActivity.ReplaceFragment(new fragment_myorders_history());
-//                }
-//            }
-//        }));
-
-
         chatIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,8 +223,24 @@ public class fragment_myorders_donhuy extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 MainActivity mainActivity = (MainActivity) getActivity();
+
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_mualai_details());
+                    DonHangAPIModel selectedOrder = arrayListOrderAPI.get(i);
+                    String id = selectedOrder.getIdDonHang();
+//                    String tinhTrang = selectedOrder.getTinhTrang();
+                    String ghiChu = selectedOrder.getGhiChu();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("idDonHang", id);
+//                    bundle.putString("tinhTrang", tinhTrang);
+                    bundle.putString("ghiChu", ghiChu);
+
+                    fragment_myorders_mualai_details detailsFragment = fragment_myorders_mualai_details.newInstance(
+                            id,
+//                            tinhTrang,
+                            ghiChu
+                    );
+                    mainActivity.ReplaceFragment(detailsFragment);
                 }
 
             }

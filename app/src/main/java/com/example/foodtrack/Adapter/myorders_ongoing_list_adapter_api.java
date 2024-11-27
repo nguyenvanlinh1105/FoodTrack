@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class myorders_ongoing_list_adapter_api extends ArrayAdapter<DonHangAPIModel> {
-    public myorders_ongoing_list_adapter_api(Context context, ArrayList<DonHangAPIModel> arrayListDonHang) {
+    public myorders_ongoing_list_adapter_api(Context context, List<DonHangAPIModel> arrayListDonHang) {
         super(context, R.layout.fragment_myorders_ongoing_list, arrayListDonHang);
     }
 
@@ -51,7 +51,7 @@ public class myorders_ongoing_list_adapter_api extends ArrayAdapter<DonHangAPIMo
 
         if (donHang != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
-            //Number format để định dạng giá tiền từ 20000 thành 20.000
+
             NumberFormat nf
                     = NumberFormat.getInstance(Locale.ITALY);
 
@@ -85,8 +85,7 @@ public class myorders_ongoing_list_adapter_api extends ArrayAdapter<DonHangAPIMo
 
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                img.setBackground(new BitmapDrawable(getContext().getResources(), resource));
-
+                                img.setImageDrawable(new BitmapDrawable(getContext().getResources(), resource));
                             }
                         });
 
