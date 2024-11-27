@@ -167,6 +167,10 @@ public interface APIService {
   Call<NguoiDungAPIModel> ChangInfoUser(@Part("idNguoiDung") RequestBody idUser,@Part("hoTen") RequestBody hoTen, @Part("sdt") RequestBody sdt, @Part("email") RequestBody email, @Part("gioiTinh") RequestBody gioiTinh, @Part("ngaySinh") RequestBody ngaySinh, @Part("diaChi") RequestBody diaChi, @Part MultipartBody.Part image);
 
 
+  // Lấy thông tin user :
+  @GET("")
+  Call<NguoiDungAPIModel> GetInfoUser(@Query("idNguoiDung")String idUser);
+
 
 
 }

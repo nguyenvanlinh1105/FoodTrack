@@ -1,5 +1,7 @@
 package com.example.foodtrack.Model.API;
 
+import android.graphics.drawable.Drawable;
+
 import com.example.foodtrack.Model.vaiTroModel;
 
 import java.time.LocalDateTime;
@@ -15,6 +17,8 @@ public class NguoiDungAPIModel {
     private String ngaySinh;
     private String matKhau;
     private String gioiTinh;
+
+
     private String avatar;
     private String trangThai;
     private LocalDateTime ngayTao;
@@ -27,6 +31,11 @@ public class NguoiDungAPIModel {
 
     public String getHoTen() {
         return hoTen;
+    }
+
+
+    public String getAvatar() {
+        return avatar;
     }
 
     public void setHoTen(String hoTen) {
@@ -124,9 +133,7 @@ public class NguoiDungAPIModel {
         this.gioiTinh = gioiTinh;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
+
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;

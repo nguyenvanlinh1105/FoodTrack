@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,11 +22,15 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Helper.RealPathUtil;
 import com.example.foodtrack.Model.API.NguoiDungAPIModel;
@@ -52,7 +58,7 @@ public class edit_profile extends AppCompatActivity {
     TextView edt_HoTen, edt_sdt, edt_email, edt_gioiTinh, edt_ngaySinh, edt_diaChi,btn_doiAnh;
     ImageView imgCalendar , img_avt ;
     SharedPreferences shareUserResponse;
-
+    String idUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +70,9 @@ public class edit_profile extends AppCompatActivity {
             return insets;
         });
         shareUserResponse = getApplicationContext().getSharedPreferences("shareUserResponseLogin", MODE_PRIVATE);
+        idUser = shareUserResponse.getString("idUser","-1");
         Mapping();
+        GetInfoUser(idUser);
         ControlButton();
     }
 
@@ -117,7 +125,7 @@ public class edit_profile extends AppCompatActivity {
 
 
 
-                String idUser = shareUserResponse.getString("idUser","-1");
+
 
                 RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
 
@@ -147,6 +155,27 @@ public class edit_profile extends AppCompatActivity {
                             edt_ngaySinh.setText(model.getNgaySinh());
                             edt_diaChi.setText(model.getDiaChi());
 
+                            String imageUrl = model.getAvatar();
+                            if (imageUrl.startsWith("http://")) {
+                                imageUrl = imageUrl.replace("http://", "https://");
+                            }
+
+                            Glide.with(getApplicationContext())
+                                    .asBitmap()
+                                    .load(imageUrl)
+                                    .into(new CustomTarget<Bitmap>() {
+                                        @Override
+                                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                                        }
+
+                                        @Override
+                                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                            img_avt.setBackground(new BitmapDrawable(getApplicationContext().getResources(), resource));
+
+                                        }
+                                    });
+
+
                         }else{
 
                         }
@@ -157,11 +186,6 @@ public class edit_profile extends AppCompatActivity {
 
                     }
                 });
-
-
-
-
-
 
 
 
@@ -183,7 +207,9 @@ public class edit_profile extends AppCompatActivity {
                 this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
                     // Cập nhật ngày vào EditText
-                    String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                   // String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                    String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "/" + selectedDay;
+
                     edt_ngaySinh.setText(formattedDate);
                 },
                 year,
@@ -272,6 +298,50 @@ public class edit_profile extends AppCompatActivity {
             }
     );
 
+
+    private void GetInfoUser(String idUser){
+        APIService.API_SERVICE.GetInfoUser(idUser).enqueue(new Callback<NguoiDungAPIModel>() {
+            @Override
+            public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
+                if(response.isSuccessful()){
+                    NguoiDungAPIModel model = response.body();
+                    edt_HoTen.setText(model.getHoTen());
+                    edt_sdt.setText(model.getSdt());
+                    edt_email.setText(model.getEmail());
+                    edt_gioiTinh.setText(model.getGioiTinh());
+                    edt_ngaySinh.setText(model.getNgaySinh());
+                    edt_diaChi.setText(model.getDiaChi());
+
+                    String imageUrl = model.getAvatar();
+                    if (imageUrl.startsWith("http://")) {
+                        imageUrl = imageUrl.replace("http://", "https://");
+                    }
+
+                    Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(imageUrl)
+                            .into(new CustomTarget<Bitmap>() {
+                                @Override
+                                public void onLoadCleared(@Nullable Drawable placeholder) {
+                                }
+
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    img_avt.setBackground(new BitmapDrawable(getApplicationContext().getResources(), resource));
+
+                                }
+                            });
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NguoiDungAPIModel> call, Throwable t) {
+
+            }
+        });
+    }
 
 
 }
