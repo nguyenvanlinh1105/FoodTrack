@@ -129,7 +129,7 @@ public class fragment_myorders_history_API extends Fragment {
         toOngoing.setOnClickListener(view -> {
             MainActivity mainActivity = (MainActivity) getActivity();
             if (mainActivity != null) {
-                mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
+                mainActivity.ReplaceFragment(new fragment_myorders_ongoing_API());
             }
         });
 

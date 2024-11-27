@@ -1,15 +1,20 @@
 package com.example.foodtrack.Model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-public class DonHangAPIModel {
+public class DonHangAPIModel implements Serializable {
     private String idDonHang;
     private String idNguoiDung;
     private String tinhTrang; //Trạng thái
     private Date ngayTao;
     private Timestamp thoiGianCapNhat;
+    private String diaChi;
+    private String phuongThucThanhToan;
+    private String ghiChu ;
+
 
     // Navigation properties
     private NguoiDungModel nguoiDung;
@@ -25,6 +30,30 @@ public class DonHangAPIModel {
 
     public String getIdNguoiDung() {
         return idNguoiDung;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public String getPhuongThucThanhToan() {
+        return phuongThucThanhToan;
+    }
+
+    public void setPhuongThucThanhToan(String phuongThucThanhToan) {
+        this.phuongThucThanhToan = phuongThucThanhToan;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
     }
 
     public void setIdNguoiDung(String idNguoiDung) {

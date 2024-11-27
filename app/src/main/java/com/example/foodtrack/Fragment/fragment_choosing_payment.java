@@ -14,9 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
-
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +41,7 @@ public class fragment_choosing_payment extends Fragment {
 
     private ImageView backBtn;
     private LinearLayout momo, zaloPay;
+    DonHangAPIModel donHang;
 
 
     public fragment_choosing_payment() {
@@ -67,6 +73,10 @@ public class fragment_choosing_payment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        if (getArguments() != null) {
+             donHang = (DonHangAPIModel) getArguments().getSerializable("donHang");
+        }
     }
 
     @Override
@@ -97,22 +107,45 @@ public class fragment_choosing_payment extends Fragment {
             @Override
             public void onClick(View view) {
                 int delay = 2000;
-                Toast.makeText(getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ReplaceFragConfirmPayment();
-                    }
-                }, delay);
 
+                donHang.setPhuongThucThanhToan("Thanh toán online");
+                PostDataToOder(donHang);
             }
         });
 
         zaloPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
+
+                donHang.setPhuongThucThanhToan("Thanh toán online");
+                PostDataToOder(donHang);
+
+
+            }
+        });
+    }
+
+    // TH thanh toán thành công :
+    private void ReplaceFragConfirmPayment(){
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.ReplaceFragment(new fragment_confirm_payment());
+    }
+
+
+    // TH thanh toán thất bại
+    private void ReplaceCart(){
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.ReplaceFragment(new checkout());
+    }
+
+    private void PostDataToOder(DonHangAPIModel donhang){
+        APIService.API_SERVICE.PostToOrder(donhang).enqueue(new Callback<DonHangAPIModel>() {
+            @Override
+            public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {
                 int delay = 2000;
-                Toast.makeText(getContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -120,11 +153,18 @@ public class fragment_choosing_payment extends Fragment {
                     }
                 }, delay);
             }
-        });
-    }
 
-    private void ReplaceFragConfirmPayment(){
-        MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.ReplaceFragment(new fragment_confirm_payment());
+            @Override
+            public void onFailure(Call<DonHangAPIModel> call, Throwable t) {
+                Toast.makeText(getContext(), "Thanh toán không thành công, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                int delay = 2000;
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ReplaceCart();
+                    }
+                }, delay);
+            }
+        });
     }
 }

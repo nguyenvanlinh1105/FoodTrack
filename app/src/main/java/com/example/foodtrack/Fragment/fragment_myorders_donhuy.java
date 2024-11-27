@@ -176,7 +176,7 @@ public class fragment_myorders_donhuy extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_history());
+                    mainActivity.ReplaceFragment(new fragment_myorders_history_API());
                 }
             }
         });
@@ -186,20 +186,20 @@ public class fragment_myorders_donhuy extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
+                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing_API());
                 }
             }
         }));
 
-        toLichSu.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_history());
-                }
-            }
-        }));
+//        toLichSu.setOnClickListener((new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                MainActivity mainActivity = (MainActivity) getActivity();
+//                if (mainActivity != null) {
+//                    mainActivity.ReplaceFragment(new fragment_myorders_history());
+//                }
+//            }
+//        }));
 
 
         chatIcon.setOnClickListener(new View.OnClickListener() {

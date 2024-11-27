@@ -1,5 +1,7 @@
 package com.example.foodtrack.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -119,16 +121,39 @@ public class checkout extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
 
+                DonHangAPIModel donHang = new DonHangAPIModel();
+                SharedPreferences dataDonHang = getContext().getSharedPreferences("dataDonHangResponse", Context.MODE_PRIVATE);
+                SharedPreferences dataUserResponse = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+
+
+                String idDonHang =dataDonHang.getString("idDonHang", "");
+                String diaChi = dataUserResponse.getString("diaChi","");
+                String phuongThucThanhToan ="Thanh toán trực tiếp";
+
+
+                donHang.setIdDonHang(idDonHang);
+                donHang.setDiaChi(diaChi);
+
+                donHang.setGhiChu(textGhiChu);
                 if (payBtn.getText().toString().equals("Xác nhận đặt đơn")) {
                     mainActivity.ReplaceFragment(new fragment_confirm_payment());
 
-                    DonHangAPIModel donHang = new DonHangAPIModel();
+
+                    donHang.setPhuongThucThanhToan(phuongThucThanhToan);
 
 
                     PostDataToOder(donHang);
                     cart.ToFinishActivity.finish();
                 } else {
-                    mainActivity.ReplaceFragment(new fragment_choosing_payment());
+                    fragment_choosing_payment fragment = new fragment_choosing_payment();
+
+                    // Tạo Bundle và truyền donHang vào
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("donHang", donHang);
+                    fragment.setArguments(bundle);
+
+                    // Thay đổi Fragment
+                    mainActivity.ReplaceFragment(fragment);
                     cart.ToFinishActivity.finish();
 
                 }
