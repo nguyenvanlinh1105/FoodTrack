@@ -3,6 +3,7 @@ package com.example.foodtrack.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -50,6 +51,7 @@ public class edit_profile extends AppCompatActivity {
 
     TextView edt_HoTen, edt_sdt, edt_email, edt_gioiTinh, edt_ngaySinh, edt_diaChi,btn_doiAnh;
     ImageView imgCalendar , img_avt ;
+    SharedPreferences shareUserResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class edit_profile extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        shareUserResponse = getApplicationContext().getSharedPreferences("shareUserResponseLogin", MODE_PRIVATE);
         Mapping();
         ControlButton();
     }
@@ -114,7 +117,9 @@ public class edit_profile extends AppCompatActivity {
 
 
 
+                String idUser = shareUserResponse.getString("idUser","-1");
 
+                RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
 
                 RequestBody bodyHoTen = RequestBody.create(MediaType.parse("multipart/form-data"), hoTen);
                 RequestBody bodySdt = RequestBody.create(MediaType.parse("multipart/form-data"), sdt);
@@ -130,7 +135,7 @@ public class edit_profile extends AppCompatActivity {
                 MultipartBody.Part multipartBodyAvt = MultipartBody.Part.createFormData("img", file.getName(), requestBodyAvt);
 
 
-                APIService.API_SERVICE.ChangInfoUser(bodyHoTen, bodySdt, bodyEmail, bodyGioiTinh, bodyNgaySinh, bodyDiaChi,multipartBodyAvt).enqueue(new Callback<NguoiDungAPIModel>() {
+                APIService.API_SERVICE.ChangInfoUser(bodyIdNguoiDung,bodyHoTen, bodySdt, bodyEmail, bodyGioiTinh, bodyNgaySinh, bodyDiaChi,multipartBodyAvt).enqueue(new Callback<NguoiDungAPIModel>() {
                     @Override
                     public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
                         if(response.isSuccessful()){
@@ -205,17 +210,28 @@ public class edit_profile extends AppCompatActivity {
 //    }
 
     private void onClickRequestPermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {// dưới androi 6 thì không cần xin quyền
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             openGallery();
             return;
         }
-        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            openGallery();
-        } else {
-            String[] requestPermission = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
-            requestPermissions(requestPermission, MY_REQUEST_CODE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
+            if (checkSelfPermission(android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
+                openGallery();
+            } else {
+                String[] requestPermission = {android.Manifest.permission.READ_MEDIA_IMAGES};
+                requestPermissions(requestPermission, MY_REQUEST_CODE);
+            }
+        } else { // Android 6 to 12
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                openGallery();
+            } else {
+                String[] requestPermission = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
+                requestPermissions(requestPermission, MY_REQUEST_CODE);
+            }
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -255,6 +271,8 @@ public class edit_profile extends AppCompatActivity {
                 }
             }
     );
+
+
 
 }
 

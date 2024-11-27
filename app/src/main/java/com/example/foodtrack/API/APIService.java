@@ -33,12 +33,13 @@ public interface APIService {
 
 
   //    linkAPI root:
-    public static String url ="https://0856-42-116-118-17.ngrok-free.app/";
+    public static String url ="https://30ac-2405-4802-b27c-97a0-b960-157b-aafb-82f7.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
+
 
     // hàm này dùng để login , gửi email và pass word
     @POST("user/login")
@@ -156,13 +157,14 @@ public interface APIService {
   // lấy comment sản phẩm : chuưa
   @GET("")
   Call<BinhLuanSanPhamModel>LayCommentSanPham(@Query("idNguoiDung")String idNguoiDung);
+// đăng comment : sản phẩm : chưa
 
 
 
   // thay đổi ảnh : chưa
-  @POST("")
+  @POST("user/update")
   @Multipart
-  Call<NguoiDungAPIModel> ChangInfoUser(@Part("hoTen") RequestBody hoTen, @Part("sdt") RequestBody sdt, @Part("email") RequestBody email, @Part("gioiTinh") RequestBody gioiTinh, @Part("ngaySinh") RequestBody ngaySinh, @Part("diaChi") RequestBody diaChi, @Part MultipartBody.Part image);
+  Call<NguoiDungAPIModel> ChangInfoUser(@Part("idNguoiDung") RequestBody idUser,@Part("hoTen") RequestBody hoTen, @Part("sdt") RequestBody sdt, @Part("email") RequestBody email, @Part("gioiTinh") RequestBody gioiTinh, @Part("ngaySinh") RequestBody ngaySinh, @Part("diaChi") RequestBody diaChi, @Part MultipartBody.Part image);
 
 
 
