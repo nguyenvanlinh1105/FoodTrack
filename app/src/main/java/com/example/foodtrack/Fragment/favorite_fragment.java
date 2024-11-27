@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,7 +59,7 @@ public class favorite_fragment extends Fragment {
     ArrayList<String> favoriteSubTitle = new ArrayList<>();
     ArrayList<Double> favoritePrice = new ArrayList<>();
 
-    ListView listView_favorite;
+    GridView gv_favorite;
     ImageView chatIcon;
 
     public favorite_fragment() {
@@ -144,14 +145,14 @@ public class favorite_fragment extends Fragment {
 
         underlined = (TextView) view.findViewById(R.id.underlined_favorite);
         underlined.setPaintFlags(underlined.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        listView_favorite = (ListView) view.findViewById(R.id.listView_favorite);
+        gv_favorite = (GridView) view.findViewById(R.id.gv_favorite);
 
- //       initializeData();
+        //       initializeData();
 //        favorite_list_adapter listAdapter = new favorite_list_adapter(getContext(), favoriteTitle, favoriteImg, favoriteSubTitle, favoritePrice);
 //        listView_favorite.setAdapter(listAdapter);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
-        String idUser = sharedPreferences.getString("idUser","");
+        String idUser = sharedPreferences.getString("idUser", "");
         getDsSanPhamYeuThich(idUser);
 
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
@@ -163,11 +164,11 @@ public class favorite_fragment extends Fragment {
         chatIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent chat = new Intent(getActivity(),  list_chat_user.class);
+                Intent chat = new Intent(getActivity(), list_chat_user.class);
                 startActivity(chat);
             }
         });
-        listView_favorite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gv_favorite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Bundle bundle = new Bundle();
@@ -191,13 +192,13 @@ public class favorite_fragment extends Fragment {
     }
 
 
-    private void getDsSanPhamYeuThich (String idNguoiDung){
+    private void getDsSanPhamYeuThich(String idNguoiDung) {
         APIService.API_SERVICE.getDsSanPhamYeuThich(idNguoiDung).enqueue(new Callback<List<SanPhamAPIModel>>() {
             @Override
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
-                List<SanPhamAPIModel> listSanPham= response.body();
-                FavoriteListAdapterAPI listAdapter = new FavoriteListAdapterAPI(getContext(),listSanPham);
-        listView_favorite.setAdapter(listAdapter);
+                List<SanPhamAPIModel> listSanPham = response.body();
+                FavoriteListAdapterAPI listAdapter = new FavoriteListAdapterAPI(getContext(), listSanPham);
+                gv_favorite.setAdapter(listAdapter);
             }
 
             @Override

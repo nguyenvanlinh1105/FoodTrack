@@ -71,7 +71,6 @@ public class cart_adapter_api extends BaseAdapter {
             convertView = inflater.inflate(R.layout.fragment_cart_item, parent, false);
             holder = new ViewHolder();
             holder.title = convertView.findViewById(R.id.item_title_cart);
-            holder.subTitle = convertView.findViewById(R.id.item_subTitle_cart);
             holder.img = convertView.findViewById(R.id.item_image_cart);
             holder.price = convertView.findViewById(R.id.price_cart);
             holder.qty = convertView.findViewById(R.id.qty_cart);
@@ -89,7 +88,6 @@ public class cart_adapter_api extends BaseAdapter {
 
         // Set data to views
         holder.title.setText(product.getTenSanPham());
-        holder.subTitle.setText(product.getMoTa());
         double giaTien = product.getGiaTien();
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
         String formattedPrice = numberFormat.format(giaTien);
@@ -143,7 +141,6 @@ public class cart_adapter_api extends BaseAdapter {
 
     static class ViewHolder {
         TextView title;
-        TextView subTitle;
         ImageView img;
         TextView price;
         TextView qty;

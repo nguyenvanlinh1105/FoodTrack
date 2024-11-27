@@ -8,14 +8,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/list_item_cart"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/background_product"
+            android:layout_weight="1"
+            android:background="@drawable/background_cart_item"
             android:padding="15dp">
 
             <ImageView
@@ -33,49 +35,34 @@
                 android:id="@+id/item_title_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="28dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="title"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/item_image_cart"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/item_subTitle_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="sub title"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/item_title_cart"
-                app:layout_constraintTop_toBottomOf="@+id/item_title_cart" />
+                app:layout_constraintTop_toTopOf="@+id/item_image_cart" />
 
             <TextView
                 android:id="@+id/price_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="price"
                 android:textColor="#FF5E00"
-                android:textSize="14sp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/item_image_cart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/item_title_cart"
-                app:layout_constraintTop_toBottomOf="@+id/item_subTitle_cart" />
+                app:layout_constraintStart_toStartOf="@+id/item_title_cart" />
 
             <LinearLayout
+                android:id="@+id/linearLayout18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/price_cart"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/price_cart">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/btn_minus_cart"
@@ -91,7 +78,7 @@
                 <TextView
                     android:id="@+id/qty_cart"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:fontFamily="sans-serif-medium"
@@ -110,18 +97,25 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/background_delete_cart_item"
+            android:gravity="center"
+            android:padding="10dp">
+
             <ImageView
                 android:id="@+id/btn_XoaCTDH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@drawable/icon_delete_favorite30"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.875"
-                app:layout_constraintStart_toEndOf="@+id/item_title_cart"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:src="@drawable/icon_delete_white30" />
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>
