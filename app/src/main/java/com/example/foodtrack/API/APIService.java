@@ -162,9 +162,13 @@ public interface APIService {
 
 
   // thay đổi ảnh : chưa
-  @POST("user/update")
+  @POST("user/update/avatar")
   @Multipart
-  Call<NguoiDungAPIModel> ChangInfoUser(@Part("idNguoiDung") RequestBody idUser,@Part("hoTen") RequestBody hoTen, @Part("sdt") RequestBody sdt, @Part("email") RequestBody email, @Part("gioiTinh") RequestBody gioiTinh, @Part("ngaySinh") RequestBody ngaySinh, @Part("diaChi") RequestBody diaChi, @Part MultipartBody.Part image);
+  Call<NguoiDungAPIModel> ChangInfoUser(@Part("idNguoiDung") RequestBody idUser, @Part MultipartBody.Part image);
+
+
+  @POST("user/update/info")
+  Call<NguoiDungAPIModel> UpdateInfo(@Body NguoiDungAPIModel model);
 
 
   // Lấy thông tin user :
