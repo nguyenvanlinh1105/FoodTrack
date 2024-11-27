@@ -96,7 +96,7 @@ public interface APIService {
     @GET("")
     Call<List<SanPhamAPIModel>> GetSanPhamDaMua();
 
-    //lấy đơn hàng đã hủy: chưa
+    //lấy đơn hàng đã hủy : chưa
     @GET("")
     Call<List<DonHangAPIModel>> GetDonHangDaHuy();
 
@@ -138,11 +138,13 @@ public interface APIService {
   Call<SanPhamYeuThichModel> GetTrangThaiYeuThich(@Query("idNguoiDung")String idNguoiDung, @Query("idSanPham") String idSanPham);
 
 
-// chưa 
+  // lấy chi tiết đơn hàng đang giao: chưa
   @GET("")
   Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDangGiao();
 
-
+  // lấy chi tiết đơn hàng đã hủy : chưa
+  @GET("")
+  Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDaHuy();
 
 
 

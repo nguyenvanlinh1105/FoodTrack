@@ -94,7 +94,7 @@ public class fragment_confirm_payment extends Fragment {
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing());
+                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing_API());
                 }
             }
         });

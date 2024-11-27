@@ -144,31 +144,7 @@ public class Drink_fragment extends Fragment {
         GetDoUong();
 
 
-        // Thiết lập sự kiện cho từng item trong ListView
-        listView_drink.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Xử lý khi click vào item
-                Bundle bundle = new Bundle();
-                bundle.putString("title", drinkTitle.get(position));
-                bundle.putDouble("price", drinkPrice.get(position));
-                bundle.putString("description", drinkDescription.get(position));
-                bundle.putInt("image", drinkImg.get(position));
 
-                fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
-                        drinkTitle.get(position),
-                        drinkPrice.get(position),
-                        drinkDescription.get(position),
-                        drinkImg.get(position)
-                );
-
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(productDetailsFragment);
-                }
-
-            }
-        });
     }
 
 
@@ -200,6 +176,35 @@ public class Drink_fragment extends Fragment {
                     List<SanPhamAPIModel> listUongDo_explore = response.body();
                     list_drink_API_adapter listAdapter = new list_drink_API_adapter(getContext(), listUongDo_explore);
                     listView_drink.setAdapter(listAdapter);
+
+                    // Thiết lập sự kiện cho từng item trong ListView
+                    listView_drink.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            // Xử lý khi click vào item
+                            Bundle bundle = new Bundle();
+                            bundle.putString("idSanPham", listUongDo_explore.get(position).getIdSanPham());
+                            bundle.putString("title", drinkTitle.get(position));
+                            bundle.putDouble("price", drinkPrice.get(position));
+                            bundle.putString("description", drinkDescription.get(position));
+                            bundle.putInt("image", drinkImg.get(position));
+
+                            fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
+                                    listUongDo_explore.get(position).getIdSanPham(),
+                                    drinkTitle.get(position),
+                                    drinkPrice.get(position),
+                                    drinkDescription.get(position),
+                                    String.valueOf(drinkImg.get(position))
+                            );
+
+                            MainActivity mainActivity = (MainActivity) getActivity();
+                            if (mainActivity != null) {
+                                mainActivity.ReplaceFragment(productDetailsFragment);
+                            }
+
+                        }
+                    });
+
                 }else{
                     UseFallbackData();
                 }
@@ -214,6 +219,33 @@ public class Drink_fragment extends Fragment {
         InitializeData();
         list_drink_adapter listAdapter = new list_drink_adapter(getContext(), arrayListDrink);
         listView_drink.setAdapter(listAdapter);
+
+        // Thiết lập sự kiện cho từng item trong ListView
+        listView_drink.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Xử lý khi click vào item
+                Bundle bundle = new Bundle();
+                bundle.putString("title", drinkTitle.get(position));
+                bundle.putDouble("price", drinkPrice.get(position));
+                bundle.putString("description", drinkDescription.get(position));
+                bundle.putInt("image", drinkImg.get(position));
+
+                fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
+                        drinkTitle.get(position),
+                        drinkPrice.get(position),
+                        drinkDescription.get(position),
+                        drinkImg.get(position)
+                );
+
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(productDetailsFragment);
+                }
+
+            }
+        });
+
     }
 
     private void UpdateRecyclerView(List<SanPhamAPIModel> data) {
