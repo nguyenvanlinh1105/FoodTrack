@@ -10,7 +10,7 @@ public class NguoiDungAPIModel {
     private int code;
     private  String message ;
     private String idUser;
-    private String hoTen;
+    private String hoTenNguoiDung;
     private String email;
     private String diaChi;
     private String sdt;
@@ -29,17 +29,9 @@ public class NguoiDungAPIModel {
 
     private String idPhongChat;
 
-    public String getHoTen() {
-        return hoTen;
-    }
-
 
     public String getAvatar() {
         return avatar;
-    }
-
-    public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
     }
 
     public String getIdPhongChat() {
@@ -78,11 +70,11 @@ public class NguoiDungAPIModel {
     }
 
     public String getHoTenNguoiDung() {
-        return hoTen;
+        return hoTenNguoiDung;
     }
 
     public void setHoTenNguoiDung(String hoTenNguoiDung) {
-        this.hoTen = hoTenNguoiDung;
+        this.hoTenNguoiDung = hoTenNguoiDung;
     }
 
     public String getEmail() {

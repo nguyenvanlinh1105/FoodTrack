@@ -62,6 +62,7 @@ public class fragment_profile extends Fragment {
         // Lấy dữ liệu từ SharedPreferences
         shareUserResponseLogin = getActivity().getSharedPreferences("shareUserResponseLogin", getActivity().MODE_PRIVATE);
         String userName = shareUserResponseLogin.getString("hoTenNguoiDung", "Guest"); // Mặc định là "Guest" nếu không tìm thấy
+
         txt_tenKH_profile.setText("Xin chào!,"+userName);
     }
 

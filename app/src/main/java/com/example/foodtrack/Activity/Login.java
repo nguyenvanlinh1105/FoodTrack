@@ -153,6 +153,7 @@ public class Login extends AppCompatActivity {
                         editorResponseLogin.putString("ngaySinh", responseUserModel.getNgaySinh());
                         editorResponseLogin.putString("idUser",responseUserModel.getIdUser());
                         editorResponseLogin.putString("hoTenNguoiDung",responseUserModel.getHoTenNguoiDung());
+
                         editorResponseLogin.putString("diaChi",responseUserModel.getDiaChi());
                         editorResponseLogin.putString("sdt", responseUserModel.getSdt());
                         editorResponseLogin.putString("gioiTinh", responseUserModel.getGioiTinh());

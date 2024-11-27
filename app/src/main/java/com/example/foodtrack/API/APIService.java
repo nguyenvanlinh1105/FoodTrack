@@ -168,7 +168,7 @@ public interface APIService {
 
 
   // Lấy thông tin user :
-  @GET("")
+  @GET("user/info")
   Call<NguoiDungAPIModel> GetInfoUser(@Query("idNguoiDung")String idUser);
 
 

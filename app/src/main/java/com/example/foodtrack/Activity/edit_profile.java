@@ -72,7 +72,7 @@ public class edit_profile extends AppCompatActivity {
         shareUserResponse = getApplicationContext().getSharedPreferences("shareUserResponseLogin", MODE_PRIVATE);
         idUser = shareUserResponse.getString("idUser","-1");
         Mapping();
-        GetInfoUser(idUser);
+        GetInfoUser(idUser);// null crash
         ControlButton();
     }
 
@@ -148,7 +148,7 @@ public class edit_profile extends AppCompatActivity {
                     public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
                         if(response.isSuccessful()){
                             NguoiDungAPIModel model = response.body();
-                            edt_HoTen.setText(model.getHoTen());
+                            edt_HoTen.setText(model.getHoTenNguoiDung());
                             edt_sdt.setText(model.getSdt());
                             edt_email.setText(model.getEmail());
                             edt_gioiTinh.setText(model.getGioiTinh());
@@ -170,7 +170,7 @@ public class edit_profile extends AppCompatActivity {
 
                                         @Override
                                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                            img_avt.setBackground(new BitmapDrawable(getApplicationContext().getResources(), resource));
+                                            img_avt.setImageDrawable(new BitmapDrawable(getApplicationContext().getResources(), resource));
 
                                         }
                                     });
@@ -208,7 +208,7 @@ public class edit_profile extends AppCompatActivity {
                 (view, selectedYear, selectedMonth, selectedDay) -> {
                     // Cập nhật ngày vào EditText
                    // String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
-                    String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "/" + selectedDay;
+                    String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
 
                     edt_ngaySinh.setText(formattedDate);
                 },
@@ -305,7 +305,7 @@ public class edit_profile extends AppCompatActivity {
             public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
                 if(response.isSuccessful()){
                     NguoiDungAPIModel model = response.body();
-                    edt_HoTen.setText(model.getHoTen());
+                    edt_HoTen.setText(model.getHoTenNguoiDung());
                     edt_sdt.setText(model.getSdt());
                     edt_email.setText(model.getEmail());
                     edt_gioiTinh.setText(model.getGioiTinh());
@@ -327,7 +327,7 @@ public class edit_profile extends AppCompatActivity {
 
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                    img_avt.setBackground(new BitmapDrawable(getApplicationContext().getResources(), resource));
+                                    img_avt.setImageDrawable(new BitmapDrawable(getApplicationContext().getResources(), resource));
 
                                 }
                             });
