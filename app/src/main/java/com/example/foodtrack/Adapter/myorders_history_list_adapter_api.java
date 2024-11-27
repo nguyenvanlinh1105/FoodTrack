@@ -22,13 +22,15 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Fragment.fragment_rating_comment;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class myorders_history_list_adapter_api extends ArrayAdapter<SanPhamAPIModel> {
-    public myorders_history_list_adapter_api(Context context, ArrayList<SanPhamAPIModel> arrayListOrder) {
+    public myorders_history_list_adapter_api(Context context, List<SanPhamAPIModel> arrayListOrder) {
         super(context, R.layout.fragment_myorders_history_list, arrayListOrder);
     }
 
@@ -36,6 +38,7 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<SanPhamAPIMo
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
         SanPhamAPIModel order = getItem(position);
+
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_myorders_history_list, parent, false);
         }
@@ -51,7 +54,7 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<SanPhamAPIMo
 
         if (order != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
-            id.setText(order.getIdSanPham());
+            id.setText(order.getIdDonHang());
             time.setText(dateFormat.format(order.getNgayTao().getTime()));
             name.setText(order.getTenSanPham());
            // img.setImageResource(order.getImg());
@@ -75,8 +78,9 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<SanPhamAPIMo
                         }
                     });
             status.setText(order.getTrangThai());
-            price.setText(order.getGiaTien()+"");
-            qty.setText(String.valueOf(order.getSoluongBH()));
+            double  tongTien = order.getGiaTien()*order.getSoLuongDat();
+            price.setText(tongTien+"");
+            qty.setText(String.valueOf(order.getSoLuongDat()));
 
             if (order.getTrangThaiBinhLuan() == 0) {
                 ratingBtn.setText("Đánh giá ngay");

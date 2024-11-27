@@ -1,6 +1,7 @@
 package com.example.foodtrack.Model.API;
 
 import com.example.foodtrack.Model.BinhLuanSanPhamModel;
+import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangModel;
 import com.example.foodtrack.Model.DanhMucModel;
 import com.example.foodtrack.Model.SanPhamYeuThichModel;
@@ -22,9 +23,10 @@ public class SanPhamAPIModel {
     private Timestamp ngayTao;
     private int trangThaiBinhLuan;
     private int soLuongDat;
+    private String idDonHang ;
 
     private DanhMucModel danhMuc;
-    private List<ChiTietDonHangModel> chiTietDonHangs;
+    private List<ChiTietDonHangAPIModel> chiTietDonHangs;
     private List<BinhLuanSanPhamModel> binhLuans;
     private List<SanPhamYeuThichModel> sanPhamYeuThichs;
 
@@ -37,6 +39,15 @@ public class SanPhamAPIModel {
         this.giaTien = giaTien;
         this.images = images;
         this.moTa = moTa;
+    }
+
+
+    public String getIdDonHang() {
+        return idDonHang;
+    }
+
+    public void setIdDonHang(String idDonHang) {
+        this.idDonHang = idDonHang;
     }
 
     public int getSoLuongDat() {
@@ -134,11 +145,11 @@ public class SanPhamAPIModel {
         this.danhMuc = danhMuc;
     }
 
-    public List<ChiTietDonHangModel> getChiTietDonHangs() {
+    public List<ChiTietDonHangAPIModel> getChiTietDonHangs() {
         return chiTietDonHangs;
     }
 
-    public void setChiTietDonHangs(List<ChiTietDonHangModel> chiTietDonHangs) {
+    public void setChiTietDonHangs(List<ChiTietDonHangAPIModel> chiTietDonHangs) {
         this.chiTietDonHangs = chiTietDonHangs;
     }
 

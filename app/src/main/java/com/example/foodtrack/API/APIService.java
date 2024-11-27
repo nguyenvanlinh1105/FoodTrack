@@ -94,7 +94,7 @@ public interface APIService {
     Call<List<DonHangAPIModel>> GetDonHangDangGiao();
     //Lấy tất cả sản phẩm đã mua - history: histori chưa
     @GET("")
-    Call<List<SanPhamAPIModel>> GetSanPhamDaMua();
+    Call<List<SanPhamAPIModel>> GetSanPhamDaMua(@Query("idNguoiDung") String idUser);
 
     //lấy đơn hàng đã hủy: chưa
     @GET("")
@@ -105,10 +105,10 @@ public interface APIService {
     Call<List<SanPhamAPIModel>> getDsSanPhamYeuThich(@Query("idNguoiDung") String idNguoiDung);
 
     @POST("order/new")
-    // thêm sản phẩm vào đơn hàng : roi
+    // thêm sản phẩm vào đơn hàng :roi
     Call<ChiTietDonHangAPIModel> PostToBuyProduct(@Body ChiTietDonHangAPIModel product);
 
-    //  đặt hàng:set trangThaiDat==1 ròi
+    //  đặt hàng:set trangThaiDat==1 roi
     @POST("")
     Call<DonHangAPIModel> PostToOrder(@Body DonHangAPIModel donHang);
 

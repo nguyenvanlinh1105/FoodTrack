@@ -118,7 +118,7 @@ public class fragment_rating_comment extends Fragment {
                 popupWindow.dismiss();
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_history());
+                    mainActivity.ReplaceFragment(new fragment_myorders_history_API());
                 }
             }
         });
