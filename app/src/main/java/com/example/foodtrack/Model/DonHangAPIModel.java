@@ -12,7 +12,7 @@ public class DonHangAPIModel implements Serializable {
     private Date ngayTao;
     private Timestamp thoiGianCapNhat;
     private String diaChi;
-    private String phuongThucThanhToan;
+    private int phuongThucThanhToan;
     private String ghiChu ;
 
 
@@ -36,11 +36,11 @@ public class DonHangAPIModel implements Serializable {
         return diaChi;
     }
 
-    public String getPhuongThucThanhToan() {
+    public int getPhuongThucThanhToan() {
         return phuongThucThanhToan;
     }
 
-    public void setPhuongThucThanhToan(String phuongThucThanhToan) {
+    public void setPhuongThucThanhToan(int phuongThucThanhToan) {
         this.phuongThucThanhToan = phuongThucThanhToan;
     }
 

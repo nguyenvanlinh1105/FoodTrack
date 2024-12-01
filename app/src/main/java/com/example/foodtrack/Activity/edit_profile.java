@@ -55,10 +55,11 @@ public class edit_profile extends AppCompatActivity {
     TextView luuBtn_editProfile;
     Uri mUri;
 
-    TextView edt_HoTen, edt_sdt, edt_email, edt_gioiTinh, edt_ngaySinh, edt_diaChi,btn_doiAnh;
-    ImageView imgCalendar , img_avt ;
+    TextView edt_HoTen, edt_sdt, edt_email, edt_gioiTinh, edt_ngaySinh, edt_diaChi, btn_doiAnh;
+    ImageView imgCalendar, img_avt;
     SharedPreferences shareUserResponse;
     String idUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class edit_profile extends AppCompatActivity {
             return insets;
         });
         shareUserResponse = getApplicationContext().getSharedPreferences("shareUserResponseLogin", MODE_PRIVATE);
-        idUser = shareUserResponse.getString("idUser","-1");
+        idUser = shareUserResponse.getString("idUser", "-1");
         Mapping();
         GetInfoUser(idUser);// null crash
         ControlButton();
@@ -89,7 +90,6 @@ public class edit_profile extends AppCompatActivity {
         img_avt = findViewById(R.id.img_avt);
 
 
-
         luuBtn_editProfile = (TextView) findViewById(R.id.luuBtn_editProfile);
     }
 
@@ -100,63 +100,67 @@ public class edit_profile extends AppCompatActivity {
                 finish();
             }
         });
-        img_avt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickRequestPermission();
-            }
-        });
+//        img_avt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onClickRequestPermission();
+//            }
+//        });
         btn_doiAnh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
-                String realPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
-                File file = new File(realPath);
-                RequestBody requestBodyAvt = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                MultipartBody.Part multipartBodyAvt = MultipartBody.Part.createFormData("img", file.getName(), requestBodyAvt);
-                APIService.API_SERVICE.ChangInfoUser(bodyIdNguoiDung, multipartBodyAvt).enqueue(new Callback<NguoiDungAPIModel>() {
-                    @Override
-                    public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
-                        if (response.isSuccessful()) {
-                            NguoiDungAPIModel model = response.body();
-                            edt_HoTen.setText(model.getHoTenNguoiDung());
-                            edt_sdt.setText(model.getSdt());
-                            edt_email.setText(model.getEmail());
-                            edt_gioiTinh.setText(model.getGioiTinh());
-                            edt_ngaySinh.setText(model.getNgaySinh());
-                            edt_diaChi.setText(model.getDiaChi());
+                if (btn_doiAnh.getText() == "Đổi hình đại diện") {
+                    onClickRequestPermission();
+                } else {
+                    RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
+                    String realPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
+                    File file = new File(realPath);
+                    RequestBody requestBodyAvt = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    MultipartBody.Part multipartBodyAvt = MultipartBody.Part.createFormData("img", file.getName(), requestBodyAvt);
+                    APIService.API_SERVICE.ChangInfoUser(bodyIdNguoiDung, multipartBodyAvt).enqueue(new Callback<NguoiDungAPIModel>() {
+                        @Override
+                        public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
+                            if (response.isSuccessful()) {
+                                NguoiDungAPIModel model = response.body();
+                                edt_HoTen.setText(model.getHoTenNguoiDung());
+                                edt_sdt.setText(model.getSdt());
+                                edt_email.setText(model.getEmail());
+                                edt_gioiTinh.setText(model.getGioiTinh());
+                                edt_ngaySinh.setText(model.getNgaySinh());
+                                edt_diaChi.setText(model.getDiaChi());
 
-                            String imageUrl = model.getAvatar();
-                            if (imageUrl.startsWith("http://")) {
-                                imageUrl = imageUrl.replace("http://", "https://");
+                                String imageUrl = model.getAvatar();
+                                if (imageUrl.startsWith("http://")) {
+                                    imageUrl = imageUrl.replace("http://", "https://");
+                                }
+
+                                Glide.with(getApplicationContext())
+                                        .asBitmap()
+                                        .load(imageUrl)
+                                        .into(new CustomTarget<Bitmap>() {
+                                            @Override
+                                            public void onLoadCleared(@Nullable Drawable placeholder) {
+                                            }
+
+                                            @Override
+                                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                                img_avt.setImageDrawable(new BitmapDrawable(getApplicationContext().getResources(), resource));
+
+                                            }
+                                        });
+
+
+                            } else {
+
                             }
+                        }
 
-                            Glide.with(getApplicationContext())
-                                    .asBitmap()
-                                    .load(imageUrl)
-                                    .into(new CustomTarget<Bitmap>() {
-                                        @Override
-                                        public void onLoadCleared(@Nullable Drawable placeholder) {
-                                        }
-
-                                        @Override
-                                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                            img_avt.setImageDrawable(new BitmapDrawable(getApplicationContext().getResources(), resource));
-
-                                        }
-                                    });
-
-
-                        } else {
+                        @Override
+                        public void onFailure(Call<NguoiDungAPIModel> call, Throwable t) {
 
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<NguoiDungAPIModel> call, Throwable t) {
-
-                    }
-                });
+                    });
+                }
             }
         });
 
@@ -179,7 +183,6 @@ public class edit_profile extends AppCompatActivity {
                 }
 
 
-
                 NguoiDungAPIModel nguoiDung = new NguoiDungAPIModel();
                 nguoiDung.setIdUser(idUser);
                 nguoiDung.setHoTenNguoiDung(hoTen);
@@ -188,7 +191,6 @@ public class edit_profile extends AppCompatActivity {
                 nguoiDung.setGioiTinh(gioiTinh);
                 nguoiDung.setNgaySinh(ngaySinh);
                 nguoiDung.setDiaChi(diaChi);
-
 
 
 //                RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
@@ -253,7 +255,7 @@ public class edit_profile extends AppCompatActivity {
 //
 
 
-                  ChangInfoUser(nguoiDung);
+                ChangInfoUser(nguoiDung);
             }
         });
 
@@ -271,7 +273,7 @@ public class edit_profile extends AppCompatActivity {
                 this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
                     // Cập nhật ngày vào EditText
-                   // String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                    // String formattedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                     String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
 
                     edt_ngaySinh.setText(formattedDate);
@@ -285,11 +287,11 @@ public class edit_profile extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void ChangInfoUser(NguoiDungAPIModel model){
+    private void ChangInfoUser(NguoiDungAPIModel model) {
         APIService.API_SERVICE.UpdateInfo(model).enqueue(new Callback<NguoiDungAPIModel>() {
             @Override
             public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     NguoiDungAPIModel model = response.body();
                     edt_HoTen.setText(model.getHoTenNguoiDung());
                     edt_sdt.setText(model.getSdt());
@@ -297,7 +299,7 @@ public class edit_profile extends AppCompatActivity {
                     edt_gioiTinh.setText(model.getGioiTinh());
                     edt_ngaySinh.setText(model.getNgaySinh());
                     edt_diaChi.setText(model.getDiaChi());
-                }else{
+                } else {
 
                 }
             }
@@ -362,11 +364,12 @@ public class edit_profile extends AppCompatActivity {
                     }
                     Uri uri = data.getData();// kết quả nhận được khi chọn ảnh
                     mUri = uri;
-                    if(mUri==null){
+                    if (mUri == null) {
 
-                    }else{
+                    } else {
                         btn_doiAnh.setText("Lưu thay đổi");
                     }
+
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                         img_avt.setImageBitmap(bitmap);
@@ -378,11 +381,11 @@ public class edit_profile extends AppCompatActivity {
     );
 
 
-    private void GetInfoUser(String idUser){
+    private void GetInfoUser(String idUser) {
         APIService.API_SERVICE.GetInfoUser(idUser).enqueue(new Callback<NguoiDungAPIModel>() {
             @Override
             public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     NguoiDungAPIModel model = response.body();
                     edt_HoTen.setText(model.getHoTenNguoiDung());
                     edt_sdt.setText(model.getSdt());

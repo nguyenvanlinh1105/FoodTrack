@@ -128,7 +128,7 @@ public class checkout extends Fragment {
 
                 String idDonHang =dataDonHang.getString("idDonHang", "");
                 String diaChi = dataUserResponse.getString("diaChi","");
-                String phuongThucThanhToan ="Thanh toán trực tiếp";
+                int phuongThucThanhToan =0;//0 la truc tiep
 
 
                 donHang.setIdDonHang(idDonHang);

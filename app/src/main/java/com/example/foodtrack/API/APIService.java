@@ -33,7 +33,7 @@ public interface APIService {
 
 
   //    linkAPI root:
-    public static String url ="https://30ac-2405-4802-b27c-97a0-b960-157b-aafb-82f7.ngrok-free.app/";
+    public static String url ="https://0089-113-23-31-245.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -93,13 +93,16 @@ public interface APIService {
   // lấy đơn hàng đang giao: chưa
     @GET("")
     Call<List<DonHangAPIModel>> GetDonHangDangGiao();
+  //lấy đơn hàng đã hủy : chưa
+  @GET("")
+  Call<List<DonHangAPIModel>> GetDonHangDaHuy();
+
+
     //Lấy tất cả sản phẩm đã mua - history: histori chưa
     @GET("")
     Call<List<SanPhamAPIModel>> GetSanPhamDaMua(@Query("idNguoiDung") String idUser);
 
-    //lấy đơn hàng đã hủy : chưa
-    @GET("")
-    Call<List<DonHangAPIModel>> GetDonHangDaHuy();
+
 
     // lấy danh sách sản phẩm yêu thích: roi
     @GET("food/love/list")
@@ -109,15 +112,13 @@ public interface APIService {
     // thêm sản phẩm vào đơn hàng :roi
     Call<ChiTietDonHangAPIModel> PostToBuyProduct(@Body ChiTietDonHangAPIModel product);
 
-    //  đặt hàng:set trangThaiDat==1 roi
-    @POST("")
+    //  đặt hàng:set trangThaiDat==1 dang
+    @POST("order/confirm")
     Call<DonHangAPIModel> PostToOrder(@Body DonHangAPIModel donHang);
 
     // hủy đặt hàng set trangThaiDat==0;
     Call<DonHangAPIModel> PostToCancleOrder(@Body DonHangAPIModel donHang);
 
-    //  đặt hàng:set trangThaiDat==datHang;
-    Call<DonHangAPIModel> PostToAgainOrder(@Body DonHangAPIModel donHang);
 
   //lấy danh sách chat: roi
   @GET("chat")
