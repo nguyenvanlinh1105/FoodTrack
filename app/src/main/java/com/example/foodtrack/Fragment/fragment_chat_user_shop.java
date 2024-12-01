@@ -220,7 +220,7 @@ public class fragment_chat_user_shop extends Fragment {
                         mSocket.emit("CLIENT_SEND_MESSAGE", jsonTinNhan);
                         listChat.add(tinNhan);
                         adapterChat.notifyDataSetChanged();
-                        rv_chat.scrollToPosition(listChat.size() - 1);
+                        rv_chat.post(() -> rv_chat.scrollToPosition(listChat.size() - 1));
 //                    Log.d("tinNhanModel", jsonTinNhan);
                         edt_chat.setText("");
 

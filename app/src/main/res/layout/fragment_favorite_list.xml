@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containter_item_deal_hoi_homepage"
-    android:layout_width="180dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="20dp"
     android:background="@color/white"
-    app:strokeColor="#E6E6E6"
-    app:strokeWidth="2dp">
+    android:elevation="4dp">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:paddingLeft="12dp"
-        android:paddingTop="20dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="20dp">
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,8 +20,8 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
                 app:cardCornerRadius="20dp">
 
@@ -38,19 +33,26 @@
                     android:src="@drawable/icon_food1" />
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/item_title_favorite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <LinearLayout
                 android:layout_marginTop="12dp"
                 android:paddingLeft="5dp"
-                android:text="Salad trái cây"
-                android:textColor="#9F2733"
-                android:textSize="14sp"
-                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/item_title_favorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="Salad trái cây"
+                    android:textColor="#9F2733"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/don_vi_tinh_deal_hoi_item"
@@ -67,27 +69,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="67dp">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/price_favorite"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_weight="1"
                     android:fontFamily="sans-serif-medium"
                     android:paddingLeft="5dp"
                     android:text="60.000 vnđ"
                     android:textColor="@color/primary_color"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
+
                 <LinearLayout
                     android:id="@+id/deleteBtn_favorite"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginEnd="3dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="5dp"
+
                     android:background="@drawable/icon_delete_favorite_bg"
                     android:gravity="center"
                     android:tag="deleteBtn_favorite"
@@ -96,9 +98,8 @@
                     app:layout_constraintTop_toTopOf="@+id/price_favorite">
 
                     <ImageView
-                        android:layout_width="20dp"
-
-                        android:layout_height="25dp"
+                        android:layout_width="18dp"
+                        android:layout_height="22dp"
                         android:src="@drawable/icon_delete_favorite30"
                         tools:layout_editor_absoluteX="309dp"
                         tools:layout_editor_absoluteY="35dp" />
@@ -108,4 +109,4 @@
     </FrameLayout>
 
 
-</com.google.android.material.card.MaterialCardView>
+</FrameLayout>
