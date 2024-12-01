@@ -30,12 +30,12 @@ import retrofit2.Response;
 public class cart_adapter_api extends BaseAdapter {
 
     Context context;
-    List<SanPhamAPIModel> arrayListSanPham;
+    public List<SanPhamAPIModel> arrayListSanPham;
     LayoutInflater inflater;
     cart activityCart;
 
-    SharedPreferences userResponse ;
-    SharedPreferences donHangResponse ;
+    SharedPreferences userResponse;
+    SharedPreferences donHangResponse;
 
     public cart_adapter_api(Context context, List<SanPhamAPIModel> arrayListSanPham, cart activityCart) {
         this.context = context;
@@ -64,63 +64,73 @@ public class cart_adapter_api extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.fragment_cart_item, parent, false);
-            holder = new ViewHolder();
-            holder.title = convertView.findViewById(R.id.item_title_cart);
-            holder.img = convertView.findViewById(R.id.item_image_cart);
-            holder.price = convertView.findViewById(R.id.price_cart);
-            holder.qty = convertView.findViewById(R.id.qty_cart);
-            holder.btn_plus_cart = convertView.findViewById(R.id.btn_plus_cart);
-            holder.btn_minus_cart = convertView.findViewById(R.id.btn_minus_cart);
-            holder.btn_XoaCTDH = convertView.findViewById(R.id.btn_XoaCTDH);
-
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+    public View getView(int i, View view, ViewGroup parent) {
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_cart_item, parent, false);
         }
+
+        TextView title = view.findViewById(R.id.item_title_cart);
+        ImageView img = view.findViewById(R.id.item_image_cart);
+        TextView price = view.findViewById(R.id.price_cart);
+        TextView qty = view.findViewById(R.id.qty_cart);
+        TextView btn_plus_cart = view.findViewById(R.id.btn_plus_cart);
+        TextView btn_minus_cart = view.findViewById(R.id.btn_minus_cart);
+        ImageView btn_XoaCTDH = view.findViewById(R.id.btn_XoaCTDH);
+
 
         SanPhamAPIModel product = arrayListSanPham.get(i);
 
         // Set data to views
-        holder.title.setText(product.getTenSanPham());
+        title.setText(product.getTenSanPham());
         double giaTien = product.getGiaTien();
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
         String formattedPrice = numberFormat.format(giaTien);
 
-        holder.price.setText(formattedPrice + " vnđ");
-        holder.qty.setText(String.valueOf(product.getSoLuongDat()));
+        price.setText(formattedPrice + " vnđ");
+        qty.setText(String.valueOf(product.getSoLuongDat()));
 
         Glide.with(context)
                 .load(product.getImages())
-                .into(holder.img);
+                .into(img);
 
-        // Handle button actions
-        holder.btn_plus_cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int qtyNum = product.getSoLuongDat() + 1;
 
-                product.setSoLuongDat(qtyNum);
-                product.setSoluongBH(qtyNum);
-                holder.qty.setText(String.valueOf(qtyNum));
-                activityCart.updateTotalPrice();
-                notifyDataSetChanged();
-            }
-        });
-        holder.btn_minus_cart.setOnClickListener(view -> updateQuantity(i, holder.qty, -1));
-
-        String idUser = userResponse.getString("idUser","-1");
-        String idDonHang = donHangResponse.getString("idDonHang","");
+        String idUser = userResponse.getString("idUser", "-1");
+        String idDonHang = donHangResponse.getString("idDonHang", "");
         ChiTietDonHangAPIModel model = new ChiTietDonHangAPIModel();
         model.setIdDonHang(idDonHang);
         model.setIdSanPham(product.getIdSanPham());
 
-        holder.btn_XoaCTDH.setOnClickListener(new View.OnClickListener() {
+        // Handle button actions
+        btn_plus_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int qtyNum = product.getSoLuongDat() + 1;
+                product.setSoLuongDat(qtyNum);
+                qty.setText(String.valueOf(qtyNum));
+                activityCart.updateTotalPrice();
+                notifyDataSetChanged();
+            }
+        });
+        btn_minus_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int qtyNum = product.getSoLuongDat() - 1;
+                if(qtyNum == 0){
+                    removeProductByModel(model);
+                    XoaSanPhamGioHang(model);
+                    activityCart.updateTotalPrice();
+                }
+                else{
+                    product.setSoLuongDat(qtyNum);
+                    qty.setText(String.valueOf(qtyNum));
+                    activityCart.updateTotalPrice();
+                    notifyDataSetChanged();
+                }
+
+            }
+        });
+
+        btn_XoaCTDH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeProductByModel(model);
@@ -128,33 +138,12 @@ public class cart_adapter_api extends BaseAdapter {
             }
         });
 
-        return convertView;
+        return view;
     }
-
-    private void updateQuantity(int position, TextView qtyView, int change) {
-        // Kiểm tra vị trí hợp lệ
-        if (position < 0 || position >= arrayListSanPham.size()) {
-            // Log lỗi để dễ kiểm tra
-            Log.e("updateQuantity", "Invalid position: " + position);
-            return;
-        }
-
-    }
-
 
     private void removeProduct(int position) {
         arrayListSanPham.remove(position);
         notifyDataSetChanged();
-    }
-
-    static class ViewHolder {
-        TextView title;
-        ImageView img;
-        TextView price;
-        TextView qty;
-        TextView btn_plus_cart;
-        TextView btn_minus_cart;
-        ImageView btn_XoaCTDH;
     }
 
     private void XoaSanPhamGioHang(ChiTietDonHangAPIModel model) {
@@ -184,7 +173,7 @@ public class cart_adapter_api extends BaseAdapter {
                 activityCart.tongTien -= Double.valueOf(arrayListSanPham.get(i).getGiaTien()) * Integer.valueOf(arrayListSanPham.get(i).getSoLuongDat());
                 NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
                 String formattedPrice = numberFormat.format(activityCart.tongTien);
-                activityCart.total.setText(formattedPrice+" vnđ");
+                activityCart.total.setText(formattedPrice + " vnđ");
                 arrayListSanPham.remove(i);
                 break;
             }
