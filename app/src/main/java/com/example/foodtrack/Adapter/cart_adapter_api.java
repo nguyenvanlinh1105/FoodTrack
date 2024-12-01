@@ -124,7 +124,7 @@ public class cart_adapter_api extends BaseAdapter {
         SanPhamAPIModel product = arrayListSanPham.get(position);
         int qtyNum = product.getSoluongBH() + change;
 
-        if (qtyNum <= 0) {
+        if (qtyNum == 0) {
             removeProduct(position);
         } else {
             product.setSoluongBH(qtyNum);
