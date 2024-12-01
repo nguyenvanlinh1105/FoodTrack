@@ -142,7 +142,7 @@ public class checkout extends Fragment {
 
                 donHang.setGhiChu(textGhiChu);
                 if (payBtn.getText().toString().equals("Xác nhận đặt đơn")) {
-                    mainActivity.ReplaceFragment(new fragment_confirm_payment());
+
 
 
                     donHang.setPhuongThucThanhToan(phuongThucThanhToan);
@@ -157,10 +157,10 @@ public class checkout extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("donHang", donHang);
                     fragment.setArguments(bundle);
-
+//                    cart.ToFinishActivity.finish();
                     // Thay đổi Fragment
                     mainActivity.ReplaceFragment(fragment);
-                    cart.ToFinishActivity.finish();
+                    //c
 
                 }
 
@@ -185,6 +185,7 @@ public class checkout extends Fragment {
         });
     }
 
+
     private void PostDataToOder(DonHangAPIModel donhang){
         APIService.API_SERVICE.PostToOrder(donhang).enqueue(new Callback<DonHangAPIModel>() {
             @Override
@@ -196,7 +197,8 @@ public class checkout extends Fragment {
                 Log.d("idDonHang",idDonHang);
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing_API());
+                    mainActivity.ReplaceFragment(new fragment_confirm_payment());
+                    //mainActivity.ReplaceFragment(new fragment_myorders_ongoing_API());
                 }
             }
 

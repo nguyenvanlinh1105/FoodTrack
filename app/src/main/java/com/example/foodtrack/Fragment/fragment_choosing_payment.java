@@ -149,8 +149,8 @@ public class fragment_choosing_payment extends Fragment {
             public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {
                 int delay = 2000;
                         SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
-        editorResponseDonHang.putString("idDonHang", null);
-        editorResponseDonHang.apply();
+                        editorResponseDonHang.putString("idDonHang", null);
+                        editorResponseDonHang.apply();
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
