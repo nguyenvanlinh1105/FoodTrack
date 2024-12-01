@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                    // Nếu có fragment trong back stack, pop fragment
                     getSupportFragmentManager().popBackStack();
                 } else {
                     finish();

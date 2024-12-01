@@ -103,15 +103,11 @@ public class cart_adapter_api extends BaseAdapter {
         holder.btn_plus_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int qtyNum = product.getSoluongBH() + 1;
+                int qtyNum = product.getSoLuongDat() + 1;
 
-                if (qtyNum <= 0) {
-
-                } else {
-                    product.setSoluongBH(qtyNum);
-                    holder.qty.setText(String.valueOf(qtyNum));
-                }
-
+                product.setSoLuongDat(qtyNum);
+                product.setSoluongBH(qtyNum);
+                holder.qty.setText(String.valueOf(qtyNum));
                 activityCart.updateTotalPrice();
                 notifyDataSetChanged();
             }

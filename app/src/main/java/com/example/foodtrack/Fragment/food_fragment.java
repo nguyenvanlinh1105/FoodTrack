@@ -195,19 +195,13 @@ public class food_fragment extends Fragment {
                     listView_food.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("idSanPham", listMonAn_explore.get(position).getIdSanPham());
-                            bundle.putString("title", foodTitle.get(position));
-                            bundle.putDouble("price", foodPrice.get(position));
-                            bundle.putString("description", foodDescription.get(position));
-                            bundle.putInt("image", foodImg.get(position));
-
+                            SanPhamAPIModel selectedProduct = listMonAn_explore.get(position);
                             fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
-                                    listMonAn_explore.get(position).getIdSanPham(),
-                                    foodTitle.get(position),
-                                    foodPrice.get(position),
-                                    foodDescription.get(position),
-                                    String.valueOf(foodImg.get(position))
+                                    selectedProduct.getIdSanPham(),
+                                    selectedProduct.getTenSanPham(),
+                                    selectedProduct.getGiaTien(),
+                                    selectedProduct.getMoTa(),
+                                    selectedProduct.getImages()
                             );
                             MainActivity mainActivity = (MainActivity) getActivity();
                             if (mainActivity != null) {

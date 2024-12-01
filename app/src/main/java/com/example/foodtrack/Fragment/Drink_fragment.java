@@ -181,22 +181,14 @@ public class Drink_fragment extends Fragment {
                     listView_drink.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            // Xử lý khi click vào item
-                            Bundle bundle = new Bundle();
-                            bundle.putString("idSanPham", listUongDo_explore.get(position).getIdSanPham());
-                            bundle.putString("title", drinkTitle.get(position));
-                            bundle.putDouble("price", drinkPrice.get(position));
-                            bundle.putString("description", drinkDescription.get(position));
-                            bundle.putInt("image", drinkImg.get(position));
-
+                            SanPhamAPIModel selectedProduct = listUongDo_explore.get(position);
                             fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
-                                    listUongDo_explore.get(position).getIdSanPham(),
-                                    drinkTitle.get(position),
-                                    drinkPrice.get(position),
-                                    drinkDescription.get(position),
-                                    String.valueOf(drinkImg.get(position))
+                                    selectedProduct.getIdSanPham(),
+                                    selectedProduct.getTenSanPham(),
+                                    selectedProduct.getGiaTien(),
+                                    selectedProduct.getMoTa(),
+                                    selectedProduct.getImages()
                             );
-
                             MainActivity mainActivity = (MainActivity) getActivity();
                             if (mainActivity != null) {
                                 mainActivity.ReplaceFragment(productDetailsFragment);

@@ -125,9 +125,8 @@ public interface APIService {
   Call<List<TinNhanModel>> getDsChat(@Query("idPhongChat")String idPhongChat);
 
     // gửi bình luận: chua
-    @POST("")
+    @POST("user/comment")
     Call<BinhLuanSanPhamModel> guiBinhLuan (@Body BinhLuanSanPhamModel binhLuanSanPhamModel);
-
 
     // thêm sản phẩm yêu thích : rồi
    @POST("food/love")
