@@ -1,5 +1,6 @@
 package com.example.foodtrack.Fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,7 @@ public class fragment_choosing_payment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    SharedPreferences sharedPreferencesDonHang;
     private ImageView backBtn;
     private LinearLayout momo, zaloPay;
     DonHangAPIModel donHang;
@@ -73,6 +75,7 @@ public class fragment_choosing_payment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        sharedPreferencesDonHang = getContext().getSharedPreferences("dataDonHangResponse", getContext().MODE_PRIVATE);
 
         if (getArguments() != null) {
              donHang = (DonHangAPIModel) getArguments().getSerializable("donHang");
@@ -108,7 +111,8 @@ public class fragment_choosing_payment extends Fragment {
             public void onClick(View view) {
                 int delay = 2000;
 
-                donHang.setPhuongThucThanhToan(1);
+                donHang.setPhuongThucThanhToan("Thanh toán online");
+                donHang.setTinhTrang("Đã xác nhận");
                 PostDataToOder(donHang);
             }
         });
@@ -117,10 +121,8 @@ public class fragment_choosing_payment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
-
-
-                donHang.setPhuongThucThanhToan(1);
+                donHang.setPhuongThucThanhToan("Thanh toán online");
+                donHang.setTinhTrang("Đã xác nhận");
                 PostDataToOder(donHang);
 
 
@@ -146,6 +148,9 @@ public class fragment_choosing_payment extends Fragment {
             @Override
             public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {
                 int delay = 2000;
+                        SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
+        editorResponseDonHang.putString("idDonHang", null);
+        editorResponseDonHang.apply();
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {

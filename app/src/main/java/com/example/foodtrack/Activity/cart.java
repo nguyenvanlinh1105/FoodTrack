@@ -47,6 +47,7 @@ public class cart extends AppCompatActivity {
     public double tongTien =0;
     private TextView edt_ghiChu;
     public String textGhiChu;
+    String idDonHang;
 
     public static Activity ToFinishActivity;
 
@@ -68,7 +69,7 @@ public class cart extends AppCompatActivity {
 
         Mapping();
 
-        String idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
+         idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
 
 
         if (idDonHang != null && !idDonHang.isEmpty()) {
@@ -109,13 +110,17 @@ public class cart extends AppCompatActivity {
             backBtn.setOnClickListener(view -> finish());
         }
         if (datDonBtn != null) {
-            datDonBtn.setOnClickListener(view -> {
-                textGhiChu = edt_ghiChu.getText().toString();
-                Intent thanhToan = new Intent(cart.this, MainActivity.class);
-                thanhToan.putExtra("fragmentToLoad", "cartFragment");
-                thanhToan.putExtra("ghiChu",textGhiChu);
-                startActivity(thanhToan);
-            });
+           if(idDonHang!=null){
+               datDonBtn.setOnClickListener(view -> {
+                   textGhiChu = edt_ghiChu.getText().toString();
+                   Intent thanhToan = new Intent(cart.this, MainActivity.class);
+                   thanhToan.putExtra("fragmentToLoad", "cartFragment");
+                   thanhToan.putExtra("ghiChu",textGhiChu);
+                   startActivity(thanhToan);
+               });
+           }else{
+               datDonBtn.setText("Không có sản phẩm nào!");
+           }
         }
     }
 
