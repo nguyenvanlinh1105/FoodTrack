@@ -116,7 +116,8 @@ public interface APIService {
     @POST("order/confirm")
     Call<DonHangAPIModel> PostToOrder(@Body DonHangAPIModel donHang);
 
-    // hủy đặt hàng set trangThaiDat==0;
+    // hủy đặt hàng set trangThaiDat==0;: chưa
+    @POST("order/deny")
     Call<DonHangAPIModel> PostToCancleOrder(@Body DonHangAPIModel donHang);
 
 

@@ -170,6 +170,7 @@ public class fragment_myorders_ongoing_details extends Fragment {
     private void UseFallbackData() {
         initializeData();
         displayOrderDetails();
+
     }
 
 
@@ -199,6 +200,14 @@ public class fragment_myorders_ongoing_details extends Fragment {
             @Override
             public void onClick(View view) {
                 requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+        btn_huy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DonHangAPIModel model = new DonHangAPIModel();
+                model.setIdDonHang(idDonHang);
+                PostToCancleOrder(model);
             }
         });
 
@@ -297,4 +306,20 @@ public class fragment_myorders_ongoing_details extends Fragment {
             ll_list_myorders_details.addView(itemView);
         }
     }
+
+
+    private void PostToCancleOrder(DonHangAPIModel model){
+        APIService.API_SERVICE.PostToCancleOrder(model).enqueue(new Callback<DonHangAPIModel>() {
+            @Override
+            public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<DonHangAPIModel> call, Throwable t) {
+
+            }
+        });
+    }
+
 }
