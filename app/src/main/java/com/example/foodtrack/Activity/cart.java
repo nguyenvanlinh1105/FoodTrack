@@ -127,23 +127,20 @@ public class cart extends AppCompatActivity {
     public void updateTotalPrice() {
         if (listView_cart != null) {
             int totalPrice = 0;
-            for (int i = 0; i < listView_cart.getCount(); i++) {
-                View view = listView_cart.getChildAt(i);
-                if (view != null) {
-                    TextView qtyTextView = view.findViewById(R.id.qty_cart);
-                    int qty = Integer.parseInt(qtyTextView.getText().toString());
 
-                    String cleanedPrice = cartPrice.get(i).replace(".", "").replace("vnđ", "");
-                    int pricePerItem = Integer.parseInt(cleanedPrice);
+            cart_adapter_api adapter = (cart_adapter_api) listView_cart.getAdapter();
+            if (adapter != null) {
+                List<SanPhamAPIModel> sanPhamList = adapter.arrayListSanPham;
 
-                    totalPrice += qty * pricePerItem;
+                for (SanPhamAPIModel product : sanPhamList) {
+                    totalPrice += product.getSoLuongDat() * product.getGiaTien();
                 }
             }
-
-            NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
-            total.setText(formatter.format(totalPrice) + "vnđ");
+            NumberFormat formatter = NumberFormat.getInstance(Locale.getDefault());
+            total.setText(formatter.format(totalPrice) + " vnđ");
         }
     }
+
 
     public  void GetDsSanPhamOrder(String idDonHang) {
         APIService.API_SERVICE.GetSanPhamGioHang(idDonHang).enqueue(new Callback<List<SanPhamAPIModel>>() {
