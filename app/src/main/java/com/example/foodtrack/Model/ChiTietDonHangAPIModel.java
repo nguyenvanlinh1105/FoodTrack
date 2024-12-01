@@ -2,7 +2,10 @@ package com.example.foodtrack.Model;
 
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 
-public class ChiTietDonHangAPIModel {
+import java.io.Serializable;
+import java.util.List;
+
+public class ChiTietDonHangAPIModel implements Serializable {
     private String idDonHang;
     private String idChiTietDonHang;
     private String idUser;
@@ -12,6 +15,7 @@ public class ChiTietDonHangAPIModel {
     // Navigation properties
  //   private DonHangModel donHang;
     private SanPhamAPIModel sanPham;
+
 
     public String getIdChiTietDonHang() {
         return idChiTietDonHang;

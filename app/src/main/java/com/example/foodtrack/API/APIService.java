@@ -91,8 +91,8 @@ public interface APIService {
   Call<List<SanPhamAPIModel>>GetSanPhamGioHang(@Query ("idDonHang") String idDonHang);
 
   // lấy đơn hàng đang giao: chưa
-    @GET("")
-    Call<List<DonHangAPIModel>> GetDonHangDangGiao();
+    @GET("order/list/unfinished")
+    Call<List<DonHangAPIModel>> GetDonHangDangGiao(@Query("idNguoiDung")String idNguoiDung);
   //lấy đơn hàng đã hủy : chưa
   @GET("")
   Call<List<DonHangAPIModel>> GetDonHangDaHuy();

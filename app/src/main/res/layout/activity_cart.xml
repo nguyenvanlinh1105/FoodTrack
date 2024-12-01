@@ -192,6 +192,7 @@
                     android:background="@android:color/transparent"
                     android:gravity="right"
                     android:hint="Nhập ghi chú ở đây..."
+                    android:lines="5"
                     android:padding="8dp"
                     android:textAlignment="textStart"
                     android:textSize="14sp" />

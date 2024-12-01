@@ -17,9 +17,6 @@ public class DonHangAPIModel implements Serializable {
     private String phuongThucThanhToan;
     private String ghiChu ;
 
-    private  List<SanPhamAPIModel> listSP;
-
-
     // Navigation properties
     private NguoiDungModel nguoiDung;
     private List<ChiTietDonHangAPIModel> chiTietDonHangs;
