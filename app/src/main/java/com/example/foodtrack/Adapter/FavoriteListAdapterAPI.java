@@ -82,7 +82,7 @@ public class FavoriteListAdapterAPI extends BaseAdapter {
 
         // Gán dữ liệu cho View
         holder.title.setText(product.getTenSanPham());
-        holder.subTitle.setText(product.getMoTa());
+       // holder.subTitle.setText(product.getMoTa());
 
         // Load image with Glide
         String imageUrl = product.getImages().replace("http://", "https://");

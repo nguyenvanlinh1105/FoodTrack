@@ -63,9 +63,11 @@ public class list_drink_API_adapter extends ArrayAdapter<SanPhamAPIModel> {
 
         TextView title = view.findViewById(R.id.item_title_product);
         TextView price = view.findViewById(R.id.item_price_product);
+        TextView moTa = view.findViewById(R.id.txtMoTa);
         ConstraintLayout img = view.findViewById(R.id.item_image_product);
         TextView addToCartBtn = view.findViewById(R.id.btn_AddToCart_food_drink);
 
+        sharedPreferencesDonHang = getContext().getSharedPreferences("dataDonHangResponse", Context.MODE_PRIVATE);
         if (drink != null) {
             String imageUrl = drink.getImages();
             if (imageUrl.startsWith("http://")) {
@@ -93,6 +95,7 @@ public class list_drink_API_adapter extends ArrayAdapter<SanPhamAPIModel> {
                     });
 //            img.setImageBitmap(drink.getImages());
             title.setText(drink.getTenSanPham());
+            moTa.setText(drink.getMoTa());
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
             String formattedPrice= formatter.format(drink.getGiaTien());
@@ -107,7 +110,7 @@ public class list_drink_API_adapter extends ArrayAdapter<SanPhamAPIModel> {
                 ChiTietDonHangAPIModel ctdh = new ChiTietDonHangAPIModel();
 
                 ctdh.setIdSanPham(drink.getIdSanPham());
-                ctdh.setSoLuongDat(5);
+                ctdh.setSoLuongDat(1);
                 String idDonHang= sharedPreferencesDonHang.getString("idDonHang","");
                 if(idDonHang !=null){
                     ctdh.setIdDonHang(idDonHang);
@@ -164,12 +167,13 @@ public class list_drink_API_adapter extends ArrayAdapter<SanPhamAPIModel> {
                 if (response.isSuccessful() && response.body() != null ) {
                     SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
                     if(ctdh.getIdDonHang()==null){
-                        Toast.makeText(context, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+
                     }else{
                         editorResponseDonHang.putString("idDonHang",ctdh.getIdDonHang());
+                        editorResponseDonHang.apply();
                     }
 
-                    Toast.makeText(context,ctdh.getIdDonHang()+"",Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(context,ctdh.getIdDonHang()+"",Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(context, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();

@@ -124,7 +124,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/textView23"
+                            android:id="@+id/txtMoTa"
                             android:layout_width="320dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"

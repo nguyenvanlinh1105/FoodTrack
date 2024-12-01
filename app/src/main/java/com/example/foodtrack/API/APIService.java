@@ -66,7 +66,7 @@ public interface APIService {
     @GET("food/list")
     Call<List<SanPhamAPIModel>> getListMonAn_Explore();
     // dùng đẻ lấy các thức uống
-    @GET("sanpham/douong")
+    @GET("food/listDrink")
     Call<List<SanPhamAPIModel>>getListDoUong_Explore();
 
     @POST("/user/password/forgot")
