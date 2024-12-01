@@ -100,7 +100,22 @@ public class cart_adapter_api extends BaseAdapter {
                 .into(holder.img);
 
         // Handle button actions
-        holder.btn_plus_cart.setOnClickListener(view -> updateQuantity(i, holder.qty, 1));
+        holder.btn_plus_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int qtyNum = product.getSoluongBH() + 1;
+
+                if (qtyNum <= 0) {
+
+                } else {
+                    product.setSoluongBH(qtyNum);
+                    holder.qty.setText(String.valueOf(qtyNum));
+                }
+
+                activityCart.updateTotalPrice();
+                notifyDataSetChanged();
+            }
+        });
         holder.btn_minus_cart.setOnClickListener(view -> updateQuantity(i, holder.qty, -1));
 
         String idUser = userResponse.getString("idUser","-1");
@@ -121,18 +136,15 @@ public class cart_adapter_api extends BaseAdapter {
     }
 
     private void updateQuantity(int position, TextView qtyView, int change) {
-        SanPhamAPIModel product = arrayListSanPham.get(position);
-        int qtyNum = product.getSoluongBH() + change;
-
-        if (qtyNum <= 0) {
-            removeProduct(position);
-        } else {
-            product.setSoluongBH(qtyNum);
-            qtyView.setText(String.valueOf(qtyNum));
+        // Kiểm tra vị trí hợp lệ
+        if (position < 0 || position >= arrayListSanPham.size()) {
+            // Log lỗi để dễ kiểm tra
+            Log.e("updateQuantity", "Invalid position: " + position);
+            return;
         }
-        activityCart.updateTotalPrice();
-        notifyDataSetChanged();
+
     }
+
 
     private void removeProduct(int position) {
         arrayListSanPham.remove(position);

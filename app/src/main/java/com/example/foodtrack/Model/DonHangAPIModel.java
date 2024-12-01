@@ -1,5 +1,7 @@
 package com.example.foodtrack.Model;
 
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -12,8 +14,10 @@ public class DonHangAPIModel implements Serializable {
     private Date ngayTao;
     private Timestamp thoiGianCapNhat;
     private String diaChi;
-    private int phuongThucThanhToan;
+    private String phuongThucThanhToan;
     private String ghiChu ;
+
+    private  List<SanPhamAPIModel> listSP;
 
 
     // Navigation properties
@@ -36,11 +40,11 @@ public class DonHangAPIModel implements Serializable {
         return diaChi;
     }
 
-    public int getPhuongThucThanhToan() {
+    public String getPhuongThucThanhToan() {
         return phuongThucThanhToan;
     }
 
-    public void setPhuongThucThanhToan(int phuongThucThanhToan) {
+    public void setPhuongThucThanhToan(String phuongThucThanhToan) {
         this.phuongThucThanhToan = phuongThucThanhToan;
     }
 

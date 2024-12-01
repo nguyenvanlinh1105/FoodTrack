@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +44,15 @@ public class checkout extends Fragment {
     private ImageView backBtn;
     private Button payBtn;
 
+    String idDonHang;
+
     private TextView tv_total_amount; // tổng tiền phải trả :
     private TextView tv_service_fee;
     private TextView tv_shipping_fee;
     private TextView tv_ghi_chu;
     private TextView tv_total_price;// thành tiền
     String textGhiChu;
+    SharedPreferences sharedPreferencesDonHang;
 
 
     private LinearLayout tienMat, applePay, icon_check_tien_mat, icon_check_applePay;
@@ -82,6 +86,7 @@ public class checkout extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        sharedPreferencesDonHang = getContext().getSharedPreferences("dataDonHangResponse", getContext().MODE_PRIVATE);
         // Lấy ghiChu từ bundle
         if (getArguments() != null) {
             textGhiChu = getArguments().getString("ghiChu");
@@ -122,16 +127,17 @@ public class checkout extends Fragment {
                 MainActivity mainActivity = (MainActivity) getActivity();
 
                 DonHangAPIModel donHang = new DonHangAPIModel();
-                SharedPreferences dataDonHang = getContext().getSharedPreferences("dataDonHangResponse", Context.MODE_PRIVATE);
+
                 SharedPreferences dataUserResponse = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
 
 
-                String idDonHang =dataDonHang.getString("idDonHang", "");
+                idDonHang =sharedPreferencesDonHang.getString("idDonHang", "");
                 String diaChi = dataUserResponse.getString("diaChi","");
-                int phuongThucThanhToan =0;//0 la truc tiep
+                String phuongThucThanhToan ="Thanh toán trực tiếp";//0 la truc tiep
 
 
                 donHang.setIdDonHang(idDonHang);
+                donHang.setTinhTrang("Đã xác nhận");
                 donHang.setDiaChi(diaChi);
 
                 donHang.setGhiChu(textGhiChu);
@@ -143,7 +149,7 @@ public class checkout extends Fragment {
 
 
                     PostDataToOder(donHang);
-                    cart.ToFinishActivity.finish();
+
                 } else {
                     fragment_choosing_payment fragment = new fragment_choosing_payment();
 
@@ -183,12 +189,23 @@ public class checkout extends Fragment {
         APIService.API_SERVICE.PostToOrder(donhang).enqueue(new Callback<DonHangAPIModel>() {
             @Override
             public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {
-
+                    SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
+                    editorResponseDonHang.putString("idDonHang", null);
+                    editorResponseDonHang.apply();
+                idDonHang =sharedPreferencesDonHang.getString("idDonHang", "");
+                Log.d("idDonHang",idDonHang);
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_myorders_ongoing_API());
+                }
             }
 
             @Override
             public void onFailure(Call<DonHangAPIModel> call, Throwable t) {
-
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new Home_Page());
+                }
             }
         });
     }
