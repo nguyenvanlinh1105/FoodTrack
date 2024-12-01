@@ -65,8 +65,6 @@ public class cart_adapter_api extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup parent) {
-        ViewHolder holder;
-
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_cart_item, parent, false);
         }
@@ -143,30 +141,9 @@ public class cart_adapter_api extends BaseAdapter {
         return view;
     }
 
-    private void updateQuantity(int position, TextView qtyView, int change) {
-        // Kiểm tra vị trí hợp lệ
-        if (position < 0 || position >= arrayListSanPham.size()) {
-            // Log lỗi để dễ kiểm tra
-            Log.e("updateQuantity", "Invalid position: " + position);
-            return;
-        }
-
-    }
-
-
     private void removeProduct(int position) {
         arrayListSanPham.remove(position);
         notifyDataSetChanged();
-    }
-
-    static class ViewHolder {
-        TextView title;
-        ImageView img;
-        TextView price;
-        TextView qty;
-        TextView btn_plus_cart;
-        TextView btn_minus_cart;
-        ImageView btn_XoaCTDH;
     }
 
     private void XoaSanPhamGioHang(ChiTietDonHangAPIModel model) {
