@@ -32,11 +32,16 @@ import com.example.foodtrack.Model.ChiTietDonHangModel;
 import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,6 +58,8 @@ public class fragment_myorders_ongoing_details extends Fragment {
     private static final String ARG_STATUS = "tinhTrang";
     private static final String ARG_NOTE = "ghiChu";
 
+    private static final Serializable ARG_ORDER = null;
+
     private String idDonHang, tinhTrang, ghiChu;
 
     private ImageView btn_back_myorders_ongoing_detail;
@@ -60,12 +67,14 @@ public class fragment_myorders_ongoing_details extends Fragment {
     private ArrayList<ChiTietDonHangModel> arrayChiTietDonHang = new ArrayList<>();
     private Button btn_huy;
 
-    private View view_after_1, view_before_2, view_after_2, view_before_3;
-    private TextView tv_step1, tv_step2, tv_step3;
+    private View view_after_1, view_before_2, view_after_2, view_before_3, view_after_3, view_before_4;
+    private TextView tv_step4, tv_step2, tv_step3;
     private ArrayList<ChiTietDonHangAPIModel> arrayChiTietDonHangAPI = new ArrayList<>();
 
+    private DonHangAPIModel donHangAPIModel = new DonHangAPIModel();
+
     private TextView tv_ghiChu, tv_thoiGianDat, tv_thanhToan,
-            tv_tongTien, tv_tongCong, tv_idDonHang;
+            tv_tongTien, tv_tongCong, tv_idDonHang, tv_tinhTrang, tv_tongSoLuongMon;
 
 
     public fragment_myorders_ongoing_details() {
@@ -96,12 +105,9 @@ public class fragment_myorders_ongoing_details extends Fragment {
         return chiTietDonHangList;
     }
 
-    public static fragment_myorders_ongoing_details newInstance(String id, String tinhTrang, String ghiChu) {
+    public static fragment_myorders_ongoing_details newInstance() {
         fragment_myorders_ongoing_details fragment = new fragment_myorders_ongoing_details();
         Bundle args = new Bundle();
-        args.putString(ARG_ID, id);
-        args.putString(ARG_STATUS, tinhTrang);
-        args.putString(ARG_NOTE, ghiChu);
         fragment.setArguments(args);
         return fragment;
     }
@@ -110,15 +116,8 @@ public class fragment_myorders_ongoing_details extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            idDonHang = getArguments().getString(ARG_ID);
-            Log.d("idDonHang", idDonHang);
-            tinhTrang = getArguments().getString(ARG_STATUS);
-            Log.d("tinhTrang", tinhTrang);
-            ghiChu = getArguments().getString(ARG_NOTE);
-            Log.d("ghichu", ghiChu);
+            donHangAPIModel = (DonHangAPIModel) getArguments().getSerializable("selectedOrder");
         }
-
-
     }
 
     @Override
@@ -133,39 +132,13 @@ public class fragment_myorders_ongoing_details extends Fragment {
     }
 
     private void GetOrderDetails() {
-        APIService.API_SERVICE.GetChiTietDonHangDangGiao().enqueue(new Callback<List<ChiTietDonHangAPIModel>>() {
-            @Override
-            public void onResponse(Call<List<ChiTietDonHangAPIModel>> call, Response<List<ChiTietDonHangAPIModel>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    List<ChiTietDonHangAPIModel> listChiTietDonHang = response.body();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(donHangAPIModel);
+        Log.d("selectedOrder", json);
 
-                    arrayChiTietDonHangAPI.clear();
-                    for (ChiTietDonHangAPIModel apiItem : listChiTietDonHang) {
-                        ChiTietDonHangAPIModel chiTietDonHang = new ChiTietDonHangAPIModel();
-                        SanPhamAPIModel sanPham = new SanPhamAPIModel(apiItem.getProduct().getTenSanPham(), apiItem.getProduct().getGiaTien(), apiItem.getProduct().getImages(), apiItem.getProduct().getMoTa());
-                        chiTietDonHang.setProduct(sanPham);
-                        chiTietDonHang.setSoLuongDat(apiItem.getSoLuongDat());
-                        chiTietDonHang.setIdChiTietDonHang(apiItem.getIdChiTietDonHang());
-                        arrayChiTietDonHangAPI.add(chiTietDonHang);
-                    }
-                    displayOrderDetailsAPI();
-                    btn_huy.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    });
-                } else {
-                    UseFallbackData();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ChiTietDonHangAPIModel>> call, Throwable t) {
-                UseFallbackData();
-            }
-        });
+        displayOrderDetailsAPI();
     }
+
 
     private void UseFallbackData() {
         initializeData();
@@ -181,10 +154,13 @@ public class fragment_myorders_ongoing_details extends Fragment {
         view_before_2 = (View) view.findViewById(R.id.view_before_step_2);
         view_after_2 = (View) view.findViewById(R.id.view_after_step_2);
         view_before_3 = (View) view.findViewById(R.id.view_before_step_3);
+        view_after_3 = (View) view.findViewById(R.id.view_after_step_3);
+        view_before_4 = (View) view.findViewById(R.id.view_before_step_4);
         btn_huy = (Button) view.findViewById(R.id.btn_huy_myOrders_detail);
 
-        tv_step2 = (TextView)view.findViewById(R.id.tv_step_2_tinhTrang_myOrders_details);
-        tv_step3 = (TextView)view.findViewById(R.id.tv_step_3_tinhTrang_myOrders_details);
+        tv_step2 = (TextView) view.findViewById(R.id.tv_step_2_tinhTrang_myOrders_details);
+        tv_step3 = (TextView) view.findViewById(R.id.tv_step_3_tinhTrang_myOrders_details);
+        tv_step4 = (TextView) view.findViewById(R.id.tv_step_4_tinhTrang_myOrders_details);
 
         tv_tongTien = (TextView) view.findViewById(R.id.tv_tongTien_myOrders_details);
         tv_tongCong = (TextView) view.findViewById(R.id.tv_total_amount_myOrders_detail);
@@ -192,7 +168,7 @@ public class fragment_myorders_ongoing_details extends Fragment {
         tv_idDonHang = (TextView) view.findViewById(R.id.tv_ma_don_hang_myOrders_detail);
         tv_thoiGianDat = (TextView) view.findViewById(R.id.tv_thoi_gian_dat_myOrders_detail);
         tv_thanhToan = (TextView) view.findViewById(R.id.tv_thanh_toan_myOrders_detail);
-
+        tv_tinhTrang = (TextView) view.findViewById(R.id.tinhTrang_myOrders_detail);
     }
 
     private void ControlButton() {
@@ -216,16 +192,16 @@ public class fragment_myorders_ongoing_details extends Fragment {
 
     private void displayOrderDetailsAPI() {
 
-        //step 2: đang giao
-        if (tinhTrang == "đang giao") {
+        //step 2: đã xác nhận
+        if (Objects.equals(donHangAPIModel.getTinhTrang(), "Đã xác nhận")) {
             view_after_1.setBackgroundResource(R.drawable.green_btn_bg);
             view_before_2.setBackgroundResource(R.drawable.green_btn_bg);
             tv_step2.setBackgroundResource(R.drawable.green_btn_bg);
 
             btn_huy.setVisibility(View.GONE);
         }
-        //step 3: hoàn thành
-        else if (tinhTrang == "hoàn thành") {
+        //step 3: đang giao
+        else if (Objects.equals(donHangAPIModel.getTinhTrang(), "Đang giao")) {
             view_after_1.setBackgroundResource(R.drawable.green_btn_bg);
             view_before_2.setBackgroundResource(R.drawable.green_btn_bg);
             tv_step2.setBackgroundResource(R.drawable.green_btn_bg);
@@ -236,8 +212,35 @@ public class fragment_myorders_ongoing_details extends Fragment {
 
             btn_huy.setVisibility(View.GONE);
         }
+        //step 4: hoàn thành
+        else if (Objects.equals(donHangAPIModel.getTinhTrang(), "Hoàn thành")) {
+            view_after_1.setBackgroundResource(R.drawable.green_btn_bg);
+            view_before_2.setBackgroundResource(R.drawable.green_btn_bg);
+            tv_step2.setBackgroundResource(R.drawable.green_btn_bg);
+
+            view_after_2.setBackgroundResource(R.drawable.green_btn_bg);
+            view_before_3.setBackgroundResource(R.drawable.green_btn_bg);
+            tv_step3.setBackgroundResource(R.drawable.green_btn_bg);
+
+            view_after_3.setBackgroundResource(R.drawable.green_btn_bg);
+            view_before_4.setBackgroundResource(R.drawable.green_btn_bg);
+            tv_step4.setBackgroundResource(R.drawable.green_btn_bg);
+
+            btn_huy.setVisibility(View.GONE);
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
 
         NumberFormat nf = NumberFormat.getInstance(Locale.ITALY);
+
+        tv_idDonHang.setText(donHangAPIModel.getIdDonHang());
+        tv_thoiGianDat.setText(dateFormat.format(donHangAPIModel.getNgayTao().getTime()));
+        tv_tinhTrang.setText(donHangAPIModel.getTinhTrang());
+        tv_thanhToan.setText(donHangAPIModel.getTinhTrangThanhToan());
+        tv_ghiChu.setText(donHangAPIModel.getGhiChu());
+
+        Log.d("idDonHang", donHangAPIModel.getIdDonHang());
+
         double tongTien = 0;
 
         for (ChiTietDonHangAPIModel chiTiet : arrayChiTietDonHangAPI) {
@@ -273,14 +276,14 @@ public class fragment_myorders_ongoing_details extends Fragment {
                 tenSanPham.setText(sanPham.getTenSanPham());
                 giaTien.setText(nf.format(sanPham.getGiaTien()) + " vnđ");
 
-                tongTien += Double.valueOf(sanPham.getGiaTien())*Integer.valueOf(chiTiet.getSoLuongDat());
+                tongTien += Double.valueOf(sanPham.getGiaTien()) * Integer.valueOf(chiTiet.getSoLuongDat());
             }
 
             ll_list_myorders_details.addView(itemView);
         }
-        tv_ghiChu.setText(ghiChu);
-        tv_idDonHang.setText(idDonHang);
-        tv_tongTien.setText(tongTien + " vnđ");
+//        tv_ghiChu.setText(ghiChu);
+//        tv_idDonHang.setText(idDonHang);
+//        tv_tongTien.setText(tongTien + " vnđ");
     }
 
     private void displayOrderDetails() {
@@ -308,7 +311,7 @@ public class fragment_myorders_ongoing_details extends Fragment {
     }
 
 
-    private void PostToCancleOrder(DonHangAPIModel model){
+    private void PostToCancleOrder(DonHangAPIModel model) {
         APIService.API_SERVICE.PostToCancleOrder(model).enqueue(new Callback<DonHangAPIModel>() {
             @Override
             public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {

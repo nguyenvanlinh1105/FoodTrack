@@ -111,7 +111,7 @@ public class fragment_choosing_payment extends Fragment {
             public void onClick(View view) {
                 int delay = 2000;
 
-                donHang.setPhuongThucThanhToan("Thanh toán online");
+                donHang.setTinhTrangThanhToan("Thanh toán online");
                 donHang.setTinhTrang("Đã xác nhận");
                 PostDataToOder(donHang);
             }
@@ -121,7 +121,7 @@ public class fragment_choosing_payment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                donHang.setPhuongThucThanhToan("Thanh toán online");
+                donHang.setTinhTrangThanhToan("Thanh toán online");
                 donHang.setTinhTrang("Đã xác nhận");
                 PostDataToOder(donHang);
 

@@ -14,7 +14,7 @@ public class DonHangAPIModel implements Serializable {
     private Date ngayTao;
     private Timestamp thoiGianCapNhat;
     private String diaChi;
-    private String phuongThucThanhToan;
+    private String tinhTrangThanhToan;
     private String ghiChu ;
 
     // Navigation properties
@@ -37,12 +37,12 @@ public class DonHangAPIModel implements Serializable {
         return diaChi;
     }
 
-    public String getPhuongThucThanhToan() {
-        return phuongThucThanhToan;
+    public String getTinhTrangThanhToan() {
+        return tinhTrangThanhToan;
     }
 
-    public void setPhuongThucThanhToan(String phuongThucThanhToan) {
-        this.phuongThucThanhToan = phuongThucThanhToan;
+    public void setTinhTrangThanhToan(String tinhTrangThanhToan) {
+        this.tinhTrangThanhToan = tinhTrangThanhToan;
     }
 
     public void setDiaChi(String diaChi) {

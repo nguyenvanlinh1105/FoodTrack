@@ -143,7 +143,7 @@ public class checkout extends Fragment {
                 donHang.setGhiChu(textGhiChu);
                 if (payBtn.getText().toString().equals("Xác nhận đặt đơn")) {
                     mainActivity.ReplaceFragment(new fragment_confirm_payment());
-                    donHang.setPhuongThucThanhToan(phuongThucThanhToan);
+                    donHang.setTinhTrangThanhToan(phuongThucThanhToan);
                     PostDataToOder(donHang);
                 } else {
                     fragment_choosing_payment fragment = new fragment_choosing_payment();

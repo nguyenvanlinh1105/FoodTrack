@@ -62,7 +62,7 @@ public class fragment_myorders_ongoing_API extends Fragment {
     LinearLayout imageIfEmpty;
 
     ArrayList<DonHangModel> arrayListOrder = new ArrayList<>();
-    ArrayList<DonHangAPIModel> arrayListOrderAPI = new ArrayList<>();
+    List<DonHangAPIModel> arrayListOrderAPI = new ArrayList<>();
 
     public fragment_myorders_ongoing_API() {
         // Required empty public constructor
@@ -195,10 +195,10 @@ public class fragment_myorders_ongoing_API extends Fragment {
         protected void onPostExecute(List<DonHangAPIModel> result) {
             super.onPostExecute(result);
             if (result != null && !result.isEmpty()) {
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String json = gson.toJson(result);
-
-                Log.d("responseBody", "onPostExecute: " + json);
+//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//                String json = gson.toJson(result);
+//                Log.d("responseBody", "onPostExecute: " + json);
+                arrayListOrderAPI = result;
                 myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), result);
                 listview_myorders_ongoing.setAdapter(listAdapter);
             } else {
@@ -263,22 +263,20 @@ public class fragment_myorders_ongoing_API extends Fragment {
                 MainActivity mainActivity = (MainActivity) getActivity();
 
                 if (mainActivity != null) {
+
                     DonHangAPIModel selectedOrder = arrayListOrderAPI.get(i);
-                    String id = selectedOrder.getIdDonHang();
-                    String tinhTrang = selectedOrder.getTinhTrang();
-                    String ghiChu = selectedOrder.getGhiChu();
+
+//                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//                    String json = gson.toJson(selectedOrder);
+//                    Log.d("selectedOrder", json);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("idDonHang", id);
-                    bundle.putString("tinhTrang", tinhTrang);
-                    bundle.putString("ghiChu", ghiChu);
+                    bundle.putSerializable("selectedOrder", selectedOrder);
+//
 
-                    fragment_myorders_ongoing_details detailsFragment = fragment_myorders_ongoing_details.newInstance(
-                            id,
-                            tinhTrang,
-                            ghiChu
-                    );
-
+//
+                    fragment_myorders_ongoing_details detailsFragment = fragment_myorders_ongoing_details.newInstance();
+                    detailsFragment.setArguments(bundle);
 
                     mainActivity.ReplaceFragment(detailsFragment);
                 }
