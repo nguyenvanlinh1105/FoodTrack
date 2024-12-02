@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodtrack.Fragment.Home_Page;
 import com.example.foodtrack.Fragment.fragment_product_detail;
+import com.example.foodtrack.Fragment.product_detail_change_info;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Fragment.checkout;
 import com.example.foodtrack.databinding.ActivityMainBinding;
@@ -49,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
                 checkoutFragment.setArguments(bundle);
 
                 ReplaceFragment(checkoutFragment);
+            }
+            else if(fragmentToLoad.equals("product_detail_change_info")){
+                product_detail_change_info detailChangeInfo = new product_detail_change_info();
+                Bundle productBundle = intent.getBundleExtra("productBundle");
+                if (productBundle != null) {
+                    detailChangeInfo.setArguments(productBundle);
+                }
+                ReplaceFragment(detailChangeInfo);
             }
         } else {
             // Nếu không có fragmentToLoad, thay thế với Home_Page

@@ -60,7 +60,7 @@ public class product_detail_change_info extends Fragment {
     private static String price;
     private static String description;
     private static String image;
-    private static Double qty;// Thay đổi kiểu dữ liệu thành String
+    private static Integer qty;// Thay đổi kiểu dữ liệu thành String
 
     String idUser;
     boolean isFavorite = false;
@@ -85,15 +85,9 @@ public class product_detail_change_info extends Fragment {
         // Required empty public constructor
     }
 
-    public static product_detail_change_info newInstance(String idSanPham, String title, Double price, String description, String image, Double qty) {
+    public static product_detail_change_info newInstance() {
         product_detail_change_info fragment = new product_detail_change_info();
         Bundle args = new Bundle();
-        args.putString(ARG_ID, idSanPham);
-        args.putString(ARG_TITLE, title);
-        args.putDouble(ARG_PRICE, price);
-        args.putString(ARG_DESCRIPTION, description);
-        args.putString(ARG_IMAGE, image);
-        args.putDouble(ARG_QTY, qty);
         fragment.setArguments(args);
         return fragment;
     }
@@ -104,15 +98,15 @@ public class product_detail_change_info extends Fragment {
         sharedPreferencesDonHang = getContext().getSharedPreferences("dataDonHangResponse", getContext().MODE_PRIVATE);
         quantity = 1;
         if (getArguments() != null) {
-            idSanPham = getArguments().getString(ARG_ID);
-            title = getArguments().getString(ARG_TITLE);
-            price = String.valueOf(getArguments().getDouble(ARG_PRICE));
-            description = getArguments().getString(ARG_DESCRIPTION);
-            image = getArguments().getString(ARG_IMAGE); // Lấy giá trị image từ URL
-            qty = getArguments().getDouble(ARG_QTY);
+            idSanPham = getArguments().getString(idSanPham);
+            title = getArguments().getString(title);
+            price = String.valueOf(getArguments().getDouble(price));
+            description = getArguments().getString(description);
+            image = getArguments().getString(image); // Lấy giá trị image từ URL
+            qty = getArguments().getInt(String.valueOf(qty));
 
         }
-        Text_quantity_product.setText(String.valueOf(qty));
+
 
 
         // reset đơn hàng
@@ -178,12 +172,19 @@ public class product_detail_change_info extends Fragment {
                         }
                     });
         }
+        Log.d("qtyCart", String.valueOf(qty));
+        Text_quantity_product.setText(String.valueOf(qty));
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                GetMonAnBenPhai();
+            }
+        }, 3000);
 
-        GetMonAnBenPhai();
 
-
+//        GetDealHoi();
         // deal hời
-        GetDealHoi();
+
         GetTrangThaiYeuThich(idUser,idSanPham);
         ControlButton();
         return view;
