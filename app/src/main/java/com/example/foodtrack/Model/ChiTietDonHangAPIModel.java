@@ -15,8 +15,42 @@ public class ChiTietDonHangAPIModel implements Serializable {
     // Navigation properties
  //   private DonHangModel donHang;
     private SanPhamAPIModel Product;
+    private String ngayTao;
+    private String ngayGiaoHang;
+    private String trangThai;
+    private int trangThaiBinhLuan;
 
+    public String getNgayTao() {
+        return ngayTao;
+    }
 
+    public void setNgayTao(String ngayTao) {
+        this.ngayTao = ngayTao;
+    }
+
+    public String getNgayGiaoHang() {
+        return ngayGiaoHang;
+    }
+
+    public void setNgayGiaoHang(String ngayGiaoHang) {
+        this.ngayGiaoHang = ngayGiaoHang;
+    }
+
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public int getTrangThaiBinhLuan() {
+        return trangThaiBinhLuan;
+    }
+
+    public void setTrangThaiBinhLuan(int trangThaiBinhLuan) {
+        this.trangThaiBinhLuan = trangThaiBinhLuan;
+    }
 
     public String getIdChiTietDonHang() {
         return idChiTietDonHang;

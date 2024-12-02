@@ -29,15 +29,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class myorders_history_list_adapter_api extends ArrayAdapter<SanPhamAPIModel> {
-    public myorders_history_list_adapter_api(Context context, List<SanPhamAPIModel> arrayListOrder) {
+public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHangAPIModel> {
+    public myorders_history_list_adapter_api(Context context, List<ChiTietDonHangAPIModel> arrayListOrder) {
         super(context, R.layout.fragment_myorders_history_list, arrayListOrder);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        SanPhamAPIModel order = getItem(position);
+        ChiTietDonHangAPIModel order = getItem(position);
 
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_myorders_history_list, parent, false);
@@ -51,14 +51,15 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<SanPhamAPIMo
         TextView status = view.findViewById(R.id.tinhTrang_item_myOrders);
         TextView qty = view.findViewById(R.id.qty_myOrders);
         TextView price = view.findViewById(R.id.price_myOrders);
+        TextView donViTinh = view.findViewById(R.id.donViTinh);
 
         if (order != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
             id.setText(order.getIdDonHang());
-            time.setText(dateFormat.format(order.getNgayTao().getTime()));
-            name.setText(order.getTenSanPham());
+            time.setText(dateFormat.format(order.getNgayTao()));
+            name.setText(order.getSanPham().getTenSanPham());
            // img.setImageResource(order.getImg());
-            String imageUrl = order.getImages();
+            String imageUrl = order.getProduct().getImages();
             if (imageUrl.startsWith("http://")) {
                 imageUrl = imageUrl.replace("http://", "https://");
             }
@@ -78,9 +79,10 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<SanPhamAPIMo
                         }
                     });
             status.setText(order.getTrangThai());
-            double  tongTien = order.getGiaTien()*order.getSoLuongDat();
+            double  tongTien = order.getProduct().getGiaTien()*order.getSoLuongDat();
             price.setText(tongTien+"");
             qty.setText(String.valueOf(order.getSoLuongDat()));
+            donViTinh.setText("Đơn vị tính:"+order.getProduct().getDonViTinh());
 
             if (order.getTrangThaiBinhLuan() == 0) {
                 ratingBtn.setText("Đánh giá ngay");
@@ -101,10 +103,10 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<SanPhamAPIMo
                     MainActivity mainActivity = (MainActivity)getContext();
                     if (mainActivity != null) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("idSanPham",order.getIdSanPham());
+                        bundle.putString("idSanPham",order.getProduct().getIdSanPham());
 
                         fragment_rating_comment fragment = new fragment_rating_comment();
-                        fragment.setArguments(bundle); // Truyền Bundle vào Fragment
+                        fragment.setArguments(bundle);
 
                         mainActivity.ReplaceFragment(fragment);
                     }

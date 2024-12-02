@@ -73,7 +73,7 @@ public interface APIService {
     @GET("food/list")
     Call<List<SanPhamAPIModel>> getListMonAn_Explore();
     // dùng đẻ lấy các thức uống
-    @GET("food/listDrink")
+    @GET("food/list/drink")
     Call<List<SanPhamAPIModel>>getListDoUong_Explore();
 
     @POST("/user/password/forgot")
@@ -87,7 +87,7 @@ public interface APIService {
 
 
     // cập nhật số lượng sản phẩm, trong giỏ hàng
-  @POST ("order/updateQuantity")
+  @POST ("order/update/quantity")
   Call<ChiTietDonHangAPIModel> UpdateSoLuongSanPhamGioHang (@Body  ChiTietDonHangAPIModel donHangAPIModel);
 
 
@@ -115,7 +115,7 @@ public interface APIService {
 
     //Lấy tất cả sản phẩm đã mua - history: histori chưa
     @GET("")
-    Call<List<SanPhamAPIModel>> GetSanPhamDaMua(@Query("idNguoiDung") String idUser);
+    Call<List<ChiTietDonHangAPIModel>> GetSanPhamDaMua(@Query("idNguoiDung") String idUser);
 
 
 

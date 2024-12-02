@@ -19,6 +19,7 @@ import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.Adapter.myorders_history_list_adapter_api;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
+import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.R;
 
 import java.text.ParseException;
@@ -40,12 +41,13 @@ public class fragment_myorders_history_API extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    List<SanPhamAPIModel> arrayListOrder;
+    List<ChiTietDonHangAPIModel> arrayListOrder;
     ListView listview_myorders_history;
     LinearLayout imageIfEmpty;
     ImageView chatIcon;
     ImageView backBtn;
     TextView toOngoing, rateBtn;
+
 
     public fragment_myorders_history_API() {
         // Required empty public constructor
@@ -123,6 +125,8 @@ public class fragment_myorders_history_API extends Fragment {
         toOngoing = view.findViewById(R.id.btn_dangDen_myOrder);
         imageIfEmpty = view.findViewById(R.id.image_if_no_order_myOrders);
         rateBtn = view.findViewById(R.id.ratingBtn_item_myOrders);
+
+
     }
 
     private void checkIfListEmpty() {
@@ -144,15 +148,15 @@ public class fragment_myorders_history_API extends Fragment {
         listview_myorders_history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SanPhamAPIModel selectedProduct = arrayListOrder.get(i); // Lấy sản phẩm được chọn
+                ChiTietDonHangAPIModel selectedProduct = arrayListOrder.get(i); // Lấy sản phẩm được chọn
 
                 // Tạo bundle để truyền dữ liệu
                 Bundle bundle = new Bundle();
                 bundle.putString("idSanPham", selectedProduct.getIdSanPham());
-                bundle.putString("title", selectedProduct.getTenSanPham());
-                bundle.putDouble("price", selectedProduct.getGiaTien());
-                bundle.putString("description", selectedProduct.getMoTa());
-                bundle.putString("image",selectedProduct.getImages());
+                bundle.putString("title", selectedProduct.getProduct().getTenSanPham());
+                bundle.putDouble("price", selectedProduct.getProduct().getGiaTien());
+                bundle.putString("description", selectedProduct.getProduct().getMoTa());
+                bundle.putString("image",selectedProduct.getProduct().getImages());
 
                 // Tạo fragment mới và truyền bundle vào
                 fragment_product_detail_API detailFragment = new fragment_product_detail_API();
@@ -178,11 +182,11 @@ public class fragment_myorders_history_API extends Fragment {
 
 
     private void GetdsLichSuSanPhamDaMua(String idUser){
-        APIService.API_SERVICE.GetSanPhamDaMua(idUser).enqueue(new Callback<List<SanPhamAPIModel>>() {
+        APIService.API_SERVICE.GetSanPhamDaMua(idUser).enqueue(new Callback<List<ChiTietDonHangAPIModel>>() {
             @Override
-            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
+            public void onResponse(Call<List<ChiTietDonHangAPIModel>> call, Response<List<ChiTietDonHangAPIModel>> response) {
                 if(response.isSuccessful()){
-                    List<SanPhamAPIModel> listSP= response.body();
+                    List<ChiTietDonHangAPIModel> listSP= response.body();
                     myorders_history_list_adapter_api listAdapter = new myorders_history_list_adapter_api(getContext(), listSP);
                     listview_myorders_history.setAdapter(listAdapter);
 
@@ -190,7 +194,7 @@ public class fragment_myorders_history_API extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
+            public void onFailure(Call<List<ChiTietDonHangAPIModel>> call, Throwable t) {
                // initializeData();
             }
         });
