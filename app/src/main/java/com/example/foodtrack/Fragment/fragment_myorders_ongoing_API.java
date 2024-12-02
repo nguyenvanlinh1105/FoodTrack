@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,10 +60,14 @@ public class fragment_myorders_ongoing_API extends Fragment {
     TextView toLichSu, toDonHuy;
     ImageView chatIcon;
     ListView listview_myorders_ongoing;
-    LinearLayout imageIfEmpty;
+    LinearLayout imageIfEmpty, line;
 
     ArrayList<DonHangModel> arrayListOrder = new ArrayList<>();
     List<DonHangAPIModel> arrayListOrderAPI = new ArrayList<>();
+
+
+
+    public myorders_ongoing_list_adapter_api listAdapter;
 
     public fragment_myorders_ongoing_API() {
         // Required empty public constructor
@@ -94,6 +99,16 @@ public class fragment_myorders_ongoing_API extends Fragment {
         SharedPreferences sharedPreferencesUser = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
         idNguoiDung = sharedPreferencesUser.getString("idUser", "-1");
 
+        getParentFragmentManager().setFragmentResultListener("cancelOrder", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(String requestKey, Bundle result) {
+                boolean isCancelled = result.getBoolean("isCancelled", false);
+                if (isCancelled) {
+                    // Làm mới danh sách sau khi đơn hàng bị hủy
+                    GetOrders(idNguoiDung);
+                }
+            }
+        });
 
     }
 
@@ -150,29 +165,11 @@ public class fragment_myorders_ongoing_API extends Fragment {
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
         imageViewTranslate = (ImageView) view.findViewById(R.id.imageViewTranslate);
+        line = (LinearLayout)view.findViewById(R.id.linearLayout14);
 
         listview_myorders_ongoing = (ListView) view.findViewById(R.id.listview_myorders);
 
     }
-
-//    private void GetOrders(String idNguoiDung) {
-//        APIService.API_SERVICE.GetDonHangDangGiao(idNguoiDung).enqueue(new Callback<List<DonHangAPIModel>>() {
-//            @Override
-//            public void onResponse(Call<List<DonHangAPIModel>> call, Response<List<DonHangAPIModel>> response) {
-//                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-//                    List<DonHangAPIModel> listDonHang = response.body();
-//                    myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), listDonHang);
-//                    listview_myorders_ongoing.setAdapter(listAdapter);
-//                } else {
-//                    UseFallbackData();
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<List<DonHangAPIModel>> call, Throwable t) {
-//                UseFallbackData();
-//            }
-//        });
-//    }
 
     private class GetOrdersTask extends AsyncTask<String, Void, List<DonHangAPIModel>> {
         @Override
@@ -199,10 +196,14 @@ public class fragment_myorders_ongoing_API extends Fragment {
 //                String json = gson.toJson(result);
 //                Log.d("responseBody", "onPostExecute: " + json);
                 arrayListOrderAPI = result;
-                myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), result);
+               listAdapter = new myorders_ongoing_list_adapter_api(getContext(), result);
                 listview_myorders_ongoing.setAdapter(listAdapter);
             } else {
-                UseFallbackData();
+//                UseFallbackData();
+                listview_myorders_ongoing.setVisibility(View.GONE);
+                imageIfEmpty.setVisibility(View.VISIBLE);
+                imageViewTranslate.setVisibility(View.GONE);
+                line.setVisibility(View.GONE);
             }
         }
     }
@@ -210,8 +211,6 @@ public class fragment_myorders_ongoing_API extends Fragment {
     private void GetOrders(String idNguoiDung) {
         new GetOrdersTask().execute(idNguoiDung);
     }
-
-
 
 
     private void UseFallbackData() {
@@ -286,8 +285,8 @@ public class fragment_myorders_ongoing_API extends Fragment {
 
     }
 
-    private void checkIfListEmpty(List<DonHangAPIModel> listDonHang) {
-        if (listDonHang.isEmpty()) {
+    private void checkIfListEmpty() {
+        if (arrayListOrderAPI.size()==0) {
             listview_myorders_ongoing.setVisibility(View.GONE);
             imageIfEmpty.setVisibility(View.VISIBLE);
             imageViewTranslate.setVisibility(View.GONE);

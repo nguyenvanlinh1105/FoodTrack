@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class myorders_ongoing_list_adapter_api extends ArrayAdapter<DonHangAPIMo
 
         TextView id = view.findViewById(R.id.item_id_myOrders);
         TextView time = view.findViewById(R.id.time_item_myOrders);
-//        TextView name = view.findViewById(R.id.name_item_myOrders);
+        TextView name = view.findViewById(R.id.ten_mon_myOrders);
         ImageView img = view.findViewById(R.id.img_item_myOrders);
         TextView status = view.findViewById(R.id.tinhTrang_item_myOrders);
         TextView qty = view.findViewById(R.id.qty_myOrders);
@@ -58,7 +59,7 @@ public class myorders_ongoing_list_adapter_api extends ArrayAdapter<DonHangAPIMo
             id.setText(donHang.getIdDonHang());
 
             time.setText(dateFormat.format(donHang.getNgayTao().getTime()));
-//            name.setText(donHang.getName());
+
             status.setText(donHang.getTinhTrang());
             qty.setText(String.valueOf(donHang.getChiTietDonHangs().size()));
 
@@ -100,7 +101,7 @@ public class myorders_ongoing_list_adapter_api extends ArrayAdapter<DonHangAPIMo
                 }
                 qty.setText(String.valueOf(totalQty));
                 price.setText(nf.format(totalPrice) + "vnđ");
-
+                name.setText(sanPhamFirst.getTenSanPham());
             }
 
         }

@@ -30,7 +30,7 @@ import java.util.Locale;
 
 public class myorders_donHuy_list_adapter_api extends ArrayAdapter<DonHangAPIModel> {
 
-    public myorders_donHuy_list_adapter_api(Context context, ArrayList<DonHangAPIModel> arrayListDonHang) {
+    public myorders_donHuy_list_adapter_api(Context context, List<DonHangAPIModel> arrayListDonHang) {
         super(context, R.layout.fragment_myorders_donhuy_list, arrayListDonHang);
 
     }
@@ -45,7 +45,7 @@ public class myorders_donHuy_list_adapter_api extends ArrayAdapter<DonHangAPIMod
 
         TextView id = view.findViewById(R.id.item_id_myOrders);
         TextView time = view.findViewById(R.id.time_item_myOrders);
-//        TextView name = view.findViewById(R.id.name_item_myOrders);
+        TextView name = view.findViewById(R.id.ten_mon_myOrders);
         ImageView img = view.findViewById(R.id.img_item_myOrders);
         TextView status = view.findViewById(R.id.tinhTrang_item_myOrders);
         TextView qty = view.findViewById(R.id.qty_myOrders);
@@ -54,15 +54,13 @@ public class myorders_donHuy_list_adapter_api extends ArrayAdapter<DonHangAPIMod
 
         if (donHang != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
-            //Number format để định dạng giá tiền từ 20000 thành 20.000
+
             NumberFormat nf
                     = NumberFormat.getInstance(Locale.ITALY);
 
             id.setText(donHang.getIdDonHang());
 
             time.setText(dateFormat.format(donHang.getNgayTao().getTime()));
-//            name.setText(donHang.getName());
-            txt_thoiGianHuy.setText(dateFormat.format(donHang.getNgayTao().getTime()));
 
             status.setText(donHang.getTinhTrang());
             qty.setText(String.valueOf(donHang.getChiTietDonHangs().size()));
@@ -90,8 +88,7 @@ public class myorders_donHuy_list_adapter_api extends ArrayAdapter<DonHangAPIMod
 
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                img.setBackground(new BitmapDrawable(getContext().getResources(), resource));
-
+                                img.setImageDrawable(new BitmapDrawable(getContext().getResources(), resource));
                             }
                         });
 
@@ -106,8 +103,7 @@ public class myorders_donHuy_list_adapter_api extends ArrayAdapter<DonHangAPIMod
                 }
                 qty.setText(String.valueOf(totalQty));
                 price.setText(nf.format(totalPrice) + "vnđ");
-
-
+                name.setText(sanPhamFirst.getTenSanPham());
             }
 
         }

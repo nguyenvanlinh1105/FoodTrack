@@ -1,6 +1,9 @@
 package com.example.foodtrack.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +21,7 @@ import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.Adapter.myorders_donHuy_list_adapter;
+import com.example.foodtrack.Adapter.myorders_donHuy_list_adapter_api;
 import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter_api;
 import com.example.foodtrack.Model.ChiTietDonHangModel;
 import com.example.foodtrack.Model.DonHangAPIModel;
@@ -25,6 +29,7 @@ import com.example.foodtrack.Model.DonHangModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,15 +54,18 @@ public class fragment_myorders_donhuy extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    String idNguoiDung;
 
     ImageView backBtn, imageViewTranslate;
     TextView toLichSu, toGoing;
     ImageView chatIcon;
     ListView listview_myorders_ongoing;
-    LinearLayout imageIfEmpty;
+    LinearLayout imageIfEmpty, line;
 
-    ArrayList<DonHangAPIModel> arrayListOrderAPI = new ArrayList<>();
+    List<DonHangAPIModel> arrayListOrderAPI = new ArrayList<>();
     ArrayList<DonHangModel> arrayListOrder = new ArrayList<>();
+
+    public myorders_donHuy_list_adapter_api listAdapter;
 
     public fragment_myorders_donhuy() {
         // Required empty public constructor
@@ -88,7 +96,8 @@ public class fragment_myorders_donhuy extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        initializeData();
+        SharedPreferences sharedPreferencesUser = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+        idNguoiDung = sharedPreferencesUser.getString("idUser", "-1");
     }
 
     private void initializeData() {
@@ -137,30 +146,51 @@ public class fragment_myorders_donhuy extends Fragment {
         View view = inflater.inflate(R.layout.fragment_myorders_donhuy, container, false);
 
         Mapping(view);
-        checkIfListEmpty();
-        GetOrders();
+//        checkIfListEmpty();
+        GetOrders(idNguoiDung);
         ControlButton();
         return view;
     }
 
-    private void GetOrders() {
-        APIService.API_SERVICE.GetDonHangDaHuy().enqueue(new Callback<List<DonHangAPIModel>>() {
-            @Override
-            public void onResponse(Call<List<DonHangAPIModel>> call, Response<List<DonHangAPIModel>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    List<DonHangAPIModel> listDonHang = response.body();
-                    myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), listDonHang);
-                    listview_myorders_ongoing.setAdapter(listAdapter);
+    private class GetOrdersTask extends AsyncTask<String, Void, List<DonHangAPIModel>> {
+        @Override
+        protected List<DonHangAPIModel> doInBackground(String... params) {
+            // Gọi API ở đây
+            try {
+                Response<List<DonHangAPIModel>> response = APIService.API_SERVICE.GetDonHangDangGiao(params[0]).execute();
+                if (response.isSuccessful()) {
+                    return response.body();
                 } else {
-                    UseFallbackData();
+                    return null;
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
             }
+        }
 
-            @Override
-            public void onFailure(Call<List<DonHangAPIModel>> call, Throwable t) {
-                UseFallbackData();
+        @Override
+        protected void onPostExecute(List<DonHangAPIModel> result) {
+            super.onPostExecute(result);
+            if (result != null && !result.isEmpty()) {
+//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//                String json = gson.toJson(result);
+//                Log.d("responseBody", "onPostExecute: " + json);
+                arrayListOrderAPI = result;
+                listAdapter = new myorders_donHuy_list_adapter_api(getContext(), result);
+                listview_myorders_ongoing.setAdapter(listAdapter);
+            } else {
+//                UseFallbackData();
+                listview_myorders_ongoing.setVisibility(View.GONE);
+                imageIfEmpty.setVisibility(View.VISIBLE);
+                imageViewTranslate.setVisibility(View.GONE);
+                line.setVisibility(View.GONE);
             }
-        });
+        }
+    }
+
+    private void GetOrders(String idNguoiDung) {
+        new GetOrdersTask().execute(idNguoiDung);
     }
 
     private void UseFallbackData() {
@@ -176,6 +206,8 @@ public class fragment_myorders_donhuy extends Fragment {
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
         imageViewTranslate = (ImageView) view.findViewById(R.id.imageViewTranslate);
+
+        line = (LinearLayout)view.findViewById(R.id.linearLayout14);
 
         listview_myorders_ongoing = (ListView) view.findViewById(R.id.listview_myorders);
 

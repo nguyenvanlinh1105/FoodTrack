@@ -26,6 +26,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Adapter.list_drink_API_adapter;
 import com.example.foodtrack.Adapter.list_drink_adapter;
+import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter_api;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangModel;
@@ -169,6 +170,7 @@ public class fragment_myorders_ongoing_details extends Fragment {
         tv_thoiGianDat = (TextView) view.findViewById(R.id.tv_thoi_gian_dat_myOrders_detail);
         tv_thanhToan = (TextView) view.findViewById(R.id.tv_thanh_toan_myOrders_detail);
         tv_tinhTrang = (TextView) view.findViewById(R.id.tinhTrang_myOrders_detail);
+        tv_tongSoLuongMon = (TextView) view.findViewById(R.id.so_luong_myOrders_detail);
     }
 
     private void ControlButton() {
@@ -181,9 +183,13 @@ public class fragment_myorders_ongoing_details extends Fragment {
         btn_huy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DonHangAPIModel model = new DonHangAPIModel();
-                model.setIdDonHang(idDonHang);
-                PostToCancleOrder(model);
+                PostToCancleOrder(donHangAPIModel);
+
+                Bundle result = new Bundle();
+                result.putBoolean("isCancelled", true);
+                getParentFragmentManager().setFragmentResult("cancelOrder", result);
+
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -198,7 +204,7 @@ public class fragment_myorders_ongoing_details extends Fragment {
             view_before_2.setBackgroundResource(R.drawable.green_btn_bg);
             tv_step2.setBackgroundResource(R.drawable.green_btn_bg);
 
-            btn_huy.setVisibility(View.GONE);
+//            btn_huy.setVisibility(View.GONE);
         }
         //step 3: đang giao
         else if (Objects.equals(donHangAPIModel.getTinhTrang(), "Đang giao")) {
@@ -238,12 +244,12 @@ public class fragment_myorders_ongoing_details extends Fragment {
         tv_tinhTrang.setText(donHangAPIModel.getTinhTrang());
         tv_thanhToan.setText(donHangAPIModel.getTinhTrangThanhToan());
         tv_ghiChu.setText(donHangAPIModel.getGhiChu());
-
+        tv_tongSoLuongMon.setText(String.valueOf(donHangAPIModel.getChiTietDonHangs().size()));
         Log.d("idDonHang", donHangAPIModel.getIdDonHang());
 
         double tongTien = 0;
 
-        for (ChiTietDonHangAPIModel chiTiet : arrayChiTietDonHangAPI) {
+        for (ChiTietDonHangAPIModel chiTiet : donHangAPIModel.getChiTietDonHangs()) {
             View itemView = LayoutInflater.from(getContext()).inflate(R.layout.list_view_item_my_orders_detail, ll_list_myorders_details, false);
 
             ImageView images = itemView.findViewById(R.id.img_item_myOrders_detail);
@@ -281,9 +287,10 @@ public class fragment_myorders_ongoing_details extends Fragment {
 
             ll_list_myorders_details.addView(itemView);
         }
-//        tv_ghiChu.setText(ghiChu);
-//        tv_idDonHang.setText(idDonHang);
-//        tv_tongTien.setText(tongTien + " vnđ");
+        tv_tongTien.setText(nf.format(tongTien) + " vnđ");
+        tongTien += 15000;
+        tv_tongCong.setText(nf.format(tongTien) + " vnđ");
+
     }
 
     private void displayOrderDetails() {
