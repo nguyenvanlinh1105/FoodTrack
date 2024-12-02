@@ -2,6 +2,7 @@ package com.example.foodtrack.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.foodtrack.API.APIService;
+import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.cart;
+import com.example.foodtrack.Fragment.fragment_product_detail_API;
+import com.example.foodtrack.Fragment.product_detail_change_info;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.DonHangAPIModel;
@@ -40,6 +44,7 @@ public class cart_adapter_api extends BaseAdapter {
     public cart_adapter_api(Context context, List<SanPhamAPIModel> arrayListSanPham, cart activityCart) {
         this.context = context;
         this.arrayListSanPham = arrayListSanPham;
+     //   this.arrayListSanPham = activityCart.list
         this.activityCart = activityCart;
         inflater = LayoutInflater.from(context);
 
@@ -104,28 +109,64 @@ public class cart_adapter_api extends BaseAdapter {
         btn_plus_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int qtyNum = product.getSoLuongDat() + 1;
-                product.setSoLuongDat(qtyNum);
-                qty.setText(String.valueOf(qtyNum));
-                activityCart.updateTotalPrice();
-                notifyDataSetChanged();
+//                int qtyNum = product.getSoLuongDat() + 1;
+//                product.setSoLuongDat(qtyNum);
+//                qty.setText(String.valueOf(qtyNum));
+//                activityCart.updateTotalPrice();
+//                notifyDataSetChanged();
+
+
+                Bundle bundle = new Bundle();
+                bundle.putString("idSanPham",product.getIdSanPham());
+                bundle.putString("title", product.getTenSanPham());
+                bundle.putDouble("price",product.getGiaTien());
+                bundle.putString("description",product.getMoTa());
+                bundle.putString("image", product.getImages());
+                bundle.putDouble("qty",product.getSoLuongDat());
+                product_detail_change_info productDetailsFragment = product_detail_change_info.newInstance(
+                        product.getIdSanPham(),
+                        product.getTenSanPham(),
+                        product.getGiaTien(),
+                        "Mô tả món ăn/đồ uống",
+                        product.getImages(),
+                        Double.valueOf(product.getSoLuongDat())
+                );
+                MainActivity mainActivity = (MainActivity) context;
+                if (mainActivity != null)
+                    mainActivity.ReplaceFragment(productDetailsFragment);
+
+
             }
         });
+
         btn_minus_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int qtyNum = product.getSoLuongDat() - 1;
-                if(qtyNum == 0){
-                    removeProductByModel(model);
-                    XoaSanPhamGioHang(model);
-                    activityCart.updateTotalPrice();
-                }
-                else{
-                    product.setSoLuongDat(qtyNum);
-                    qty.setText(String.valueOf(qtyNum));
-                    activityCart.updateTotalPrice();
-                    notifyDataSetChanged();
-                }
+//                int qtyNum = product.getSoLuongDat() - 1;
+//                if(qtyNum == 0){
+//                    removeProductByModel(model);
+//                    XoaSanPhamGioHang(model);
+//                    activityCart.updateTotalPrice();
+//                }
+//                else{
+//                    product.setSoLuongDat(qtyNum);
+//                    qty.setText(String.valueOf(qtyNum));
+//                    activityCart.updateTotalPrice();
+//                    notifyDataSetChanged();
+//                }
+
+                product_detail_change_info productDetailsFragment = product_detail_change_info.newInstance(
+                        product.getIdSanPham(),
+                        product.getTenSanPham(),
+                        product.getGiaTien(),
+                        "Mô tả món ăn/đồ uống",
+                        product.getImages(),
+                        Double.valueOf(product.getSoLuongDat())
+                );
+                MainActivity mainActivity = (MainActivity) context;
+                if (mainActivity != null)
+                    mainActivity.ReplaceFragment(productDetailsFragment);
+
 
             }
         });
@@ -134,6 +175,7 @@ public class cart_adapter_api extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 removeProductByModel(model);
+                activityCart.updateButtonVisibility();
                 XoaSanPhamGioHang(model);
             }
         });
@@ -151,9 +193,7 @@ public class cart_adapter_api extends BaseAdapter {
             @Override
             public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
                 if (response.isSuccessful()) {
-//
-//                    activityCart.updateTotalPrice();
-//                    notifyDataSetChanged();
+
                 } else {
                     // Xử lý lỗi nếu xóa không thành công
                 }

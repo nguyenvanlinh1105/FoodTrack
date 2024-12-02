@@ -211,7 +211,7 @@ public class fragment_myorders_ongoing_API extends Fragment {
         new GetOrdersTask().execute(idNguoiDung);
     }
 
-  
+
 
 
     private void UseFallbackData() {

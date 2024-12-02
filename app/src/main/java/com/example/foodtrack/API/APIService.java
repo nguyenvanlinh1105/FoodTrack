@@ -56,6 +56,7 @@ public interface APIService {
     Call<NguoiDungModel> PostUserToSingin(@Body NguoiDungModel userModel);
 
 
+
     // Home_Page
     // dùng để list sản phẩm deal hời
     @GET("food/bargain")
@@ -85,6 +86,10 @@ public interface APIService {
     Call<NguoiDungModel>PostToResetPass(@Body NguoiDungModel userModel);
 
 
+    // cập nhật số lượng sản phẩm, trong giỏ hàng
+  @POST ("")
+  Call<ChiTietDonHangAPIModel> UpdateSoLuongSanPhamGioHang (@Body  ChiTietDonHangAPIModel donHangAPIModel);
+
 
 
 
@@ -102,6 +107,10 @@ public interface APIService {
   //lấy đơn hàng đã hủy : chưa
   @GET("")
   Call<List<DonHangAPIModel>> GetDonHangDaHuy();
+
+  // hủy đặt hàng set trangThaiDat==0;: chưa
+  @POST("order/deny")
+  Call<DonHangAPIModel> PostToCancleOrder(@Body DonHangAPIModel donHang);
 
 
     //Lấy tất cả sản phẩm đã mua - history: histori chưa
@@ -122,9 +131,7 @@ public interface APIService {
     @POST("order/confirm")
     Call<DonHangAPIModel> PostToOrder(@Body DonHangAPIModel donHang);
 
-    // hủy đặt hàng set trangThaiDat==0;: chưa
-    @POST("order/deny")
-    Call<DonHangAPIModel> PostToCancleOrder(@Body DonHangAPIModel donHang);
+
 
 
   //lấy danh sách chat: roi

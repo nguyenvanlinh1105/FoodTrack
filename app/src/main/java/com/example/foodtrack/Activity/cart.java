@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,6 +25,8 @@ import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +82,7 @@ public class cart extends AppCompatActivity {
             UseFallbackData();
         }
 
+
         ControlButton();
     }
 
@@ -93,6 +98,7 @@ public class cart extends AppCompatActivity {
             listView_cart.setAdapter(listAdapter);
         }
         total.setText(tongTien+ " vnđ");
+
     }
 
     private void initializeData() {
@@ -110,7 +116,7 @@ public class cart extends AppCompatActivity {
             backBtn.setOnClickListener(view -> finish());
         }
         if (datDonBtn != null) {
-           if(idDonHang!=null){
+            if(idDonHang!=null){
                datDonBtn.setOnClickListener(view -> {
                    textGhiChu = edt_ghiChu.getText().toString();
                    Intent thanhToan = new Intent(cart.this, MainActivity.class);
@@ -119,7 +125,7 @@ public class cart extends AppCompatActivity {
                    startActivity(thanhToan);
                });
            }else{
-               datDonBtn.setText("Không có sản phẩm nào!");
+
            }
         }
     }
@@ -142,32 +148,88 @@ public class cart extends AppCompatActivity {
     }
 
 
-    public  void GetDsSanPhamOrder(String idDonHang) {
-        APIService.API_SERVICE.GetSanPhamGioHang(idDonHang).enqueue(new Callback<List<SanPhamAPIModel>>() {
-            @Override
-            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    List<SanPhamAPIModel> listSanPham = response.body();
-                    for (SanPhamAPIModel sp : listSanPham) {
-                        tongTien += Double.valueOf(sp.getGiaTien())*Integer.valueOf(sp.getSoLuongDat());
-                        NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
-                        String formattedPrice = numberFormat.format(tongTien);
+//    public  void GetDsSanPhamOrder(String idDonHang) {
+//        APIService.API_SERVICE.GetSanPhamGioHang(idDonHang).enqueue(new Callback<List<SanPhamAPIModel>>() {
+//            @Override
+//            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
+//                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+//                    List<SanPhamAPIModel> listSanPham = response.body();
+//
+//                    for (SanPhamAPIModel sp : listSanPham) {
+//                        tongTien += Double.valueOf(sp.getGiaTien())*Integer.valueOf(sp.getSoLuongDat());
+//                        NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
+//                        String formattedPrice = numberFormat.format(tongTien);
+//
+//                        total.setText(formattedPrice+" vnđ");
+//                    }
+//
+//
+//                    UpdateRecyclerView(listSanPham);
+//                } else {
+//                    UseFallbackData();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
+//             //   UseFallbackData();
+//            }
+//        });
+//    }
 
-                        total.setText(formattedPrice+" vnđ");
-                    }
-                    UpdateRecyclerView(listSanPham);
+    private class GetDsSanPhamOrderTask extends AsyncTask<String, Void, List<SanPhamAPIModel>> {
+
+        @Override
+        protected List<SanPhamAPIModel> doInBackground(String... params) {
+            try {
+                Response<List<SanPhamAPIModel>> response = APIService.API_SERVICE.GetSanPhamGioHang(params[0]).execute();
+                if (response.isSuccessful() && response.body() != null) {
+                    return response.body();
                 } else {
-                    UseFallbackData();
+                    return null;
                 }
-
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
             }
+        }
 
-            @Override
-            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
-             //   UseFallbackData();
+        @Override
+        protected void onPostExecute(List<SanPhamAPIModel> listSanPham) {
+            super.onPostExecute(listSanPham);
+            if (listSanPham != null && !listSanPham.isEmpty()) {
+                for (SanPhamAPIModel sp : listSanPham) {
+                    tongTien += Double.parseDouble(String.valueOf(sp.getGiaTien())) * Integer.parseInt(String.valueOf(sp.getSoLuongDat()));
+                }
+                Log.d("TongTien", "Giá trị tổng tiền: " + tongTien);
+
+
+
+                // Format tổng tiền
+                NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault());
+                String formattedPrice = numberFormat.format(tongTien);
+                total.setText(formattedPrice + " vnđ");
+
+                // Cập nhật RecyclerView
+                UpdateRecyclerView(listSanPham);
+            } else {
+                UseFallbackData();
             }
-        });
+        }
     }
+    public void GetDsSanPhamOrder(String idDonHang) {
+        new GetDsSanPhamOrderTask().execute(idDonHang);
+    }
+
+    public void updateButtonVisibility() {
+        if (tongTien == 0.0) {
+            datDonBtn.setVisibility(View.GONE);
+        } else {
+            datDonBtn.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     private void UseFallbackData() {
        // initializeData();
@@ -175,6 +237,7 @@ public class cart extends AppCompatActivity {
     }
 
     private void UpdateRecyclerView(List<SanPhamAPIModel> data) {
+        updateButtonVisibility();
         if (listView_cart != null) {
             cart_adapter_api listAdapter = new cart_adapter_api(this, data, this);
             listView_cart.setAdapter(listAdapter);
