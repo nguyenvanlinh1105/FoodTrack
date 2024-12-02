@@ -14,7 +14,7 @@ public class ChiTietDonHangAPIModel implements Serializable {
     private int soLuongDat;
     // Navigation properties
  //   private DonHangModel donHang;
-    private SanPhamAPIModel sanPham;
+    private SanPhamAPIModel Product;
 
 
     public String getIdChiTietDonHang() {
@@ -65,7 +65,14 @@ public class ChiTietDonHangAPIModel implements Serializable {
         this.soLuongDat = soLuongDat;
     }
 
-   // public DonHangModel getDonHang() {
+    public SanPhamAPIModel getProduct() {
+        return Product;
+    }
+
+    public void setProduct(SanPhamAPIModel product) {
+        Product = product;
+    }
+    // public DonHangModel getDonHang() {
 //        return donHang;
 //    }
 
@@ -73,11 +80,4 @@ public class ChiTietDonHangAPIModel implements Serializable {
 //        this.donHang = donHang;
 //    }
 
-    public SanPhamAPIModel getSanPham() {
-        return sanPham;
-    }
-
-    public void setSanPham(SanPhamAPIModel sanPham) {
-        this.sanPham = sanPham;
-    }
 }
