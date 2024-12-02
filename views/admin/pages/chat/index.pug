@@ -1,91 +1,66 @@
 extends ../../layouts/default.pug
 block content
-    section
-        .container.py-5
-            .row.d-flex.justify-content-center
-                .col-md-10.col-lg-8.col-xl-6
-                    #chat2.card
-                        .card-header.d-flex.justify-content-between.align-items-center.p-3
-                            h5.mb-0 Chat
-                            button.btn.btn-primary.btn-sm(type='button', data-mdb-button-init='', data-mdb-ripple-init='', data-mdb-ripple-color='dark')
-                                | Let's Chat
-                                | App
-                        .card-body(data-mdb-perfect-scrollbar-init='', style='position: relative; height: 400px')
-                            .d-flex.flex-row.justify-content-start
-                                img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
-                                div
-                                    p.small.p-2.ms-3.mb-1.rounded-3.bg-body-tertiary Hi
-                                    p.small.p-2.ms-3.mb-1.rounded-3.bg-body-tertiary
-                                        | How are you ...???
-                                    p.small.p-2.ms-3.mb-1.rounded-3.bg-body-tertiary
-                                        | What are you doing
-                                        | tomorrow? Can we come up a bar?
-                                    p.small.ms-3.mb-3.rounded-3.text-muted 23:58
-                            .divider.d-flex.align-items-center.mb-4
-                                p.text-center.mx-3.mb-0(style='color: #a2aab7;') Today
-                            .d-flex.flex-row.justify-content-end.mb-4.pt-1
-                                div
-                                    p.small.p-2.me-3.mb-1.text-white.rounded-3.bg-primary Hiii, I'm good.
-                                    p.small.p-2.me-3.mb-1.text-white.rounded-3.bg-primary How are you doing?
-                                    p.small.p-2.me-3.mb-1.text-white.rounded-3.bg-primary
-                                        | Long time no see! Tomorrow
-                                        | office. will
-                                        | be free on sunday.
-                                    p.small.me-3.mb-3.rounded-3.text-muted.d-flex.justify-content-end 00:06
-                                img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
-                            .d-flex.flex-row.justify-content-start.mb-4
-                                img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
-                                div
-                                    p.small.p-2.ms-3.mb-1.rounded-3.bg-body-tertiary Okay
-                                    p.small.p-2.ms-3.mb-1.rounded-3.bg-body-tertiary
-                                        | We will go on
-                                        | Sunday?
-                                    p.small.ms-3.mb-3.rounded-3.text-muted 00:07
-                            .d-flex.flex-row.justify-content-end.mb-4
-                                div
-                                    p.small.p-2.me-3.mb-1.text-white.rounded-3.bg-primary That's awesome!
-                                    p.small.p-2.me-3.mb-1.text-white.rounded-3.bg-primary
-                                        | I will meet you Sandon Square
-                                        | sharp at
-                                        | 10 AM
-                                    p.small.p-2.me-3.mb-1.text-white.rounded-3.bg-primary Is that okay?
-                                    p.small.me-3.mb-3.rounded-3.text-muted.d-flex.justify-content-end 00:09
-                                img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
-                            .d-flex.flex-row.justify-content-start.mb-4
-                                img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
-                                div
-                                    p.small.p-2.ms-3.mb-1.rounded-3.bg-body-tertiary
-                                        | Okay i will meet
-                                        | you on
-                                        | Sandon Square
-                                    p.small.ms-3.mb-3.rounded-3.text-muted 00:11
-                            .d-flex.flex-row.justify-content-end.mb-4
-                                div
-                                    p.small.p-2.me-3.mb-1.text-white.rounded-3.bg-primary
-                                        | Do you have pictures of Matley
-                                        | Marriage?
-                                    p.small.me-3.mb-3.rounded-3.text-muted.d-flex.justify-content-end 00:11
-                                img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
-                            .d-flex.flex-row.justify-content-start.mb-4
-                                img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
-                                div
-                                    p.small.p-2.ms-3.mb-1.rounded-3.bg-body-tertiary
-                                        | Sorry I don't
-                                        | have. i
-                                        | changed my phone.
-                                    p.small.ms-3.mb-3.rounded-3.text-muted 00:13
-                            .d-flex.flex-row.justify-content-end
-                                div
-                                    p.small.p-2.me-3.mb-1.text-white.rounded-3.bg-primary
-                                        | Okay then see you on sunday!!
-                                    p.small.me-3.mb-3.rounded-3.text-muted.d-flex.justify-content-end 00:15
-                                img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp', alt='avatar 1', style='width: 45px; height: 100%;')
-                        .card-footer.text-muted.d-flex.justify-content-start.align-items-center.p-3
-                            img(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp', alt='avatar 3', style='width: 40px; height: 100%;')
-                            input#exampleFormControlInput1.form-control.form-control-lg(type='text', placeholder='Type message')
-                            a.ms-1.text-muted(href='#!')
-                                i.fas.fa-paperclip
-                            a.ms-3.text-muted(href='#!')
-                                i.fas.fa-smile
-                            a.ms-3(href='#!')
-                                i.fas.fa-paper-plane
+    .container
+        .row.clearfix
+            .col-lg-12
+                .card.chat-app(style="background: #fff; transition: .5s; border: 0; margin-bottom: 30px; margin-top: 30px; border-radius: .55rem; position: relative; width: 100%; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);")
+                    .chat(style="height: 530px; position: relative")
+                        .chat-header.clearfix
+                            .row
+                                .col-lg-6
+                                    if(customer.avatar)
+                                        a(href='javascript:void(0);', data-toggle='modal', data-target='#view_info')
+                                            img(src=customer.avatar, alt='avatar')
+                                    else
+                                        if(customer.gioiTinh==='Nam')
+                                            a(href='javascript:void(0);', data-toggle='modal', data-target='#view_info')
+                                                img(src='/admin/images/undraw_profile.svg', alt='avatar')
+                                        else 
+                                            a(href='javascript:void(0);', data-toggle='modal', data-target='#view_info')
+                                                img(src='/admin/images/undraw_profile_3.svg', alt='avatar')
+                                    .chat-about
+                                        h6.m-b-0 #{customer.hoTen}
+                                .col-lg-6.hidden-sm.text-right
+                                    a.btn.btn-outline-secondary(href='javascript:void(0);' style="margin-right:10px")
+                                        i.fa.fa-camera
+                                    a.btn.btn-outline-primary(href='javascript:void(0);' style="margin-right:10px")
+                                        i.fa.fa-image
+                                    a.btn.btn-outline-info(href='javascript:void(0);' style="margin-right:10px")
+                                        i.fa.fa-cogs
+                                    a.btn.btn-outline-warning(href='javascript:void(0);')
+                                        i.fa.fa-question
+                        .chat-history(style="height: 369.2px; max-height: 369.2px; overflow-y: auto")
+                            ul.m-b-0#chat-box()
+                                for chat in listChat
+                                    if chat.Gui==user.idNguoiDung
+                                        li.clearfix
+                                            .message-data.text-right.message-data-right
+                                                span.message-data-time(style="margin-right:10px") #{chat.thoiGianTao}
+                                                if(chat.avatar)
+                                                    img.message-data-avatar(src=chat.avatar, alt='avatar')
+                                                else
+                                                    if(chat.gioiTinh==='Nam')
+                                                        img(src='/admin/images/undraw_profile.svg', alt='avatar')
+                                                    else 
+                                                        img(src='/admin/images/undraw_profile_3.svg', alt='avatar')
+                                            div.message.other-message.float-right
+                                                = chat.noiDung
+                                    else
+                                        li.clearfix
+                                            .message-data.message-data-left
+                                                if(chat.avatar)
+                                                    img.message-data-avatar(src=chat.avatar, alt='avatar')
+                                                else
+                                                    if(chat.gioiTinh==='Nam')
+                                                        img(src='/admin/images/undraw_profile.svg', alt='avatar')
+                                                    else 
+                                                        img(src='/admin/images/undraw_profile_3.svg', alt='avatar')
+                                                span.message-data-time #{chat.thoiGianTao}
+                                            div.message.other-message
+                                                = chat.noiDung
+                        .chat-message.clearfix(style="position:absolute; bottom:0; width:100%")
+                            .input-group.mb-0
+                                .input-group-prepend
+                                    span.input-group-text
+                                        i.fas.fa-message
+                                input.form-control(chat-input type='text', placeholder='Enter text here...' id-user=user.idNguoiDung)

@@ -8,20 +8,33 @@ import {paginationCustomer} from '../../helper/pagination.helper';
 
 export const pageCustomer = async(req:Request,res:Response)=>{
     const pagination= await paginationCustomer(req,4);
-    const customers= await allModel.NguoiDung.findAll({
-        attributes:[
+    const customers = await allModel.NguoiDung.findAll({
+        attributes: [
+            'idNguoiDung',
             'hoTen', 'email', 'sdt', 
             'ngaySinh', 'gioiTinh', 'avatar', 
             'trangThai', 'token'
         ],
-        where:{
-            vaiTro:'VT002',
-            deleted:0,
+        where: {
+            vaiTro: 'VT002',
+            deleted: false,
         },
         limit: pagination.limitItems,
         offset: pagination.skip,
-        raw:true
-    })
+        raw: true, // If you need to flatten the data
+    });
+    for (const customer of customers) {
+        const phongChat = await allModel.ChiTietPhongChat.findOne({
+            where: {
+                idNguoiDung: customer['idNguoiDung'],
+            },
+            attributes: ['idPhongChat'],
+            raw: true
+        });
+        if (phongChat) {
+            customer['idPhongChat'] = phongChat['idPhongChat'];
+        }
+    }
     res.render('admin/pages/customer/index',{
         title:'Quản lý khách hàng',
         customers:customers,
@@ -55,8 +68,10 @@ export const detailCustomerPage = async (req:Request, res:Response) => {
         attributes: {
             exclude: ['idNguoiDung', 'ngayCapNhat'],
             include: [
-                [sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.col('Orders.idDonHang'))), 'soLuongDonHang'], // Đếm số lượng đơn hàng
-                [sequelize.fn('SUM', sequelize.literal('`Orders->OrderDetails`.`soLuongDat` * `Orders->OrderDetails->Product`.`giaTien`')), 'tongTienDonHang']
+                [sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.literal(`CASE WHEN Orders.tinhTrang ='Đang xử lý' or Orders.tinhTrang = 'Đã xác nhận' or Orders.tinhTrang = 'Đang giao' THEN Orders.idDonHang END`))), 'soLuongDonHangDangXuLy'], // Đếm số lượng đơn hàng
+                [sequelize.fn('SUM', sequelize.literal(`CASE WHEN Orders.tinhTrang ='Đang xử lý' or Orders.tinhTrang = 'Đã xác nhận' or Orders.tinhTrang = 'Đang giao' THEN \`Orders->OrderDetails\`.\`soLuongDat\` * \`Orders->OrderDetails->Product\`.\`giaTien\` END`)), 'tongTienDonHangDangXuLy'], // Tổng tiền đơn hàng
+                [sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.literal(`CASE WHEN Orders.tinhTrang = 'Hoàn thành' THEN Orders.idDonHang END`))), 'soLuongDonHangDaThanhToan'],
+                [sequelize.fn('SUM', sequelize.literal(`CASE WHEN Orders.tinhTrang = 'Hoàn thành' THEN \`Orders->OrderDetails\`.\`soLuongDat\` * \`Orders->OrderDetails->Product\`.\`giaTien\` END`)), 'tongTienDonHangDaThanhToan']
             ]
         },
         include: [
@@ -87,10 +102,11 @@ export const detailCustomerPage = async (req:Request, res:Response) => {
         ...data,
     }
     customer['ngayTao']=moment(data['ngayTao']).format('YYYY-MM-DD');
-    customer['soLuongDonHang']=(data['soLuongDonHang']>0)?data['soLuongDonHang']:0; // Kiểm tra xem có đơn hàng nào đã đặt hay chưa, nếu có thì hiển thị số lượng, ngược lại hiển thị 0
-    customer['tongTienDonHang'] = (data['tongTienDonHang'] > 0) ? 
-    new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data['tongTienDonHang']) : 
-    '0₫'; // Kiểm tra xem có đơn hàng nào đã đặt hay chưa, nếu có thì hiển thị tổng tiền, ngược lại hiển thị 0₫
+    customer['soLuongDonHangDangXuLy']=(data['soLuongDonHangDangXuLy']>0)?data['soLuongDonHangDangXuLy']:0; 
+    customer['tongTienDonHangDangXuLy'] = (data['tongTienDonHangDangXuLy']) ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data['tongTienDonHangDangXuLy']) : '0₫'; 
+    
+    customer['soLuongDonHangDaThanhToan']=(data['soLuongDonHangDaThanhToan']>0)?data['soLuongDonHangDaThanhToan']:0; 
+    customer['tongTienDonHangDaThanhToan'] = (data['tongTienDonHangDaThanhToan']) ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data['tongTienDonHangDaThanhToan']) : '0₫'; 
     res.render('admin/pages/customer/detail',{
         title:'Chi tiết khách hàng',
         customer:customer,

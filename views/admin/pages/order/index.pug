@@ -1,0 +1,75 @@
+extends ../../layouts/default.pug
+block content 
+    .container-fluid.mt-4
+      .d-sm-flex.align-items-center.justify-content-between.mb-4
+          h1.h3.mb-2.text-gray-800 <strong>Bảng quản lý đơn hàng</strong>
+      // Page Heading
+      p.mb-4
+        | Bảng này giúp quản lý các đơn hàng trong App 
+      // DataTales Example
+      .card.shadow.mb-4
+        .card-header.py-3
+          h6.m-0.font-weight-bold.text-primary Đơn hàng
+        .card-body
+          .table-responsive
+            table#dataTable.table.table-bordered(width='100%', cellspacing='0')
+              thead
+                tr
+                    th.text-center STT
+                    th.text-center Mã đơn hàng
+                    th.text-center Tên khách
+                    th.text-center Tình trạng
+                    th.text-center Ngày tạo
+                    th.text-center Hành động
+              tbody
+                if(orders.length>0)
+                  each order, index in orders
+                    tr
+                      td.text-center #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
+                      td.text-center #{order.idDonHang}
+                      td #{order.tenNguoiDung}
+                      td.text-center
+                        if(order.tinhTrang == "Đang xử lý")
+                          span(class="badge badge-secondary" style="padding:8px") Đang xử lý
+
+                        else if(order.tinhTrang == "Đã xác nhận")
+                          span(class="badge badge-warning" style="padding:8px") Đã xác nhận
+
+                        else if(order.tinhTrang == "Đang giao")
+                          span(class="badge badge-info" style="padding:8px") Đang giao
+
+                        else if(order.tinhTrang == "Hoàn thành")
+                          buttspanon(class="badge badge-success" style="padding:8px") Hoàn thành
+
+                        else
+                          span(class="badge badge-danger" style="padding:8px") Đã hủy
+                      td.text-center #{order.ngayTao}
+                      td.text-center(style="display: flex; justify-content: space-between; align-items: center; height:65.6px")
+                          a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/management/order/detail/${order.idDonHang}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                              i.fas.fa-eye(style="margin-right: 5px;")
+                              |  Chi tiết
+                          if(order.tinhTrang == "Đã xác nhận")
+                            a.btn.btn-info.btn-sm.btn-table(style="flex: 1; padding: 5px 10px; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;" btn-deliver-order=order.idDonHang)
+                                i.fas.fa-shipping-fast(style="margin-right: 5px;")
+                                |  Giao hàng
+                          a.btn.btn-warning.btn-sm.btn-table(href=`/${prefixAdmin}/management/order/notification/${order.idDonHang}`, style="flex: 1; padding: 5px 10px; background-color: #ffc107; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                              i.fas.fa-bell(style="margin-right: 5px;")
+                              |  Thông báo
+                else
+                  tr
+                    td(colspan='6')
+                      p.text-center Chưa có đơn hàng nào
+        nav.ml-3
+          div(style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; margin-right:20px")
+            span
+              | Trang #{pagination.currentPage} trong tổng số #{pagination.totalPages} trang
+            ul(class="pagination" style="margin-top: 10px;")
+              if(pagination.currentPage > 1)
+                li(class="page-item")
+                  a(class="page-link" href=`/admin/management/order?page=${pagination.currentPage-1}`) Trang trước
+              - for (let index = 1; index <= pagination.totalPages; index++) 
+                li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
+                  a(class="page-link" href=`/admin/management/order?page=${index}`) #{index}
+              if(pagination.currentPage < pagination.totalPages)
+                li(class="page-item")
+                  a(class="page-link" href=`/admin/management/order?page=${pagination.currentPage+1}`) Trang sau

@@ -2,10 +2,11 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 const TinNhan= sequelize.define("TinNhan",{
-    idTinNhan:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        primaryKey:true
+    idTinNhan: {
+        type: DataTypes.INTEGER,  // Chuyển từ STRING thành INTEGER
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,  // Thêm thuộc tính AUTO_INCREMENT
     },
     idPhongChat:{
         type:DataTypes.STRING,
@@ -23,8 +24,12 @@ const TinNhan= sequelize.define("TinNhan",{
         type:DataTypes.TEXT,
         allowNull:true
     },
-    thoiGianCapNhat:{
+    thoiGianTao:{
         type:DataTypes.DATE,
+    },
+    Gui:{
+        type:DataTypes.STRING,
+        allowNull:false,
     }
 },{
     tableName: "TinNhan",

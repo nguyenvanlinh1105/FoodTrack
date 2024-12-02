@@ -34,9 +34,10 @@ const SanPham= sequelize.define("SanPham",{
     moTa:{
         type:DataTypes.TEXT,
     },
-    soLuong:{
-        type:DataTypes.INTEGER,
-        allowNull:false
+    soLuongDaBan: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0 // Đặt giá trị mặc định
     },
     donViTinh:{
         type:DataTypes.STRING,

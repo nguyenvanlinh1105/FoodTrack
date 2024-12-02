@@ -14,7 +14,6 @@ export const index= async(req: Request, res: Response)=>{
     const foods=await SanPham.findAll({
         where:{
             deleted:0,
-            trangThai:'active'
         }
         ,raw:true,
         limit:pagination.limitItems,
@@ -63,7 +62,6 @@ export const create = async(req: Request, res: Response)=>{
         giaTien:req.body['giaTien'],
         images:JSON.stringify(req.body.images),
         moTa:req.body['moTa'],
-        soLuong:req.body['soLuong'],
         donViTinh:((req.body['idDanhMuc']==='DM001')?'suất':'ly'),
         ngayTao:dayjs().format('YYYY-MM-DD HH:mm:ss'),
         slug:slug
@@ -139,9 +137,10 @@ export const editPage= async(req: Request, res: Response)=>{
 }
 
 export const edit = async(req: Request, res: Response)=>{
-    if(req.body.images){
-        console.log("Có");
+    if (req.body.images && req.body.images.length > 0) {
         req.body.images=JSON.stringify(req.body.images);
+    } else {
+        delete req.body.images;  
     }
     await SanPham.update(req.body,{
         where:{
@@ -162,4 +161,23 @@ export const deleteFood=async(req: Request, res: Response)=>{
         }
     });
     res.status(200).json({message:'Xóa món ăn thành công'});
+}
+
+export const changeStatus=async(req: Request, res: Response)=>{
+    const  {slug,status} = req.params;
+    try {
+        const [affectedRows]= await allModel.SanPham.update(
+            { trangThai: status }, // Dữ liệu cần cập nhật
+            { where: { slug: slug, deleted:false } } // Điều kiện cập nhật
+        );
+        if (affectedRows > 0) {
+            req.flash("success","Cập nhật trạng thái thành công");
+        }else{
+            req.flash("error","Cập nhật trạng thái thất bại");
+        }
+        res.redirect('back');
+    } catch (error) {
+        req.flash("error","Cập nhật trạng thái thất bại");
+        res.redirect('back');
+    }
 }

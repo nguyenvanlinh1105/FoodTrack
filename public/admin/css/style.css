@@ -11349,3 +11349,35 @@ table.dataTable thead .sorting_desc:after {
   border-radius: 5px;
 }
 
+.order-food-detail {
+  scrollbar-width: thin; /* Thanh cuộn mỏng */
+  scrollbar-color: #888 #e0e0e0; /* Màu thanh cuộn */
+}
+.order-food-detail::-webkit-scrollbar {
+  width: 8px; /* Độ rộng thanh cuộn */
+}
+.order-food-detail::-webkit-scrollbar-thumb {
+  background: #888; /* Màu thanh trượt */
+  border-radius: 10px; /* Bo góc */
+}
+.order-food-detail::-webkit-scrollbar-track {
+  background: #e0e0e0; /* Màu nền của thanh cuộn */
+}
+
+.dropdown-list-message {
+  border: none; /* Loại bỏ viền */
+}
+
+.dropdown-list-message::-webkit-scrollbar {
+  width: 6px; /* Độ rộng thanh cuộn */
+}
+
+.dropdown-list-message::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4; /* Màu thanh trượt */
+  border-radius: 10px; /* Bo góc */
+}
+
+.dropdown-list-message::-webkit-scrollbar-track {
+  background: transparent; /* Loại bỏ nền thanh cuộn */
+  border: none; /* Loại bỏ viền của track */
+}

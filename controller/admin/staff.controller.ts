@@ -141,7 +141,7 @@ export const detailStaffPage = async (req:Request, res:Response) => {
     staff['ngayTao']=moment(data['ngayTao']).format('YYYY-MM-DD');
     const roles=await allModel.VaiTro.findAll({
         where:{
-            idVaiTro:['VT001','VT003','VT004','VT005']
+            idVaiTro:['VT003','VT004','VT005']
         },
         raw:true
     })

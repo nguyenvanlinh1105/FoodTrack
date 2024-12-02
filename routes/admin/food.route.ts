@@ -14,5 +14,6 @@ router.get('/edit/:slug',foodController.editPage);
 router.patch('/edit/:slug',upload.array('images', 4),uploadCloud.uploadFields,foodController.edit);
 router.post('/create',upload.array('images', 4),uploadCloud.uploadFields,foodController.create);
 router.patch('/delete/:slug',foodController.deleteFood);
+router.get('/change-status/:slug/:status',foodController.changeStatus);
 
 export default router;

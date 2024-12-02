@@ -3,6 +3,8 @@ import dotenv from 'dotenv';//Nhúng dotenv từ module dotenv
 import cors from "cors" //Nhúng cors vào dự án
 dotenv.config();//Thêm config cho dotenv
 import path from "path";//Nhúng path
+import http from "http";//Nhúng http
+import { Server } from "socket.io";
 import bodyParser from'body-parser';//Nhúng body-parser từ module body-parser
 import methodOverride from 'method-override';//Nhúng method-override từ module method-override
 
@@ -21,7 +23,42 @@ import routesAPI from "./routes/api/index.route";
 import routesAdmin from "./routes/admin/index.route";
 
 const app: Express = express();
+const server = http.createServer(app);//Tạo server
 const port : number | string =process.env.PORT ||3000;
+
+
+const io = new Server(server, {
+    cors: {
+        origin: "*", // Cấu hình CORS để cho phép truy cập từ các domain khác
+        methods: ["GET", "POST", "PUT", "DELETE"],
+    },
+});
+
+// Khai báo biến toàn cục
+declare global {
+    var _io: Server | undefined;
+}
+global._io = io;
+
+//Client
+import * as saveChatDB from './helper/saveChatDB.helper';
+_io.on('connection', (socket) => {
+    socket.on('CLIENT_SEND_MESSAGE', (data) => {
+        const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        try {
+            const chatData = JSON.parse(data);
+            _io.emit('SERVER_RESEND_MESSAGE_CLIENT', { 
+                name: chatData.tenNguoiDung,
+                message: chatData.noiDungChat, 
+                gender: chatData.gioiTinh,
+                time: currentTime,
+            });
+            saveChatDB.saveChat(chatData.idPhongChat, chatData.noiDungChat, "", new Date(), chatData.idUser);
+        } catch (error) {
+            console.log('Error', error);
+        }
+    })
+});
 
 app.use(cors());//Nhúng cors vào dự án
 
@@ -58,6 +95,6 @@ app.use((req:Request, res:Response,next:NextFunction)=>{
 routesAPI(app);
 routesAdmin(app);
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });

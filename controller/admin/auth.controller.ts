@@ -248,6 +248,11 @@ export const profilePage= async(req:Request,res:Response)=>{
 }
 
 export const profileUpdate = async(req:Request,res:Response)=>{
+    if (req.body.images && req.body.images.length > 0) {
+        req.body.images=JSON.stringify(req.body.images);
+    } else {
+        delete req.body.images;  
+    }
     const { password, 'password-confirm': passwordConfirm,diaChi,...otherData} = req.body;
     const token=res.locals.user.token;
     if ((password && !passwordConfirm) || (!password && passwordConfirm)) {
@@ -259,7 +264,6 @@ export const profileUpdate = async(req:Request,res:Response)=>{
         req.flash('error', 'Mật khẩu và xác nhận mật khẩu không khớp.');
         return res.redirect('back');
     }
-    console.log(otherData);
     const updatedData = {
         ...otherData,
         ...(password ? { matKhau: hashPassword(password) } : {}) // Chỉ thêm password nếu password tồn tại

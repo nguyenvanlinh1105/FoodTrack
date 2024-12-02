@@ -3,9 +3,10 @@ import sequelize from '../config/database';
 
 const BinhLuanSanPham= sequelize.define("BinhLuanSanPham",{
     idBinhLuan:{
-        type:DataTypes.STRING,
+        type:DataTypes.INTEGER,
         allowNull:false,
-        primaryKey:true
+        primaryKey:true,
+        autoIncrement: true
     },
     idNguoiDung:{
         type:DataTypes.STRING,

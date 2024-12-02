@@ -66,13 +66,21 @@ block content
                                     .col-md-12
                                         textarea.form-control.form-control-line(name='diaChi' placeholder='Nhập địa chỉ' rows='3' readonly)= customer.diaChi
                                 .form-group
-                                    label.col-md-12 Số lượng đơn hàng đã đặt
+                                    label.col-md-12 Số lượng đơn hàng hoàn thành
                                     .col-md-12
-                                        p.form-control.form-control-static(style='font-weight: bold;')= customer.soLuongDonHang || '0 đơn hàng'
+                                        p.form-control.form-control-static(style='font-weight: bold;')= customer.soLuongDonHangDaThanhToan || '0 đơn hàng'
                                 .form-group
-                                    label.col-md-12 Tổng tiền cho các đơn hàng
+                                    label.col-md-12 Tổng tiền cho các đơn hàng hoàn thành
                                     .col-md-12
-                                        p.form-control.form-control-static(style='font-weight: bold;') #{customer.tongTienDonHang}
+                                        p.form-control.form-control-static(style='font-weight: bold;') #{customer.tongTienDonHangDaThanhToan}
+                                .form-group
+                                    label.col-md-12 Số lượng đơn hàng đang xử lý
+                                    .col-md-12
+                                        p.form-control.form-control-static(style='font-weight: bold;')= customer.soLuongDonHangDangXuLy || '0 đơn hàng'
+                                .form-group
+                                    label.col-md-12 Tổng tiền cho các đơn hàng đang xử lý
+                                    .col-md-12
+                                        p.form-control.form-control-static(style='font-weight: bold;') #{customer.tongTienDonHangDangXuLy}
                                 .form-group
                                     label.col-md-12 Ngày tạo tài khoản
                                     .col-md-12

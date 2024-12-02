@@ -36,6 +36,9 @@ const DonHang= sequelize.define("DonHang",{
     },
     diaChi:{
         type:DataTypes.STRING,
+    },
+    tinhTrangThanhToan:{
+        type:DataTypes.STRING,
     }
 },{
     tableName: "DonHang",

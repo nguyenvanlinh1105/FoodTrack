@@ -119,7 +119,6 @@ if(foodForm){
 if(arrayForm.length>0){
     arrayForm.forEach(formElement => {
         formElement.addEventListener('submit', async function (event) {
-            console.log('Vào');
             event.preventDefault();
 
             if (typeof tinymce !== 'undefined') {
@@ -146,7 +145,6 @@ if(arrayForm.length>0){
                 }
             }
             if (hasError===true) return;
-            console.log('Tới đây');
             try {
                 fetch(form.action, {
                     method: 'POST',
@@ -220,7 +218,7 @@ function enableEmailInput() {
 }
 
 $(document).ready(function() {
-    var table = $('#dataTable').DataTable({
+    $('#dataTable').DataTable({
         language: {
             emptyTable: "Chưa có dữ liệu",
             zeroRecords: "Không tìm thấy",
@@ -229,17 +227,17 @@ $(document).ready(function() {
             loadingRecords: "Loading...",
         },
         "width": "100%",
-        lengthChange: false,      // Bỏ phần thay đổi số lượng bản ghi hiển thị
-        paging: false,            // Bật phân trang
-        pageLength: 4,            // Giới hạn tối đa 4 bản ghi mỗi trang
-        info: false,              // Bỏ phần số thông tin bảng ghi
-        searching: true,          // Giữ lại chức năng tìm kiếm
-        ordering: true,           // Giữ lại chức năng sắp xếp
-        stateSave: true,          // Lưu lại trạng thái
+        lengthChange: false,
+        paging: false,
+        pageLength: 4,
+        info: false,
+        searching: true,
+        ordering: true,
+        stateSave: false, // Tắt lưu trạng thái
         columnDefs: [
             { 
-                targets: -1,       // Cột cuối cùng (target: -1)
-                orderable: false   // Tắt tính năng sắp xếp cho cột cuối cùng
+                targets: -1,       
+                orderable: false  
             }
         ]
     });
@@ -373,7 +371,6 @@ if(deleteCategoryButtons.length >0){
             }).then((result) => {
                 if(result.isConfirmed){
                     const slug=button.getAttribute('btn-delete-category');
-                    console.log(slug);
                     fetch(`/admin/management/category/delete/${slug}`, {
                         method: 'PATCH',
                         headers: {
@@ -422,8 +419,170 @@ if(deleteFoodButtons.length >0){
             }).then((result) => {
                 if(result.isConfirmed){
                     const slug=button.getAttribute('btn-delete-food');
-                    console.log(slug);
                     fetch(`/admin/management/food/delete/${slug}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(async (response) => response.json())
+                    .then(async (data) => {
+                        await Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        location.reload();
+                    })
+                    .catch( async (error) => {
+                        await Swal.fire({
+                            icon: "error",
+                            title: "Lỗi xảy ra",
+                            text: error.message,
+                        });
+                        location.reload();
+                    });
+                }
+            })
+        })
+    })
+}
+
+
+const chatInput = document.querySelector('[chat-input]');
+if (chatInput) {
+    const socket = io(); // Kết nối đến server Socket.IO
+    const chatHistory=document.querySelector('.chat-history');
+    const chatBox = document.querySelector('#chat-box');
+    chatHistory.scrollTop = chatBox.scrollHeight;
+    chatInput.addEventListener('keydown', async (e) => {
+        if (e.key === 'Enter' && chatInput.value.trim()) {
+            const id=chatInput.getAttribute('id-user');
+            const message = chatInput.value.trim();
+            socket.emit('ADMIN_SEND_MESSAGE', 
+                { 
+                    id:id,
+                    message: message,
+                }); // Phát sự kiện với nội dung message
+            chatInput.value = ''; // Xóa input sau khi gửi
+        }
+    });
+    socket.on('SERVER_RESEND_MESSAGE_ADMIN', (data) => {
+        const { message, avatar, gender, time } = data;
+    
+        // Tạo phần tử li cho tin nhắn
+        const messageItem = document.createElement('li');
+        messageItem.classList.add('clearfix'); // Thêm class clearfix cho tin nhắn
+    
+        // Tạo phần tử chứa thông tin tin nhắn (thời gian và avatar)
+        const messageData = document.createElement('div');
+        messageData.classList.add('message-data', 'text-right','message-data-right'); // Thêm class cho phần thông tin tin nhắn
+    
+        // Tạo phần tử thời gian
+        const timeElement = document.createElement('span');
+        timeElement.classList.add('message-data-time');
+        timeElement.style.marginRight = '10px'; // Khoảng cách bên phải
+        timeElement.innerText = time; // Thêm thời gian vào phần tử
+    
+        // Tạo phần tử avatar
+        const avatarElement = document.createElement('img');
+        avatarElement.classList.add('message-data-avatar');
+        avatarElement.src = avatar || (gender === 'Nam' ? '/admin/images/undraw_profile.svg' : '/admin/images/undraw_profile_3.svg'); // Cấp nguồn avatar dựa trên giới tính hoặc avatar mặc định
+    
+        // Tạo phần tử nội dung tin nhắn
+        const messageContent = document.createElement('div');
+        messageContent.classList.add('message', 'other-message', 'float-right');
+        messageContent.innerText = message; // Thêm nội dung tin nhắn vào phần tử
+    
+        // Gắn các phần tử vào messageData
+        messageData.appendChild(timeElement);
+        messageData.appendChild(avatarElement);
+    
+        // Gắn messageData và messageContent vào messageItem
+        messageItem.appendChild(messageData);
+        messageItem.appendChild(messageContent);
+    
+        // Thêm messageItem vào vùng chat
+        if (chatBox) {
+            chatBox.appendChild(messageItem);
+            // Cuộn xuống cuối cùng trong chat box sau khi thêm tin nhắn
+            chatHistory.scrollTop = chatBox.scrollHeight;
+        }
+    });
+    socket.on('SERVER_RESEND_MESSAGE_CLIENT', (data) => {
+        // Tạo li mới
+        const li = document.createElement('li');
+        li.classList.add('clearfix');
+    
+        // Tạo phần thông tin tin nhắn
+        const messageData = document.createElement('div');
+        messageData.classList.add('message-data','message-data-left');
+
+
+         // Thêm ảnh đại diện
+         const avatarImg = document.createElement('img');
+         if (data.avatar) {
+             avatarImg.src = data.avatar;
+         } else if (data.gender === 'Nam') {
+             avatarImg.src = '/admin/images/undraw_profile.svg';
+         } else {
+             avatarImg.src = '/admin/images/undraw_profile_3.svg';
+         }
+         avatarImg.alt = 'avatar';
+     
+         messageData.appendChild(avatarImg);
+
+        const timeSpan = document.createElement('span');
+        timeSpan.classList.add('message-data-time');
+        timeSpan.textContent = data.time;
+    
+        messageData.appendChild(timeSpan);
+    
+        // Tạo nội dung tin nhắn
+        const message = document.createElement('div');
+        message.classList.add('message', 'other-message'); // hoặc 'my-message' nếu tin nhắn từ người dùng hiện tại
+        message.textContent = data.message;
+    
+        // Thêm vào li
+        li.appendChild(messageData);
+        li.appendChild(message);
+        if(chatBox){
+            chatBox.appendChild(li);
+            chatHistory.scrollTop = chatBox.scrollHeight;
+        }
+    });
+            
+}
+
+const listMessageDropDown=document.querySelector('#messagesDropdown');
+if(listMessageDropDown){
+    listMessageDropDown.addEventListener('click',async (e)=>{
+        e.preventDefault();
+        const messageList=document.querySelector('.dropdown-list-message');
+        messageList.classList.toggle('show');
+    })
+}
+
+const deliverOrderButtons=document.querySelectorAll('[btn-deliver-order]');
+if(deliverOrderButtons.length >0){
+    deliverOrderButtons.forEach((button)=>{
+        button.addEventListener('click',async (e)=>{
+            e.preventDefault();
+            Swal.fire({
+                title: 'Bạn có giao đơn hàng này không ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#28A745',
+                cancelButtonColor: '#d33',
+                focusConfirm: false
+            }).then((result) => {
+                if(result.isConfirmed){
+                    const id=button.getAttribute('btn-deliver-order');
+                    fetch(`/admin/management/order/deliver/${id}`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json'

@@ -40,3 +40,10 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
         a.nav-link.collapsed(href='/admin/management/food', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
             i.fas.fa-utensils
             span Quản lý món ăn
+    hr.sidebar-divider
+    .sidebar-heading
+        | Management Order
+    li.nav-item(class=(title.includes('đơn hàng') ? 'active' : ''))
+        a.nav-link.collapsed(href='/admin/management/order', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
+            i.fas.fa-truck-loading
+            span Quản lý đơn hàng

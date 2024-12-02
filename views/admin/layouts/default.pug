@@ -19,6 +19,7 @@ html(lang='en')
 
     link(rel="icon" type="image/x-icon" href="/admin/images/icon.jpg")
     link(rel='stylesheet', type='text/css', href='/admin/css/style.css')
+    link(rel='stylesheet', type='text/css', href='/admin/css/chat.css')
     title #{title}
   body#page-top
     +alertSuccess(3000)
@@ -44,4 +45,5 @@ html(lang='en')
     script(src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js")
     script(src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js")
     script(src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js")
+    script(src="/socket.io/socket.io.js")
     script(src='/admin/js/main.js' defer)

@@ -38,7 +38,7 @@ block content
                                 .form-group
                                     label.col-sm-12 Danh mục
                                     .col-md-12
-                                        select.form-control.form-control-line(name='danhMuc')
+                                        select.form-control.form-control-line(name='idDanhMuc')
                                             each category in categories
                                                 option(value=category.idDanhMuc selected=(category.idDanhMuc == food.idDanhMuc)) #{category.tenDanhMuc}
                                 .form-group
@@ -46,9 +46,9 @@ block content
                                     .col-md-12
                                         input.form-control.form-control-line(type='text' placeholder="Giá tiền" name='giaTien' value=food.giaTien)
                                 .form-group
-                                    label.col-md-12 Số lượng
+                                    label.col-md-12 Số lượng đã bán
                                     .col-md-12
-                                        input.form-control.form-control-line(type='text', placeholder='Số lượng', name='soLuong', value=food.soLuong)
+                                        input.form-control.form-control-line(type='text', placeholder='Số lượng', name='soLuongDaBan', value=food.soLuongDaBan)
                                 .form-group
                                     label.col-md-12 Đơn vị tính
                                     .col-md-12

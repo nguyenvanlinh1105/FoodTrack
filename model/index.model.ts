@@ -9,6 +9,8 @@ import DanhMuc from './DanhMuc.model';
 import PhongChat from './PhongChat.model';
 import ChiTietPhongChat from './ChiTietPhongChat.model';
 import TinNhan from './TinNhan.model';
+import SanPhamYeuThich from './SanPhamYeuThich.model';
+import BinhLuanSanPham from './BinhLuanSanPham.model';
 
 // Define associations
 VaiTro.hasMany(NguoiDung, {
@@ -24,40 +26,50 @@ NguoiDung.belongsTo(VaiTro, {
 });
 
 NguoiDung.hasMany(DonHang, {
-    foreignKey: 'idNguoiDung', // Foreign key in DonHang referring to NguoiDung
+    foreignKey: 'idNguoiDung', 
     sourceKey: 'idNguoiDung',
-    as: 'Orders' // Alias for the relationship
+    as: 'Orders' // Alias 
+});
+
+NguoiDung.hasMany(BinhLuanSanPham, {
+    foreignKey: 'idNguoiDung', 
+    sourceKey: 'idNguoiDung',
+    as: 'Comments' // Alias 
+});
+SanPham.hasMany(BinhLuanSanPham, {
+    foreignKey: 'idSanPham', 
+    sourceKey: 'idSanPham',
+    as: 'Comments' // Alias 
 });
 
 DonHang.belongsTo(NguoiDung, {
-    foreignKey: 'idNguoiDung', // Foreign key in DonHang referring to NguoiDung
+    foreignKey: 'idNguoiDung', 
     targetKey: 'idNguoiDung',
-    as: 'User' // Alias for the relationship
+    as: 'User' // Alias 
 });
 
-
 DonHang.hasMany(ChiTietDonHang, {
-    foreignKey: 'idDonHang', // Foreign key in ChiTietDonHang referring to DonHang
+    foreignKey: 'idDonHang', 
     sourceKey: 'idDonHang',
-    as: 'OrderDetails' // Alias for the relationship
+    as: 'OrderDetails' // Alias
 });
 
 ChiTietDonHang.belongsTo(DonHang, {
-    foreignKey: 'idDonHang', // Foreign key in ChiTietDonHang referring to DonHang
+    foreignKey: 'idDonHang', 
     targetKey: 'idDonHang',
-    as: 'Order' // Alias for the relationship
+    as: 'Order' // Alias
 });
 
 SanPham.hasMany(ChiTietDonHang, {
     foreignKey: 'idSanPham',
     sourceKey: 'idSanPham',
-    as: 'OrderDetails'  // Alias để sử dụng trong truy vấn
+    as: 'OrderDetails'  // Alias
 });
 
 ChiTietDonHang.belongsTo(SanPham, {
     foreignKey: 'idSanPham',
     targetKey: 'idSanPham',
-    as: 'Product'  // Alias để sử dụng trong truy vấn
+    as: 'Product'  // Alias
 });
 
 SanPham.belongsTo(DanhMuc, {
@@ -75,7 +87,7 @@ DanhMuc.hasMany(SanPham, {
 PhongChat.hasMany(TinNhan, {
     foreignKey: 'idPhongChat',
     sourceKey: 'idPhongChat',
-    as: 'Messages', // Alias cho tin nhắn
+    as: 'Messages', // Alias
 });
 
 
@@ -83,31 +95,55 @@ PhongChat.hasMany(TinNhan, {
 TinNhan.belongsTo(PhongChat, {
     foreignKey: 'idPhongChat',
     targetKey: 'idPhongChat',
-    as: 'Room', // Alias cho phòng chat
+    as: 'Room', // Alias
 });
 
 PhongChat.hasMany(ChiTietPhongChat, {
     foreignKey: 'idPhongChat',
     sourceKey: 'idPhongChat',
-    as: 'Participants', // Alias cho danh sách người tham gia
+    as: 'Participants', // Alias
 });
 
 ChiTietPhongChat.belongsTo(PhongChat, {
     foreignKey: 'idPhongChat',
     targetKey: 'idPhongChat',
-    as: 'Room', // Alias cho phòng chat
+    as: 'Room', // Alias
 });
 
 NguoiDung.hasMany(ChiTietPhongChat, {
     foreignKey: 'idNguoiDung',
     sourceKey: 'idNguoiDung',
-    as: 'RoomDetails', // Alias cho chi tiết phòng chat
+    as: 'RoomDetails', // Alias
 });
 
 ChiTietPhongChat.belongsTo(NguoiDung, {
     foreignKey: 'idNguoiDung',
     targetKey: 'idNguoiDung',
-    as: 'User', // Alias cho người dùng
+    as: 'User', // Alias
 });
 
-export {sequelize,VaiTro, NguoiDung,DonHang,  ChiTietDonHang, SanPham,DanhMuc,PhongChat,ChiTietPhongChat,TinNhan};
+
+//SanPhamYeuThich
+NguoiDung.hasMany(SanPhamYeuThich, {
+    foreignKey: 'idNguoiDung',
+    sourceKey: 'idNguoiDung',
+    as: 'FavoriteProducts', // Alias
+});
+
+SanPham.hasMany(SanPhamYeuThich, {
+    foreignKey: 'idSanPham',
+    sourceKey: 'idSanPham',
+    as: 'FavoriteUsers', // Alias
+});
+SanPhamYeuThich.belongsTo(NguoiDung, {
+    foreignKey: 'idNguoiDung',
+    targetKey: 'idNguoiDung',
+    as: 'User', // Alias
+});
+SanPhamYeuThich.belongsTo(SanPham, {
+    foreignKey: 'idSanPham',
+    targetKey: 'idSanPham',
+    as: 'Product', // Alias
+});
+
+export {sequelize,VaiTro, NguoiDung,DonHang,  ChiTietDonHang, SanPham,DanhMuc,PhongChat,ChiTietPhongChat,TinNhan,BinhLuanSanPham};

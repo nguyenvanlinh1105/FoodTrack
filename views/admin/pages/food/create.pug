@@ -19,15 +19,6 @@ block content
                                 option(selected=true, value='') Danh mục
                                 each category in categories 
                                     option(value=category.idDanhMuc) #{category.tenDanhMuc}
-                        .col-md-12
-                            input.form-control.mt-3(
-                                type="number"
-                                id="soLuong"
-                                name="soLuong"
-                                placeholder='Nhập số lượng'
-                                min=1
-                            )
-                            .invalid-feedback.invalid-feedback-soLuong-missed Trường Số lượng không thể để trống!
                         .col-md-12.mt-3
                             textarea(
                                     type="text"

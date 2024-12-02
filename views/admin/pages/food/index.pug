@@ -12,19 +12,19 @@ block content
       // DataTales Example
       .card.shadow.mb-4
         .card-header.py-3
-          h6.m-0.font-weight-bold.text-primary Đồ ăn
+          h6.m-0.font-weight-bold.text-primary Món ăn
         .card-body
           .table-responsive
             table#dataTable.table.table-bordered(width='100%', cellspacing='0')
               thead
                 tr
-                    th STT
-                    th Hình ảnh
-                    th Tên món ăn
-                    th Giá tiền
-                    th Số lượng
-                    th Trạng thái
-                    th Hành động
+                    th.text-center STT
+                    th.text-center Hình ảnh
+                    th.text-center Tên món ăn
+                    th.text-center Giá tiền
+                    th.text-center Số lượng đã bán
+                    th.text-center Trạng thái
+                    th.text-center Hành động
               tbody
                 if(foods.length>0)
                   each food, index in foods
@@ -34,13 +34,13 @@ block content
                         img.food-image(src=food.images, alt=food.name, width='100px')
                       td #{food.tenSanPham}
                       td.text-center #{food.giaTien}
-                      td.text-center #{food.soLuong}
+                      td.text-center #{food.soLuongDaBan}
                       td.text-center
                         if(food.trangThai=='active')
-                          a(href=`/admin/management/food/change-status/${food.slug}/inactive` class="badge badge-success"
+                          a(href=`/admin/management/food/change-status/${food.slug}/inactive` class="badge badge-success" style="padding:5px"
                                   food-status=`inactive`) Hoạt động
                         else
-                          a(href=`/admin/management/food/change-status/${food.slug}/active` class="badge badge-danger"
+                          a(href=`/admin/management/food/change-status/${food.slug}/active` class="badge badge-danger" style="padding:5px"
                               food-status=`active`) Dừng hoạt động
                       td.text-center(style="display: flex; justify-content: space-between; align-items: center; height:125.6px")
                         a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/management/food/detail/${food.slug}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
