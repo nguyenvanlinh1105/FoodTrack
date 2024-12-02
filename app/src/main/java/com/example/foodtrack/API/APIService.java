@@ -14,8 +14,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -30,16 +32,20 @@ import retrofit2.http.Query;
 
 public interface APIService {
 
-
+  OkHttpClient okHttpClient = new OkHttpClient.Builder()
+          .connectTimeout(30, TimeUnit.SECONDS)
+          .readTimeout(30, TimeUnit.SECONDS)
+          .writeTimeout(30, TimeUnit.SECONDS)
+          .build();
 
   //    linkAPI root:
-    public static String url ="https://0089-113-23-31-245.ngrok-free.app/";
+    public static String url ="https://feb4-113-23-31-245.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
-
 
     // hàm này dùng để login , gửi email và pass word
     @POST("user/login")
@@ -140,6 +146,12 @@ public interface APIService {
   Call<SanPhamYeuThichModel> GetTrangThaiYeuThich(@Query("idNguoiDung")String idNguoiDung, @Query("idSanPham") String idSanPham);
 
 
+
+  Retrofit retrofit = new Retrofit.Builder()
+          .baseUrl("https://example.com/")
+          .client(okHttpClient)
+          .addConverterFactory(GsonConverterFactory.create())
+          .build();
   // lấy chi tiết đơn hàng đang giao: chưa
   @GET("")
   Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDangGiao();

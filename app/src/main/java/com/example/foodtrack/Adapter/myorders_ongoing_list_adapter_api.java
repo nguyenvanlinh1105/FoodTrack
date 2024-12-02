@@ -69,7 +69,7 @@ public class myorders_ongoing_list_adapter_api extends ArrayAdapter<DonHangAPIMo
             if (chiTietDonHangs != null && !chiTietDonHangs.isEmpty()) {
 
                 ChiTietDonHangAPIModel first  = chiTietDonHangs.get(0);
-                SanPhamAPIModel sanPhamFirst = first.getSanPham();
+                SanPhamAPIModel sanPhamFirst = first.getProduct();
                 String imageUrl = sanPhamFirst.getImages();
                 if (imageUrl.startsWith("http://")) {
                     imageUrl = imageUrl.replace("http://", "https://");
@@ -90,7 +90,7 @@ public class myorders_ongoing_list_adapter_api extends ArrayAdapter<DonHangAPIMo
                         });
 
                 for (ChiTietDonHangAPIModel chiTietDonHang : chiTietDonHangs) {
-                    SanPhamAPIModel sanPham = chiTietDonHang.getSanPham();
+                    SanPhamAPIModel sanPham = chiTietDonHang.getProduct();
                     int soLuong = chiTietDonHang.getSoLuongDat();
                     totalQty += soLuong;
 

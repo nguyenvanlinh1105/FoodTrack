@@ -139,8 +139,8 @@ public class fragment_myorders_mualai_details extends Fragment {
                     arrayChiTietDonHangAPI.clear();
                     for (ChiTietDonHangAPIModel apiItem : listChiTietDonHang) {
                         ChiTietDonHangAPIModel chiTietDonHang = new ChiTietDonHangAPIModel();
-                        SanPhamAPIModel sanPham = new SanPhamAPIModel(apiItem.getSanPham().getTenSanPham(), apiItem.getSanPham().getGiaTien(), apiItem.getSanPham().getImages(), apiItem.getSanPham().getMoTa());
-                        chiTietDonHang.setSanPham(sanPham);
+                        SanPhamAPIModel sanPham = new SanPhamAPIModel(apiItem.getProduct().getTenSanPham(), apiItem.getProduct().getGiaTien(), apiItem.getProduct().getImages(), apiItem.getProduct().getMoTa());
+                        chiTietDonHang.setProduct(sanPham);
                         chiTietDonHang.setSoLuongDat(apiItem.getSoLuongDat());
                         chiTietDonHang.setIdChiTietDonHang(apiItem.getIdChiTietDonHang());
                         arrayChiTietDonHangAPI.add(chiTietDonHang);
@@ -183,7 +183,7 @@ public class fragment_myorders_mualai_details extends Fragment {
             TextView giaTien = itemView.findViewById(R.id.tv_gia_myOrders_detail);
 
             soLuongDat.setText(String.valueOf(chiTiet.getSoLuongDat()));
-            SanPhamAPIModel sanPham = chiTiet.getSanPham();
+            SanPhamAPIModel sanPham = chiTiet.getProduct();
             if (sanPham != null) {
                 String imageUrl = sanPham.getImages();
                 if (imageUrl.startsWith("http://")) {

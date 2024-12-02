@@ -33,6 +33,8 @@ import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.DonHangModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,6 +52,8 @@ public class fragment_myorders_ongoing_API extends Fragment {
 
     private String mParam1;
     private String mParam2;
+
+    String idNguoiDung;
 
     ImageView backBtn, imageViewTranslate;
     TextView toLichSu, toDonHuy;
@@ -88,8 +92,8 @@ public class fragment_myorders_ongoing_API extends Fragment {
         }
 
         SharedPreferences sharedPreferencesUser = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
-        String idNguoiDung = sharedPreferencesUser.getString("idUser","-1");
-        GetOrders(idNguoiDung);
+        idNguoiDung = sharedPreferencesUser.getString("idUser", "-1");
+
 
     }
 
@@ -133,8 +137,8 @@ public class fragment_myorders_ongoing_API extends Fragment {
         Mapping(view);
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_shipper);
         imageViewTranslate.startAnimation(animation);
-        checkIfListEmpty();
-
+//        checkIfListEmpty();
+        GetOrders(idNguoiDung);
         ControlButton();
         return view;
     }
@@ -142,7 +146,7 @@ public class fragment_myorders_ongoing_API extends Fragment {
     public void Mapping(View view) {
         backBtn = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing);
         toLichSu = (TextView) view.findViewById(R.id.btn_lichSu_myOrders);
-        toDonHuy = (TextView)view.findViewById(R.id.btn_donHuy_myOrders);
+        toDonHuy = (TextView) view.findViewById(R.id.btn_donHuy_myOrders);
         chatIcon = (ImageView) view.findViewById(R.id.chatIcon);
         imageIfEmpty = (LinearLayout) view.findViewById(R.id.image_if_no_order_myOrders);
         imageViewTranslate = (ImageView) view.findViewById(R.id.imageViewTranslate);
@@ -191,6 +195,10 @@ public class fragment_myorders_ongoing_API extends Fragment {
         protected void onPostExecute(List<DonHangAPIModel> result) {
             super.onPostExecute(result);
             if (result != null && !result.isEmpty()) {
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(result);
+
+                Log.d("responseBody", "onPostExecute: " + json);
                 myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), result);
                 listview_myorders_ongoing.setAdapter(listAdapter);
             } else {
@@ -202,6 +210,8 @@ public class fragment_myorders_ongoing_API extends Fragment {
     private void GetOrders(String idNguoiDung) {
         new GetOrdersTask().execute(idNguoiDung);
     }
+
+  
 
 
     private void UseFallbackData() {
@@ -278,8 +288,8 @@ public class fragment_myorders_ongoing_API extends Fragment {
 
     }
 
-    private void checkIfListEmpty() {
-        if (arrayListOrder.isEmpty()) {
+    private void checkIfListEmpty(List<DonHangAPIModel> listDonHang) {
+        if (listDonHang.isEmpty()) {
             listview_myorders_ongoing.setVisibility(View.GONE);
             imageIfEmpty.setVisibility(View.VISIBLE);
             imageViewTranslate.setVisibility(View.GONE);
