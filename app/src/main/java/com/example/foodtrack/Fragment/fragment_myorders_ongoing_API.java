@@ -3,6 +3,7 @@ package com.example.foodtrack.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,7 @@ import com.example.foodtrack.Model.DonHangModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -149,19 +151,58 @@ public class fragment_myorders_ongoing_API extends Fragment {
 
     }
 
-    private void GetOrders(String idNguoiDung) {
-        APIService.API_SERVICE.GetDonHangDangGiao(idNguoiDung).enqueue(new Callback<List<DonHangAPIModel>>() {
-            @Override
-            public void onResponse(Call<List<DonHangAPIModel>> call, Response<List<DonHangAPIModel>> response) {
-                Log.d("heee","Không ổn lắm mày ạ");
-            }
+//    private void GetOrders(String idNguoiDung) {
+//        APIService.API_SERVICE.GetDonHangDangGiao(idNguoiDung).enqueue(new Callback<List<DonHangAPIModel>>() {
+//            @Override
+//            public void onResponse(Call<List<DonHangAPIModel>> call, Response<List<DonHangAPIModel>> response) {
+//                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+//                    List<DonHangAPIModel> listDonHang = response.body();
+//                    myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), listDonHang);
+//                    listview_myorders_ongoing.setAdapter(listAdapter);
+//                } else {
+//                    UseFallbackData();
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<List<DonHangAPIModel>> call, Throwable t) {
+//                UseFallbackData();
+//            }
+//        });
+//    }
 
-            @Override
-            public void onFailure(Call<List<DonHangAPIModel>> call, Throwable t) {
-
+    private class GetOrdersTask extends AsyncTask<String, Void, List<DonHangAPIModel>> {
+        @Override
+        protected List<DonHangAPIModel> doInBackground(String... params) {
+            // Gọi API ở đây
+            try {
+                Response<List<DonHangAPIModel>> response = APIService.API_SERVICE.GetDonHangDangGiao(params[0]).execute();
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else {
+                    return null;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
             }
-        });
+        }
+
+        @Override
+        protected void onPostExecute(List<DonHangAPIModel> result) {
+            super.onPostExecute(result);
+            if (result != null && !result.isEmpty()) {
+                myorders_ongoing_list_adapter_api listAdapter = new myorders_ongoing_list_adapter_api(getContext(), result);
+                listview_myorders_ongoing.setAdapter(listAdapter);
+            } else {
+                UseFallbackData();
+            }
+        }
     }
+
+    private void GetOrders(String idNguoiDung) {
+        new GetOrdersTask().execute(idNguoiDung);
+    }
+
 
     private void UseFallbackData() {
         initializeData();
