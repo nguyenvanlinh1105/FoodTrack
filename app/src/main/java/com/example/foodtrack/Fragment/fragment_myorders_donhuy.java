@@ -157,7 +157,7 @@ public class fragment_myorders_donhuy extends Fragment {
         protected List<DonHangAPIModel> doInBackground(String... params) {
             // Gọi API ở đây
             try {
-                Response<List<DonHangAPIModel>> response = APIService.API_SERVICE.GetDonHangDangGiao(params[0]).execute();
+                Response<List<DonHangAPIModel>> response = APIService.API_SERVICE.GetDonHangDaHuy(params[0]).execute();
                 if (response.isSuccessful()) {
                     return response.body();
                 } else {

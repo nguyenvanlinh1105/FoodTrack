@@ -42,6 +42,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,6 +81,7 @@ public class product_detail_change_info extends Fragment {
     private RecyclerView rvProductDetail, rvDealHoi;
 
     SharedPreferences sharedPreferencesDonHang;
+    String idDonHang ;
 
 
     public product_detail_change_info() {
@@ -96,14 +99,15 @@ public class product_detail_change_info extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferencesDonHang = getContext().getSharedPreferences("dataDonHangResponse", getContext().MODE_PRIVATE);
+        idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
         quantity = 1;
         if (getArguments() != null) {
-            idSanPham = getArguments().getString(idSanPham);
+            idSanPham = getArguments().getString("idSanPham");
             title = getArguments().getString(title);
             price = String.valueOf(getArguments().getDouble(price));
             description = getArguments().getString(description);
             image = getArguments().getString(image); // Lấy giá trị image từ URL
-            qty = getArguments().getInt(String.valueOf(qty));
+            qty = getArguments().getInt("soluong");
 
         }
 
@@ -174,21 +178,12 @@ public class product_detail_change_info extends Fragment {
         }
         Log.d("qtyCart", String.valueOf(qty));
         Text_quantity_product.setText(String.valueOf(qty));
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                GetMonAnBenPhai();
-            }
-        }, 3000);
+        executeTasks();
 
-
-//        GetDealHoi();
-        // deal hời
-
-        GetTrangThaiYeuThich(idUser,idSanPham);
         ControlButton();
         return view;
     }
+
 
     private void Mapping(View view) {
         btn_back_product_detail = view.findViewById(R.id.btn_back_product_detail);
@@ -233,26 +228,6 @@ public class product_detail_change_info extends Fragment {
             }
         });
 
-
-        btn_favorite_check_product_detail.setOnClickListener(view -> {
-            if (!isFavorite) {
-
-                SanPhamYeuThichModel model = new SanPhamYeuThichModel();
-                model.setIdNguoiDung(idUser);
-                model.setIdSanPham(idSanPham);
-                ThemSanPhamYeuThichModel(model);
-                btn_favorite_check_product_detail.setImageResource(R.drawable.icon_fill_heart_48);
-                isFavorite = true;
-
-            } else {
-                SanPhamYeuThichModel model = new SanPhamYeuThichModel();
-                model.setIdNguoiDung(idUser);
-                model.setIdSanPham(idSanPham);
-                BoSanPhamYeuThichModel(model);
-                btn_favorite_check_product_detail.setImageResource(R.drawable.icon_heart_48);
-                isFavorite = false;
-            }
-        });
         btn_minus_product_detail.setOnClickListener(view -> {
             quantity = Integer.parseInt(Text_quantity_product.getText().toString());
             if (quantity > 0) quantity--;
@@ -274,24 +249,38 @@ public class product_detail_change_info extends Fragment {
 
                 ctdh.setIdSanPham(idSanPham);
                 ctdh.setSoLuongDat(quantity);
-                String idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
+
                 //   Log.d("idDonHang",idDonHang);
                 if (idDonHang != null) {
                     ctdh.setIdDonHang(idDonHang);
                 }
+                UpdateSoLuongSanPhamGioHang(ctdh);
 
-
-                if (idUser != "-1") {
-                    ctdh.setIdUser(idUser);
-                    UpdateSoLuongSanPhamGioHang(ctdh);
-                } else {
-                    Toast.makeText(getContext(), "Không tìm thấy ID người dùng", Toast.LENGTH_SHORT).show();
-                }
                 CreatePopup(view);
             }
         });
 
     }
+
+    public void executeTasks() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        executor.submit(() -> {
+            GetMonAnBenPhai(); // Hàm đầu tiên
+        });
+
+        executor.submit(() -> {
+          //  GetDealHoi(); // Hàm thứ hai
+        });
+
+        executor.submit(() -> {
+           // GetTrangThaiYeuThich(idUser,idSanPham);
+        });
+
+        executor.shutdown(); // Kết thúc ExecutorService sau khi hoàn thành
+    }
+
+
 
     private void GetMonAnBenPhai(){
         APIService.API_SERVICE.getListMonAn_Explore().enqueue(new Callback<List<SanPhamAPIModel>>() {
@@ -315,44 +304,8 @@ public class product_detail_change_info extends Fragment {
         });
     }
 
-    private void GetDealHoi(){
-        APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamAPIModel>>() {
-            @Override
-            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<SanPhamAPIModel> listSanPhamDeaHoi = response.body();
-                    Log.d("API_SUCCESS", "Data size: " + listSanPhamDeaHoi.size());
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                    rvDealHoi.setLayoutManager(layoutManager);
-                    recyclerView_deal_hoi_API_adapter dealAdapter = new recyclerView_deal_hoi_API_adapter(getContext(), listSanPhamDeaHoi);
-                    rvDealHoi.setAdapter(dealAdapter);
-
-                } else {
-                    Log.e("API_ERROR", "Response not successful: " + response.code());
-                    if (response.errorBody() != null) {
-                        try {
-                            Log.e("API_ERROR", "Error body: " + response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-            }
 
 
-            @Override
-            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
-                Log.e("API_ERROR", "Error: " + t.getMessage());
-                if (t instanceof JsonSyntaxException) {
-                    JsonSyntaxException jsonError = (JsonSyntaxException) t;
-                    Log.e("API_ERROR", "JSON Error: " + jsonError.getCause());
-                }
-                t.printStackTrace();
-                Toast.makeText(getContext(), "Lỗi dữ liệu: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void CreatePopup(View view) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -410,61 +363,8 @@ public class product_detail_change_info extends Fragment {
         });
     }
 
-    private void ThemSanPhamYeuThichModel(SanPhamYeuThichModel model) {
-        APIService.API_SERVICE.ThemSanPhamYeuThichModel(model).enqueue(new Callback<SanPhamYeuThichModel>() {
-            @Override
-            public void onResponse(Call<SanPhamYeuThichModel> call, Response<SanPhamYeuThichModel> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<SanPhamYeuThichModel> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void BoSanPhamYeuThichModel(SanPhamYeuThichModel model) {
-        APIService.API_SERVICE.BoSanPhamYeuThichModel(model).enqueue(new Callback<SanPhamYeuThichModel>() {
-            @Override
-            public void onResponse(Call<SanPhamYeuThichModel> call, Response<SanPhamYeuThichModel> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<SanPhamYeuThichModel> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void GetTrangThaiYeuThich(String idNguoiDung , String idSanPham){
-        APIService.API_SERVICE.GetTrangThaiYeuThich(idNguoiDung, idSanPham).enqueue(new Callback<SanPhamYeuThichModel>() {
-            @Override
-            public void onResponse(Call<SanPhamYeuThichModel> call, Response<SanPhamYeuThichModel> response) {
-                if(response.isSuccessful()){
-
-                    Log.d("isLove",response.body().isLove()+"");
-                    if(response.body().isLove()==true){
-                        btn_favorite_check_product_detail.setImageResource(R.drawable.icon_fill_heart_48);
-                        isFavorite = true;
-                    }else{
-                        btn_favorite_check_product_detail.setImageResource(R.drawable.icon_heart_48);
-                        isFavorite = false;
-                    }
 
 
-                }else{
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SanPhamYeuThichModel> call, Throwable t) {
-
-            }
-        });
-    }
 }
 
 

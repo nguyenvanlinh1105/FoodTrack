@@ -123,7 +123,7 @@ public class cart_adapter_api extends BaseAdapter {
                 bundle.putDouble("price", product.getGiaTien());
                 bundle.putString("description", "Mô tả món ăn/đồ uống");
                 bundle.putString("image", product.getImages());
-                bundle.putInt("qty", product.getSoLuongDat());
+                bundle.putInt("soluong", product.getSoLuongDat());
 
                 Intent detail = new Intent(context, MainActivity.class);
                 detail.putExtra("fragmentToLoad", "product_detail_change_info");
