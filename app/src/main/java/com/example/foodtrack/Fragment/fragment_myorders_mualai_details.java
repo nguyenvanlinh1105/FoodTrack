@@ -176,7 +176,7 @@ public class fragment_myorders_mualai_details extends Fragment {
 
         double tongTien = 0;
 
-        for (ChiTietDonHangAPIModel chiTiet : arrayChiTietDonHangAPI) {
+        for (ChiTietDonHangAPIModel chiTiet : donHangAPIModel.getChiTietDonHangs()) {
             View itemView = LayoutInflater.from(getContext()).inflate(R.layout.list_view_item_my_orders_detail, ll_list_myorders_details, false);
 
             ImageView images = itemView.findViewById(R.id.img_item_myOrders_detail);
