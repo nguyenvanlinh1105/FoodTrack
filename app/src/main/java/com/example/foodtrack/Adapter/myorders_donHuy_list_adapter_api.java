@@ -73,10 +73,12 @@ public class myorders_donHuy_list_adapter_api extends ArrayAdapter<DonHangAPIMod
 
             if (thoiGianHuyStr != null && !thoiGianHuyStr.isEmpty()) {
                 try {
-                    SimpleDateFormat apiFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.ENGLISH);
-                    Date thoiGianHuyDate = apiFormat.parse(thoiGianHuyStr);
+                    // Định dạng gốc của chuỗi thoiGianHuy
+                    SimpleDateFormat originalFormat = new SimpleDateFormat("dd/M/yyyy, h:mm:ss a", Locale.ENGLISH);
+                    Date thoiGianHuyDate = originalFormat.parse(thoiGianHuyStr);
 
-                    SimpleDateFormat displayFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.ENGLISH);
+                    // Định dạng hiển thị mong muốn
+                    SimpleDateFormat displayFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH);
                     txt_thoiGianHuy.setText(displayFormat.format(thoiGianHuyDate)); // Hiển thị sau khi định dạng
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -85,6 +87,7 @@ public class myorders_donHuy_list_adapter_api extends ArrayAdapter<DonHangAPIMod
             } else {
                 txt_thoiGianHuy.setText("Không có thông tin");
             }
+
 
 
             // Định dạng lại để hiển thị
