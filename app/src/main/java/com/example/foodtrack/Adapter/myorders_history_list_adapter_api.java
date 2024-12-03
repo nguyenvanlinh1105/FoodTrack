@@ -25,8 +25,11 @@ import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.R;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHangAPIModel> {
@@ -56,7 +59,16 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
         if (order != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
             id.setText(order.getIdDonHang());
-            time.setText(dateFormat.format(order.getNgayTao()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            //try {
+//                Date date = sdf.parse(order.getNgayTao());
+                // Sau đó, bạn có thể sử dụng DateFormat.format() để định dạng lại ngày
+//                String formattedDate = DateFormat.getDateInstance().format(date);
+                time.setText(dateFormat.format(order.getNgayTao()));
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+
             name.setText(order.getSanPham().getTenSanPham());
            // img.setImageResource(order.getImg());
             String imageUrl = order.getProduct().getImages();

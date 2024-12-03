@@ -23,12 +23,16 @@ import android.widget.Toast;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.list_chat_user;
+import com.example.foodtrack.Adapter.myorders_donHuy_list_adapter_api;
 import com.example.foodtrack.Adapter.myorders_history_list_adapter_api;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -117,7 +121,7 @@ public class fragment_myorders_history_API extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myorders_history, container, false);
         Mapping(view);
-        checkIfListEmpty();
+      //  checkIfListEmpty();
         ControlButton();
         return view;
     }
@@ -190,61 +194,61 @@ public class fragment_myorders_history_API extends Fragment {
     }
 
 
-    private void GetdsLichSuSanPhamDaMua(String idUser) {
-        new FetchSanPhamDaMuaTask(idUser).execute();
-    }
-
-    private class FetchSanPhamDaMuaTask extends AsyncTask<Void, Void, List<ChiTietDonHangAPIModel>> {
-        private final String idUser;
-
-        public FetchSanPhamDaMuaTask(String idUser) {
-            this.idUser = idUser;
-        }
-
+    private class  GetOrdersTask extends AsyncTask<String, Void, List<DonHangAPIModel>> {
         @Override
-        protected List<ChiTietDonHangAPIModel> doInBackground(Void... voids) {
+        protected List<DonHangAPIModel> doInBackground(String... params) {
+            // Gọi API ở đây
             try {
-                // Gọi API đồng bộ (synchronous)
-                Response<List<DonHangAPIModel>> response = APIService.API_SERVICE.GetSanPhamDaMua(idUser).execute();
-
-                if (response.isSuccessful() && response.body() != null) {
-                    List<DonHangAPIModel> listSP = response.body();
-                   // List<ChiTietDonHangAPIModel> listchitiet = new ArrayList<>();
-
-                    for (DonHangAPIModel dh : listSP) {
-                        for (ChiTietDonHangAPIModel ctdh : dh.getChiTietDonHangs()) {
-                            ChiTietDonHangAPIModel donhang = new ChiTietDonHangAPIModel();
-                            donhang.setIdDonHang(dh.getIdDonHang());
-                            donhang.setTrangThai(dh.getTinhTrang());
-                            donhang.setNgayGiaoHang(dh.getThoiGianHoanThanh());
-                            donhang.setHasComment(ctdh.getHasComment());
-                            donhang.setSoLuongDat(ctdh.getSoLuongDat());
-                            donhang.setProduct(ctdh.getProduct());
-                            arrayListOrder.add(donhang);
-                        }
-                    }
-
-                    return arrayListOrder;
+                Response<List<DonHangAPIModel>> response = APIService.API_SERVICE.GetSanPhamDaMua(params[0]).execute();
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else {
+                    return null;
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
-            return null;
         }
 
         @Override
-        protected void onPostExecute(List<ChiTietDonHangAPIModel> listchitiet) {
-            if (listchitiet != null) {
-                // Cập nhật giao diện
-                myorders_history_list_adapter_api listAdapter =
-                        new myorders_history_list_adapter_api(getContext(), listchitiet);
+        protected void onPostExecute(List<DonHangAPIModel> result) {
+            super.onPostExecute(result);
+            if (result != null && !result.isEmpty()) {
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(result);
+                Log.d("responseBody", "onPostExecute: " + json);
+                List<DonHangAPIModel> listSP = result;
+                List<ChiTietDonHangAPIModel> listChiTiet = new ArrayList<>();
+
+                // Lọc dữ liệu chi tiết đơn hàng
+                for (DonHangAPIModel dh : listSP) {
+                    for (ChiTietDonHangAPIModel ctdh : dh.getChiTietDonHangs()) {
+                        ChiTietDonHangAPIModel donhang = new ChiTietDonHangAPIModel();
+                        donhang.setIdDonHang(dh.getIdDonHang());
+                        donhang.setTrangThai(dh.getTinhTrang());
+                        donhang.setNgayGiaoHang(dh.getThoiGianHoanThanh());
+                        dh.setNgayTao(dh.getNgayTao());
+                        donhang.setHasComment(ctdh.getHasComment());
+                        donhang.setSoLuongDat(ctdh.getSoLuongDat());
+                        donhang.setProduct(ctdh.getProduct());
+                        listChiTiet.add(donhang);
+                    }
+                }
+                myorders_history_list_adapter_api listAdapter = new myorders_history_list_adapter_api(getContext(), listChiTiet);
                 listview_myorders_history.setAdapter(listAdapter);
             } else {
-                // Hiển thị thông báo lỗi
-                Toast.makeText(getContext(), "Không thể tải dữ liệu", Toast.LENGTH_SHORT).show();
+//                UseFallbackData();
+                listview_myorders_history.setVisibility(View.GONE);
+                imageIfEmpty.setVisibility(View.VISIBLE);
             }
         }
     }
+
+    private void GetdsLichSuSanPhamDaMua(String idNguoiDung) {
+        new GetOrdersTask().execute(idNguoiDung);
+    }
+
 
 
 
