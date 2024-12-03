@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,14 @@ import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangModel;
+import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -59,8 +64,11 @@ public class fragment_myorders_mualai_details extends Fragment {
     private ArrayList<ChiTietDonHangModel> arrayChiTietDonHang = new ArrayList<>();
     private ArrayList<ChiTietDonHangAPIModel> arrayChiTietDonHangAPI = new ArrayList<>();
 
+    private DonHangAPIModel donHangAPIModel = new DonHangAPIModel();
+
     private TextView tv_ghiChu, tv_thoiGianDat, tv_thanhToan,
-            tv_tongTien, tv_tongCong, tv_idDonHang;
+            tv_tongTien, tv_tongCong, tv_idDonHang, tv_tinhTrang, tv_tongSoLuongMon;
+
 
     public fragment_myorders_mualai_details() {
         // Required empty public constructor
@@ -98,11 +106,9 @@ public class fragment_myorders_mualai_details extends Fragment {
      * @return A new instance of fragment fragment_myorders_mualai_details.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_myorders_mualai_details newInstance(String id, String ghiChu) {
+    public static fragment_myorders_mualai_details newInstance() {
         fragment_myorders_mualai_details fragment = new fragment_myorders_mualai_details();
         Bundle args = new Bundle();
-        args.putString(ARG_ID, id);
-        args.putString(ARG_NOTE, ghiChu);
         fragment.setArguments(args);
         return fragment;
     }
@@ -111,8 +117,7 @@ public class fragment_myorders_mualai_details extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            idDonHang = getArguments().getString(ARG_ID);
-            ghiChu = getArguments().getString(ARG_NOTE);
+            donHangAPIModel = (DonHangAPIModel) getArguments().getSerializable("selectedOrder");
         }
     }
 
@@ -120,48 +125,34 @@ public class fragment_myorders_mualai_details extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myorders_mualai_details, container, false);
-        ll_list_myorders_details = view.findViewById(R.id.ll_list_myorders_details);
-        btn_back_myorders_ongoing_detail = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing_detail);
-        btn_mua_lai = (Button) view.findViewById(R.id.btn_mua_lai_myOrders_detail);
+        Mapping(view);
 //        displayOrderDetails();
         GetOrderDetails();
         ControlButton();
         return view;
     }
 
+    private void Mapping(View view) {
+        ll_list_myorders_details = view.findViewById(R.id.ll_list_myorders_details);
+        btn_back_myorders_ongoing_detail = (ImageView) view.findViewById(R.id.btn_back_myorders_ongoing_detail);
+        btn_mua_lai = (Button) view.findViewById(R.id.btn_mua_lai_myOrders_detail);
+
+        tv_tongTien = (TextView) view.findViewById(R.id.tv_tongTien_myOrders_details);
+        tv_tongCong = (TextView) view.findViewById(R.id.tv_total_amount_myOrders_detail);
+        tv_ghiChu = (TextView) view.findViewById(R.id.tv_ghi_chu_myOrders_detail);
+        tv_idDonHang = (TextView) view.findViewById(R.id.tv_ma_don_hang_myOrders_detail);
+        tv_thoiGianDat = (TextView) view.findViewById(R.id.tv_thoi_gian_dat_myOrders_detail);
+        tv_thanhToan = (TextView) view.findViewById(R.id.tv_thanh_toan_myOrders_detail);
+        tv_tinhTrang = (TextView) view.findViewById(R.id.tinhTrang_myOrders_detail);
+        tv_tongSoLuongMon = (TextView) view.findViewById(R.id.so_luong_myOrders_detail);
+    }
+
     private void GetOrderDetails() {
-        APIService.API_SERVICE.GetChiTietDonHangDaHuy().enqueue(new Callback<List<ChiTietDonHangAPIModel>>() {
-            @Override
-            public void onResponse(Call<List<ChiTietDonHangAPIModel>> call, Response<List<ChiTietDonHangAPIModel>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    List<ChiTietDonHangAPIModel> listChiTietDonHang = response.body();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(donHangAPIModel);
+        Log.d("selectedOrder", json);
 
-                    arrayChiTietDonHangAPI.clear();
-                    for (ChiTietDonHangAPIModel apiItem : listChiTietDonHang) {
-                        ChiTietDonHangAPIModel chiTietDonHang = new ChiTietDonHangAPIModel();
-                        SanPhamAPIModel sanPham = new SanPhamAPIModel(apiItem.getProduct().getTenSanPham(), apiItem.getProduct().getGiaTien(), apiItem.getProduct().getImages(), apiItem.getProduct().getMoTa());
-                        chiTietDonHang.setProduct(sanPham);
-                        chiTietDonHang.setSoLuongDat(apiItem.getSoLuongDat());
-                        chiTietDonHang.setIdChiTietDonHang(apiItem.getIdChiTietDonHang());
-                        arrayChiTietDonHangAPI.add(chiTietDonHang);
-                    }
-                    displayOrderDetailsAPI();
-                    btn_mua_lai.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    });
-                } else {
-                    UseFallbackData();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ChiTietDonHangAPIModel>> call, Throwable t) {
-                UseFallbackData();
-            }
-        });
+        displayOrderDetailsAPI();
     }
 
     private void UseFallbackData() {
@@ -171,7 +162,18 @@ public class fragment_myorders_mualai_details extends Fragment {
 
     private void displayOrderDetailsAPI() {
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+
         NumberFormat nf = NumberFormat.getInstance(Locale.ITALY);
+
+        tv_idDonHang.setText(donHangAPIModel.getIdDonHang());
+        tv_thoiGianDat.setText(dateFormat.format(donHangAPIModel.getNgayTao().getTime()));
+        tv_tinhTrang.setText(donHangAPIModel.getTinhTrang());
+        tv_thanhToan.setText(donHangAPIModel.getTinhTrangThanhToan());
+        tv_ghiChu.setText(donHangAPIModel.getGhiChu());
+        tv_tongSoLuongMon.setText(String.valueOf(donHangAPIModel.getChiTietDonHangs().size()));
+//        Log.d("idDonHang", donHangAPIModel.getIdDonHang());
+
         double tongTien = 0;
 
         for (ChiTietDonHangAPIModel chiTiet : arrayChiTietDonHangAPI) {
@@ -212,9 +214,9 @@ public class fragment_myorders_mualai_details extends Fragment {
 
             ll_list_myorders_details.addView(itemView);
         }
-        tv_ghiChu.setText(ghiChu);
-        tv_idDonHang.setText(idDonHang);
-        tv_tongTien.setText(tongTien + " vnđ");
+        tv_tongTien.setText(nf.format(tongTien) + " vnđ");
+        tongTien += 15000;
+        tv_tongCong.setText(nf.format(tongTien) + " vnđ");
     }
 
 

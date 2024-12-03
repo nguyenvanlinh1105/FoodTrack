@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,10 @@ import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.R;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,6 +67,29 @@ public class myorders_donHuy_list_adapter_api extends ArrayAdapter<DonHangAPIMod
 
             status.setText(donHang.getTinhTrang());
             qty.setText(String.valueOf(donHang.getChiTietDonHangs().size()));
+
+
+            String thoiGianHuyStr = donHang.getThoiGianHuy();
+
+            if (thoiGianHuyStr != null && !thoiGianHuyStr.isEmpty()) {
+                try {
+                    SimpleDateFormat apiFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.ENGLISH);
+                    Date thoiGianHuyDate = apiFormat.parse(thoiGianHuyStr);
+
+                    SimpleDateFormat displayFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.ENGLISH);
+                    txt_thoiGianHuy.setText(displayFormat.format(thoiGianHuyDate)); // Hiển thị sau khi định dạng
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    txt_thoiGianHuy.setText("Lỗi định dạng");
+                }
+            } else {
+                txt_thoiGianHuy.setText("Không có thông tin");
+            }
+
+
+            // Định dạng lại để hiển thị
+
+//            txt_thoiGianHuy.setText(donHang.getThoiGianHuy());
 
             int totalQty = 0;
             int totalPrice = 0;

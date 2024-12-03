@@ -16,10 +16,19 @@ public class DonHangAPIModel implements Serializable {
     private String diaChi;
     private String tinhTrangThanhToan;
     private String ghiChu ;
+    private String thoiGianHuy;
 
     // Navigation properties
     private NguoiDungModel nguoiDung;
     private List<ChiTietDonHangAPIModel> chiTietDonHangs;
+
+    public String getThoiGianHuy() {
+        return thoiGianHuy;
+    }
+
+    public void setThoiGianHuy(String thoiGianHuy) {
+        this.thoiGianHuy = thoiGianHuy;
+    }
 
     public String getIdDonHang() {
         return idDonHang;

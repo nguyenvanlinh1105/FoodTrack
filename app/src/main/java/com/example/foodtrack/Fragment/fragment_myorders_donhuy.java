@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.DonHangModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -173,9 +176,9 @@ public class fragment_myorders_donhuy extends Fragment {
         protected void onPostExecute(List<DonHangAPIModel> result) {
             super.onPostExecute(result);
             if (result != null && !result.isEmpty()) {
-//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//                String json = gson.toJson(result);
-//                Log.d("responseBody", "onPostExecute: " + json);
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(result);
+                Log.d("responseBody", "onPostExecute: " + json);
                 arrayListOrderAPI = result;
                 listAdapter = new myorders_donHuy_list_adapter_api(getContext(), result);
                 listview_myorders_ongoing.setAdapter(listAdapter);
@@ -258,20 +261,19 @@ public class fragment_myorders_donhuy extends Fragment {
 
                 if (mainActivity != null) {
                     DonHangAPIModel selectedOrder = arrayListOrderAPI.get(i);
-                    String id = selectedOrder.getIdDonHang();
-//                    String tinhTrang = selectedOrder.getTinhTrang();
-                    String ghiChu = selectedOrder.getGhiChu();
+
+//                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//                    String json = gson.toJson(selectedOrder);
+//                    Log.d("selectedOrder", json);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("idDonHang", id);
-//                    bundle.putString("tinhTrang", tinhTrang);
-                    bundle.putString("ghiChu", ghiChu);
+                    bundle.putSerializable("selectedOrder", selectedOrder);
+//
 
-                    fragment_myorders_mualai_details detailsFragment = fragment_myorders_mualai_details.newInstance(
-                            id,
-//                            tinhTrang,
-                            ghiChu
-                    );
+//
+                    fragment_myorders_mualai_details detailsFragment = fragment_myorders_mualai_details.newInstance();
+                    detailsFragment.setArguments(bundle);
+
                     mainActivity.ReplaceFragment(detailsFragment);
                 }
 
