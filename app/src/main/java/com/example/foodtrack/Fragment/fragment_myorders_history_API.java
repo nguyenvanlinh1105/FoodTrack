@@ -228,7 +228,7 @@ public class fragment_myorders_history_API extends Fragment {
                         donhang.setIdDonHang(dh.getIdDonHang());
                         donhang.setTrangThai(dh.getTinhTrang());
                         donhang.setNgayGiaoHang(dh.getThoiGianHoanThanh());
-                        dh.setNgayTao(dh.getNgayTao());
+                        donhang.setNgayTao(dh.getNgayTao());
                         donhang.setHasComment(ctdh.getHasComment());
                         donhang.setSoLuongDat(ctdh.getSoLuongDat());
                         donhang.setProduct(ctdh.getProduct());

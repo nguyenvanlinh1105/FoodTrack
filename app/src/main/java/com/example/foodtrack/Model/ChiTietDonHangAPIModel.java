@@ -3,6 +3,7 @@ package com.example.foodtrack.Model;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class ChiTietDonHangAPIModel implements Serializable {
@@ -15,7 +16,7 @@ public class ChiTietDonHangAPIModel implements Serializable {
     // Navigation properties
  //   private DonHangModel donHang;
     private SanPhamAPIModel Product;
-    private String ngayTao;
+    private Date ngayTao;
     private String ngayGiaoHang;
     private String trangThai;
     private int trangThaiBinhLuan;
@@ -30,11 +31,11 @@ public class ChiTietDonHangAPIModel implements Serializable {
         this.hasComment = hasComment;
     }
 
-    public String getNgayTao() {
+    public Date getNgayTao() {
         return ngayTao;
     }
 
-    public void setNgayTao(String ngayTao) {
+    public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
     }
 

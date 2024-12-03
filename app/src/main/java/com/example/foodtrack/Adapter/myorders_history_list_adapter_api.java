@@ -26,11 +26,13 @@ import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.R;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHangAPIModel> {
     public myorders_history_list_adapter_api(Context context, List<ChiTietDonHangAPIModel> arrayListOrder) {
@@ -59,18 +61,15 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
         if (order != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
             id.setText(order.getIdDonHang());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            //try {
-//                Date date = sdf.parse(order.getNgayTao());
-                // Sau đó, bạn có thể sử dụng DateFormat.format() để định dạng lại ngày
-//                String formattedDate = DateFormat.getDateInstance().format(date);
-                time.setText(dateFormat.format(order.getNgayTao()));
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
+
+
+            NumberFormat nf
+                    = NumberFormat.getInstance(Locale.ITALY);
+
+
+            time.setText(dateFormat.format(order.getNgayTao().getTime()));
 
             name.setText(order.getSanPham().getTenSanPham());
-           // img.setImageResource(order.getImg());
             String imageUrl = order.getProduct().getImages();
             if (imageUrl.startsWith("http://")) {
                 imageUrl = imageUrl.replace("http://", "https://");
@@ -86,15 +85,15 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
 
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            img.setBackground(new BitmapDrawable(getContext().getResources(), resource));
-
+                            img.setImageDrawable(new BitmapDrawable(getContext().getResources(), resource));
                         }
                     });
+
             status.setText(order.getTrangThai());
-            double  tongTien = order.getProduct().getGiaTien()*order.getSoLuongDat();
-            price.setText(tongTien+"");
+            double tongTien = order.getProduct().getGiaTien() * order.getSoLuongDat();
+            price.setText(tongTien + "");
             qty.setText(String.valueOf(order.getSoLuongDat()));
-            donViTinh.setText("Đơn vị tính:"+order.getProduct().getDonViTinh());
+            donViTinh.setText("Đơn vị tính:" + order.getProduct().getDonViTinh());
 
             if (order.getTrangThaiBinhLuan() == 0) {
                 ratingBtn.setText("Đánh giá ngay");
@@ -112,10 +111,10 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
             @Override
             public void onClick(View view) {
                 if (ratingBtn.getText() == "Đánh giá ngay") {
-                    MainActivity mainActivity = (MainActivity)getContext();
+                    MainActivity mainActivity = (MainActivity) getContext();
                     if (mainActivity != null) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("idSanPham",order.getProduct().getIdSanPham());
+                        bundle.putString("idSanPham", order.getProduct().getIdSanPham());
 
                         fragment_rating_comment fragment = new fragment_rating_comment();
                         fragment.setArguments(bundle);
@@ -125,10 +124,10 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
                 }
             }
         });
+
         return view;
-
-
     }
+
 
 
 
