@@ -48,46 +48,50 @@ public interface APIService {
             .build()
             .create(APIService.class);
 
-    // hàm này dùng để login , gửi email và pass word
+    // hàm này dùng để login , gửi email và pass word: rồi
     @POST("user/login")
     Call<NguoiDungAPIModel> GetUserToLogin(@Body NguoiDungAPIModel userModel);
 
-    // hàm này dùng để singin đăng kí tài khoản , api trả về ....
+    // hàm này dùng để singin đăng kí tài khoản , api trả về ....: rồi
     @POST("user/register")
     Call<NguoiDungModel> PostUserToSingin(@Body NguoiDungModel userModel);
 
 
 
     // Home_Page
-    // dùng để list sản phẩm deal hời
+    // dùng để list sản phẩm deal hời: rồi
     @GET("food/bargain")
     Call<List<SanPhamAPIModel>> getListSanphamHomePage_DealHoi();
-    // dùng để list sản phẩm banchay
+    // dùng để list sản phẩm banchay: rồi
     @GET("/food/bestseller")
     Call<List<SanPhamAPIModel>> getListSanphamHomePage_BanChay();
-  // dùng để list sản phẩm monmoi
+  // dùng để list sản phẩm monmoi: rồi
     @GET("food/new")
     Call<List<SanPhamAPIModel>> getListSanphamHomePage_MonMoi();
 
     // Explore
-  // dùng để lấy các món ăn
+  // dùng để lấy các món ăn: rồi
     @GET("food/list")
     Call<List<SanPhamAPIModel>> getListMonAn_Explore();
-    // dùng đẻ lấy các thức uống
+    // lấy các thức uống; rồi
     @GET("food/list/drink")
     Call<List<SanPhamAPIModel>>getListDoUong_Explore();
 
+
+    // quên mật khẩu: rồi
     @POST("/user/password/forgot")
     Call<NguoiDungModel>PostEmailToLogin(@Body NguoiDungModel userModel);
 
+    // lấy otp: rồi
     @POST("/user/password/otp")
     Call<NguoiDungModel>PostEmailandOPTLogin(@Body NguoiDungModel userModel);
 
+    // reset password : roi
     @POST("/user/password/reset")
     Call<NguoiDungModel>PostToResetPass(@Body NguoiDungModel userModel);
 
 
-    // cập nhật số lượng sản phẩm, trong giỏ hàng
+    // cập nhật số lượng sản phẩm, trong giỏ hàng: rồi
   @POST ("order/update/quantity")
   Call<ChiTietDonHangAPIModel> UpdateSoLuongSanPhamGioHang (@Body  ChiTietDonHangAPIModel donHangAPIModel);
 
@@ -97,19 +101,19 @@ public interface APIService {
   @GET("order/detail")
   Call<List<SanPhamAPIModel>>GetSanPhamGioHang(@Query ("idDonHang") String idDonHang);
 
-  // lấy đơn hàng đang giao: chưa
+  // lấy đơn hàng đang giao: roi
     @GET("order/list/unfinished")
     Call<List<DonHangAPIModel>> GetDonHangDangGiao(@Query("idNguoiDung")String idNguoiDung);
-  //lấy đơn hàng đã hủy : chưa
+  //lấy đơn hàng đã hủy : roi
   @GET("order/list/deny")
   Call<List<DonHangAPIModel>> GetDonHangDaHuy(@Query("idNguoiDung")String idNguoiDung);
 
-  // hủy đặt hàng set trangThaiDat==0;: chưa
+  // hủy đặt hàng set trangThaiDat==0;: roi
   @POST("order/deny")
   Call<DonHangAPIModel> PostToCancleOrder(@Body DonHangAPIModel donHang);
 
 
-    //Lấy tất cả sản phẩm đã mua - history: histori chưa
+    //Lấy tất cả sản phẩm đã mua - history: ròi
     @GET("food/list/order")
     Call<List<DonHangAPIModel>> GetSanPhamDaMua(@Query("idNguoiDung") String idUser);
 
@@ -134,9 +138,6 @@ public interface APIService {
   @GET("chat")
   Call<List<TinNhanModel>> getDsChat(@Query("idPhongChat")String idPhongChat);
 
-    // gửi bình luận: chua
-    @POST("user/comment")
-    Call<BinhLuanSanPhamModel> guiBinhLuan (@Body BinhLuanSanPhamModel binhLuanSanPhamModel);
 
     // thêm sản phẩm yêu thích : rồi
    @POST("food/love")
@@ -155,11 +156,13 @@ public interface APIService {
           .client(okHttpClient)
           .addConverterFactory(GsonConverterFactory.create())
           .build();
-  // lấy chi tiết đơn hàng đang giao: chưa
+
+
+  // lấy chi tiết đơn hàng đang giao: roi
   @GET("")
   Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDangGiao();
 
-  // lấy chi tiết đơn hàng đã hủy : chưa
+  // lấy chi tiết đơn hàng đã hủy : ròi
   @GET("")
   Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDaHuy();
 
@@ -170,6 +173,11 @@ public interface APIService {
   Call<ChiTietDonHangAPIModel> XoaSanPhamGioHang(@Body ChiTietDonHangAPIModel model);
 
 
+
+  // gửi bình luận: chua
+  @POST("user/comment")
+  Call<BinhLuanSanPhamModel> guiBinhLuan (@Body BinhLuanSanPhamModel binhLuanSanPhamModel);
+
   // lấy comment sản phẩm : chuưa
   @GET("")
   Call<BinhLuanSanPhamModel>LayCommentSanPham(@Query("idNguoiDung")String idNguoiDung);
@@ -177,17 +185,17 @@ public interface APIService {
 
 
 
-  // thay đổi ảnh : chưa
+  // thay đổi ảnh : roi
   @POST("user/update/avatar")
   @Multipart
   Call<NguoiDungAPIModel> ChangInfoUser(@Part("idNguoiDung") RequestBody idUser, @Part MultipartBody.Part image);
 
-
+// cập nhật thông tin user: rồi
   @POST("user/update/info")
   Call<NguoiDungAPIModel> UpdateInfo(@Body NguoiDungAPIModel model);
 
 
-  // Lấy thông tin user :
+  // Lấy thông tin user : roi
   @GET("user/info")
   Call<NguoiDungAPIModel> GetInfoUser(@Query("idNguoiDung")String idUser);
 
