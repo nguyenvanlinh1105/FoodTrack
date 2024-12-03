@@ -1,6 +1,7 @@
 package com.example.foodtrack.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,7 +29,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.API.APIService;
+import com.example.foodtrack.Activity.Login;
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Activity.cart;
 import com.example.foodtrack.Adapter.recyclerView_deal_hoi_API_adapter;
 import com.example.foodtrack.Adapter.recyclerView_product_detail_adapter_api;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
@@ -48,6 +51,8 @@ import java.util.concurrent.Executors;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import com.example.foodtrack.Activity.cart;
 
 public class product_detail_change_info extends Fragment {
     private static final String ARG_ID = "idSanPham";
@@ -211,7 +216,12 @@ public class product_detail_change_info extends Fragment {
     }
 
     private void ControlButton() {
-        btn_back_product_detail.setOnClickListener(view -> requireActivity().getSupportFragmentManager().popBackStack());
+        btn_back_product_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
 
         btn_rating_product_details.setOnClickListener(view -> {
             MainActivity mainActivity = (MainActivity) getActivity();

@@ -172,8 +172,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-
-                    android:id="@+id/tinhTrang_item_myOrders"
+                    android:id="@+id/tv_thoi_gian_hoan_thanh_myOrders_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
