@@ -19,6 +19,16 @@ public class ChiTietDonHangAPIModel implements Serializable {
     private String ngayGiaoHang;
     private String trangThai;
     private int trangThaiBinhLuan;
+    private int hasComment;
+
+
+    public int getHasComment() {
+        return hasComment;
+    }
+
+    public void setHasComment(int hasComment) {
+        this.hasComment = hasComment;
+    }
 
     public String getNgayTao() {
         return ngayTao;

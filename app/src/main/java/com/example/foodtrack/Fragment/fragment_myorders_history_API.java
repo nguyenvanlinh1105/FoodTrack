@@ -3,8 +3,13 @@ package com.example.foodtrack.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
@@ -20,6 +26,7 @@ import com.example.foodtrack.Activity.list_chat_user;
 import com.example.foodtrack.Adapter.myorders_history_list_adapter_api;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
+import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.R;
 
 import java.text.ParseException;
@@ -117,6 +124,9 @@ public class fragment_myorders_history_API extends Fragment {
 
     private void Mapping(View view) {
         listview_myorders_history = view.findViewById(R.id.listview_myorders);
+        if (arrayListOrder == null) {
+            arrayListOrder = new ArrayList<>();
+        }
         myorders_history_list_adapter_api listAdapter = new myorders_history_list_adapter_api(getContext(), arrayListOrder);
         listview_myorders_history.setAdapter(listAdapter);
 
@@ -125,9 +135,8 @@ public class fragment_myorders_history_API extends Fragment {
         toOngoing = view.findViewById(R.id.btn_dangDen_myOrder);
         imageIfEmpty = view.findViewById(R.id.image_if_no_order_myOrders);
         rateBtn = view.findViewById(R.id.ratingBtn_item_myOrders);
-
-
     }
+
 
     private void checkIfListEmpty() {
         if (arrayListOrder.isEmpty()) {
@@ -181,22 +190,62 @@ public class fragment_myorders_history_API extends Fragment {
     }
 
 
-    private void GetdsLichSuSanPhamDaMua(String idUser){
-        APIService.API_SERVICE.GetSanPhamDaMua(idUser).enqueue(new Callback<List<ChiTietDonHangAPIModel>>() {
-            @Override
-            public void onResponse(Call<List<ChiTietDonHangAPIModel>> call, Response<List<ChiTietDonHangAPIModel>> response) {
-                if(response.isSuccessful()){
-                    List<ChiTietDonHangAPIModel> listSP= response.body();
-                    myorders_history_list_adapter_api listAdapter = new myorders_history_list_adapter_api(getContext(), listSP);
-                    listview_myorders_history.setAdapter(listAdapter);
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ChiTietDonHangAPIModel>> call, Throwable t) {
-               // initializeData();
-            }
-        });
+    private void GetdsLichSuSanPhamDaMua(String idUser) {
+        new FetchSanPhamDaMuaTask(idUser).execute();
     }
+
+    private class FetchSanPhamDaMuaTask extends AsyncTask<Void, Void, List<ChiTietDonHangAPIModel>> {
+        private final String idUser;
+
+        public FetchSanPhamDaMuaTask(String idUser) {
+            this.idUser = idUser;
+        }
+
+        @Override
+        protected List<ChiTietDonHangAPIModel> doInBackground(Void... voids) {
+            try {
+                // Gọi API đồng bộ (synchronous)
+                Response<List<DonHangAPIModel>> response = APIService.API_SERVICE.GetSanPhamDaMua(idUser).execute();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    List<DonHangAPIModel> listSP = response.body();
+                   // List<ChiTietDonHangAPIModel> listchitiet = new ArrayList<>();
+
+                    for (DonHangAPIModel dh : listSP) {
+                        for (ChiTietDonHangAPIModel ctdh : dh.getChiTietDonHangs()) {
+                            ChiTietDonHangAPIModel donhang = new ChiTietDonHangAPIModel();
+                            donhang.setIdDonHang(dh.getIdDonHang());
+                            donhang.setTrangThai(dh.getTinhTrang());
+                            donhang.setNgayGiaoHang(dh.getThoiGianHoanThanh());
+                            donhang.setHasComment(ctdh.getHasComment());
+                            donhang.setSoLuongDat(ctdh.getSoLuongDat());
+                            donhang.setProduct(ctdh.getProduct());
+                            arrayListOrder.add(donhang);
+                        }
+                    }
+
+                    return arrayListOrder;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<ChiTietDonHangAPIModel> listchitiet) {
+            if (listchitiet != null) {
+                // Cập nhật giao diện
+                myorders_history_list_adapter_api listAdapter =
+                        new myorders_history_list_adapter_api(getContext(), listchitiet);
+                listview_myorders_history.setAdapter(listAdapter);
+            } else {
+                // Hiển thị thông báo lỗi
+                Toast.makeText(getContext(), "Không thể tải dữ liệu", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
 }

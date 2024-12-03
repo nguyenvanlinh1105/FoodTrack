@@ -39,7 +39,7 @@ public interface APIService {
           .build();
 
   //    linkAPI root:
-    public static String url ="https://633e-113-23-31-245.ngrok-free.app/";
+    public static String url ="https://dd74-113-23-29-130.ngrok-free.app/";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
             .client(okHttpClient)
@@ -92,11 +92,6 @@ public interface APIService {
 
 
 
-
-
-
-
-
     //lấy tất cả sản phẩm trong dơn hàng hiện tại :ròi
   @GET("order/detail")
   Call<List<SanPhamAPIModel>>GetSanPhamGioHang(@Query ("idDonHang") String idDonHang);
@@ -114,8 +109,8 @@ public interface APIService {
 
 
     //Lấy tất cả sản phẩm đã mua - history: histori chưa
-    @GET("")
-    Call<List<ChiTietDonHangAPIModel>> GetSanPhamDaMua(@Query("idNguoiDung") String idUser);
+    @GET("food/list/order")
+    Call<List<DonHangAPIModel>> GetSanPhamDaMua(@Query("idNguoiDung") String idUser);
 
 
 
