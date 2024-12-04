@@ -22,6 +22,16 @@ public class ChiTietDonHangAPIModel implements Serializable {
     private int trangThaiBinhLuan;
     private int hasComment;
 
+    private String tinhTrang;
+
+    public String getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(String tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
+
     private List<SanPhamAPIModel> products;
 
     public List<SanPhamAPIModel> getProducts() {

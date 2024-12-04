@@ -89,13 +89,13 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
                         }
                     });
 
-            status.setText(order.getTrangThai());
+           status.setText(order.getTinhTrang());
             double tongTien = order.getProduct().getGiaTien() * order.getSoLuongDat();
             price.setText(tongTien + "");
             qty.setText(String.valueOf(order.getSoLuongDat()));
             donViTinh.setText("Đơn vị tính:" + order.getProduct().getDonViTinh());
 
-            if (order.getTrangThaiBinhLuan() == 0) {
+            if (order.getHasComment() == 0) {
                 ratingBtn.setText("Đánh giá ngay");
                 ratingBtn.setTextColor(Color.parseColor("#FFFFFF"));
                 ratingBtn.setBackgroundResource(R.drawable.less_radius_btn_bg_orange);

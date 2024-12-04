@@ -105,6 +105,7 @@ public interface APIService {
   // lấy đơn hàng đang giao: roi
     @GET("order/list/unfinished")
     Call<List<DonHangAPIModel>> GetDonHangDangGiao(@Query("idNguoiDung")String idNguoiDung);
+
   //lấy đơn hàng đã hủy : roi
   @GET("order/list/deny")
   Call<List<DonHangAPIModel>> GetDonHangDaHuy(@Query("idNguoiDung")String idNguoiDung);
@@ -185,7 +186,7 @@ public interface APIService {
   Call<BinhLuanSanPhamModel> guiBinhLuan (@Body BinhLuanSanPhamModel binhLuanSanPhamModel);
 
   // lấy comment sản phẩm : chuưa
-  @GET("")
+  @GET("food/list/comment")
   Call<BinhLuanSanPhamModel>LayCommentSanPham(@Query("idSanPham")String idSanPham);
 // đăng comment : sản phẩm : chưa
 
