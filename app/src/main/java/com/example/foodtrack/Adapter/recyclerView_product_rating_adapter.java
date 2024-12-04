@@ -76,7 +76,7 @@ public class recyclerView_product_rating_adapter extends RecyclerView.Adapter<re
 
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        holder.img.setBackground(new BitmapDrawable(context.getResources(), resource));
+                        holder.img.setImageDrawable(new BitmapDrawable(context.getResources(), resource));
 
                     }
                 });

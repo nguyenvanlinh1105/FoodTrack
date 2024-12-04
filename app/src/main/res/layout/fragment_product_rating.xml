@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
             android:layout_marginRight="3dp"
-            android:text="2"
+            android:text="0"
             android:textColor="@color/material_dynamic_neutral50"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -71,8 +71,8 @@
     <ImageView
         android:scaleType="fitXY"
         android:id="@+id/image_sanpham"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
