@@ -401,6 +401,7 @@ public class fragment_myorders_mualai_details extends Fragment {
 
             @Override
             public void onFailure(Call<ChiTietDonHangAPIModel> call, Throwable t) {
+                notificationHelper.sendNotification("Thông báo đơn hàng","Mua đơn hàng thất bại, vui lòng thử lại sau!");
 
             }
         });

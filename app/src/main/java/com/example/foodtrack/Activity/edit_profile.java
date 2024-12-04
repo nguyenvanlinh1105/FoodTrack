@@ -109,7 +109,7 @@ public class edit_profile extends AppCompatActivity {
         btn_doiAnh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btn_doiAnh.getText() == "Đổi hình đại diện") {
+                if (mUri==null) {
                     onClickRequestPermission();
                 } else {
                     RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
@@ -317,14 +317,14 @@ public class edit_profile extends AppCompatActivity {
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
                 openGallery();
             } else {
                 String[] requestPermission = {android.Manifest.permission.READ_MEDIA_IMAGES};
                 requestPermissions(requestPermission, MY_REQUEST_CODE);
             }
-        } else { // Android 6 to 12
+        } else {
             if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 openGallery();
             } else {
