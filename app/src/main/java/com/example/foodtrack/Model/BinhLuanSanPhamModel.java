@@ -12,6 +12,16 @@ public class BinhLuanSanPhamModel {
     private Timestamp ngayBinhLuan;
     private NguoiDungAPIModel user;
 
+    private String idDonHang;
+
+    public String getIdDonHang() {
+        return idDonHang;
+    }
+
+    public void setIdDonHang(String idDonHang) {
+        this.idDonHang = idDonHang;
+    }
+
     public NguoiDungAPIModel getUser() {
         return user;
     }

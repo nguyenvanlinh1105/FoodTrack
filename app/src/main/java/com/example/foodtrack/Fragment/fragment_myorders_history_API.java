@@ -158,29 +158,29 @@ public class fragment_myorders_history_API extends Fragment {
             startActivity(chat);
         });
 
-        listview_myorders_history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ChiTietDonHangAPIModel selectedProduct = arrayListOrder.get(i); // Lấy sản phẩm được chọn
-
-                // Tạo bundle để truyền dữ liệu
-                Bundle bundle = new Bundle();
-                bundle.putString("idSanPham", selectedProduct.getIdSanPham());
-                bundle.putString("title", selectedProduct.getProduct().getTenSanPham());
-                bundle.putDouble("price", selectedProduct.getProduct().getGiaTien());
-                bundle.putString("description", selectedProduct.getProduct().getMoTa());
-                bundle.putString("image",selectedProduct.getProduct().getImages());
-
-                // Tạo fragment mới và truyền bundle vào
-                fragment_product_detail_API detailFragment = new fragment_product_detail_API();
-                detailFragment.setArguments(bundle);
-
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(detailFragment);
-                }
-            }
-        });
+//        listview_myorders_history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                ChiTietDonHangAPIModel selectedProduct = arrayListOrder.get(i); // Lấy sản phẩm được chọn
+//
+//                // Tạo bundle để truyền dữ liệu
+//                Bundle bundle = new Bundle();
+//                bundle.putString("idSanPham", selectedProduct.getIdSanPham());
+//                bundle.putString("title", selectedProduct.getProduct().getTenSanPham());
+//                bundle.putDouble("price", selectedProduct.getProduct().getGiaTien());
+//                bundle.putString("description", selectedProduct.getProduct().getMoTa());
+//                bundle.putString("image",selectedProduct.getProduct().getImages());
+//
+//                // Tạo fragment mới và truyền bundle vào
+//                fragment_product_detail_API detailFragment = new fragment_product_detail_API();
+//                detailFragment.setArguments(bundle);
+//
+//                MainActivity mainActivity = (MainActivity) getActivity();
+//                if (mainActivity != null) {
+//                    mainActivity.ReplaceFragment(detailFragment);
+//                }
+//            }
+//        });
 
 
         toOngoing.setOnClickListener(view -> {

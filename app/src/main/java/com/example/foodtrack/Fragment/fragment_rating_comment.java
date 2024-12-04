@@ -27,7 +27,7 @@ import retrofit2.Response;
 public class fragment_rating_comment extends Fragment {
 
     // Biến nhận dữ liệu từ Bundle
-    private String idSanPham;
+    private String idSanPham,idDonHang;
 
     // Các view trong Fragment
     private ImageView btn_back;
@@ -38,10 +38,11 @@ public class fragment_rating_comment extends Fragment {
         // Constructor rỗng bắt buộc
     }
 
-    public static fragment_rating_comment newInstance(String idSanPham) {
+    public static fragment_rating_comment newInstance(String idSanPham, String idDonHang) {
         fragment_rating_comment fragment = new fragment_rating_comment();
         Bundle args = new Bundle();
         args.putString("idSanPham", idSanPham);
+        args.putString("idDonHang", idDonHang);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,6 +52,7 @@ public class fragment_rating_comment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             idSanPham = getArguments().getString("idSanPham");
+            idDonHang = getArguments().getString("idDonHang");
         }
     }
 
@@ -94,7 +96,11 @@ public class fragment_rating_comment extends Fragment {
                 BinhLuanSanPhamModel binhLuanSanPhamModel = new BinhLuanSanPhamModel();
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
                 binhLuanSanPhamModel.setIdNguoiDung(sharedPreferences.getString("idUser", ""));
+
+
                 binhLuanSanPhamModel.setIdSanPham(idSanPham);
+                binhLuanSanPhamModel.setIdDonHang(idDonHang);
+
                 binhLuanSanPhamModel.setNoiDung(commentText);
 
                 // Gửi bình luận qua API

@@ -117,7 +117,7 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
                     if (mainActivity != null) {
                         Bundle bundle = new Bundle();
                         bundle.putString("idSanPham", order.getProduct().getIdSanPham());
-
+                        bundle.putString("idDonHang", order.getIdDonHang());
                         fragment_rating_comment fragment = new fragment_rating_comment();
                         fragment.setArguments(bundle);
 
