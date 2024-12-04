@@ -6,10 +6,11 @@ import com.example.foodtrack.Model.ChiTietDonHangModel;
 import com.example.foodtrack.Model.DanhMucModel;
 import com.example.foodtrack.Model.SanPhamYeuThichModel;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class SanPhamAPIModel {
+public class SanPhamAPIModel implements Serializable {
 
     private String idSanPham;
     private String idDanhMuc;

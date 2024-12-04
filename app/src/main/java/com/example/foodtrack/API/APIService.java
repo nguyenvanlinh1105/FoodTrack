@@ -120,7 +120,7 @@ public interface APIService {
     Call<List<DonHangAPIModel>> GetSanPhamDaMua(@Query("idNguoiDung") String idUser);
 
     // mưa lại đơn hàng : dang lam
-    @POST("")
+    @POST("/order/reorder")
     Call<ChiTietDonHangAPIModel> MuaLaiDonHang(@Body ChiTietDonHangAPIModel model);
 
 
@@ -184,7 +184,7 @@ public interface APIService {
   // gửi bình luận: chua
   @POST("user/comment")
   Call<BinhLuanSanPhamModel> guiBinhLuan (@Body BinhLuanSanPhamModel binhLuanSanPhamModel);
-
+  
   // lấy comment sản phẩm : chuưa
   @GET("food/list/comment")
   Call<BinhLuanSanPhamModel>LayCommentSanPham(@Query("idSanPham")String idSanPham);
