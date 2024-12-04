@@ -232,7 +232,18 @@ public class fragment_myorders_mualai_details extends Fragment {
         btn_mua_lai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ChiTietDonHangAPIModel model = new ChiTietDonHangAPIModel();
+                model.setIdDonHang(donHangAPIModel.getIdDonHang());
+                List<SanPhamAPIModel> listproduct = new ArrayList<>();
+                List<ChiTietDonHangAPIModel> listCTDH = donHangAPIModel.getChiTietDonHangs();
+                for (ChiTietDonHangAPIModel item: listCTDH
+                     ) {
+                    SanPhamAPIModel sanPham = new SanPhamAPIModel(item.getIdSanPham());
+                    listproduct.add(sanPham);
+                }
+                model.setProducts(listproduct);
 
+                MuaLai(model);
             }
         });
     }

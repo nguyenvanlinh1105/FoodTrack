@@ -31,8 +31,9 @@ public class SanPhamAPIModel {
     private List<SanPhamYeuThichModel> sanPhamYeuThichs;
 
 
-
-
+    public SanPhamAPIModel(String idSanPham) {
+        this.idSanPham = idSanPham;
+    }
 
     public SanPhamAPIModel(String tenSanPham, double giaTien, String images, String moTa) {
         this.tenSanPham = tenSanPham;
