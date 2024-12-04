@@ -32,8 +32,8 @@ public class SanPhamAPIModel implements Serializable {
     private List<SanPhamYeuThichModel> sanPhamYeuThichs;
 
 
-    public SanPhamAPIModel(String idSanPham) {
-        this.idSanPham = idSanPham;
+    public SanPhamAPIModel() {
+
     }
 
     public SanPhamAPIModel(String tenSanPham, double giaTien, String images, String moTa) {

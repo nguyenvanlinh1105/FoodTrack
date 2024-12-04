@@ -61,6 +61,7 @@ public class favorite_fragment extends Fragment {
 
     GridView gv_favorite;
     ImageView chatIcon;
+    List<SanPhamAPIModel> listSanPham = new ArrayList<>();
 
     public favorite_fragment() {
         // Required empty public constructor
@@ -170,25 +171,30 @@ public class favorite_fragment extends Fragment {
         });
         gv_favorite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Bundle bundle = new Bundle();
-                bundle.putString("title", favoriteTitle.get(position));
-                bundle.putDouble("price", favoritePrice.get(position));
-                bundle.putString("description", favoriteSubTitle.get(position));
-                bundle.putInt("image", favoriteImg.get(position));
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Lấy sản phẩm đang được click từ danh sách
+                SanPhamAPIModel clickedProduct = listSanPham.get(position);
 
-                fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
-                        favoriteTitle.get(position),
-                        favoritePrice.get(position),
-                        favoriteSubTitle.get(position),
-                        favoriteImg.get(position)
-                );
+                // Tạo Bundle để truyền dữ liệu sang Fragment
+                Bundle bundle = new Bundle();
+                bundle.putString("idSanPham", clickedProduct.getIdSanPham());
+                bundle.putString("title", clickedProduct.getTenSanPham());
+                bundle.putDouble("price", clickedProduct.getGiaTien());
+                bundle.putString("description", clickedProduct.getMoTa());
+                bundle.putString("image", clickedProduct.getImages());
+
+                // Tạo fragment_product_detail và gắn Bundle
+                fragment_product_detail_API productDetailsFragment = new fragment_product_detail_API();
+                productDetailsFragment.setArguments(bundle);
+
+                // Chuyển Fragment
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(productDetailsFragment);
                 }
             }
         });
+
     }
 
 
@@ -196,7 +202,7 @@ public class favorite_fragment extends Fragment {
         APIService.API_SERVICE.getDsSanPhamYeuThich(idNguoiDung).enqueue(new Callback<List<SanPhamAPIModel>>() {
             @Override
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
-                List<SanPhamAPIModel> listSanPham = response.body();
+                 listSanPham = response.body();
                 FavoriteListAdapterAPI listAdapter = new FavoriteListAdapterAPI(getContext(), listSanPham);
                 gv_favorite.setAdapter(listAdapter);
             }

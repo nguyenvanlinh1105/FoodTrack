@@ -1,6 +1,7 @@
 package com.example.foodtrack.Model;
 
 import com.example.foodtrack.Model.API.NguoiDungAPIModel;
+import com.example.foodtrack.Model.API.SanPhamAPIModel;
 
 import java.sql.Timestamp;
 
@@ -9,8 +10,17 @@ public class BinhLuanSanPhamModel {
     private String idNguoiDung;
     private String idSanPham;
     private String noiDung;
-    private Timestamp ngayBinhLuan;
+    private String ngayBinhLuan;
     private NguoiDungAPIModel user;
+    private SanPhamAPIModel product;
+
+    public SanPhamAPIModel getProduct() {
+        return product;
+    }
+
+    public void setProduct(SanPhamAPIModel product) {
+        this.product = product;
+    }
 
     private String idDonHang;
 
@@ -66,11 +76,11 @@ public class BinhLuanSanPhamModel {
         this.noiDung = noiDung;
     }
 
-    public Timestamp getNgayBinhLuan() {
+    public String getNgayBinhLuan() {
         return ngayBinhLuan;
     }
 
-    public void setNgayBinhLuan(Timestamp ngayBinhLuan) {
+    public void setNgayBinhLuan(String ngayBinhLuan) {
         this.ngayBinhLuan = ngayBinhLuan;
     }
 

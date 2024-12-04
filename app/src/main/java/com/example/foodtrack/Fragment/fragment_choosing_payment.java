@@ -1,8 +1,14 @@
 package com.example.foodtrack.Fragment;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -17,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Adapter.NotificationHelper;
 import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.R;
 
@@ -44,6 +51,9 @@ public class fragment_choosing_payment extends Fragment {
     private ImageView backBtn;
     private LinearLayout momo, zaloPay;
     DonHangAPIModel donHang;
+
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
+    private NotificationHelper notificationHelper;
 
 
     public fragment_choosing_payment() {
@@ -80,7 +90,48 @@ public class fragment_choosing_payment extends Fragment {
         if (getArguments() != null) {
              donHang = (DonHangAPIModel) getArguments().getSerializable("donHang");
         }
+
+        notificationHelper = new NotificationHelper(getContext());
+
+        // Kiểm tra và xin quyền
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkNotificationPermission();
+        } else {
+
+        }
+
     }
+
+
+    private void checkNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    REQUEST_NOTIFICATION_PERMISSION
+            );
+        } else {
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                // Người dùng từ chối quyền
+                Toast.makeText(getContext(), "Bạn đã từ chối quyền thông báo", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,7 +164,8 @@ public class fragment_choosing_payment extends Fragment {
 
                 donHang.setTinhTrangThanhToan("Thanh toán online");
                 donHang.setTinhTrang("Đã xác nhận");
-                PostDataToOder(donHang);
+
+                PostDataToOder(donHang, "momo");
             }
         });
 
@@ -123,7 +175,7 @@ public class fragment_choosing_payment extends Fragment {
 
                 donHang.setTinhTrangThanhToan("Thanh toán online");
                 donHang.setTinhTrang("Đã xác nhận");
-                PostDataToOder(donHang);
+                PostDataToOder(donHang, "zaloPay");
 
 
             }
@@ -143,7 +195,7 @@ public class fragment_choosing_payment extends Fragment {
         mainActivity.ReplaceFragment(new checkout());
     }
 
-    private void PostDataToOder(DonHangAPIModel donhang){
+    private void PostDataToOder(DonHangAPIModel donhang, String appPay){
         APIService.API_SERVICE.PostToOrder(donhang).enqueue(new Callback<DonHangAPIModel>() {
             @Override
             public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {
@@ -151,6 +203,14 @@ public class fragment_choosing_payment extends Fragment {
                         SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
                         editorResponseDonHang.putString("idDonHang", null);
                         editorResponseDonHang.apply();
+                        if(appPay=="momo"){
+                            notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng của bạn đã được đặt hàng thành công và trong quá trình xử lí!");
+                            notificationHelper.sendNotification("Thông báo thanh toán đơn hàng","Đơn hàng của bạn đã được thanh toán thành công bằng ví điện tử momo!");
+                        }else{
+                            notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng của bạn đã được đặt hàng thành công và trong quá trình xử lí!");
+                            notificationHelper.sendNotification("Thông báo thanh toán đơn hàng","Đơn hàng của bạn đã được thanh toán thành công bằng ví điện tử zaloPay!");
+
+                        }
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {

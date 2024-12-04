@@ -1,13 +1,18 @@
 package com.example.foodtrack.Fragment;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.service.controls.templates.ControlButton;
@@ -19,11 +24,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.API.APIService;
+import com.example.foodtrack.Adapter.NotificationHelper;
 import com.example.foodtrack.Adapter.list_drink_API_adapter;
 import com.example.foodtrack.Adapter.list_drink_adapter;
 import com.example.foodtrack.Adapter.myorders_ongoing_list_adapter_api;
@@ -67,6 +74,12 @@ public class fragment_myorders_ongoing_details extends Fragment {
     private LinearLayout ll_list_myorders_details;
     private ArrayList<ChiTietDonHangModel> arrayChiTietDonHang = new ArrayList<>();
     private Button btn_huy;
+
+    // thông báo
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
+    private NotificationHelper notificationHelper;
+
+
 
     private View view_after_1, view_before_2, view_after_2, view_before_3, view_after_3, view_before_4;
     private TextView tv_step4, tv_step2, tv_step3;
@@ -118,6 +131,43 @@ public class fragment_myorders_ongoing_details extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             donHangAPIModel = (DonHangAPIModel) getArguments().getSerializable("selectedOrder");
+        }
+
+        notificationHelper = new NotificationHelper(getContext());
+
+        // Kiểm tra và xin quyền
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkNotificationPermission();
+        } else {
+
+        }
+    }
+
+
+    private void checkNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    REQUEST_NOTIFICATION_PERMISSION
+            );
+        } else {
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                // Người dùng từ chối quyền
+                Toast.makeText(getContext(), "Bạn đã từ chối quyền thông báo", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -322,12 +372,12 @@ public class fragment_myorders_ongoing_details extends Fragment {
         APIService.API_SERVICE.PostToCancleOrder(model).enqueue(new Callback<DonHangAPIModel>() {
             @Override
             public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {
-
+                notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng của bạn đã được hủy thành công bạn có thể mua lại ngay trong phần dã hủy!");
             }
 
             @Override
             public void onFailure(Call<DonHangAPIModel> call, Throwable t) {
-
+                notificationHelper.sendNotification("Thông báo đơn hàng","Thông báo hủy đơn hàng thất bại, vui lòng thử lại!");
             }
         });
     }

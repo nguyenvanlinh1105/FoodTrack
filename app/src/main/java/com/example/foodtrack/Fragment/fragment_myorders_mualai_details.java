@@ -1,6 +1,8 @@
 package com.example.foodtrack.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -10,13 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -70,7 +76,11 @@ public class fragment_myorders_mualai_details extends Fragment {
 
     private TextView tv_ghiChu, tv_thoiGianDat, tv_thanhToan,
             tv_tongTien, tv_tongCong, tv_idDonHang, tv_tinhTrang, tv_tongSoLuongMon;
+    String idUser;
+    SharedPreferences shareUserResponseLogin,shareDonHangResponseData ;
 
+
+    List<String> listIdSanPham  = new ArrayList<>();
 
     public fragment_myorders_mualai_details() {
         // Required empty public constructor
@@ -121,6 +131,12 @@ public class fragment_myorders_mualai_details extends Fragment {
         if (getArguments() != null) {
             donHangAPIModel = (DonHangAPIModel) getArguments().getSerializable("selectedOrder");
         }
+          shareUserResponseLogin = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+        idUser = shareUserResponseLogin.getString("idUser","-1");
+
+        shareDonHangResponseData = getContext().getSharedPreferences("dataDonHangResponse", Context.MODE_PRIVATE);
+        idDonHang = shareDonHangResponseData.getString("idDonHang","");
+
     }
 
     @Override
@@ -188,6 +204,7 @@ public class fragment_myorders_mualai_details extends Fragment {
 
             soLuongDat.setText(String.valueOf(chiTiet.getSoLuongDat()));
             SanPhamAPIModel sanPham = chiTiet.getProduct();
+            listIdSanPham.add(sanPham.getIdSanPham());
             if (sanPham != null) {
                 String imageUrl = sanPham.getImages();
                 if (imageUrl.startsWith("http://")) {
@@ -233,16 +250,60 @@ public class fragment_myorders_mualai_details extends Fragment {
             @Override
             public void onClick(View view) {
                 ChiTietDonHangAPIModel model = new ChiTietDonHangAPIModel();
-                model.setIdDonHang(donHangAPIModel.getIdDonHang());
+                model.setIdDonHang(idDonHang);
+                model.setIdUser(idUser);
+                model.setIdDonHangHuy(donHangAPIModel.getIdDonHang());
                 List<SanPhamAPIModel> listproduct = new ArrayList<>();
                 List<ChiTietDonHangAPIModel> listCTDH = donHangAPIModel.getChiTietDonHangs();
-                for (ChiTietDonHangAPIModel item : listCTDH) {
-                    SanPhamAPIModel sanPham = new SanPhamAPIModel(item.getIdSanPham());
+
+                for (int i = 0; i < listIdSanPham.size(); i++) {
+
+                    String idSanPham = listIdSanPham.get(i);
+
+                    ChiTietDonHangAPIModel chiTiet = listCTDH.get(i);
+
+                    SanPhamAPIModel sanPham = new SanPhamAPIModel();
+                    sanPham.setIdSanPham(idSanPham);
+                    sanPham.setSoLuongDat(chiTiet.getSoLuongDat());
+
                     listproduct.add(sanPham);
                 }
+
                 model.setProducts(listproduct);
 
                 MuaLai(model);
+
+
+               // showPopup(view);
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                        Intent cart = new Intent(getContext(), cart.class);
+                        startActivity(cart);
+                    }, 1000);// đổi lại nếu nhanh quá nha
+
+                }
+
+            }
+        });
+    }
+
+    private void showPopup(View view) {
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_cancel_order, null);
+
+        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        TextView btnOk = popupView.findViewById(R.id.btn_ok_popup_submit_cmt);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_myorders_history_API());
+                }
             }
         });
     }
@@ -278,11 +339,15 @@ public class fragment_myorders_mualai_details extends Fragment {
         APIService.API_SERVICE.MuaLaiDonHang(model).enqueue(new Callback<ChiTietDonHangAPIModel>() {
             @Override
             public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
+                ChiTietDonHangAPIModel ctdh = response.body();
                 if (response.isSuccessful()) {
-                    MainActivity mainActivity = (MainActivity) getActivity();
-                    if (mainActivity != null) {
-                        Intent cart = new Intent(getContext(), cart.class);
-                        startActivity(cart);
+                    SharedPreferences.Editor editorResponseDonHang = shareDonHangResponseData.edit();
+                    if (ctdh.getIdDonHang()!=null) {
+                        editorResponseDonHang.putString("idDonHang", ctdh.getIdDonHang());
+                        editorResponseDonHang.apply();
+
+
+                    } else {
 
                     }
                 }

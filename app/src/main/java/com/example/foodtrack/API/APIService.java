@@ -187,7 +187,7 @@ public interface APIService {
 
   // lấy comment sản phẩm : chuưa
   @GET("food/list/comment")
-  Call<BinhLuanSanPhamModel>LayCommentSanPham(@Query("idSanPham")String idSanPham);
+  Call<List<BinhLuanSanPhamModel>>LayCommentSanPham(@Query("idSanPham") String idSanPham);
 // đăng comment : sản phẩm : chưa
 
 

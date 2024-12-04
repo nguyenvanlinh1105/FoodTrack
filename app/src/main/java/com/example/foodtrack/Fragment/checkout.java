@@ -2,8 +2,13 @@ package com.example.foodtrack.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,13 +19,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.cart;
+import com.example.foodtrack.Adapter.NotificationHelper;
 import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.R;
-
+import android.Manifest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +43,9 @@ public class checkout extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
+    private NotificationHelper notificationHelper;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -91,7 +101,44 @@ public class checkout extends Fragment {
         if (getArguments() != null) {
             textGhiChu = getArguments().getString("ghiChu");
         }
+
+        notificationHelper = new NotificationHelper(getContext());
+
+        // Kiểm tra và xin quyền
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkNotificationPermission();
+        } else {
+
+        }
     }
+
+    private void checkNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    REQUEST_NOTIFICATION_PERMISSION
+            );
+        } else {
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                // Người dùng từ chối quyền
+                Toast.makeText(getContext(), "Bạn đã từ chối quyền thông báo", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -142,7 +189,7 @@ public class checkout extends Fragment {
 
                 donHang.setGhiChu(textGhiChu);
                 if (payBtn.getText().toString().equals("Xác nhận đặt đơn")) {
-                    mainActivity.ReplaceFragment(new fragment_confirm_payment());
+                   // mainActivity.ReplaceFragment(new fragment_confirm_payment());
                     donHang.setTinhTrangThanhToan(phuongThucThanhToan);
                     PostDataToOder(donHang);
                 } else {
@@ -191,6 +238,8 @@ public class checkout extends Fragment {
                 idDonHang =sharedPreferencesDonHang.getString("idDonHang", "");
                 Log.d("idDonHang",idDonHang);
                 MainActivity mainActivity = (MainActivity) getActivity();
+                // Người dùng cấp quyền, gửi thông báo
+                notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng của bạn đã được đặt hàng thành công và trong quá trình xử lí!");
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new fragment_confirm_payment());
                     //mainActivity.ReplaceFragment(new fragment_myorders_ongoing_API());

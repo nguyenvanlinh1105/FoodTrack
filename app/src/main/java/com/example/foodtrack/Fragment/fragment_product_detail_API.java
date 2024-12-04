@@ -222,6 +222,8 @@ public class fragment_product_detail_API extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("idSanPham", idSanPham);
+                bundle.putString("tenSanPham", title);
+                bundle.putString("image", image);
 
                 // Đặt bundle vào fragment
                 ratingFragment.setArguments(bundle);

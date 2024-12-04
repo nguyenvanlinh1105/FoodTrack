@@ -1,7 +1,13 @@
 package com.example.foodtrack.Fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Adapter.recyclerView_product_rating_adapter;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
@@ -21,6 +30,7 @@ import com.example.foodtrack.Model.BinhLuanSanPhamModel;
 import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.R;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -56,6 +66,8 @@ public class fragment_product_rating extends Fragment {
     private LinearLayout if_no_Comment_productRating;
 
     private String idSanPham;
+    private String tenSanPham;
+    private String image;
 
     public fragment_product_rating() {
         
@@ -87,9 +99,15 @@ public class fragment_product_rating extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        // Lấy idSanPham từ bundle
         if (getArguments() != null) {
+            // Lấy dữ liệu từ Bundle
             idSanPham = getArguments().getString("idSanPham");
+            tenSanPham = getArguments().getString("tenSanPham");
+            image = getArguments().getString("image");
+
+
+
+
         }
   //      Log.d("fragment_product_rating", "idSanPham: " + idSanPham);
      //   initializeData();
@@ -112,7 +130,7 @@ public class fragment_product_rating extends Fragment {
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = dateFormat.parse("22/9/2024");
                 long time = date.getTime();
-                comment.setNgayBinhLuan(new Timestamp(time));
+               // comment.setNgayBinhLuan(new Timestamp(time));
             } catch (ParseException e) {
                 e.printStackTrace(); // In ra lỗi nếu có
             }
@@ -152,6 +170,33 @@ public class fragment_product_rating extends Fragment {
         rv_product_rating = (RecyclerView) view.findViewById(R.id.recyclerView_product_rating);
         tv_soLuongBinhLuan = (TextView) view.findViewById(R.id.tv_so_luong_binh_luan_productRating);
         if_no_Comment_productRating = (LinearLayout) view.findViewById(R.id.if_no_Comment_productRating);
+
+        ImageView image_sanpham = view.findViewById(R.id.image_sanpham);
+        TextView ten = view.findViewById(R.id.tenSanPham);
+        ten.setText("Tên món: "+tenSanPham);
+
+
+        String imageUrl = image;
+        if (imageUrl.startsWith("http://")) {
+            imageUrl = imageUrl.replace("http://", "https://");
+        }
+
+        Glide.with(getContext())
+                .asBitmap()
+                .load(imageUrl)
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                    }
+
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        image_sanpham.setImageDrawable(new BitmapDrawable(getContext().getResources(), resource));
+
+                    }
+                });
+
+
     }
 
     private void ControlButton(){
@@ -162,29 +207,53 @@ public class fragment_product_rating extends Fragment {
             }
         });
     }
-    private void LayCommentSanPham(String idSanPham){
-        APIService.API_SERVICE.LayCommentSanPham(idSanPham).enqueue(new Callback<BinhLuanSanPhamModel>() {
-            @Override
-            public void onResponse(Call<BinhLuanSanPhamModel> call, Response<BinhLuanSanPhamModel> response) {
-                    if(response.isSuccessful()){
-                        binhLuanList = (List<BinhLuanSanPhamModel>) response.body();
 
-                        LinearLayoutManager layoutManager
-                                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-                        rv_product_rating.setLayoutManager(layoutManager);
-                        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
-                        rv_product_rating.setAdapter(adapter);
-                        tv_soLuongBinhLuan.setText(String.valueOf(binhLuanList.size()));
 
-                    }else{
-                        Log.d("BinhLuan","Lỗi không lấy bình luận sản phẩm");
-                    }
-            }
 
-            @Override
-            public void onFailure(Call<BinhLuanSanPhamModel> call, Throwable t) {
 
-            }
-        });
+    private void LayCommentSanPham(String idSanPham) {
+        new LayCommentSanPhamTask().execute(idSanPham);
     }
+
+    private class LayCommentSanPhamTask extends AsyncTask<String, Void, List<BinhLuanSanPhamModel>> {
+        @Override
+        protected List<BinhLuanSanPhamModel> doInBackground(String... params) {
+            String idSanPham = params[0];
+            try {
+                // Gọi API đồng bộ
+                Response<List<BinhLuanSanPhamModel>> response = APIService.API_SERVICE.LayCommentSanPham(idSanPham).execute();
+                if (response.isSuccessful() && response.body() != null) {
+                    return response.body();
+                } else {
+                    Log.d("BinhLuan", "Lỗi không lấy bình luận sản phẩm");
+                    return null;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<BinhLuanSanPhamModel> binhLuanList) {
+            if (binhLuanList != null) {
+                LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+                rv_product_rating.setLayoutManager(layoutManager);
+
+                recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
+                rv_product_rating.setAdapter(adapter);
+
+                tv_soLuongBinhLuan.setText(String.valueOf(binhLuanList.size()));
+            } else {
+                Log.d("BinhLuan", "Không có bình luận nào được trả về.");
+            }
+        }
+    }
+
+
+
+
+
+
+
 }
