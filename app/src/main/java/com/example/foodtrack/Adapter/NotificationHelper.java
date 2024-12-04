@@ -40,7 +40,7 @@ public class NotificationHelper {
         Notification notification = new NotificationCompat.Builder(context, channelId)
                 .setContentTitle(tilte)
                 .setContentText(content)
-                .setSmallIcon(R.drawable.icon_send)
+                .setSmallIcon(R.drawable.icon_food)
                 .setLargeIcon(bitmap)
                 .setAutoCancel(true) // Đóng thông báo khi người dùng nhấn vào
                 .build();

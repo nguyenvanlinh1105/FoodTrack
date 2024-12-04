@@ -1,15 +1,20 @@
 package com.example.foodtrack.Fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -24,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -31,6 +37,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Activity.cart;
+import com.example.foodtrack.Adapter.NotificationHelper;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangModel;
@@ -64,6 +71,9 @@ public class fragment_myorders_mualai_details extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String idDonHang, tinhTrang, ghiChu;
+
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
+    private NotificationHelper notificationHelper;
 
     private Button btn_mua_lai;
     private ImageView btn_back_myorders_ongoing_detail;
@@ -137,6 +147,42 @@ public class fragment_myorders_mualai_details extends Fragment {
         shareDonHangResponseData = getContext().getSharedPreferences("dataDonHangResponse", Context.MODE_PRIVATE);
         idDonHang = shareDonHangResponseData.getString("idDonHang","");
 
+        notificationHelper = new NotificationHelper(getContext());
+
+        // Kiểm tra và xin quyền
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkNotificationPermission();
+        } else {
+
+        }
+
+    }
+
+    private void checkNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    REQUEST_NOTIFICATION_PERMISSION
+            );
+        } else {
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                // Người dùng từ chối quyền
+                Toast.makeText(getContext(), "Bạn đã từ chối quyền thông báo", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -345,7 +391,7 @@ public class fragment_myorders_mualai_details extends Fragment {
                     if (ctdh.getIdDonHang()!=null) {
                         editorResponseDonHang.putString("idDonHang", ctdh.getIdDonHang());
                         editorResponseDonHang.apply();
-
+                        notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng của bạn đã được đặt hàng thành công và trong quá trình xử lí!");
 
                     } else {
 
