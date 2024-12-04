@@ -53,7 +53,7 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
         TextView name = view.findViewById(R.id.name_item_myOrders);
         ImageView img = view.findViewById(R.id.img_item_myOrders);
         TextView ratingBtn = view.findViewById(R.id.ratingBtn_item_myOrders);
-        TextView status = view.findViewById(R.id.tinhTrang_item_myOrders);
+//        TextView status = view.findViewById(R.id.tinhTrang_item_myOrders);
         TextView qty = view.findViewById(R.id.qty_myOrders);
         TextView price = view.findViewById(R.id.price_myOrders);
         TextView donViTinh = view.findViewById(R.id.donViTinh);
@@ -89,13 +89,13 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
                         }
                     });
 
-            status.setText(order.getTrangThai());
+//            status.setText(order.getHasComment());
             double tongTien = order.getProduct().getGiaTien() * order.getSoLuongDat();
             price.setText(tongTien + "");
             qty.setText(String.valueOf(order.getSoLuongDat()));
             donViTinh.setText("Đơn vị tính:" + order.getProduct().getDonViTinh());
 
-            if (order.getTrangThaiBinhLuan() == 0) {
+            if (order.getHasComment() == 0) {
                 ratingBtn.setText("Đánh giá ngay");
                 ratingBtn.setTextColor(Color.parseColor("#FFFFFF"));
                 ratingBtn.setBackgroundResource(R.drawable.less_radius_btn_bg_orange);

@@ -236,8 +236,7 @@ public class fragment_myorders_mualai_details extends Fragment {
                 model.setIdDonHang(donHangAPIModel.getIdDonHang());
                 List<SanPhamAPIModel> listproduct = new ArrayList<>();
                 List<ChiTietDonHangAPIModel> listCTDH = donHangAPIModel.getChiTietDonHangs();
-                for (ChiTietDonHangAPIModel item: listCTDH
-                     ) {
+                for (ChiTietDonHangAPIModel item : listCTDH) {
                     SanPhamAPIModel sanPham = new SanPhamAPIModel(item.getIdSanPham());
                     listproduct.add(sanPham);
                 }
@@ -275,18 +274,18 @@ public class fragment_myorders_mualai_details extends Fragment {
         }
     }
 
-    private void MuaLai(ChiTietDonHangAPIModel model){
+    private void MuaLai(ChiTietDonHangAPIModel model) {
         APIService.API_SERVICE.MuaLaiDonHang(model).enqueue(new Callback<ChiTietDonHangAPIModel>() {
             @Override
             public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
-              if(response.isSuccessful()){
-                  MainActivity mainActivity = (MainActivity) getActivity();
-                  if (mainActivity != null) {
-                      Intent cart  = new Intent(getContext(), com.example.foodtrack.Activity.cart.class);
-                      startActivity(cart);
+                if (response.isSuccessful()) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    if (mainActivity != null) {
+                        Intent cart = new Intent(getContext(), cart.class);
+                        startActivity(cart);
 
-                  }
-              }
+                    }
+                }
             }
 
             @Override
