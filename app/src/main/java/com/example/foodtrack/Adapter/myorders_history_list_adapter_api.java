@@ -93,7 +93,7 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
 
 
             double tongTien = order.getProduct().getGiaTien() * order.getSoLuongDat();
-            price.setText(tongTien + "");
+            price.setText( nf.format(tongTien) + "vnđ");
             qty.setText(String.valueOf(order.getSoLuongDat()));
             donViTinh.setText("Đơn vị tính:" + order.getProduct().getDonViTinh());
 
@@ -118,6 +118,7 @@ public class myorders_history_list_adapter_api extends ArrayAdapter<ChiTietDonHa
                         Bundle bundle = new Bundle();
                         bundle.putString("idSanPham", order.getProduct().getIdSanPham());
                         bundle.putString("idDonHang", order.getIdDonHang());
+                        bundle.putString("image", order.getProduct().getImages());
                         fragment_rating_comment fragment = new fragment_rating_comment();
                         fragment.setArguments(bundle);
 

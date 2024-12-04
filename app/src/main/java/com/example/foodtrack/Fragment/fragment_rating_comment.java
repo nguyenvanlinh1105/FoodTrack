@@ -2,8 +2,13 @@ package com.example.foodtrack.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.Gravity;
@@ -15,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
 import com.example.foodtrack.Model.BinhLuanSanPhamModel;
@@ -27,10 +35,10 @@ import retrofit2.Response;
 public class fragment_rating_comment extends Fragment {
 
     // Biến nhận dữ liệu từ Bundle
-    private String idSanPham,idDonHang;
+    private String idSanPham,idDonHang, image;
 
     // Các view trong Fragment
-    private ImageView btn_back;
+    private ImageView btn_back, img_product;
     private TextView btn_GuiCamNhan;
     private EditText textArea_Comment;
 
@@ -38,11 +46,12 @@ public class fragment_rating_comment extends Fragment {
         // Constructor rỗng bắt buộc
     }
 
-    public static fragment_rating_comment newInstance(String idSanPham, String idDonHang) {
+    public static fragment_rating_comment newInstance(String idSanPham, String idDonHang, String image) {
         fragment_rating_comment fragment = new fragment_rating_comment();
         Bundle args = new Bundle();
         args.putString("idSanPham", idSanPham);
         args.putString("idDonHang", idDonHang);
+        args.putString("image", image);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,6 +62,7 @@ public class fragment_rating_comment extends Fragment {
         if (getArguments() != null) {
             idSanPham = getArguments().getString("idSanPham");
             idDonHang = getArguments().getString("idDonHang");
+            image = getArguments().getString("image");
         }
     }
 
@@ -60,6 +70,25 @@ public class fragment_rating_comment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rating_comment, container, false);
         initViews(view);   // Khởi tạo các thành phần giao diện
+
+        if (image.startsWith("http://")) {
+            image = image.replace("http://", "https://");
+        }
+        Glide.with(getContext())
+                .asBitmap()
+                .load(image)
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                    }
+
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        img_product.setImageDrawable(new BitmapDrawable(getContext().getResources(), resource));
+
+                    }
+                });
+
         setListeners();    // Gán sự kiện cho các nút
         return view;
     }
@@ -69,6 +98,7 @@ public class fragment_rating_comment extends Fragment {
         btn_back = view.findViewById(R.id.btn_back_rating_comment);
         btn_GuiCamNhan = view.findViewById(R.id.btn_GuiCamNhan);
         textArea_Comment = view.findViewById(R.id.textArea_Comment);
+        img_product = view.findViewById(R.id.img_product_rating_comment);
     }
 
     // Thiết lập sự kiện cho các nút
