@@ -1,5 +1,7 @@
 package com.example.foodtrack.Model;
 
+import com.example.foodtrack.Model.API.NguoiDungAPIModel;
+
 import java.sql.Timestamp;
 
 public class BinhLuanSanPhamModel {
@@ -8,7 +10,15 @@ public class BinhLuanSanPhamModel {
     private String idSanPham;
     private String noiDung;
     private Timestamp ngayBinhLuan;
+    private NguoiDungAPIModel user;
 
+    public NguoiDungAPIModel getUser() {
+        return user;
+    }
+
+    public void setUser(NguoiDungAPIModel user) {
+        this.user = user;
+    }
 
     // Navigation properties
     private NguoiDungModel nguoiDung;

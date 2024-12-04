@@ -6,6 +6,7 @@ import com.example.foodtrack.Model.API.NguoiDungAPIModel;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.BinhLuanSanPhamModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
+import com.example.foodtrack.Model.ChiTietDonHangModel;
 import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.Model.SanPhamYeuThichModel;
@@ -39,7 +40,7 @@ public interface APIService {
           .build();
 
   //    linkAPI root:
-    public static String url ="https://dd74-113-23-29-130.ngrok-free.app/";
+    public static String url ="https://e636-113-23-29-130.ngrok-free.app/";
 
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
@@ -117,6 +118,11 @@ public interface APIService {
     @GET("food/list/order")
     Call<List<DonHangAPIModel>> GetSanPhamDaMua(@Query("idNguoiDung") String idUser);
 
+    // mưa lại đơn hàng : dang lam
+    @POST("")
+    Call<ChiTietDonHangAPIModel> MuaLaiDonHang(@Body ChiTietDonHangAPIModel model);
+
+
 
 
     // lấy danh sách sản phẩm yêu thích: roi
@@ -158,13 +164,13 @@ public interface APIService {
           .build();
 
 
-  // lấy chi tiết đơn hàng đang giao: roi
-  @GET("")
-  Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDangGiao();
-
-  // lấy chi tiết đơn hàng đã hủy : ròi
-  @GET("")
-  Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDaHuy();
+//  // lấy chi tiết đơn hàng đang giao: roi
+//  @GET("")
+//  Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDangGiao();
+//
+//  // lấy chi tiết đơn hàng đã hủy : ròi
+//  @GET("")
+//  Call<List<ChiTietDonHangAPIModel>> GetChiTietDonHangDaHuy();
 
 
 
@@ -180,7 +186,7 @@ public interface APIService {
 
   // lấy comment sản phẩm : chuưa
   @GET("")
-  Call<BinhLuanSanPhamModel>LayCommentSanPham(@Query("idNguoiDung")String idNguoiDung);
+  Call<BinhLuanSanPhamModel>LayCommentSanPham(@Query("idSanPham")String idSanPham);
 // đăng comment : sản phẩm : chưa
 
 

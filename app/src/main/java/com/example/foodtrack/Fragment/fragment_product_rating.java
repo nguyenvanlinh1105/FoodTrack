@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Adapter.recyclerView_product_rating_adapter;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.BinhLuanSanPhamModel;
@@ -27,6 +28,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -125,12 +130,12 @@ public class fragment_product_rating extends Fragment {
         Mapping(view);
 
 
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        rv_product_rating.setLayoutManager(layoutManager);
-        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
-        rv_product_rating.setAdapter(adapter);
-        tv_soLuongBinhLuan.setText(String.valueOf(binhLuanList.size()));
+//        LinearLayoutManager layoutManager
+//                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+//        rv_product_rating.setLayoutManager(layoutManager);
+//        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
+//        rv_product_rating.setAdapter(adapter);
+//        tv_soLuongBinhLuan.setText(String.valueOf(binhLuanList.size()));
         if(binhLuanList.size()==0){
             rv_product_rating.setVisibility(view.GONE);
             if_no_Comment_productRating.setVisibility(view.VISIBLE);
@@ -159,6 +164,28 @@ public class fragment_product_rating extends Fragment {
         });
     }
     private void LayCommentSanPham(String idSanPham){
+        APIService.API_SERVICE.LayCommentSanPham(idSanPham).enqueue(new Callback<BinhLuanSanPhamModel>() {
+            @Override
+            public void onResponse(Call<BinhLuanSanPhamModel> call, Response<BinhLuanSanPhamModel> response) {
+                    if(response.isSuccessful()){
+                        binhLuanList = (List<BinhLuanSanPhamModel>) response.body();
 
+                        LinearLayoutManager layoutManager
+                                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+                        rv_product_rating.setLayoutManager(layoutManager);
+                        recyclerView_product_rating_adapter adapter = new recyclerView_product_rating_adapter(getContext(), binhLuanList);
+                        rv_product_rating.setAdapter(adapter);
+                        tv_soLuongBinhLuan.setText(String.valueOf(binhLuanList.size()));
+
+                    }else{
+                        Log.d("BinhLuan","Lỗi không lấy bình luận sản phẩm");
+                    }
+            }
+
+            @Override
+            public void onFailure(Call<BinhLuanSanPhamModel> call, Throwable t) {
+
+            }
+        });
     }
 }

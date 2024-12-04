@@ -1,5 +1,6 @@
 package com.example.foodtrack.Fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -23,6 +24,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.foodtrack.API.APIService;
 import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Activity.cart;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangAPIModel;
 import com.example.foodtrack.Model.ChiTietDonHangModel;
@@ -230,10 +232,7 @@ public class fragment_myorders_mualai_details extends Fragment {
         btn_mua_lai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.ReplaceFragment(new checkout());
-                }
+
             }
         });
     }
@@ -263,5 +262,26 @@ public class fragment_myorders_mualai_details extends Fragment {
             // Add itemView to LinearLayout
             ll_list_myorders_details.addView(itemView);
         }
+    }
+
+    private void MuaLai(ChiTietDonHangAPIModel model){
+        APIService.API_SERVICE.MuaLaiDonHang(model).enqueue(new Callback<ChiTietDonHangAPIModel>() {
+            @Override
+            public void onResponse(Call<ChiTietDonHangAPIModel> call, Response<ChiTietDonHangAPIModel> response) {
+              if(response.isSuccessful()){
+                  MainActivity mainActivity = (MainActivity) getActivity();
+                  if (mainActivity != null) {
+                      Intent cart  = new Intent(getContext(), com.example.foodtrack.Activity.cart.class);
+                      startActivity(cart);
+
+                  }
+              }
+            }
+
+            @Override
+            public void onFailure(Call<ChiTietDonHangAPIModel> call, Throwable t) {
+
+            }
+        });
     }
 }
