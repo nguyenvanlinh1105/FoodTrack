@@ -48,7 +48,7 @@ public class cart extends AppCompatActivity {
     private ImageView backBtn;
     public TextView total;
     private TextView datDonBtn;
-    public double tongTien =0;
+    public double tongTien = 0;
     private TextView edt_ghiChu;
     public String textGhiChu;
     String idDonHang;
@@ -73,7 +73,7 @@ public class cart extends AppCompatActivity {
 
         Mapping();
 
-         idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
+        idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
 
 
         if (idDonHang != null && !idDonHang.isEmpty()) {
@@ -97,7 +97,7 @@ public class cart extends AppCompatActivity {
             cart_adapter listAdapter = new cart_adapter(this, cartTitle, cartImg, cartSubTitle, cartPrice, cartQty, this);
             listView_cart.setAdapter(listAdapter);
         }
-        total.setText(tongTien+ " vnđ");
+        total.setText(tongTien + " vnđ");
 
     }
 
@@ -116,17 +116,19 @@ public class cart extends AppCompatActivity {
             backBtn.setOnClickListener(view -> finish());
         }
         if (datDonBtn != null) {
-            if(idDonHang!=null){
-               datDonBtn.setOnClickListener(view -> {
-                   textGhiChu = edt_ghiChu.getText().toString();
-                   Intent thanhToan = new Intent(cart.this, MainActivity.class);
-                   thanhToan.putExtra("fragmentToLoad", "cartFragment");
-                   thanhToan.putExtra("ghiChu",textGhiChu);
-                   startActivity(thanhToan);
-               });
-           }else{
+            if (idDonHang != null) {
+                datDonBtn.setOnClickListener(view -> {
+                    textGhiChu = edt_ghiChu.getText().toString();
+                    Intent thanhToan = new Intent(cart.this, MainActivity.class);
+                    thanhToan.putExtra("fragmentToLoad", "cartFragment");
+                    thanhToan.putExtra("ghiChu", textGhiChu);
+//                    Log.d("tongTien", String.valueOf(tongTien));
+                    thanhToan.putExtra("tongTien", tongTien);
+                    startActivity(thanhToan);
+                });
+            } else {
 
-           }
+            }
         }
     }
 
@@ -146,37 +148,6 @@ public class cart extends AppCompatActivity {
             total.setText(formatter.format(totalPrice) + " vnđ");
         }
     }
-
-
-//    public  void GetDsSanPhamOrder(String idDonHang) {
-//        APIService.API_SERVICE.GetSanPhamGioHang(idDonHang).enqueue(new Callback<List<SanPhamAPIModel>>() {
-//            @Override
-//            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
-//                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-//                    List<SanPhamAPIModel> listSanPham = response.body();
-//
-//                    for (SanPhamAPIModel sp : listSanPham) {
-//                        tongTien += Double.valueOf(sp.getGiaTien())*Integer.valueOf(sp.getSoLuongDat());
-//                        NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault()); // Sử dụng Locale mặc định
-//                        String formattedPrice = numberFormat.format(tongTien);
-//
-//                        total.setText(formattedPrice+" vnđ");
-//                    }
-//
-//
-//                    UpdateRecyclerView(listSanPham);
-//                } else {
-//                    UseFallbackData();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
-//             //   UseFallbackData();
-//            }
-//        });
-//    }
 
     private class GetDsSanPhamOrderTask extends AsyncTask<String, Void, List<SanPhamAPIModel>> {
 
@@ -205,7 +176,6 @@ public class cart extends AppCompatActivity {
                 Log.d("TongTien", "Giá trị tổng tiền: " + tongTien);
 
 
-
                 // Format tổng tiền
                 NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault());
                 String formattedPrice = numberFormat.format(tongTien);
@@ -218,6 +188,7 @@ public class cart extends AppCompatActivity {
             }
         }
     }
+
     public void GetDsSanPhamOrder(String idDonHang) {
         new GetDsSanPhamOrderTask().execute(idDonHang);
     }
@@ -232,7 +203,7 @@ public class cart extends AppCompatActivity {
 
 
     private void UseFallbackData() {
-       // initializeData();
+        // initializeData();
         UpdateRecyclerView(new ArrayList<>());
     }
 

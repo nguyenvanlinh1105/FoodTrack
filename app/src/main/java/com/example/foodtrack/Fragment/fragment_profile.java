@@ -134,8 +134,10 @@ public class fragment_profile extends Fragment {
         toThongBao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent notify = new Intent(getActivity(), fragment_thong_bao_user.class);
-                startActivity(notify);
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.ReplaceFragment(new fragment_thong_bao_user());
+                }
             }
         });
     }

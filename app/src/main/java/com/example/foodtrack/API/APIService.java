@@ -206,12 +206,12 @@ public interface APIService {
   @GET("user/info")
   Call<NguoiDungAPIModel> GetInfoUser(@Query("idNguoiDung")String idUser);
 
-  // Tìm kiếm sản phẩm: chưa
-  @GET("")
+  // Tìm kiếm sản phẩm: rồi
+  @GET("food/search")
   Call<List<SanPhamAPIModel>> GetSearchResult(@Query("query")String query);
 
   // lấy danh sách thông báo : chưa
-  @GET("")
+  @GET("user/list/notification")
   Call<List<ThongBaoModel>> GetListNoti(@Query("idNguoiDung") String idNguoiDung);
 
   // gửi thông báo : chưa

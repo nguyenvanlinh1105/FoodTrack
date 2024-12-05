@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.example.foodtrack.Adapter.notification_list_adapter;
 import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.ThongBaoModel;
 import com.example.foodtrack.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +51,8 @@ public class fragment_thong_bao_user extends Fragment {
     List<ThongBaoModel> listThongBao = new ArrayList<>();
 
     String idNguoiDung;
+
+    SharedPreferences sharedPreferencesUser;
 
     private notification_list_adapter listAdapter;
 
@@ -80,7 +85,7 @@ public class fragment_thong_bao_user extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        SharedPreferences sharedPreferencesUser = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+        sharedPreferencesUser = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
         idNguoiDung = sharedPreferencesUser.getString("idUser", "-1");
     }
 
@@ -90,6 +95,7 @@ public class fragment_thong_bao_user extends Fragment {
         View view = inflater.inflate(R.layout.fragment_thong_bao_user, container, false);
 
         lv_thong_bao_user = (ListView) view.findViewById(R.id.lv_thong_bao_user);
+        Log.d("idNguoiDung", idNguoiDung);
         GetNoti(idNguoiDung);
 
         return view;
@@ -116,9 +122,11 @@ public class fragment_thong_bao_user extends Fragment {
         protected void onPostExecute(List<ThongBaoModel> result) {
             super.onPostExecute(result);
             if (result != null && !result.isEmpty()) {
-//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//                String json = gson.toJson(result);
-//                Log.d("responseBody", "onPostExecute: " + json);
+
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(result);
+                Log.d("responseBody", "onPostExecute: " + json);
+
                 listThongBao = result;
                 listAdapter = new notification_list_adapter(getContext(), result);
                 lv_thong_bao_user.setAdapter(listAdapter);

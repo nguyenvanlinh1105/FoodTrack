@@ -150,7 +150,7 @@ public class fragment_chat_user_shop extends Fragment {
                 requireActivity().runOnUiThread(() -> {
                     try {
                         JSONObject obj = (JSONObject) args[0];
-                        Log.d("objectChat", "objChat" + obj.toString());
+//                        Log.d("objectChat", "objChat" + obj.toString());
 
                         String idUser = obj.getString("id");
                         String idPhongChat = shared.getString("idPhongChat", "");

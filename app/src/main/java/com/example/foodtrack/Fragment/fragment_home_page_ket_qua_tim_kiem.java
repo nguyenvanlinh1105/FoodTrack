@@ -1,24 +1,45 @@
 package com.example.foodtrack.Fragment;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.foodtrack.Activity.MainActivity;
+import com.example.foodtrack.Adapter.NotificationHelper;
 import com.example.foodtrack.Adapter.food_list_API_adapter;
 import com.example.foodtrack.Adapter.list_drink_API_adapter;
 import com.example.foodtrack.Adapter.notification_list_adapter;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.R;
+import com.example.foodtrack.SocketManager;
+import com.google.gson.JsonIOException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +59,11 @@ public class fragment_home_page_ket_qua_tim_kiem extends Fragment {
     private ListView lv_ket_qua_tim_kiem;
 
     private LinearLayout if_not_empty, if_empty;
+
+
+
+    private ImageView btn_back;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,7 +96,12 @@ public class fragment_home_page_ket_qua_tim_kiem extends Fragment {
         if (getArguments() != null) {
             searchResult = (List<SanPhamAPIModel>) getArguments().getSerializable(ARG_SEARCH);
         }
+
     }
+
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,10 +114,40 @@ public class fragment_home_page_ket_qua_tim_kiem extends Fragment {
             tv_so_luong.setText(String.valueOf(searchResult.size()));
             list_drink_API_adapter listAdapter = new list_drink_API_adapter(getContext(), searchResult);
             lv_ket_qua_tim_kiem.setAdapter(listAdapter);
+
+            lv_ket_qua_tim_kiem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    SanPhamAPIModel selectedProduct = searchResult.get(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("soLuongDaBan", selectedProduct.getSoLuongDaBan());
+                    fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
+                            selectedProduct.getIdSanPham(),
+                            selectedProduct.getTenSanPham(),
+                            selectedProduct.getGiaTien(),
+                            selectedProduct.getMoTa(),
+                            selectedProduct.getImages(),
+                            selectedProduct.getSoLuongDaBan()
+                    );
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    if (mainActivity != null) {
+                        mainActivity.ReplaceFragment(productDetailsFragment);
+                    }
+
+                }
+            });
         } else {
             if_empty.setVisibility(View.VISIBLE);
             if_not_empty.setVisibility(View.GONE);
         }
+
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
         return view;
     }
 
@@ -95,5 +156,10 @@ public class fragment_home_page_ket_qua_tim_kiem extends Fragment {
         lv_ket_qua_tim_kiem = (ListView) view.findViewById(R.id.lv_ket_qua_tim_kiem);
         if_empty = (LinearLayout) view.findViewById(R.id.image_if_empty_ket_qua_tim_kiem);
         if_not_empty = (LinearLayout) view.findViewById(R.id.if_not_empty_ket_qua_tim_kiem);
+        btn_back = (ImageView) view.findViewById(R.id.btn_back);
     }
+
+
+
+
 }

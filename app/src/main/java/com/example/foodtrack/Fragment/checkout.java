@@ -3,6 +3,7 @@ package com.example.foodtrack.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -27,7 +28,12 @@ import com.example.foodtrack.Activity.cart;
 import com.example.foodtrack.Adapter.NotificationHelper;
 import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.R;
+
 import android.Manifest;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,8 +57,11 @@ public class checkout extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
+
     private ImageView backBtn;
     private Button payBtn;
+    private LinearLayout ll_tich_diem_checkout;
 
     String idDonHang;
 
@@ -61,11 +70,13 @@ public class checkout extends Fragment {
     private TextView tv_shipping_fee;
     private TextView tv_ghi_chu;
     private TextView tv_total_price;// thành tiền
+    private TextView tv_address;// thành tiền
     String textGhiChu;
-    SharedPreferences sharedPreferencesDonHang;
+    Double tongTien;
+    SharedPreferences sharedPreferencesDonHang, shareUserResponseLogin;
 
 
-    private LinearLayout tienMat, applePay, icon_check_tien_mat, icon_check_applePay;
+    private LinearLayout tienMat, applePay, icon_check_tien_mat, icon_check_applePay, icon_check_tich_diem;
 
     public checkout() {
         // Required empty public constructor
@@ -97,9 +108,11 @@ public class checkout extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         sharedPreferencesDonHang = getContext().getSharedPreferences("dataDonHangResponse", getContext().MODE_PRIVATE);
+        shareUserResponseLogin = getContext().getSharedPreferences("shareUserResponseLogin", getContext().MODE_PRIVATE);
         // Lấy ghiChu từ bundle
         if (getArguments() != null) {
             textGhiChu = getArguments().getString("ghiChu");
+            tongTien = getArguments().getDouble("tongTien");
         }
 
         notificationHelper = new NotificationHelper(getContext());
@@ -145,7 +158,17 @@ public class checkout extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout, container, false);
         Mapping(view);
+
+
+        Log.d("tongTienCheckout", String.valueOf(tongTien));
+
         tv_ghi_chu.setText(textGhiChu);
+        tv_address.setText(shareUserResponseLogin.getString("diaChi", "Khách sạn Novotel, tầng 12 phòng 15, Đà Nẵng"));
+        tv_total_price.setText(formatter.format(tongTien) + "vnđ");
+        tv_total_amount.setText(formatter.format(tongTien + 15000 + 2000) + "vnđ");
+
+        payBtn.setText("Thanh toán " + tv_total_amount.getText());
+
         ControlButton();
         return view;
     }
@@ -157,8 +180,14 @@ public class checkout extends Fragment {
         applePay = (LinearLayout) view.findViewById(R.id.apple_pay_checkout);
         icon_check_applePay = (LinearLayout) view.findViewById(R.id.icon_check_applePay_checkout);
         icon_check_tien_mat = (LinearLayout) view.findViewById(R.id.icon_check_tien_mat_checkout);
+        icon_check_tich_diem = (LinearLayout) view.findViewById(R.id.icon_check_tich_diem_checkout);
+
+        ll_tich_diem_checkout = (LinearLayout) view.findViewById(R.id.ll_tich_diem_checkout);
 
         tv_ghi_chu = view.findViewById(R.id.tv_ghi_chu);
+        tv_address = view.findViewById(R.id.tv_address);
+        tv_total_price = view.findViewById(R.id.tv_total_price);
+        tv_total_amount = view.findViewById(R.id.tv_total_amount);
     }
 
     private void ControlButton() {
@@ -178,9 +207,9 @@ public class checkout extends Fragment {
                 SharedPreferences dataUserResponse = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
 
 
-                idDonHang =sharedPreferencesDonHang.getString("idDonHang", "");
-                String diaChi = dataUserResponse.getString("diaChi","");
-                String phuongThucThanhToan ="Thanh toán trực tiếp";//0 la truc tiep
+                idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
+                String diaChi = dataUserResponse.getString("diaChi", "");
+                String phuongThucThanhToan = "Thanh toán trực tiếp";//0 la truc tiep
 
 
                 donHang.setIdDonHang(idDonHang);
@@ -189,21 +218,17 @@ public class checkout extends Fragment {
 
                 donHang.setGhiChu(textGhiChu);
                 if (payBtn.getText().toString().equals("Xác nhận đặt đơn")) {
-                   // mainActivity.ReplaceFragment(new fragment_confirm_payment());
+                    // mainActivity.ReplaceFragment(new fragment_confirm_payment());
                     donHang.setTinhTrangThanhToan(phuongThucThanhToan);
                     PostDataToOder(donHang);
                 } else {
                     fragment_choosing_payment fragment = new fragment_choosing_payment();
 
-                    // Tạo Bundle và truyền donHang vào
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("donHang", donHang);
                     fragment.setArguments(bundle);
-//                    cart.ToFinishActivity.finish();
-                    // Thay đổi Fragment
-                    mainActivity.ReplaceFragment(fragment);
-                    //c
 
+                    mainActivity.ReplaceFragment(fragment);
                 }
 
             }
@@ -222,24 +247,48 @@ public class checkout extends Fragment {
             public void onClick(View view) {
                 icon_check_applePay.setBackgroundResource(R.drawable.icon_check_50);
                 icon_check_tien_mat.setBackground(null);
-                payBtn.setText("Thanh toán 248.000đ");
+                payBtn.setText("Thanh toán " + tv_total_amount.getText());
+            }
+        });
+        icon_check_tich_diem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Drawable currentBackground = icon_check_tich_diem.getBackground();
+                Drawable checkDrawable = ContextCompat.getDrawable(view.getContext(), R.drawable.icon_check_50);
+
+                if (currentBackground != null && checkDrawable != null &&
+                        currentBackground.getConstantState().equals(checkDrawable.getConstantState())) {
+                    icon_check_tich_diem.setBackground(null);
+                    ll_tich_diem_checkout.setVisibility(View.GONE);
+                    tv_total_amount.setText(formatter.format(tongTien + 15000 + 2000 ) + "vnđ");
+                } else {
+                    icon_check_tich_diem.setBackgroundResource(R.drawable.icon_check_50);
+                    ll_tich_diem_checkout.setVisibility(View.VISIBLE);
+                    tv_total_amount.setText(formatter.format(tongTien + 15000 + 2000 - 2000) + "vnđ");
+                    payBtn.setText("Thanh toán " + tv_total_amount.getText());
+                }
+
             }
         });
     }
 
 
-    private void PostDataToOder(DonHangAPIModel donhang){
+    private void PostDataToOder(DonHangAPIModel donhang) {
         APIService.API_SERVICE.PostToOrder(donhang).enqueue(new Callback<DonHangAPIModel>() {
             @Override
             public void onResponse(Call<DonHangAPIModel> call, Response<DonHangAPIModel> response) {
-                    SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
-                    editorResponseDonHang.putString("idDonHang", null);
-                    editorResponseDonHang.apply();
-                idDonHang =sharedPreferencesDonHang.getString("idDonHang", "");
-                Log.d("idDonHang",idDonHang);
+                idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
+                notificationHelper.sendNotification("Thông báo đơn hàng", "Đơn hàng " + idDonHang + " bạn đã được đặt hàng thành công và trong quá trình xử lí!");
+
+                SharedPreferences.Editor editorResponseDonHang = sharedPreferencesDonHang.edit();
+                editorResponseDonHang.putString("idDonHang", null);
+                editorResponseDonHang.apply();
+
+                Log.d("idDonHang", idDonHang);
                 MainActivity mainActivity = (MainActivity) getActivity();
+
                 // Người dùng cấp quyền, gửi thông báo
-                notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng của bạn đã được đặt hàng thành công và trong quá trình xử lí!");
+
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new fragment_confirm_payment());
                     //mainActivity.ReplaceFragment(new fragment_myorders_ongoing_API());
