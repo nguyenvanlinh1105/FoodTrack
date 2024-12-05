@@ -89,6 +89,7 @@ public class recyclerView_mon_moi_adapter extends RecyclerView.Adapter<recyclerV
                 bundle.putString("price", holder.price.getText().toString());
                 bundle.putString("description", product.getMoTa());
                 bundle.putInt("image", product.getImages());
+                bundle.putInt("soLuongDaBan", product.getSoLuongDaBan());
                 fragment_product_detail productDetailsFragment = fragment_product_detail.newInstance(
                         holder.title.getText().toString(),
                         product.getGiaTien(),

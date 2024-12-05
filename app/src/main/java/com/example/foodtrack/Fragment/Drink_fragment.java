@@ -182,12 +182,15 @@ public class Drink_fragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             SanPhamAPIModel selectedProduct = listUongDo_explore.get(position);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("soLuongDaBan", selectedProduct.getSoLuongDaBan());
                             fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
                                     selectedProduct.getIdSanPham(),
                                     selectedProduct.getTenSanPham(),
                                     selectedProduct.getGiaTien(),
                                     selectedProduct.getMoTa(),
-                                    selectedProduct.getImages()
+                                    selectedProduct.getImages(),
+                                    selectedProduct.getSoLuongDaBan()
                             );
                             MainActivity mainActivity = (MainActivity) getActivity();
                             if (mainActivity != null) {

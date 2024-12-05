@@ -11,7 +11,7 @@ public class SanPhamModel {
     private double giaTien;
     private int images;
     private String moTa;
-    private int soluongBH;
+    private int soLuongDaBan;
     private String donViTinh;
     private Timestamp ngayTao;
     private int trangThaiBinhLuan;
@@ -85,12 +85,12 @@ public class SanPhamModel {
         this.moTa = moTa;
     }
 
-    public int getSoluongBH() {
-        return soluongBH;
+    public int getSoLuongDaBan() {
+        return soLuongDaBan;
     }
 
-    public void setSoluongBH(int soluongBH) {
-        this.soluongBH = soluongBH;
+    public void setSoLuongDaBan(int soLuongDaBan) {
+        this.soLuongDaBan = soLuongDaBan;
     }
 
     public String getDonViTinh() {
@@ -108,6 +108,7 @@ public class SanPhamModel {
     public void setNgayTao(Timestamp ngayTao) {
         this.ngayTao = ngayTao;
     }
+
     public DanhMucModel getDanhMuc() {
         return danhMuc;
     }

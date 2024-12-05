@@ -20,8 +20,8 @@
 
         <TextView
             android:id="@+id/tv_left_list_chat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Xin chào Tech Trio"/>
     </LinearLayout>
 
@@ -38,8 +38,8 @@
         <TextView
             android:textColor="#fff"
             android:id="@+id/tv_right_list_chat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Xin chào FoodTrack" />
     </LinearLayout>
 

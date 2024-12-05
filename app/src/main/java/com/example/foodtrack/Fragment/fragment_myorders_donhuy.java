@@ -176,9 +176,9 @@ public class fragment_myorders_donhuy extends Fragment {
         protected void onPostExecute(List<DonHangAPIModel> result) {
             super.onPostExecute(result);
             if (result != null && !result.isEmpty()) {
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String json = gson.toJson(result);
-                Log.d("responseBody", "onPostExecute: " + json);
+//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//                String json = gson.toJson(result);
+//                Log.d("responseBody", "onPostExecute: " + json);
                 arrayListOrderAPI = result;
                 listAdapter = new myorders_donHuy_list_adapter_api(getContext(), result);
                 listview_myorders_ongoing.setAdapter(listAdapter);

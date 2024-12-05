@@ -112,12 +112,14 @@ public class recyclerView_mon_moi_API_adapter extends RecyclerView.Adapter<recyc
                 bundle.putString("price", holder.price.getText().toString());
                 bundle.putString("description", "Mô tả món ăn/đồ uống");
                 bundle.putString("image", product.getImages());
+                bundle.putInt("soLuongDaBan", product.getSoLuongDaBan());
                 fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
                         product.getIdSanPham(),
                         holder.title.getText().toString(),
                         product.getGiaTien(),
-                        "Mô tả món ăn/đồ uống",
-                        product.getImages()
+                        product.getMoTa(),
+                        product.getImages(),
+                        product.getSoLuongDaBan()
                 );
                 MainActivity mainActivity = (MainActivity) context;
                 if (mainActivity != null)

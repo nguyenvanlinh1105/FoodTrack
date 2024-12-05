@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.R;
 import com.example.foodtrack.Adapter.food_list_adapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -196,12 +199,21 @@ public class food_fragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                             SanPhamAPIModel selectedProduct = listMonAn_explore.get(position);
+
+                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                            String json = gson.toJson(selectedProduct);
+                            Log.d("foodList", "onPostExecute: " + json);
+
+//                            Bundle bundle = new Bundle();
+//                            bundle.putInt("soLuongDaBan", selectedProduct.getSoLuongDaBan());
+
                             fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
                                     selectedProduct.getIdSanPham(),
                                     selectedProduct.getTenSanPham(),
                                     selectedProduct.getGiaTien(),
                                     selectedProduct.getMoTa(),
-                                    selectedProduct.getImages()
+                                    selectedProduct.getImages(),
+                                    selectedProduct.getSoLuongDaBan()
                             );
                             MainActivity mainActivity = (MainActivity) getActivity();
                             if (mainActivity != null) {

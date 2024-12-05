@@ -19,12 +19,12 @@ public class SanPhamAPIModel implements Serializable {
     private double giaTien;
     private String images;
     private String moTa;
-    private int soluongBH;
+    private int soLuongDaBan;
     private String donViTinh;
     private Timestamp ngayTao;
     private int trangThaiBinhLuan;
     private int soLuongDat;
-    private String idDonHang ;
+    private String idDonHang;
 
     private DanhMucModel danhMuc;
     private List<ChiTietDonHangAPIModel> chiTietDonHangs;
@@ -116,12 +116,12 @@ public class SanPhamAPIModel implements Serializable {
         this.moTa = moTa;
     }
 
-    public int getSoluongBH() {
-        return soluongBH;
+    public int getSoLuongDaBan() {
+        return soLuongDaBan;
     }
 
-    public void setSoluongBH(int soluongBH) {
-        this.soluongBH = soluongBH;
+    public void setSoLuongDaBan(int soLuongDaBan) {
+        this.soLuongDaBan = soLuongDaBan;
     }
 
     public String getDonViTinh() {
@@ -139,6 +139,7 @@ public class SanPhamAPIModel implements Serializable {
     public void setNgayTao(Timestamp ngayTao) {
         this.ngayTao = ngayTao;
     }
+
     public DanhMucModel getDanhMuc() {
         return danhMuc;
     }

@@ -71,7 +71,6 @@ public class fragment_chat_user_shop extends Fragment {
 
     private SharedPreferences shared;
 
-
     public fragment_chat_user_shop() {
         // Required empty public constructor
     }
@@ -157,7 +156,7 @@ public class fragment_chat_user_shop extends Fragment {
                         String idPhongChat = shared.getString("idPhongChat", "");
                         String noiDung = obj.getString("message");
 
-                        TinNhanModel tinNhan = new TinNhanModel(idPhongChat, idUser, "linh", noiDung, "nam");
+                        TinNhanModel tinNhan = new TinNhanModel(idPhongChat, idUser, "linh", noiDung, "nam", shared.getString("avatar", null));
                         listChat.add(tinNhan);
 
                         adapterChat.notifyDataSetChanged();
@@ -213,8 +212,9 @@ public class fragment_chat_user_shop extends Fragment {
                     if (message.isEmpty()) {
                         Toast.makeText(getContext(), "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
                     } else {
+                        Log.d("avatar",  shared.getString("avatar", "trong"));
 //                    shared = getActivity().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
-                        TinNhanModel tinNhan = new TinNhanModel(shared.getString("idPhongChat", ""), shared.getString("idUser", ""), shared.getString("hoTenNguoiDung", ""), message, shared.getString("gioiTinh", ""));
+                        TinNhanModel tinNhan = new TinNhanModel(shared.getString("idPhongChat", ""), shared.getString("idUser", ""), shared.getString("hoTenNguoiDung", ""), message, shared.getString("gioiTinh", ""), shared.getString("avatar", null));
                         Gson gson = new Gson();
                         String jsonTinNhan = gson.toJson(tinNhan);
                         mSocket.emit("CLIENT_SEND_MESSAGE", jsonTinNhan);

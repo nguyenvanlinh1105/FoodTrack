@@ -34,6 +34,8 @@ import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.Model.SanPhamYeuThichModel;
 import com.example.foodtrack.R;
 
+import org.w3c.dom.Text;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +54,14 @@ public class fragment_product_detail extends Fragment {
     private static final String ARG_PRICE = "price";
     private static final String ARG_DESCRIPTION = "description";
     private static final String ARG_IMAGE = "image";
+    private static final String ARG_SOLUONGDABAN = "soLuong";
 
 
     // TODO: Rename and change types of parameters
     private static String title;
     private static String price;
     private static String description;
-    private static int image;
+    private static int image, soLuongDaBan;
 
     // Khai báo một biến flag để kiểm tra trạng thái
     boolean isFavorite = false;
@@ -69,6 +72,7 @@ public class fragment_product_detail extends Fragment {
     private ImageView btn_minus_product_detail;
     private ImageView btn_plus_product_detail;
     private TextView Text_quantity_product;
+    private TextView tv_soLuongDaBan;
     private int quantity;
     private TextView btn_AddToCart_product_detail;
 
@@ -105,6 +109,7 @@ public class fragment_product_detail extends Fragment {
             price = String.valueOf(getArguments().getDouble(ARG_PRICE));
             description = getArguments().getString(ARG_DESCRIPTION);
             image = getArguments().getInt(ARG_IMAGE);
+            soLuongDaBan = getArguments().getInt(ARG_SOLUONGDABAN);
         }
     }
 
@@ -148,11 +153,13 @@ public class fragment_product_detail extends Fragment {
             Double price = bundle.getDouble("price");
             String description = bundle.getString("description");
             int image = bundle.getInt("image");
+            soLuongDaBan = bundle.getInt("soLuongDaBan");
 
             TextView titleView = view.findViewById(R.id.title_product_details);
             TextView priceView = view.findViewById(R.id.price_product_details);
             TextView descriptionView = view.findViewById(R.id.description_product_detail);
             ImageView imageView = view.findViewById(R.id.image_product_details);
+            TextView soLuongDaBanView = view.findViewById(R.id.tv_soLuongDaBan_product_detail);
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
             String formattedPrice = formatter.format(price);

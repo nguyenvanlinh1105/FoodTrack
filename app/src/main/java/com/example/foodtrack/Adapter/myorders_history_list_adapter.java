@@ -52,7 +52,7 @@ public class myorders_history_list_adapter extends ArrayAdapter<SanPhamModel> {
             img.setImageResource(order.getImages());
             status.setText(order.getTrangThai());
             price.setText(order.getGiaTien()+"");
-            qty.setText(String.valueOf(order.getSoluongBH()));
+            qty.setText(String.valueOf(order.getSoLuongDaBan()));
 
             if (order.getTrangThaiBinhLuan()== 0) {
                 ratingBtn.setText("Đánh giá ngay");

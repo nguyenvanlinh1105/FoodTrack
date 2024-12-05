@@ -76,12 +76,15 @@ public class recyclerView_product_detail_adapter_api extends RecyclerView.Adapte
 
         // Set onClickListener for product container
         holder.container.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("soLuongDaBan", product.getSoLuongDaBan());
             fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
                     product.getIdSanPham(),
                     product.getTenSanPham(),
                     product.getGiaTien(),
                     product.getMoTa(),
-                    product.getImages()
+                    product.getImages(),
+                    product.getSoLuongDaBan()
             );
 
             if (context instanceof MainActivity) {

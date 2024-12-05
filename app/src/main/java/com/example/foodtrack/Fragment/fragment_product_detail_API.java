@@ -42,6 +42,8 @@ import com.example.foodtrack.Model.SanPhamYeuThichModel;
 import com.example.foodtrack.R;
 import com.google.gson.JsonSyntaxException;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -58,12 +60,14 @@ public class fragment_product_detail_API extends Fragment {
     private static final String ARG_PRICE = "price";
     private static final String ARG_DESCRIPTION = "description";
     private static final String ARG_IMAGE = "image";
+    private static final String ARG_SOLUONGDABAN = "soluong";
 
     private static String idSanPham;
     private static String title;
     private static String price;
     private static String description;
     private static String image; // Thay đổi kiểu dữ liệu thành String
+    private static Integer soLuongDaBan; // Thay đổi kiểu dữ liệu thành String
 
     String idUser;
     boolean isFavorite = false;
@@ -87,7 +91,7 @@ public class fragment_product_detail_API extends Fragment {
         // Required empty public constructor
     }
 
-    public static fragment_product_detail_API newInstance(String idSanPham, String title, Double price, String description, String image) {
+    public static fragment_product_detail_API newInstance(String idSanPham, String title, Double price, String description, String image, int soLuongDaBan) {
         fragment_product_detail_API fragment = new fragment_product_detail_API();
         Bundle args = new Bundle();
         args.putString(ARG_ID, idSanPham);
@@ -95,6 +99,7 @@ public class fragment_product_detail_API extends Fragment {
         args.putDouble(ARG_PRICE, price);
         args.putString(ARG_DESCRIPTION, description);
         args.putString(ARG_IMAGE, image);
+        args.putInt(ARG_SOLUONGDABAN, soLuongDaBan);
         fragment.setArguments(args);
         return fragment;
     }
@@ -110,6 +115,7 @@ public class fragment_product_detail_API extends Fragment {
             price = String.valueOf(getArguments().getDouble(ARG_PRICE));
             description = getArguments().getString(ARG_DESCRIPTION);
             image = getArguments().getString(ARG_IMAGE); // Lấy giá trị image từ URL
+            soLuongDaBan = getArguments().getInt(ARG_SOLUONGDABAN);
 
         }
 
@@ -147,11 +153,13 @@ public class fragment_product_detail_API extends Fragment {
             Double price = bundle.getDouble("price");
             String description = bundle.getString("description");
             String imageUrl = bundle.getString("image");
+//            Integer soLuongDaBan = bundle.getInt("soLuongDaBan");
 
             TextView titleView = view.findViewById(R.id.title_product_details);
             TextView priceView = view.findViewById(R.id.price_product_details);
             TextView descriptionView = view.findViewById(R.id.description_product_detail);
             ImageView imageView = view.findViewById(R.id.image_product_details);
+            TextView soLuongView = view.findViewById(R.id.tv_soLuongDaBan_product_detail);
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.ITALY);
             String formattedPrice = formatter.format(price) + "vnđ";
@@ -159,6 +167,7 @@ public class fragment_product_detail_API extends Fragment {
             titleView.setText(title);
             priceView.setText(formattedPrice);
             descriptionView.setText(description);
+            soLuongView.setText(String.valueOf(soLuongDaBan));
 //            Glide.with(this).load(imageUrl).into(imageView);
             //nhớ chuyển http -> https
             Glide.with(getContext())

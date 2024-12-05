@@ -1,7 +1,10 @@
 package com.example.foodtrack.Activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,11 +13,14 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.foodtrack.API.APIService;
+import com.example.foodtrack.Adapter.NotificationHelper;
 import com.example.foodtrack.Model.API.NguoiDungAPIModel;
 import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.R;
@@ -29,6 +35,10 @@ public class chang_password extends AppCompatActivity {
     TextView btn_xacNhanDoi_MK;
     public  String email, emailBackup;
     SharedPreferences shareLogin ;
+
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
+    private NotificationHelper notificationHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,13 @@ public class chang_password extends AppCompatActivity {
         emailBackup = shareLogin.getString("email","vanlinh11052004nguyenvan@gmail.com");
         TextView edtmatkhau = findViewById(R.id.edt_confirm_chang_password);
 
+        notificationHelper = new NotificationHelper(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkNotificationPermission();
+        } else {
+
+        }
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -61,7 +78,7 @@ public class chang_password extends AppCompatActivity {
         btn_xacNhanDoi_MK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(chang_password.this, "Bạn đã cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(chang_password.this, "Bạn đã cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
                 Intent firstPage = new Intent(chang_password.this, first_page.class);
 //                startActivity(firstPage);
                 finish();
@@ -91,6 +108,19 @@ public class chang_password extends AppCompatActivity {
 
             }
         });
+    }
+    private void checkNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    REQUEST_NOTIFICATION_PERMISSION
+            );
+        } else {
+
+        }
     }
     private void PostEmailAndPassToReset(NguoiDungModel user){
         APIService.API_SERVICE.PostToResetPass(user).enqueue(new Callback<NguoiDungModel>() {

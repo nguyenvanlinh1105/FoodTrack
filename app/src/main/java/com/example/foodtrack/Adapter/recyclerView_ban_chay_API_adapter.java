@@ -114,7 +114,8 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
                         product.getTenSanPham(),
                         product.getGiaTien(),
                         product.getMoTa(),
-                        product.getImages()
+                        product.getImages(),
+                        product.getSoLuongDaBan()
                 );
 
                 // Truyền Bundle vào Fragment

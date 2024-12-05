@@ -74,12 +74,14 @@ public class recyclerView_deal_hoi_API_adapter extends RecyclerView.Adapter<recy
                 bundle.putString("description", product.getMoTa());
 //                bundle.putInt("image", product.getImages());
                 bundle.putString("image", product.getImages());
+                bundle.putInt("soLuongDaBan", product.getSoLuongDaBan());
                 fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
                         product.getIdSanPham(),
                         holder.title.getText().toString(),
                         product.getGiaTien(),
                         product.getMoTa(),
-                        product.getImages()
+                        product.getImages(),
+                        product.getSoLuongDaBan()
                 );
                 MainActivity mainActivity = (MainActivity) context;
                 if (mainActivity != null)

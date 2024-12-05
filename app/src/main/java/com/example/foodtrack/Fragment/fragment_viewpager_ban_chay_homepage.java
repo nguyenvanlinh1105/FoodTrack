@@ -85,47 +85,47 @@ public class fragment_viewpager_ban_chay_homepage extends Fragment {
         listProduct = new ArrayList<>();
 
         SanPhamModel product1 = new SanPhamModel("Cơm tấm", 50000, R.drawable.com_tam, "Hạt cơm tấm dẻo thơm ăn kèm sườn nướng tươi ngon vừa ra lò");
-        product1.setSoluongBH(1239);
+        product1.setSoLuongDaBan(1239);
         listProduct.add(product1);
 
         SanPhamModel product2 = new SanPhamModel("Chuối tươi", 30000, R.drawable.icon_food2, "Chuối sứ vàng ươm tươi ngon đây bà con ơi");
-        product2.setSoluongBH(1220);
+        product2.setSoLuongDaBan(1220);
         listProduct.add(product2);
 
         SanPhamModel product3 = new SanPhamModel("Gnoochi sốt cà chua", 50000, R.drawable.gnocchi_tomato, "Gnocchi hòa cùng sốt cà chua nhà làm mang chút vị chua thanh mát, kết hợp với mùi thơm từ húng tây và tiêu đen xay mịn");
-        product3.setSoluongBH(1241);
+        product3.setSoLuongDaBan(1241);
         listProduct.add(product3);
 
         SanPhamModel product4 = new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển");
-        product4.setSoluongBH(1239);
+        product4.setSoLuongDaBan(1239);
         listProduct.add(product4);
 
         SanPhamModel product5 = new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Cơm nóng ăn kèm gà chiên tẩm sốt chua ngọt ngoài giòn trong mềm, thấm đẫm gia vị");
-        product5.setSoluongBH(1230);
+        product5.setSoLuongDaBan(1230);
         listProduct.add(product5);
 
         SanPhamModel product6 = new SanPhamModel("Mì Carbonara", 80000, R.drawable.carbonara, "Sợi mì tươi ăn cùng phần sốt kem béo ngậy, pha chút vị mặn đến từ thịt xông khói, điểm xuyến cùng ít phô mai bào vụn bên trên");
-        product5.setSoluongBH(1230);
+        product5.setSoLuongDaBan(1230);
         listProduct.add(product6);
 
         SanPhamModel product7 = new SanPhamModel("Chuối tươi", 30000, R.drawable.icon_food2, "Chuối sứ vàng ươm tươi ngon đây bà con ơi");
-        product2.setSoluongBH(1220);
+        product2.setSoLuongDaBan(1220);
         listProduct.add(product2);
 
         SanPhamModel product8 = new SanPhamModel("Pallavi Biryani", 50000, R.drawable.pallavi_biryani, "Pallavi Biryani là một món cơm trộn đặc biệt từ Ấn Độ, được nấu với gạo thơm, thịt và gia vị độc đáo.");
-        product3.setSoluongBH(1241);
+        product3.setSoLuongDaBan(1241);
         listProduct.add(product3);
 
         SanPhamModel product9 = new SanPhamModel("Burger phô mai", 30000, R.drawable.double_cheese, "Burger phô mai cổ điển");
-        product4.setSoluongBH(1239);
+        product4.setSoLuongDaBan(1239);
         listProduct.add(product4);
 
         SanPhamModel product10 = new SanPhamModel("Cơm gà sốt chua ngọt", 80000, R.drawable.chicken, "Cơm nóng ăn kèm gà chiên tẩm sốt chua ngọt ngoài giòn trong mềm, thấm đẫm gia vị");
-        product5.setSoluongBH(1230);
+        product5.setSoLuongDaBan(1230);
         listProduct.add(product5);
 
         SanPhamModel product11 = new SanPhamModel("Mì Carbonara", 80000, R.drawable.carbonara, "Sợi mì tươi ăn cùng phần sốt kem béo ngậy, pha chút vị mặn đến từ thịt xông khói, điểm xuyến cùng ít phô mai bào vụn bên trên");
-        product5.setSoluongBH(1230);
+        product5.setSoLuongDaBan(1230);
         listProduct.add(product6);
 
 

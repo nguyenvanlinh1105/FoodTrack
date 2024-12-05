@@ -22,7 +22,7 @@ import com.example.foodtrack.Activity.edit_profile;
 
 public class fragment_profile extends Fragment {
 
-    ConstraintLayout toEditHoSo, toMyOrders, doiMatKhau_profile, dangXuat_profile, btn_card_profile, chiTietNhom_profile;
+    ConstraintLayout toEditHoSo, toMyOrders, doiMatKhau_profile, dangXuat_profile, btn_card_profile, chiTietNhom_profile, toThongBao;
     ImageView chatIcon;
     TextView txt_tenKH_profile;
 
@@ -56,6 +56,7 @@ public class fragment_profile extends Fragment {
         dangXuat_profile = view.findViewById(R.id.dangXuat_profile);
         txt_tenKH_profile = view.findViewById(R.id.txt_tenKH_profile);
         chiTietNhom_profile = view.findViewById(R.id.chiTietNhom_profile);
+        toThongBao = view.findViewById(R.id.thong_bao_profile);
     }
 
     public void LoadUserInfo() {
@@ -127,6 +128,14 @@ public class fragment_profile extends Fragment {
                 if (mainActivity != null) {
                     mainActivity.ReplaceFragment(new fragment_chi_tiet_nhom_thuc_hien());
                 }
+            }
+        });
+
+        toThongBao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent notify = new Intent(getActivity(), fragment_thong_bao_user.class);
+                startActivity(notify);
             }
         });
     }

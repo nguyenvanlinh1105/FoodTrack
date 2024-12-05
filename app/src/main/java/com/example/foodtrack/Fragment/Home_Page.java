@@ -8,12 +8,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +32,6 @@ import com.example.foodtrack.Adapter.viewPager_mon_moi_ban_chay_home_page_adapte
 import com.example.foodtrack.Model.API.SanPhamAPIModel;
 import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
-import com.example.foodtrack.SocketManager;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.JsonSyntaxException;
@@ -59,15 +63,18 @@ public class Home_Page extends Fragment {
 
     Socket mSocket;
 
+    private Handler handler = new Handler();
+    private Runnable debounceRunnable;
+
     private TextView btn_DoUong_homepage, btn_DoAn_homepage;
     private ImageView chatIcon, imageViewRotate1, imageViewRotate2, imageViewRotate_DealHoi;
+    private EditText edt_search;
 
     private List<SanPhamModel> listProduct;
     private RecyclerView rvDealHoi;
 
     private TabLayout tlMonMoiBanChay;
     private ViewPager2 vpMonMoiBanChay;
-
 
 
     public Home_Page() {
@@ -148,16 +155,10 @@ public class Home_Page extends Fragment {
         imageViewRotate1.startAnimation(anim_rotate);
         imageViewRotate2.startAnimation(anim_rotate);
 
+        edt_search = (EditText) view.findViewById(R.id.edt_search_home_page);
 
 
         listProduct = new ArrayList<>();
-
-//        InitializeData();
-//        LinearLayoutManager layoutManager
-//                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-//        rvDealHoi.setLayoutManager(layoutManager);
-//        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), listProduct );
-//        rvDealHoi.setAdapter(dealAdapter);
 
         GetDealHoi();
 
@@ -178,7 +179,6 @@ public class Home_Page extends Fragment {
                             break;
                     }
                 }).attach();
-
 
 
     }
@@ -219,62 +219,114 @@ public class Home_Page extends Fragment {
         });
 
 
+        edt_search.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    actionId == EditorInfo.IME_ACTION_DONE ||
+                    actionId == EditorInfo.IME_ACTION_GO ||
+                    (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+
+                String query = edt_search.getText().toString().trim();
+                if (!query.isEmpty()) {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                    }
+
+                    // Xử lý debounce
+                    if (debounceRunnable != null) {
+                        handler.removeCallbacks(debounceRunnable);
+                    }
+
+                    debounceRunnable = () -> fetchDataAndNavigate(query);
+                    handler.postDelayed(debounceRunnable, 1500);
+                }
+                return true;
+            }
+            return false;
+        });
+
+
     }
 
-    private void GetDealHoi(){
-        APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamAPIModel>>() {
+    private void fetchDataAndNavigate(String query) {
+        APIService.API_SERVICE.GetSearchResult(query).enqueue(new Callback<List<SanPhamAPIModel>>() {
             @Override
             public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<SanPhamAPIModel> listSanPhamDeaHoi = response.body();
-                    Log.d("API_SUCCESS", "Data size: " + listSanPhamDeaHoi.size());
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                    rvDealHoi.setLayoutManager(layoutManager);
-                    recyclerView_deal_hoi_API_adapter dealAdapter = new recyclerView_deal_hoi_API_adapter(getContext(), listSanPhamDeaHoi);
-                    rvDealHoi.setAdapter(dealAdapter);
-//                    Log.d("Text.....", listSanPhamDeaHoi.get(0).getImages());
-
-                } else {
-                    UseFallbackData();
-                    Log.e("API_ERROR", "Response not successful: " + response.code());
-                    if (response.errorBody() != null) {
-                        try {
-                            Log.e("API_ERROR", "Error body: " + response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    List<SanPhamAPIModel> searchResults = response.body();
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    if (mainActivity != null) {
+                        Fragment searchFragment = fragment_home_page_ket_qua_tim_kiem.newInstance(searchResults);
+                        mainActivity.ReplaceFragment(searchFragment);
                     }
-                    
+                } else {
+                    Toast.makeText(getContext(), "Không tìm thấy sản phẩm!", Toast.LENGTH_SHORT).show();
                 }
             }
-
 
             @Override
             public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
-                Log.e("API_ERROR", "Error: " + t.getMessage());
-                if (t instanceof JsonSyntaxException) {
-                    JsonSyntaxException jsonError = (JsonSyntaxException) t;
-                    Log.e("API_ERROR", "JSON Error: " + jsonError.getCause());
-                }
-                t.printStackTrace();
-                Toast.makeText(getContext(), "Lỗi dữ liệu: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-    private void UseFallbackData() {
-        // Khởi tạo dữ liệu nếu get fail api
-        listProduct = new ArrayList<>();
-        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct nếu không lấy được data từ api
-        UpdateRecyclerView(listProduct);
+
+
+        private void GetDealHoi () {
+            APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamAPIModel>>() {
+                @Override
+                public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        List<SanPhamAPIModel> listSanPhamDeaHoi = response.body();
+                        Log.d("API_SUCCESS", "Data size: " + listSanPhamDeaHoi.size());
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                        rvDealHoi.setLayoutManager(layoutManager);
+                        recyclerView_deal_hoi_API_adapter dealAdapter = new recyclerView_deal_hoi_API_adapter(getContext(), listSanPhamDeaHoi);
+                        rvDealHoi.setAdapter(dealAdapter);
+//                    Log.d("Text.....", listSanPhamDeaHoi.get(0).getImages());
+
+                    } else {
+                        UseFallbackData();
+                        Log.e("API_ERROR", "Response not successful: " + response.code());
+                        if (response.errorBody() != null) {
+                            try {
+                                Log.e("API_ERROR", "Error body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+                }
+
+
+                @Override
+                public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
+                    Log.e("API_ERROR", "Error: " + t.getMessage());
+                    if (t instanceof JsonSyntaxException) {
+                        JsonSyntaxException jsonError = (JsonSyntaxException) t;
+                        Log.e("API_ERROR", "JSON Error: " + jsonError.getCause());
+                    }
+                    t.printStackTrace();
+                    Toast.makeText(getContext(), "Lỗi dữ liệu: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        private void UseFallbackData () {
+            // Khởi tạo dữ liệu nếu get fail api
+            listProduct = new ArrayList<>();
+            InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct nếu không lấy được data từ api
+            UpdateRecyclerView(listProduct);
+        }
+
+        private void UpdateRecyclerView (List < SanPhamModel > data) {
+            // Cập nhật RecyclerView với dữ liệu (có thể từ API hoặc dữ liệu khởi tạo) rút gọn code cho dễ nhìn
+            LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+            rvDealHoi.setLayoutManager(layoutManager);
+            recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), data);
+            rvDealHoi.setAdapter(dealAdapter);
+        }
+
+
     }
-
-    private void UpdateRecyclerView(List<SanPhamModel> data) {
-        // Cập nhật RecyclerView với dữ liệu (có thể từ API hoặc dữ liệu khởi tạo) rút gọn code cho dễ nhìn
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        rvDealHoi.setLayoutManager(layoutManager);
-        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), data);
-        rvDealHoi.setAdapter(dealAdapter);
-    }
-
-
-}

@@ -6,14 +6,16 @@ public class TinNhanModel {
     private String tenNguoiDung;
     private String noiDungChat;
     private String gioiTinh;
+    private String avatar;
 //    private
 
-    public TinNhanModel(String idPhongChat,String idUser,String tenNguoiDung, String noiDungChat, String gioiTinh) {
+    public TinNhanModel(String idPhongChat,String idUser,String tenNguoiDung, String noiDungChat, String gioiTinh, String avatar) {
         this.idPhongChat = idPhongChat;
         this.idUser = idUser;
         this.tenNguoiDung = tenNguoiDung;
         this.noiDungChat = noiDungChat;
         this.gioiTinh = gioiTinh;
+        this.avatar = avatar;
     }
 
 
@@ -23,9 +25,19 @@ public class TinNhanModel {
         this.noiDungChat = noiDungChat;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public String getIdPhongChat() {
         return idPhongChat;
     }
+
+
 
     public void setIdPhongChat(String idPhongChat) {
         this.idPhongChat = idPhongChat;

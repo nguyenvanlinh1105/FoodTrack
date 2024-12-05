@@ -11,6 +11,7 @@ import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.NguoiDungModel;
 import com.example.foodtrack.Model.SanPhamYeuThichModel;
 import com.example.foodtrack.Model.TestChat.TinNhanModel;
+import com.example.foodtrack.Model.ThongBaoModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -40,7 +41,7 @@ public interface APIService {
           .build();
 
   //    linkAPI root:
-    public static String url ="https://e636-113-23-29-130.ngrok-free.app/";
+    public static String url ="https://996d-113-23-29-130.ngrok-free.app/";
 
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)
@@ -201,12 +202,21 @@ public interface APIService {
   @POST("user/update/info")
   Call<NguoiDungAPIModel> UpdateInfo(@Body NguoiDungAPIModel model);
 
-
   // Lấy thông tin user : roi
   @GET("user/info")
   Call<NguoiDungAPIModel> GetInfoUser(@Query("idNguoiDung")String idUser);
 
+  // Tìm kiếm sản phẩm: chưa
+  @GET("")
+  Call<List<SanPhamAPIModel>> GetSearchResult(@Query("query")String query);
 
+  // lấy danh sách thông báo : chưa
+  @GET("")
+  Call<List<ThongBaoModel>> GetListNoti(@Query("idNguoiDung") String idNguoiDung);
+
+  // gửi thông báo : chưa
+  @POST("")
+  Call<ThongBaoModel> SendNoti(@Body ThongBaoModel model);
 
 }
 
