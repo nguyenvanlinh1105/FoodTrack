@@ -60,52 +60,214 @@ block content
                                 .h5.mb-0.font-weight-bold.text-gray-800 #{totalMoneyMonth}
                             .col-auto
                                 i.fas.fa-dollar-sign.fa-2x.text-gray-300
-    .container-fluid.mt-4
-        div(style="")
-            ul(id="commonLegend" style="display:flex;list-style: none; padding: 0; margin: 0;")
-        div
-            canvas(id="myChart" style="width: 100% !important; max-width:300px; height:300px")
-
+    .container-fluid.mt-4.mb-5
+        div(style="display:flex; flex-wrap:wrap; margin-top:50px; justify-content:space-around;")
+            div(style="width: 400px; height:400px;position:relative;")
+                canvas(id="ChartPie" style="width:400px !important;height:400px !important" data-order-date=countOrdersDate data-money-date=moneyOrdersDate)
+                div(style="position:absolute; width:700px !important; left:-25px; bottom:-40px")
+                    ul(id="commonLegend" style="display:flex;list-style: none; padding: 0; margin: 0")
+            div(style="width: 60%;")
+                canvas(id="ChartLine" style="height:80%" data-money-month=moneyOrdersMonth)
     script(src="https://cdn.jsdelivr.net/npm/chart.js")
 
     script.
-        const labels=[
-            {
-                title:'Đang xử lý',
-            },
-            {
-                title:'Đã xác nhận'
-            },
-            {
-                title:'Đang giao'
-            },
-            {
-                title:'Hoàn thành',
-            },
-            {
-                title:'Đã hủy',
-            },
-        ];
-        const colors = [
-            'rgba(255, 99, 132, 0.6)', // Đang xử lý
-            'rgba(54, 162, 235, 0.6)', // Đã xác nhận
-            'rgba(255, 206, 86, 0.6)', // Đang giao
-            'rgba(75, 192, 192, 0.6)', // Hoàn thành
-            'rgba(153, 102, 255, 0.6)' // Đã hủy
-        ];
-        const emptyColor = 'rgba(128, 128, 128, 0.6)'; // Màu xám cho dữ liệu trống
-        
-        const ctx = document.getElementById('myChart');
+            const labelsPie = [
+                { title: 'Đang xử lý' },
+                { title: 'Đã xác nhận' },
+                { title: 'Đang giao' },
+                { title: 'Hoàn thành' },
+                { title: 'Đã hủy' },
+                { title: 'Không có dữ liệu'}
+            ];
+            const colorsPie = [
+                'rgba(133, 135, 150, 0.8)', // Đang xử lý
+                'rgba(54, 162, 235, 0.8)', // Đã xác nhận
+                'rgba(255, 193, 7, 0.8)', // Đang giao
+                'rgba(75, 192, 192, 0.8)', // Hoàn thành
+                'rgba(231, 74, 59, 0.8)', // Đã hủy
+                'rgba(0, 0, 0, 0.8)' // Không có dữ liệu
+            ];
+            const colorsMoneyPie = [
+                'rgba(133, 135, 150, 0.4)', // Đang xử lý
+                'rgba(54, 162, 235, 0.4)', // Đã xác nhận
+                'rgba(255, 193, 7, 0.4)', // Đang giao
+                'rgba(75, 192, 192, 0.4)', // Hoàn thành
+                'rgba(231, 74, 59, 0.4)' // Đã hủy
+            ];
+            const emptyColor = 'rgba(128, 128, 128, 0.8)'; // Màu xám cho dữ liệu trống
+            const emptyMoneyColor = 'rgba(128, 128, 128, 0.4)'; // Màu xám nhạt cho tiền trống
+            
+            const ctx = document.getElementById('ChartPie');
+            let dataJSON = ctx.getAttribute('data-order-date');
+            dataJSON = JSON.parse(dataJSON);
+            let isEmpty=dataJSON.length===0;
+            let dataPie = [0, 0, 0, 0, 0];
+            let totalMoneyPie = [0, 0, 0, 0, 0];
 
+            if(!isEmpty){
+                dataPie = [
+                    parseInt(dataJSON[0]?.soLuongDonHangDangXuLy || 0),
+                    parseInt(dataJSON[0]?.soLuongDonHangDaXacNhan || 0),
+                    parseInt(dataJSON[0]?.soLuongDonHangDangGiao || 0),
+                    parseInt(dataJSON[0]?.soLuongDonHangHoanThanh || 0),
+                    parseInt(dataJSON[0]?.soLuongDonHangDaHuy || 0)
+                ];
+                dataJSON=ctx.getAttribute('data-money-date');
+                dataJSON=JSON.parse(dataJSON);
+                totalMoneyPie = Object.values(dataJSON).map(money =>
+                    parseFloat(money.replace(/[^\d]/g, '')) // Loại bỏ ký tự không phải số
+                );
+            }
+            
+            if(!isEmpty) {
+                // Tạo Pie Chart
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labelsPie.map(label => label.title), // Sửa cú pháp
+                        datasets: [
+                            {
+                                label: 'Số lượng đơn hàng',
+                                data: dataPie,
+                                backgroundColor: colorsPie
+                            },
+                            {
+                                label: 'Tổng tiền',
+                                data: totalMoneyPie,
+                                backgroundColor: colorsMoneyPie
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false // Tắt legend mặc định để hiển thị legend tùy chỉnh
+                            }
+                        }
+                    }
+                });
+            } else {
+                // Tạo Pie Chart
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Không có dữ liệu'], // Nhãn mặc định
+                        datasets: [
+                            {
+                                label: 'Số lượng đơn hàng',
+                                data: [1], // Số lượng đơn hàng bằng 0
+                                backgroundColor: ['rgba(0, 0, 0, 0.8)'] // Màu đen cho số lượng
+                            },
+                            {
+                                label: 'Tổng tiền',
+                                data: [1], // Tổng tiền bằng 0
+                                backgroundColor: ['rgba(128, 128, 128, 0.8)'] // Màu xám cho tiền
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false // Tắt legend mặc định để hiển thị legend tùy chỉnh
+                            }
+                        }
+                    }
+                });
+            }
+
+        // Tạo legend tùy chỉnh
         const commonLegend = document.getElementById('commonLegend');
-        labels.forEach((label, index) => {
+        labelsPie.forEach((label, index) => {
             const legendItem = document.createElement('li');
             legendItem.style.display = 'flex';
             legendItem.style.alignItems = 'center';
             legendItem.style.marginRight = '10px';
             legendItem.innerHTML = `
-                            <span style="display:inline-block; width:15px; height:15px; background-color:${colors[index]}; margin-right:8px;"></span>
-                            ${label.title}
-                        `;
+                <span style="display:inline-block; width:15px; height:15px; background-color:${colorsPie[index]}; margin-right:8px;"></span>
+                ${label.title}
+            `;
             commonLegend.appendChild(legendItem);
+        });
+
+        // Tạo Line Chart
+        const ctx2 = document.getElementById('ChartLine');
+        // Dữ liệu số lượng đơn hàng (ngày 1 đến ngày 7)
+        dataJSON=ctx2.getAttribute('data-money-month');
+        dataJSON=JSON.parse(dataJSON);
+        for(const money of dataJSON){
+            money.tongTien=parseFloat((money.tongTien).replace(/[^\d]/g, '')) // Loại bỏ ký tự không phải số
+        };
+
+        // Lấy ngày hiện tại
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth(); 
+        const currentYear = currentDate.getFullYear();
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        // Tạo mảng labelsDays
+        const labelsDays = Array.from({ length: daysInMonth }, (_, index) => (index + 1).toString());
+
+        // Khởi tạo mảng mặc định
+        const dataDays = Array(daysInMonth).fill(0);
+        const totalMoneyForDays = Array(daysInMonth).fill(0);
+
+        // Ánh xạ dữ liệu vào mảng
+        dataJSON.forEach(({ ngay, soLuongDonHang, tongTien }) => {
+            dataDays[ngay - 1] = soLuongDonHang; // Chỉ số mảng bắt đầu từ 0
+            totalMoneyForDays[ngay - 1] = tongTien;
+        });
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: labelsDays,
+                datasets: [
+                    {
+                        label: 'Số lượng đơn hàng',
+                        data: dataDays, 
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        yAxisID: 'y1'
+                    },
+                    {
+                        label: 'Tổng tiền',
+                        data: totalMoneyForDays, 
+                        borderColor: 'rgba(255, 99, 132, 1)', // Đường màu đỏ
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)', // Nền màu hồng nhạt
+                        fill: false,
+                        tension: 0.1,
+                        type: 'line',
+                        yAxisID: 'y2'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y1: {
+                        beginAtZero: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Số lượng đơn hàng'
+                        }
+                    },
+                    y2: {
+                        beginAtZero: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Tổng tiền (₫)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                }
+            }
         });

@@ -47,3 +47,10 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
         a.nav-link.collapsed(href='/admin/management/order', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
             i.fas.fa-truck-loading
             span Quản lý đơn hàng
+    hr.sidebar-divider
+    .sidebar-heading
+        | Management Comments
+    li.nav-item(class=(title.includes('bình luận') ? 'active' : ''))
+        a.nav-link.collapsed(href='/admin/management/comment', data-toggle='collapse', data-target='#collapsePages', aria-expanded='true', aria-controls='collapsePages')
+            i.fas.fa-comment
+            span Quản lý bình luận

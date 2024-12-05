@@ -3,9 +3,16 @@ import * as allModel from '../../model/index.model';
 
 import { paginationGeneral } from '../../helper/pagination.helper';
 import { addOrderToQueue } from '../../helper/updateDoneOrder.helper';
-import { parse } from 'path';
 
 export const index = async(req: Request, res: Response)=>{
+    //Push thông báo cho app
+    _io.once('connection', (socket) => {
+        console.log("connect")
+        socket.on('ADMIN_SEND_NOTIFICATION', (data) => {
+            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            _io.emit('SEND_NOTIFICATION_CLIENT', data);
+        });   
+    });
     const pagination = await paginationGeneral(req,4,allModel.DonHang);
     const orders = await allModel.DonHang.findAll({
         where: {
@@ -113,7 +120,6 @@ export const deliverOrder = async(req: Request, res: Response)=>{
                     tinhTrang:"Đã xác nhận"
                 }
             })
-            
             const isQueue= await addOrderToQueue(idDonHang);
             if(!isQueue){
                 res.status(404).json({message:'Đã xảy ra lỗi khi vận chuyển đơn hàng.'});
@@ -123,5 +129,42 @@ export const deliverOrder = async(req: Request, res: Response)=>{
         }
     }catch(error){
         res.status(500).json('Đã xảy ra lỗi khi vận chuyển đơn hàng.');
+    }
+}
+
+
+
+export const notificationOrder = async(req: Request, res: Response)=>{
+    const {idDonHang} = req.params;
+    try{
+        const order = await allModel.DonHang.findOne({
+            where: 
+            { 
+                idDonHang : idDonHang,
+            },
+            include: [
+                {
+                    model: allModel.NguoiDung,
+                    as: 'User', 
+                    attributes: ['idNguoiDung'] 
+                }
+            ],
+            raw: true,
+            nest: true,
+        });
+        if(!order){
+            res.status(404).json({message:'Không tìm thấy đơn hàng'});
+        }else{
+            res.status(200).json({message:'Đã gửi thông báo!'});
+            await allModel.ThongBao.create({
+                idNguoiDung:order['User']['idNguoiDung'],
+                noiDung:req.body.noiDung,
+                tieuDe:req.body.tieuDe,
+                tinhTrang:0,
+                ngayThongBao:req.body.ngayThongBao
+            })
+        }
+    }catch(error){
+        res.status(500).json('Đã xảy ra lỗi khi gửi thông báo.');
     }
 }

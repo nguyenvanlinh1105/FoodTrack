@@ -1,6 +1,6 @@
 import { Request,Response } from 'express';//Nhúng kiểu Request và Response từ module express
+import { Op, Sequelize } from 'sequelize';
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import * as allModel from "../../model/index.model";//Nhúng tất cả model
 
 //Helper
@@ -286,4 +286,27 @@ export const profileUpdate = async(req:Request,res:Response)=>{
     });
     req.flash('success','Cập nhật thông tin thành công');
     res.redirect('/admin/dashboard');
+}
+
+export const updateMessages = async(req:Request,res:Response)=>{
+    try {
+        const { idChats } = req.body; 
+
+        if (!idChats || idChats.length === 0) {
+            res.status(400).json({ message: 'Không có danh sách chat' });
+        }
+        await allModel.TinNhan.update(
+            { tinhTrang: 1 }, 
+            {
+                where: {
+                    idTinNhan: {
+                        [Op.in]: idChats
+                    }
+                }
+            }
+        );
+        res.status(200).json({ messages: 'Success'});
+    } catch (error) {
+        res.status(500).json({ message: 'Lỗi server '+ error.message });
+    }
 }

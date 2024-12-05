@@ -1,3 +1,4 @@
+const socket = io(); // Kết nối đến server Socket.IO
 //Ẩn alert
 const alertSuccess = document.querySelector('[show-alert]');
 if (alertSuccess) {
@@ -451,9 +452,101 @@ if(deleteFoodButtons.length >0){
 }
 
 
+//Phần chat
+socket.on('SERVER_RESEND_MESSAGE_CLIENT', (data) => {
+    const totalMessageElement = document.querySelector('.total-message');
+    const envelopeIcon = document.querySelector('#messagesDropdown i.fas.fa-envelope');
+    if (window.location.href.includes('chat')) {
+        socket.emit('SAVE_CHAT_READ',data);
+        const chatHistory = document.querySelector('.chat-history');
+        const chatBox = document.querySelector('#chat-box');
+        chatHistory.scrollTop = chatBox.scrollHeight;
+
+        const li = document.createElement('li');
+        li.classList.add('clearfix');
+
+        const messageData = document.createElement('div');
+        messageData.classList.add('message-data', 'message-data-left');
+
+        const avatarImg = document.createElement('img');
+        avatarImg.src = data.avatar || (data.gender === 'Nam' ? '/admin/images/undraw_profile.svg' : '/admin/images/undraw_profile_3.svg');
+        avatarImg.alt = 'avatar';
+
+        messageData.appendChild(avatarImg);
+
+        const timeSpan = document.createElement('span');
+        timeSpan.classList.add('message-data-time');
+        timeSpan.textContent = data.time;
+        messageData.appendChild(timeSpan);
+
+        const message = document.createElement('div');
+        message.classList.add('message', 'other-message');
+        message.textContent = data.message;
+
+        li.appendChild(messageData);
+        li.appendChild(message);
+        if (chatBox) {
+            chatBox.appendChild(li);
+            chatHistory.scrollTop = chatBox.scrollHeight;
+        }
+        
+    } else {
+        socket.emit('SAVE_CHAT_UNREAD',data);
+        if (totalMessageElement) {
+            let currentCount = parseInt(totalMessageElement.innerText, 10) || 0;
+            currentCount += 1;
+            totalMessageElement.innerText = currentCount;
+        }
+
+        if (envelopeIcon) {
+            envelopeIcon.classList.add('shake');
+            setTimeout(() => envelopeIcon.classList.remove('shake'), 500);
+        }
+
+        const dropdownList = document.querySelector('.dropdown-list-message');
+        const clearMessageLink = document.querySelector('.dropdown-item.text-center.small.text-gray-500.last-text-list-message');
+
+        if (dropdownList && clearMessageLink) {
+
+            const newMessage = document.createElement('a');
+            newMessage.classList.add('dropdown-item', 'd-flex', 'align-items-center');
+            newMessage.href = `/admin/chat/${data.idRoom}`; // Đường dẫn đến trang chat
+            newMessage.setAttribute('idChat',data.idTinNhan);
+            newMessage.setAttribute('status',data.tinhTrang);
+
+            // Tạo ảnh
+            const avatarContainer = document.createElement('div');
+            avatarContainer.classList.add('dropdown-list-image', 'mr-3');  // Thêm các class cho div
+            const avatarImg = document.createElement('img');
+            avatarImg.classList.add('rounded-circle');  
+            avatarImg.src = data.avatar || (data.gender === 'Nam' ? '/admin/images/undraw_profile.svg' : '/admin/images/undraw_profile_3.svg');
+            avatarImg.alt = 'avatar'; 
+            avatarContainer.appendChild(avatarImg);
+
+            const messageText = document.createElement('div');
+            const text = document.createElement('div');
+            text.classList.add('text-truncate');
+            text.textContent = data.message;
+
+            const senderName = document.createElement('div');
+            senderName.classList.add('small', 'text-gray-500');
+            senderName.textContent = data.name;
+
+            messageText.appendChild(text);
+            messageText.appendChild(senderName);
+
+            newMessage.appendChild(avatarContainer);
+            newMessage.appendChild(messageText);
+
+            dropdownList.insertBefore(newMessage, clearMessageLink);
+        }
+
+        
+    }
+});
+
 const chatInput = document.querySelector('[chat-input]');
 if (chatInput) {
-    const socket = io(); // Kết nối đến server Socket.IO
     const chatHistory=document.querySelector('.chat-history');
     const chatBox = document.querySelector('#chat-box');
     chatHistory.scrollTop = chatBox.scrollHeight;
@@ -469,6 +562,7 @@ if (chatInput) {
             chatInput.value = ''; // Xóa input sau khi gửi
         }
     });
+    
     socket.on('SERVER_RESEND_MESSAGE_ADMIN', (data) => {
         const { message, avatar, gender, time } = data;
     
@@ -510,59 +604,49 @@ if (chatInput) {
             // Cuộn xuống cuối cùng trong chat box sau khi thêm tin nhắn
             chatHistory.scrollTop = chatBox.scrollHeight;
         }
-    });
-    socket.on('SERVER_RESEND_MESSAGE_CLIENT', (data) => {
-        // Tạo li mới
-        const li = document.createElement('li');
-        li.classList.add('clearfix');
-    
-        // Tạo phần thông tin tin nhắn
-        const messageData = document.createElement('div');
-        messageData.classList.add('message-data','message-data-left');
-
-
-         // Thêm ảnh đại diện
-         const avatarImg = document.createElement('img');
-         if (data.avatar) {
-             avatarImg.src = data.avatar;
-         } else if (data.gender === 'Nam') {
-             avatarImg.src = '/admin/images/undraw_profile.svg';
-         } else {
-             avatarImg.src = '/admin/images/undraw_profile_3.svg';
-         }
-         avatarImg.alt = 'avatar';
-     
-         messageData.appendChild(avatarImg);
-
-        const timeSpan = document.createElement('span');
-        timeSpan.classList.add('message-data-time');
-        timeSpan.textContent = data.time;
-    
-        messageData.appendChild(timeSpan);
-    
-        // Tạo nội dung tin nhắn
-        const message = document.createElement('div');
-        message.classList.add('message', 'other-message'); // hoặc 'my-message' nếu tin nhắn từ người dùng hiện tại
-        message.textContent = data.message;
-    
-        // Thêm vào li
-        li.appendChild(messageData);
-        li.appendChild(message);
-        if(chatBox){
-            chatBox.appendChild(li);
-            chatHistory.scrollTop = chatBox.scrollHeight;
-        }
-    });
-            
+    });          
 }
 
-const listMessageDropDown=document.querySelector('#messagesDropdown');
-if(listMessageDropDown){
-    listMessageDropDown.addEventListener('click',async (e)=>{
+const listMessageDropDown = document.querySelector('#messagesDropdown');
+if (listMessageDropDown) {
+
+    listMessageDropDown.addEventListener('click', async (e) => {
         e.preventDefault();
-        const messageList=document.querySelector('.dropdown-list-message');
+
+        // Reset số tin nhắn trong dropdown
+        const totalMessageElement = document.querySelector('.total-message');
+        if (totalMessageElement) {
+            totalMessageElement.innerText = 0;
+        }
+
+        // Kiểm tra nếu chưa fetch thì thực hiện fetch
+        const idChats = Array.from(document.querySelectorAll('[idChat]'))
+            .map(element => {
+                return (element.getAttribute('status') === '0') ? parseInt(element.getAttribute('idChat')) : null;
+            })
+            .filter(id => id !== null); // Chỉ lấy những id có status = 0
+        console.log(idChats);
+        if (idChats.length !== 0) {
+            // Thực hiện fetch nếu có idChats hợp lệ
+            fetch('/admin/update/messages', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ idChats }) // Gửi danh sách idChats dưới dạng JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        // Toggle dropdown list hiển thị
+        const messageList = document.querySelector('.dropdown-list-message');
         messageList.classList.toggle('show');
-    })
+    });
 }
 
 const deliverOrderButtons=document.querySelectorAll('[btn-deliver-order]');
@@ -583,6 +667,174 @@ if(deliverOrderButtons.length >0){
                 if(result.isConfirmed){
                     const id=button.getAttribute('btn-deliver-order');
                     fetch(`/admin/management/order/deliver/${id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(async (response) => response.json())
+                    .then(async (data) => {
+                        await Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        location.reload(); 
+                    })
+                    .catch( async (error) => {
+                        await Swal.fire({
+                            icon: "error",
+                            title: "Lỗi xảy ra",
+                            text: error.message,
+                        });
+                        location.reload();
+                    });
+                }
+            })
+        })
+    })
+}
+
+const notificationOrderButtons=document.querySelectorAll('[btn-notification-order]');
+if(notificationOrderButtons.length >0){
+    notificationOrderButtons.forEach((button)=>{
+        button.addEventListener('click',async (e)=>{
+            e.preventDefault();
+            Swal.fire({
+                title: 'Nhập thông tin thông báo',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#28A745',
+                cancelButtonColor: '#d33',
+                html: `
+                    <input type="text" id="order-title" class="swal2-input" placeholder="Nhập tiêu đề" style="width:80%">
+                    <textarea id="order-content" class="swal2-textarea" placeholder="Nhập nội dung" style="width:80%"></textarea>
+                `,
+                preConfirm: () => {
+                    const title = document.getElementById('order-title').value;
+                    const content = document.getElementById('order-content').value;
+            
+                    if (!title || !content) {
+                        Swal.showValidationMessage('Vui lòng nhập đầy đủ tiêu đề và nội dung');
+                    }
+                    return { title, content };
+                }
+            }).then((result) => {
+                if(result.isConfirmed){
+                    const id=button.getAttribute('btn-notification-order');
+                    const currentDate = new Date().toLocaleDateString();
+                    socket.emit("ADMIN_SEND_NOTIFICATION",{
+                        tieuDe:result.value.title,
+                        noiDung:result.value.content,
+                        ngayThongBao:currentDate
+                    })
+                    fetch(`/admin/management/order/notification/${id}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            tieuDe: result.value.title,
+                            noiDung: result.value.content,
+                            ngayThongBao: currentDate
+                        })
+                    })
+                    .then(async (response) => response.json())
+                    .then(async (data) => {
+                        await Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        location.reload(); 
+                    })
+                    .catch( async (error) => {
+                        await Swal.fire({
+                            icon: "error",
+                            title: "Lỗi xảy ra",
+                            text: error.message,
+                        });
+                        location.reload();
+                    });
+                }
+            })
+        })
+    })
+}
+
+
+const commentApproveButtons=document.querySelectorAll('[btn-comment-approve]');
+if(commentApproveButtons.length >0){
+    commentApproveButtons.forEach((button)=>{
+        button.addEventListener('click',async (e)=>{
+            e.preventDefault();
+            Swal.fire({
+                title: 'Bạn có muốn chấp thuận bình luận này ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#28A745',
+                cancelButtonColor: '#d33',
+                focusConfirm: false
+            }).then((result) => {
+                if(result.isConfirmed){
+                    const id=button.getAttribute('btn-comment-approve');
+                    fetch(`/admin/management/comment/approve/${id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(async (response) => response.json())
+                    .then(async (data) => {
+                        await Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        location.reload();
+                    })
+                    .catch( async (error) => {
+                        await Swal.fire({
+                            icon: "error",
+                            title: "Lỗi xảy ra",
+                            text: error.message,
+                        });
+                        location.reload();
+                    });
+                }
+            })
+        })
+    })
+}
+
+const commentDisapproveButtons=document.querySelectorAll('[btn-comment-disapprove]');
+if(commentDisapproveButtons.length >0){
+    commentDisapproveButtons.forEach((button)=>{
+        button.addEventListener('click',async (e)=>{
+            e.preventDefault();
+            Swal.fire({
+                title: 'Bạn có muốn từ chối bình luận này ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#28A745',
+                cancelButtonColor: '#d33',
+                focusConfirm: false
+            }).then((result) => {
+                if(result.isConfirmed){
+                    const id=button.getAttribute('btn-comment-disapprove');
+                    fetch(`/admin/management/comment/disapprove/${id}`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json'

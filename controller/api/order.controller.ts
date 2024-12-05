@@ -179,10 +179,10 @@ export const confirm= async(req: Request, res: Response) => {
 }
 export const deny= async(req: Request, res: Response) => {
     const {idDonHang}=req.body;
-    console.log(idDonHang);
     try {
         await allModel.DonHang.update({
             tinhTrang:'Đã hủy',
+            thoiGianHuy:new Date()
         },{
             where:{
                 idDonHang:idDonHang,
@@ -202,49 +202,10 @@ export const listUnfinished= async (req: Request, res: Response) => {
             where: 
             { 
                 idNguoiDung:idNguoiDung, 
-                tinhTrang: { [Op.in]: ['Đã xác nhận', 'Đang giao'] },
+                tinhTrang: { [Op.in]: ['Đã xác nhận', 'Đang giao','Hoàn thành'] },
             },
             attributes: ['idDonHang', 'ngayTao', 'diaChi', 'tinhTrang','ghiChu','tinhTrangThanhToan'],
-            raw: true, 
-        });
-        for(const order of orders){
-            const foods= await allModel.ChiTietDonHang.findAll({
-                where: {
-                    idDonHang: order['idDonHang'],
-                },
-                attributes:['soLuongDat'],
-                include: [
-                    {
-                        model: allModel.SanPham,
-                        as: 'Product',
-                        attributes: ['tenSanPham', 'giaTien', 'images'],
-                    },
-                ],
-                raw: true,
-                nest: true,
-            });
-            order['chiTietDonHangs']=[];
-            for(const food of foods){
-                food['Product']['images'] = JSON.parse(food['Product']['images'])[0];
-                order['chiTietDonHangs'].push(food);
-            }
-        }
-        res.status(200).json(orders);
-    } catch (error) {
-        res.status(500).json({message:'Lỗi '+error.message});
-    }
-}
-
-export const listFinished= async (req: Request, res: Response) => {
-    const {idNguoiDung}=req.query;
-    try {
-        const orders = await allModel.DonHang.findAll({
-            where: 
-            { 
-                idNguoiDung:idNguoiDung, 
-                tinhTrang: 'Hoàn thành',
-            },
-            attributes: ['idDonHang', 'ngayTao', 'diaChi', 'tinhTrang','ghiChu','tinhTrangThanhToan'],
+            order: [['ngayTao', 'DESC']],
             raw: true, 
         });
         for(const order of orders){
@@ -283,8 +244,10 @@ export const listDeny= async (req: Request, res: Response) => {
             { 
                 idNguoiDung:idNguoiDung, 
                 tinhTrang: 'Đã hủy',
+                deleted:false
             },
-            attributes: ['idDonHang', 'ngayTao', 'diaChi', 'tinhTrang','ghiChu','tinhTrangThanhToan'],
+            attributes: ['idDonHang', 'ngayTao', 'diaChi', 'tinhTrang','ghiChu','tinhTrangThanhToan','thoiGianHuy'],
+            order: [['idDonHang', 'DESC']],
             raw: true, 
         });
         for(const order of orders){
@@ -297,7 +260,7 @@ export const listDeny= async (req: Request, res: Response) => {
                     {
                         model: allModel.SanPham,
                         as: 'Product',
-                        attributes: ['tenSanPham', 'giaTien', 'images'],
+                        attributes: ['idSanPham','tenSanPham', 'giaTien', 'images'],
                     },
                 ],
                 raw: true,
@@ -308,6 +271,7 @@ export const listDeny= async (req: Request, res: Response) => {
                 food['Product']['images'] = JSON.parse(food['Product']['images'])[0];
                 order['chiTietDonHangs'].push(food);
             }
+            order['thoiGianHuy']=order['thoiGianHuy'].toLocaleString();
         }
         res.status(200).json(orders);
     } catch (error) {
@@ -315,8 +279,9 @@ export const listDeny= async (req: Request, res: Response) => {
     }
 }
 
-export const updateQuanity= async (req: Request, res: Response) => {
+export const updateQuantity= async (req: Request, res: Response) => {
     const {idDonHang,idSanPham,soLuongDat}=req.body;
+    console.log(req.body);
     try{
         const isExist= await allModel.ChiTietDonHang.findOne({
             where:{
@@ -339,6 +304,66 @@ export const updateQuanity= async (req: Request, res: Response) => {
             res.status(200).json({message:'Cập nhật số lượng thành công'});
         }
     }catch(error){
+        res.status(500).json({message:'Lỗi '+error.message});
+    }
+}
+
+export const reorder= async(req: Request, res: Response) => {
+    let {idUser,idDonHang,products,idDonHangHuy}=req.body;
+    try {
+        let idDonHangTra=null;
+        if(!idDonHang){
+            idDonHang=await generateNextId(allModel.DonHang,'DH');
+            const newDonHang = await allModel.DonHang.create({
+                idDonHang:idDonHang,
+                idNguoiDung:idUser,
+                tinhTrang:'Đang xử lý',
+                ngayTao:new Date(),
+            }) 
+            idDonHangTra=idDonHang;
+        }
+        for(const product of products){
+            const lastThreeIdDonHang = idDonHang.trim().slice(-3); // Lấy 3 ký tự cuối
+            const lastThreeIdSanPham = product['idSanPham'].trim().slice(-3); // Lấy 3 ký tự cuối
+            const idChiTietDonHang = `CTDH${lastThreeIdDonHang}_${lastThreeIdSanPham}`;
+
+            const isExist= await allModel.ChiTietDonHang.findOne({
+                where:{
+                    idDonHang:idDonHang,
+                    idSanPham:product['idSanPham']
+                },
+                raw:true
+            })
+            if(isExist){
+                await allModel.ChiTietDonHang.update({
+                    soLuongDat:isExist['soLuongDat']+product['soLuongDat'],
+                },{
+                    where:{
+                        idDonHang:idDonHang,
+                        idSanPham:product['idSanPham']
+                    }
+                })
+            }else{
+                await allModel.ChiTietDonHang.create({
+                    idChiTietDonHang:idChiTietDonHang,
+                    idDonHang:idDonHang,
+                    idSanPham:product['idSanPham'],
+                    soLuongDat:product['soLuongDat']
+                })
+            }
+        }
+        await allModel.DonHang.update({
+            deleted:true
+        },{
+            where:{
+                idDonHang:idDonHangHuy
+            }
+        })
+        res.status(200).json({
+            message:'Đã mua lại các sản phẩm thành công',
+            idDonHang:idDonHangTra
+        });
+    } catch (error) {
         res.status(500).json({message:'Lỗi '+error.message});
     }
 }

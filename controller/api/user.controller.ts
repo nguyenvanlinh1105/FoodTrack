@@ -1,6 +1,6 @@
 import { Request,Response } from 'express';//Nhúng kiểu Request và Response từ module express
 import * as allModel from '../../model/index.model';
-
+import { Op, Sequelize } from 'sequelize';
 
 import {hashPassword,verifyPassword} from '../../helper/hashAndVerifyPassword.helper';
 import generateNextId from '../../helper/generateNextId.helper';
@@ -8,7 +8,6 @@ import { generateRandomNumber } from '../../helper/generateRandom.helper';
 import emailQueue,{checkOTPAPI} from '../../helper/emailQueue.helper';
 import * as generateString from '../../helper/generateRandom.helper';
 import * as isValid from '../../helper/validField.helper';
-import router from '../../routes/api/user.route';
 
 export const login= async (req:Request,res:Response)=>{
     const {email,matKhau} = req.body;
@@ -91,6 +90,16 @@ export const register=async(req:Request,res:Response)=>{
                 token:generateString.generateRandomString(30), // Tạo token ngẫu nhiên
             }
             const createdUser = await allModel.NguoiDung.create(newUser);
+            const createdRoom= await allModel.PhongChat.create({
+                idPhongChat: await generateNextId(allModel.PhongChat, 'PC'),
+                loaiPhong: 'private',
+                thoiGianTao: new Date(),
+                thoiGianCapNhat: new Date()
+            })
+            await allModel.ChiTietPhongChat.create({
+                idNguoiDung: createdUser['idNguoiDung'],
+                idPhongChat: createdRoom['idPhongChat'],
+            });
             res.status(200).json({message: 'Đăng ký thành công!'});
         }
     } catch (error) {
@@ -160,7 +169,12 @@ export const passwordReset=async(req:Request,res:Response)=>{
                 email:email
             }
         });
-        res.status(200).json({matKhau:matKhau,message:'Đổi mật khẩu thành công'});
+        res.status(200).json
+        ({
+            matKhau:matKhau,
+            message:'Đổi mật khẩu thành công',
+            email:email
+        });
     }
 }
 
@@ -247,15 +261,49 @@ export const getInfo=async(req:Request,res:Response)=>{
     }
 }
 export const comment = async(req:Request,res:Response)=>{
-    const {idNguoiDung,idSanPham,noiDung}=req.body;
+    const {idNguoiDung,idSanPham,noiDung,idDonHang}=req.body;
+    console.log(req.body);
     try {
         await allModel.BinhLuanSanPham.create({
             idNguoiDung:idNguoiDung,
             idSanPham:idSanPham,
+            idDonHang:idDonHang,
             noiDung:noiDung,
             ngayBinhLuan:new Date()
         })
         res.status(200).json({message:'Bình luận thành công'});
+    } catch (error) {
+        res.status(500).json({message:'Lỗi '+error.message});
+    }
+}
+
+export const listNotification=async(req:Request,res:Response)=>{
+    const {idNguoiDung}=req.query;
+    try {
+        const notifications= await allModel.ThongBao.findAll({
+            where:{
+                idNguoiDung:idNguoiDung,
+                tinhTrang:0
+            },
+            order:[
+                ['ngayThongBao','DESC']
+            ],
+            raw:true
+        });
+        if(notifications.length>0){
+            const idsToUpdate = notifications.map(notification => notification['idThongBao']);
+            await allModel.ThongBao.update(
+                { tinhTrang: 1 }, 
+                {
+                    where: {
+                        idThongBao: {
+                            [Op.in]: idsToUpdate 
+                        }
+                    }
+                }
+            );
+        }
+        res.status(200).json(notifications);
     } catch (error) {
         res.status(500).json({message:'Lỗi '+error.message});
     }

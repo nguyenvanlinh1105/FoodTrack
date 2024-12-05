@@ -11,6 +11,7 @@ import ChiTietPhongChat from './ChiTietPhongChat.model';
 import TinNhan from './TinNhan.model';
 import SanPhamYeuThich from './SanPhamYeuThich.model';
 import BinhLuanSanPham from './BinhLuanSanPham.model';
+import ThongBao from './ThongBao.model';
 
 // Define associations
 VaiTro.hasMany(NguoiDung, {
@@ -36,11 +37,38 @@ NguoiDung.hasMany(BinhLuanSanPham, {
     sourceKey: 'idNguoiDung',
     as: 'Comments' // Alias 
 });
+
+NguoiDung.hasMany(ThongBao,{
+    foreignKey:'idNguoiDung',
+    sourceKey:'idNguoiDung',
+    as:'Notifications'
+})
+
+BinhLuanSanPham.belongsTo(NguoiDung, {
+    foreignKey: 'idNguoiDung', 
+    targetKey: 'idNguoiDung',
+    as: 'user' // Alias 
+})
 SanPham.hasMany(BinhLuanSanPham, {
     foreignKey: 'idSanPham', 
     sourceKey: 'idSanPham',
     as: 'Comments' // Alias 
 });
+BinhLuanSanPham.belongsTo(SanPham, {
+    foreignKey: 'idSanPham', 
+    targetKey: 'idSanPham',
+    as: 'product' // Alias 
+})
+DonHang.hasMany(BinhLuanSanPham, {
+    foreignKey: 'idDonHang', 
+    sourceKey: 'idDonHang',
+    as: 'Comments' // Alias 
+})
+BinhLuanSanPham.belongsTo(DonHang, {
+    foreignKey: 'idDonHang', 
+    targetKey: 'idDonHang',
+    as: 'Order' // Alias
+})
 
 DonHang.belongsTo(NguoiDung, {
     foreignKey: 'idNguoiDung', 
@@ -146,4 +174,4 @@ SanPhamYeuThich.belongsTo(SanPham, {
     as: 'Product', // Alias
 });
 
-export {sequelize,VaiTro, NguoiDung,DonHang,  ChiTietDonHang, SanPham,DanhMuc,PhongChat,ChiTietPhongChat,TinNhan,BinhLuanSanPham};
+export {sequelize,VaiTro, NguoiDung,DonHang,  ChiTietDonHang, SanPham,DanhMuc,PhongChat,ChiTietPhongChat,TinNhan,BinhLuanSanPham,ThongBao};

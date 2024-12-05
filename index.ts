@@ -42,22 +42,32 @@ global._io = io;
 
 //Client
 import * as saveChatDB from './helper/saveChatDB.helper';
+import TinNhan from './model/TinNhan.model';
 _io.on('connection', (socket) => {
-    socket.on('CLIENT_SEND_MESSAGE', (data) => {
+    socket.on('CLIENT_SEND_MESSAGE', async (data) => {
         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         try {
             const chatData = JSON.parse(data);
             _io.emit('SERVER_RESEND_MESSAGE_CLIENT', { 
-                name: chatData.tenNguoiDung,
+                avatar: chatData.avatar,
+                name:chatData.tenNguoiDung,
                 message: chatData.noiDungChat, 
                 gender: chatData.gioiTinh,
                 time: currentTime,
+                idRoom: chatData.idPhongChat,
+                idUser: chatData.idUser,
             });
-            saveChatDB.saveChat(chatData.idPhongChat, chatData.noiDungChat, "", new Date(), chatData.idUser);
         } catch (error) {
             console.log('Error', error);
         }
     })
+    socket.on('SAVE_CHAT_READ', (data) => {
+        saveChatDB.saveChat(data.idRoom, data.message, "", new Date(), data.idUser);
+    });
+
+    socket.on('SAVE_CHAT_UNREAD', (data) => {
+        saveChatDB.saveChat(data.idRoom, data.message, "", new Date(), data.idUser, 0);
+    });
 });
 
 app.use(cors());//Nhúng cors vào dự án

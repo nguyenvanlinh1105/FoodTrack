@@ -8,7 +8,6 @@ const chat =async (req: Request, res: Response) => {
     //Admin
     _io.once('connection', (socket) => {
         socket.on('ADMIN_SEND_MESSAGE', (data) => {
-            console.log('Data', data);
             _io.emit('SEND_TO_CLIENT', data);
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             _io.emit('SERVER_RESEND_MESSAGE_ADMIN', { 

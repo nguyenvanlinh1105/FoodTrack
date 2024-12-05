@@ -28,6 +28,7 @@ const orderUpdateWorker = new Worker(
     'orderUpdateQueue',
     async (job) => {
         const { idDonHang } = job.data;
+        const transaction = await allModel.sequelize.transaction();
         try {
             // Tìm và cập nhật trạng thái đơn hàng sang "Hoàn thành"
             const updated = await allModel.DonHang.update(
@@ -42,12 +43,34 @@ const orderUpdateWorker = new Worker(
                     }
                 }
             );
-
-            if (updated[0] > 0) {
-                console.log(`Đơn hàng ${idDonHang} đã được cập nhật sang trạng thái "Hoàn thành".`);
-            } else {
-                console.log(`Không tìm thấy hoặc không thể cập nhật đơn hàng ${idDonHang}.`);
+            if (updated[0] === 0) {
+                throw new Error('Không tìm thấy đơn hàng hoặc trạng thái không phù hợp');
             }
+        
+             // Lấy danh sách sản phẩm và số lượng
+            const foods = await allModel.ChiTietDonHang.findAll({
+                where: {
+                    idDonHang
+                },
+                attributes: ['idSanPham', 'soLuongDat'],
+                transaction
+            });
+            const updates = foods.map(item => {
+                return allModel.SanPham.update(
+                    {
+                        soLuongDaBan: allModel.sequelize.literal(`soLuongDaBan + ${item['soLuongDat']}`)
+                    },
+                    {
+                        where: {
+                            idSanPham: item['idSanPham']
+                        },
+                        transaction 
+                    }
+                );
+            });
+            await Promise.all(updates);
+            await transaction.commit();
+            console.log('Cập nhật thành công!');
         } catch (error) {
             console.error('Lỗi khi cập nhật trạng thái đơn hàng:', error);
         }

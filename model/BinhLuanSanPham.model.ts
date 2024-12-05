@@ -26,12 +26,25 @@ const BinhLuanSanPham= sequelize.define("BinhLuanSanPham",{
             key: "idSanPham"
         }
     },
+    idDonHang:{
+        type:DataTypes.STRING,
+        allowNull:false,
+        primaryKey:true,
+        references:{
+            model: "DonHang",
+            key: "idDonHang"
+        }
+    },
     noiDung:{
         type: DataTypes.TEXT,
         allowNull:false
     },
     ngayBinhLuan:{
         type: DataTypes.DATE,
+    },
+    tinhTrang:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: 'Đang xử lý'
     }
 },{
     tableName: "BinhLuanSanPham",

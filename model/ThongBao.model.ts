@@ -1,43 +1,39 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
-const TinNhan= sequelize.define("TinNhan",{
-    idTinNhan: {
+const ThongBao= sequelize.define("ThongBao",{
+    idThongBao: {
         type: DataTypes.INTEGER,  // Chuyển từ STRING thành INTEGER
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,  // Thêm thuộc tính AUTO_INCREMENT
     },
-    idPhongChat:{
+    idNguoiDung:{
         type:DataTypes.STRING,
         allowNull:false,
         references:{
-            model:'PhongChat',// Tên bảng trong database
-            key:'idPhongChat'// Khóa chính được tham chiếu
+            model:'NguoiDung',// Tên bảng trong database
+            key:'idNguoiDung'// Khóa chính được tham chiếu
         }
     },
-    noiDung:{
+    tieuDe:{
         type:DataTypes.STRING,
         allowNull:false
     },
-    images:{
+    noiDung:{
         type:DataTypes.TEXT,
         allowNull:true
-    },
-    thoiGianTao:{
-        type:DataTypes.DATE,
-    },
-    Gui:{
-        type:DataTypes.STRING,
-        allowNull:false,
     },
     tinhTrang:{
         type:DataTypes.INTEGER,
         allowNull:false,
+    },
+    ngayThongBao:{
+        type:DataTypes.DATE,
     }
 },{
-    tableName: "TinNhan",
+    tableName: "ThongBao",
     timestamps: false
 })
 
-export default TinNhan;
+export default ThongBao;

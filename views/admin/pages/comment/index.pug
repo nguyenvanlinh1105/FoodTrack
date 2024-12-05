@@ -1,0 +1,69 @@
+extends ../../layouts/default.pug
+
+block content
+    .container-fluid.mt-4
+        .d-sm-flex.align-items-center.justify-content-between.mb-4
+            h1.h3.mb-2.text-gray-800 
+                strong Bảng quản lý bình luận
+        // Page Heading
+        p.mb-4
+            | Bảng này giúp quản lý các bình luận trong App 
+        // DataTales Example
+        .card.shadow.mb-4
+            .card-header.py-3
+                h6.m-0.font-weight-bold.text-primary Bình luận
+            .card-body
+                .table-responsive
+                    table#dataTable.table.table-bordered(width='100%', cellspacing='0')
+                        thead
+                            tr
+                                th.text-center STT
+                                th.text-center Tên khách hàng
+                                th.text-center Tên món ăn
+                                th.text-center Tình trạng
+                                th.text-center Ngày bình luận
+                                th.text-center Hành động 
+                        tbody
+                            if comments.length > 0
+                                each comment, index in comments
+                                    tr
+                                        td.text-center #{(index + 1) + (pagination.limitItems * (pagination.currentPage - 1))}
+                                        td #{comment.user.hoTen}
+                                        td #{comment.product.tenSanPham}
+                                        td.text-center
+                                            if comment.tinhTrang == "Đang xử lý"
+                                                span.badge.badge-secondary(style="padding:8px") Đang xử lý
+                                            else if comment.tinhTrang == "Đã chấp thuận"
+                                                span.badge.badge-success(style="padding:8px") Đã chấp thuận
+                                            else
+                                                span.badge.badge-danger(style="padding:8px") Đã từ chối
+                                        td.text-center #{comment.ngayBinhLuan}
+                                        td.text-center(style="display: flex; justify-content: space-between; align-items: center; height:65.6px")
+                                            a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/management/comment/approve/`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                                                i.fas.fa-eye(style="margin-right: 5px;")
+                                                |  Chi tiết
+                                            if(comment.tinhTrang == "Đang xử lý")
+                                                a.btn.btn-success.btn-sm.btn-table(href=`#`, style="flex: 1; padding: 5px 10px; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;" btn-comment-approve=comment.idBinhLuan)
+                                                    i.fas.fa-check(style="margin-right: 5px;")
+                                                    | Chấp nhận
+                                                a.btn.btn-danger.btn-sm.btn-table(href=`#`, style="flex:  1; padding: 5px 10px; background-color: #dc3545; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center;" btn-comment-disapprove=comment.idBinhLuan)
+                                                    i.fas.fa-times(style="margin-right: 5px;")
+                                                    | Từ chối
+                            else
+                                tr
+                                    td(colspan='6')
+                                        p.text-center Chưa có bình luận nào
+                nav.ml-3
+                    div(style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; margin-right:20px")
+                        span
+                            | Trang #{pagination.currentPage} trong tổng số #{pagination.totalPages} trang
+                        ul.pagination(style="margin-top: 10px;")
+                            if pagination.currentPage > 1
+                                li.page-item
+                                    a.page-link(href=`/admin/management/category?page=${pagination.currentPage - 1}`) Trang trước
+                            - for (let index = 1; index <= pagination.totalPages; index++)
+                                li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
+                                    a.page-link(href=`/admin/management/category?page=${index}`) #{index}
+                            if pagination.currentPage < pagination.totalPages
+                                li.page-item
+                                    a.page-link(href=`/admin/management/category?page=${pagination.currentPage + 1}`) Trang sau

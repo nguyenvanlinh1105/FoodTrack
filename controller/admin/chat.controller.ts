@@ -1,10 +1,10 @@
 import { Request,Response } from 'express';//Nhúng kiểu Request và Response từ module express
 import * as allModel from '../../model/index.model';
-import Sequelize from 'sequelize';//Nhúng module sequelize
 import chatSocket from'../../socket/chat.socket';//Nhúng file chat.socket
 
 import TinNhan from '../../model/TinNhan.model';
 import NguoiDung from '../../model/NguoiDung.model';
+
 export const index = async (req: Request, res: Response) => {
     const user=res.locals.user;
     const { IdRoom } = req.params;

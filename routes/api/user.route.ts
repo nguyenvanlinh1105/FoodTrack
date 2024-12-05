@@ -17,5 +17,5 @@ router.post('/password/reset',userController.passwordReset);
 router.post('/update/avatar',upload.single("img"),uploadCloud.uploadSingle,userController.updateAvatar);
 router.post('/update/info',userController.updateInfo);
 router.post('/comment',userController.comment);
-
+router.get('/list/notification',userController.listNotification);
 export default router;

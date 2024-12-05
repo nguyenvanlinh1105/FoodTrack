@@ -62,12 +62,17 @@ export const  paginationGeneral = async (req:Request,limitItems:number=4,table:M
         pagination.currentPage=Number(req.query.page);
     }
     pagination.skip=(pagination.currentPage-1)*pagination.limitItems;// Công thức tính skip
-
-    const countTotal = await table.count({
-        where:{
-            deleted:0
-        }
-    });
-    pagination['totalPages']= Math.ceil(countTotal/pagination.limitItems);// Công thức tính tổng số trang
-    return pagination;
+    if(table.name==='BinhLuanSanPham'){
+        const countTotal = await table.count({});
+        pagination['totalPages']= Math.ceil(countTotal/pagination.limitItems);// Công thức tính tổng số trang
+        return pagination;
+    }else{
+        const countTotal = await table.count({
+            where:{
+                deleted:0
+            }
+        });
+        pagination['totalPages']= Math.ceil(countTotal/pagination.limitItems);// Công thức tính tổng số trang
+        return pagination;
+    }
 }
