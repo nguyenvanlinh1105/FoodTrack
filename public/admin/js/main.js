@@ -504,10 +504,11 @@ socket.on('SERVER_RESEND_MESSAGE_CLIENT', (data) => {
         }
 
         const dropdownList = document.querySelector('.dropdown-list-message');
+        const noneMessages = dropdownList.querySelector('h7.dropdown-item.text-center.text-gray-500.none-messages');
         const clearMessageLink = document.querySelector('.dropdown-item.text-center.small.text-gray-500.last-text-list-message');
 
         if (dropdownList && clearMessageLink) {
-
+            noneMessages.remove();
             const newMessage = document.createElement('a');
             newMessage.classList.add('dropdown-item', 'd-flex', 'align-items-center');
             newMessage.href = `/admin/chat/${data.idRoom}`; // Đường dẫn đến trang chat
@@ -540,8 +541,6 @@ socket.on('SERVER_RESEND_MESSAGE_CLIENT', (data) => {
 
             dropdownList.insertBefore(newMessage, clearMessageLink);
         }
-
-        
     }
 });
 
@@ -607,6 +606,7 @@ if (chatInput) {
     });          
 }
 
+//Message dropdown
 const listMessageDropDown = document.querySelector('#messagesDropdown');
 if (listMessageDropDown) {
 
@@ -647,6 +647,15 @@ if (listMessageDropDown) {
         const messageList = document.querySelector('.dropdown-list-message');
         messageList.classList.toggle('show');
     });
+}
+
+const listNotificationDropDown = document.querySelector('#notificationsDropdown');
+if(listNotificationDropDown){
+    listNotificationDropDown.addEventListener('click',async (e)=>{
+        e.preventDefault();
+        const notificationList=document.querySelector('.dropdown-list-notification');
+        notificationList.classList.toggle('show');
+    })
 }
 
 const deliverOrderButtons=document.querySelectorAll('[btn-deliver-order]');

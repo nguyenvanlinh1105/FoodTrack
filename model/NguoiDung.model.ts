@@ -69,7 +69,6 @@ const NguoiDung= sequelize.define("NguoiDung",{
     tichDiem:{
         type:DataTypes.INTEGER,
         allowNull:false,
-        defaultValue: 0
     }
 },{
     tableName: "NguoiDung",

@@ -89,6 +89,7 @@ export const createAdmin=async(req:Request, res:Response)=>{
         ngayCapNhat:new Date(),
         vaiTro:req.body['vaiTro'],
         token:generateString.generateRandomString(30), // Tạo token ngẫu nhiên
+        tichDiem:0,
     }
     try {
         const createdUser = await allModel.NguoiDung.create(newUser);

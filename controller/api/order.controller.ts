@@ -159,8 +159,23 @@ export const cancelFood= async(req: Request, res: Response) => {
 }
 
 export const confirm= async(req: Request, res: Response) => {
-    const {idDonHang,diaChi,ghiChu,phuongThucThanhToan,tinhTrang}=req.body;
+    const {idDonHang,diaChi,ghiChu,phuongThucThanhToan,tinhTrang,tichDiem}=req.body;
     try {
+        const order=await allModel.DonHang.findOne({
+            where:{
+                idDonHang:idDonHang,
+                tinhTrang:'Đang xử lý'
+            },
+            include:[
+                {
+                    model:allModel.NguoiDung,
+                    as:'User',
+                    attributes:['idNguoiDung','tichDiem']
+                }
+            ],
+            raw:true,
+            nest:true
+        })
         await allModel.DonHang.update({
             tinhTrang:tinhTrang,
             diaChi:diaChi,
@@ -170,6 +185,13 @@ export const confirm= async(req: Request, res: Response) => {
             where:{
                 idDonHang:idDonHang,
                 tinhTrang:'Đang xử lý'
+            }
+        })
+        await allModel.NguoiDung.update({
+            tichDiem:order['User']['tichDiem']-tichDiem
+        },{
+            where:{
+                idNguoiDung:order['User']['idNguoiDung']
             }
         })
         res.status(200).json({message:'Xác nhận đơn hàng thành công'});

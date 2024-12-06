@@ -7,7 +7,6 @@ import { addOrderToQueue } from '../../helper/updateDoneOrder.helper';
 export const index = async(req: Request, res: Response)=>{
     //Push thông báo cho app
     _io.once('connection', (socket) => {
-        console.log("connect")
         socket.on('ADMIN_SEND_NOTIFICATION', (data) => {
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             _io.emit('SEND_NOTIFICATION_CLIENT', data);

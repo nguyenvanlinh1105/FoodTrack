@@ -253,7 +253,7 @@ export const profileUpdate = async(req:Request,res:Response)=>{
     } else {
         delete req.body.images;  
     }
-    const { password, 'password-confirm': passwordConfirm,diaChi,...otherData} = req.body;
+    const { password, 'password-confirm': passwordConfirm,...otherData} = req.body;
     const token=res.locals.user.token;
     if ((password && !passwordConfirm) || (!password && passwordConfirm)) {
         req.flash('error', 'Vui lòng nhập cả mật khẩu và xác nhận mật khẩu.');
@@ -268,15 +268,6 @@ export const profileUpdate = async(req:Request,res:Response)=>{
         ...otherData,
         ...(password ? { matKhau: hashPassword(password) } : {}) // Chỉ thêm password nếu password tồn tại
     };
-    if (diaChi) {
-        const mapEmbedUrl = await getMapEmbedUrl(diaChi);
-        if (mapEmbedUrl) {
-            updatedData['diaChi'] = mapEmbedUrl;
-        } else {
-            req.flash('error', 'Không thể cập nhật địa chỉ. Vui lòng kiểm tra lại.');
-            return res.redirect('back');
-        }
-    }
     await allModel.NguoiDung.update(updatedData, {
         where:{
             token: token,

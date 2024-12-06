@@ -44,6 +44,7 @@ export const login= async (req:Request,res:Response)=>{
                     diaChi:user['diaChi'],
                     idPhongChat:user['RoomDetails.idPhongChat'],
                     ngaySinh:user['ngaySinh'],
+                    tichDiem:user['tichDiem'],
                 })
             }else{
                 res.status(404).json({message:"Mật khẩu không chính xác"});
@@ -87,7 +88,8 @@ export const register=async(req:Request,res:Response)=>{
                 ngayTao:new Date(),
                 ngayCapNhat:new Date(),
                 vaiTro:'VT002',
-                token:generateString.generateRandomString(30), // Tạo token ngẫu nhiên
+                token:generateString.generateRandomString(30),// Tạo token ngẫu nhiên
+                tichDiem:1000 
             }
             const createdUser = await allModel.NguoiDung.create(newUser);
             const createdRoom= await allModel.PhongChat.create({

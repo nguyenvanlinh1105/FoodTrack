@@ -14,7 +14,7 @@ export const addOrderToQueue = async (idDonHang: string):Promise<boolean> => {
             {
                 delay: 60000,   // 1 phút
                 attempts: 3,     // Số lần thử lại nếu thất bại
-                backoff: 10000   // Thời gian chờ giữa mỗi lần thử lại (ms)
+                backoff: 3000   // Thời gian chờ giữa mỗi lần thử lại (ms)
             }
         );
         return true;
@@ -48,6 +48,7 @@ const orderUpdateWorker = new Worker(
             }
         
              // Lấy danh sách sản phẩm và số lượng
+            let totalMoney=0;
             const foods = await allModel.ChiTietDonHang.findAll({
                 where: {
                     idDonHang
@@ -55,7 +56,15 @@ const orderUpdateWorker = new Worker(
                 attributes: ['idSanPham', 'soLuongDat'],
                 transaction
             });
-            const updates = foods.map(item => {
+            const updates = foods.map(async(item) => {
+                const food = await allModel.SanPham.findOne({
+                    where: {
+                        idSanPham: item['idSanPham'],
+                    },
+                    raw: true,
+                    attributes: ['giaTien'],
+                })
+                totalMoney+=parseFloat(food['giaTien'])*parseInt(item['soLuongDat']);
                 return allModel.SanPham.update(
                     {
                         soLuongDaBan: allModel.sequelize.literal(`soLuongDaBan + ${item['soLuongDat']}`)
@@ -67,6 +76,41 @@ const orderUpdateWorker = new Worker(
                         transaction 
                     }
                 );
+            });
+            const order= await allModel.DonHang.findOne({
+                where: {
+                    idDonHang
+                },
+                include:[
+                    {
+                        model: allModel.NguoiDung,
+                        as: 'User',
+                        attributes: ['idNguoiDung','tichDiem'],
+                    }
+                ],
+                raw: true,
+                nest: true,
+            })
+            let tichDiem;
+            console.log(totalMoney);
+            if (totalMoney < 50000) {
+                tichDiem = 0;
+            } else if (totalMoney < 150000) {
+                tichDiem = 2000;
+            } else {
+                tichDiem = 3000;
+            }
+
+            await allModel.NguoiDung.update({
+                tichDiem: order['User']['tichDiem']+tichDiem
+            },{
+                where:{
+                    idNguoiDung: order['User']['idNguoiDung']
+                },
+                transaction
+            })
+            _io.emit('SEND_SCORE_CLIENT', {
+                tichDiem:(order['User']['tichDiem']+tichDiem)
             });
             await Promise.all(updates);
             await transaction.commit();

@@ -84,6 +84,7 @@ export const listFood= async (req: Request, res: Response) => {
         where:{
             deleted:0,
             trangThai:'active',
+            donViTinh:'suất',
         },
         raw:true,
         attributes:['idSanPham','slug','tenSanPham','giaTien','images','soLuongDaBan','moTa']
@@ -274,7 +275,6 @@ export const listOrder = async(req: Request, res: Response) => {
 
 export const listComment = async(req: Request, res: Response) => {
     const {idSanPham} = req.query;
-    console.log(req.query);
     try {
         const isExistComment = await allModel.BinhLuanSanPham.findOne({
             where:{

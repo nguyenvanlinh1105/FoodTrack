@@ -14,24 +14,24 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.static-top.shadow
               button.btn.btn-primary(type='button')
                 i.fas.fa-search.fa-sm
     li.nav-item.dropdown.no-arrow.mx-1
-      a#alertsDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+      a#notificationsDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
         i.fas.fa-bell.fa-fw
-        span.badge.badge-danger.badge-counter 3+
-      .dropdown-list.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby='alertsDropdown')
-        h6.dropdown-header Alerts Center
+        span.badge.badge-danger.badge-counter 0
+      .dropdown-list.dropdown-list-notification.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby='alertsDropdown')
+        h6.dropdown-header Danh sách thông báo mới
         a.dropdown-item.d-flex.align-items-center(href='#')
           .mr-3
             .icon-circle.bg-primary
               i.fas.fa-file-alt.text-white
           div
-            .small.text-gray-500 December 12, 2019
+            .small.text-gray-500 12/12/2024
             span.font-weight-bold A new monthly report is ready to download!
         a.dropdown-item.d-flex.align-items-center(href='#')
           .mr-3
             .icon-circle.bg-success
               i.fas.fa-donate.text-white
           div
-            .small.text-gray-500 December 7, 2019
+            .small.text-gray-500 7/12/2024
             | $290.29 has been deposited into your account!
         a.dropdown-item.d-flex.align-items-center(href='#')
           .mr-3
@@ -40,14 +40,14 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.static-top.shadow
           div
             .small.text-gray-500 December 2, 2019
             | Spending Alert: We've noticed unusually high spending for your account.
-        a.dropdown-item.text-center.small.text-gray-500(href='#') Show All Alerts
+        a.dropdown-item.text-center.small.text-gray-500(href='#') Xem tất cả thông báo
     li.nav-item.dropdown.no-arrow.mx-1
       a#messagesDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
         i.fas.fa-envelope.fa-fw
         span.badge.badge-danger.badge-counter.total-message #{countUnreadMessages}
       .dropdown-list.dropdown-list-message.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby='messagesDropdown' style="max-height: 300px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #c4c4c4 transparent;")
         h6.dropdown-header Danh sách tin nhắn mới
-        if(listUnreadMessages.length != 0)
+        if(listUnreadMessages.length > 0)
           each message in listUnreadMessages
             a.dropdown-item.d-flex.align-items-center(href=`/admin/chat/${message.idPhongChat}` idChat=message.idTinNhan status=message.tinhTrang)
               .dropdown-list-image.mr-3
@@ -57,7 +57,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.static-top.shadow
                 | #{message.noiDung}
                 .small.text-gray-500 #{message.tenNguoiDung}
         else 
-          h7.dropdown-item.text-center.text-gray-500 Chưa có tin nhắn mới
+          h7.dropdown-item.text-center.text-gray-500.none-messages Chưa có tin nhắn mới
         a.dropdown-item.text-center.small.text-gray-500.last-text-list-message(href='/admin/management/customer') Xem tất cả tin nhắn
     .topbar-divider.d-none.d-sm-block
     li.nav-item.dropdown.no-arrow(userAdminLi)
