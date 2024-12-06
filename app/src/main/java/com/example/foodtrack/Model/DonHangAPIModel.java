@@ -18,6 +18,15 @@ public class DonHangAPIModel implements Serializable {
     private String ghiChu ;
     private String thoiGianHoanThanh;
 
+    private Integer tichDiem;
+
+    public Integer getTichDiem() {
+        return tichDiem;
+    }
+
+    public void setTichDiem(Integer tichDiem) {
+        this.tichDiem = tichDiem;
+    }
 
     public String getThoiGianHoanThanh() {
         return thoiGianHoanThanh;

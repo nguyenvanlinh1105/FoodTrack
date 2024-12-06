@@ -4,11 +4,20 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class ThongBaoModel implements Serializable {
+    private int idThongBao;
     private String idUser;
     private String tieuDe;
     private String noiDung;
     private String loaiThongBao;
     private Date ngayThongBao;
+
+    public int getIdThongBao() {
+        return idThongBao;
+    }
+
+    public void setIdThongBao(int idThongBao) {
+        this.idThongBao = idThongBao;
+    }
 
     public String getIdUser() {
         return idUser;

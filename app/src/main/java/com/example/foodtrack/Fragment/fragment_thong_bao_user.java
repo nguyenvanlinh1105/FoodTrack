@@ -2,15 +2,19 @@ package com.example.foodtrack.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.foodtrack.API.APIService;
@@ -21,6 +25,8 @@ import com.example.foodtrack.Adapter.notification_list_adapter;
 import com.example.foodtrack.Model.DonHangAPIModel;
 import com.example.foodtrack.Model.ThongBaoModel;
 import com.example.foodtrack.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,8 +52,13 @@ public class fragment_thong_bao_user extends Fragment {
 
     private ListView lv_thong_bao_user;
     List<ThongBaoModel> listThongBao = new ArrayList<>();
+    private LinearLayout if_empty;
+
+    private ImageView btn_back;
 
     String idNguoiDung;
+
+    SharedPreferences sharedPreferencesUser;
 
     private notification_list_adapter listAdapter;
 
@@ -80,7 +91,7 @@ public class fragment_thong_bao_user extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        SharedPreferences sharedPreferencesUser = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
+        sharedPreferencesUser = getContext().getSharedPreferences("shareUserResponseLogin", Context.MODE_PRIVATE);
         idNguoiDung = sharedPreferencesUser.getString("idUser", "-1");
     }
 
@@ -89,8 +100,18 @@ public class fragment_thong_bao_user extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thong_bao_user, container, false);
 
+        btn_back = (ImageView) view.findViewById(R.id.btn_back_thong_bao_user);
+        if_empty = (LinearLayout) view.findViewById(R.id.image_if_empty_thong_bao_user);
         lv_thong_bao_user = (ListView) view.findViewById(R.id.lv_thong_bao_user);
+//        Log.d("idNguoiDung", idNguoiDung);
         GetNoti(idNguoiDung);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
         return view;
     }
@@ -116,15 +137,20 @@ public class fragment_thong_bao_user extends Fragment {
         protected void onPostExecute(List<ThongBaoModel> result) {
             super.onPostExecute(result);
             if (result != null && !result.isEmpty()) {
-//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//                String json = gson.toJson(result);
-//                Log.d("responseBody", "onPostExecute: " + json);
+
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(result);
+                Log.d("responseBody", "onPostExecute: " + json);
+
+                lv_thong_bao_user.setVisibility(View.VISIBLE);
+                if_empty.setVisibility(View.GONE);
+
                 listThongBao = result;
                 listAdapter = new notification_list_adapter(getContext(), result);
                 lv_thong_bao_user.setAdapter(listAdapter);
             } else {
                 lv_thong_bao_user.setVisibility(View.GONE);
-//                imageIfEmpty.setVisibility(View.VISIBLE);
+                if_empty.setVisibility(View.VISIBLE);
             }
         }
     }

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:background="@drawable/thong_bao_item_bg"
+    android:layout_height="wrap_content"
     tools:context=".Fragment.fragment_list_chat_user_item">
 
     <!-- TODO: Update blank fragment layout -->
@@ -15,6 +16,8 @@
 
 
         <TextView
+            android:drawableLeft="@drawable/image_bell"
+            android:drawablePadding="10dp"
             android:id="@+id/tv_tieuDe_thong_bao_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,16 +36,14 @@
             android:id="@+id/tv_loai_thong_bao_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="36dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Loại thông báo"
-            android:textColor="@color/sub_primary_color"
+            android:layout_marginTop="3dp"
+            android:text="Loại thông báo : Thông báo nhắc nhở"
+            android:textColor="#FFB55E"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.167"
+            app:layout_constraintStart_toStartOf="@+id/tv_tieuDe_thong_bao_item"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tieuDe_thong_bao_item" />
 
         <TextView
             android:id="@+id/tv_noiDung_thong_bao_item"
@@ -54,14 +55,13 @@
             android:layout_marginBottom="5dp"
             android:fontFamily="sans-serif-medium"
             android:lines="3"
-            android:text="Cảm ơn bạn đã đặt hàng ở ..."
+            android:text="Đơn hàng DH015 đã được đặt hàng thành công ! vui lòng kiểm trả lại đơn mua."
             android:textColor="#505050"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_loai_thong_bao_item"
-            app:layout_constraintTop_toBottomOf="@+id/tv_loai_thong_bao_item"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_loai_thong_bao_item"/>
 
         <TextView
             android:id="@+id/tv_ngay_thong_bao_item"

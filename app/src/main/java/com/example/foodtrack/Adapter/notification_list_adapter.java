@@ -30,7 +30,7 @@ public class notification_list_adapter extends ArrayAdapter<ThongBaoModel> {
             view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_thong_bao_item, parent, false);
         }
 
-        TextView tv_loai = (TextView) view.findViewById(R.id.tv_loai_thong_bao_item);
+//        TextView tv_loai = (TextView) view.findViewById(R.id.tv_loai_thong_bao_item);
         TextView tv_tieuDe = (TextView) view.findViewById(R.id.tv_tieuDe_thong_bao_item);
         TextView tv_noiDung = (TextView) view.findViewById(R.id.tv_noiDung_thong_bao_item);
         TextView tv_ngay = (TextView) view.findViewById(R.id.tv_ngay_thong_bao_item);
@@ -38,7 +38,6 @@ public class notification_list_adapter extends ArrayAdapter<ThongBaoModel> {
         if (noti != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
 
-            tv_loai.setText(noti.getLoaiThongBao());
             tv_tieuDe.setText(noti.getTieuDe());
             tv_noiDung.setText(noti.getNoiDung());
             tv_ngay.setText(dateFormat.format(noti.getNgayThongBao().getTime()));

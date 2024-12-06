@@ -34,6 +34,8 @@ import com.example.foodtrack.Model.SanPhamModel;
 import com.example.foodtrack.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
@@ -179,8 +181,6 @@ public class Home_Page extends Fragment {
                             break;
                     }
                 }).attach();
-
-
     }
 
     private void ControlButton() {
@@ -255,7 +255,14 @@ public class Home_Page extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     List<SanPhamAPIModel> searchResults = response.body();
                     MainActivity mainActivity = (MainActivity) getActivity();
+
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String json = gson.toJson(searchResults);
+                    Log.d("searchResults", json);
+
                     if (mainActivity != null) {
+//                        Log.d("mainActivity", "mainActivity khong null");
+                        edt_search.setText("");
                         Fragment searchFragment = fragment_home_page_ket_qua_tim_kiem.newInstance(searchResults);
                         mainActivity.ReplaceFragment(searchFragment);
                     }
@@ -272,61 +279,61 @@ public class Home_Page extends Fragment {
     }
 
 
-        private void GetDealHoi () {
-            APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamAPIModel>>() {
-                @Override
-                public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        List<SanPhamAPIModel> listSanPhamDeaHoi = response.body();
-                        Log.d("API_SUCCESS", "Data size: " + listSanPhamDeaHoi.size());
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                        rvDealHoi.setLayoutManager(layoutManager);
-                        recyclerView_deal_hoi_API_adapter dealAdapter = new recyclerView_deal_hoi_API_adapter(getContext(), listSanPhamDeaHoi);
-                        rvDealHoi.setAdapter(dealAdapter);
+    private void GetDealHoi() {
+        APIService.API_SERVICE.getListSanphamHomePage_DealHoi().enqueue(new Callback<List<SanPhamAPIModel>>() {
+            @Override
+            public void onResponse(Call<List<SanPhamAPIModel>> call, Response<List<SanPhamAPIModel>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<SanPhamAPIModel> listSanPhamDeaHoi = response.body();
+                    Log.d("API_SUCCESS", "Data size: " + listSanPhamDeaHoi.size());
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                    rvDealHoi.setLayoutManager(layoutManager);
+                    recyclerView_deal_hoi_API_adapter dealAdapter = new recyclerView_deal_hoi_API_adapter(getContext(), listSanPhamDeaHoi);
+                    rvDealHoi.setAdapter(dealAdapter);
 //                    Log.d("Text.....", listSanPhamDeaHoi.get(0).getImages());
 
-                    } else {
-                        UseFallbackData();
-                        Log.e("API_ERROR", "Response not successful: " + response.code());
-                        if (response.errorBody() != null) {
-                            try {
-                                Log.e("API_ERROR", "Error body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                } else {
+                    UseFallbackData();
+                    Log.e("API_ERROR", "Response not successful: " + response.code());
+                    if (response.errorBody() != null) {
+                        try {
+                            Log.e("API_ERROR", "Error body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-
                     }
+
                 }
+            }
 
 
-                @Override
-                public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
-                    Log.e("API_ERROR", "Error: " + t.getMessage());
-                    if (t instanceof JsonSyntaxException) {
-                        JsonSyntaxException jsonError = (JsonSyntaxException) t;
-                        Log.e("API_ERROR", "JSON Error: " + jsonError.getCause());
-                    }
-                    t.printStackTrace();
-                    Toast.makeText(getContext(), "Lỗi dữ liệu: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            @Override
+            public void onFailure(Call<List<SanPhamAPIModel>> call, Throwable t) {
+                Log.e("API_ERROR", "Error: " + t.getMessage());
+                if (t instanceof JsonSyntaxException) {
+                    JsonSyntaxException jsonError = (JsonSyntaxException) t;
+                    Log.e("API_ERROR", "JSON Error: " + jsonError.getCause());
                 }
-            });
-        }
-
-        private void UseFallbackData () {
-            // Khởi tạo dữ liệu nếu get fail api
-            listProduct = new ArrayList<>();
-            InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct nếu không lấy được data từ api
-            UpdateRecyclerView(listProduct);
-        }
-
-        private void UpdateRecyclerView (List < SanPhamModel > data) {
-            // Cập nhật RecyclerView với dữ liệu (có thể từ API hoặc dữ liệu khởi tạo) rút gọn code cho dễ nhìn
-            LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-            rvDealHoi.setLayoutManager(layoutManager);
-            recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), data);
-            rvDealHoi.setAdapter(dealAdapter);
-        }
-
-
+                t.printStackTrace();
+                Toast.makeText(getContext(), "Lỗi dữ liệu: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    private void UseFallbackData() {
+        // Khởi tạo dữ liệu nếu get fail api
+        listProduct = new ArrayList<>();
+        InitializeData(); // Hàm này sẽ thêm dữ liệu vào listProduct nếu không lấy được data từ api
+        UpdateRecyclerView(listProduct);
+    }
+
+    private void UpdateRecyclerView(List<SanPhamModel> data) {
+        // Cập nhật RecyclerView với dữ liệu (có thể từ API hoặc dữ liệu khởi tạo) rút gọn code cho dễ nhìn
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvDealHoi.setLayoutManager(layoutManager);
+        recyclerView_deal_hoi_adapter dealAdapter = new recyclerView_deal_hoi_adapter(getContext(), data);
+        rvDealHoi.setAdapter(dealAdapter);
+    }
+
+
+}

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fillViewport="true"
     android:background="@color/white"
+    android:fillViewport="true"
     tools:context=".Fragment.checkout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,12 +101,12 @@
                     android:src="@drawable/locate_orange_30" />
 
                 <TextView
-                    android:layout_marginEnd="12dp"
                     android:id="@+id/tv_address"
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="12dp"
                     android:maxLines="3"
                     android:text="Khách sạn Novotel, tầng 12 phòng 15, Đà Nẵng"
                     android:textColor="#6D3805" />
@@ -214,8 +214,7 @@
                     <LinearLayout
                         android:id="@+id/icon_check_tien_mat_checkout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        ></LinearLayout>
+                        android:layout_height="match_parent"></LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -245,6 +244,61 @@
                 android:textColor="#6D3805"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/tich_diem_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icon_tich_diem" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="Dùng "
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_so_diem_tich_duoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="2000"
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text=" điểm đã tích được"
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:id="@+id/icon_check_tich_diem_checkout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"></LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -312,7 +366,7 @@
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="2.000vnđ"
+                    android:text="0vnđ"
                     android:textColor="#6D3805"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -334,6 +388,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+
                     android:id="@+id/tv_shipping_fee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -348,9 +403,45 @@
                     android:textColor="#6D3805"
                     android:textSize="16sp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_tich_diem_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Sử dụng điểm"
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_tich_diem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
+                    android:gravity="right"
+
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="-2000vnđ"
+                    android:textColor="#6D3805"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/tenSanPham"
                     android:layout_width="wrap_content"
@@ -364,15 +455,15 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:layout_weight="1"
                     android:id="@+id/tv_ghi_chu"
-                    android:layout_marginLeft="30dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="12dp"
-                    android:gravity="right"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
+                    android:gravity="right"
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"

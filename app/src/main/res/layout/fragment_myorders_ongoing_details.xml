@@ -523,6 +523,29 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sử dụng điểm"
+                            android:textColor="@color/brown"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_tichDiem_myOrders_detail"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="-15.000vnđ"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/brown"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="20dp">
 
                         <TextView
