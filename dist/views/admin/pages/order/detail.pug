@@ -1,0 +1,117 @@
+extends ../../layouts/default.pug
+
+block content 
+    .container-fluid.mt-4
+        .d-sm-flex.align-items-center.justify-content-between.mb-4
+            h1.h3.mb-2.text-gray-800 
+                strong Thông đơn hàng
+        // Page Heading
+        p.mb-4
+            | Thông tin chi tiết đơn hàng
+            .row
+                // Column
+                .col-lg-4.col-xlg-3.col-md-5
+                    .card
+                        .card-body
+                            center.m-t-30
+                                if(order.User.avatar)
+                                    img.img-profile.rounded-circle(src=`${order.User.avatar}` style="width:350px")
+                                else
+                                    if(order.User.gioiTinh==='Nam')
+                                        img.img-profile.rounded-circle(src='/admin/images/undraw_profile.svg')
+                                    else
+                                        img.img-profile.rounded-circle(src='/admin/images/undraw_profile_3.svg')
+                                h4.card-title.mt-3 #{order.User.hoTen}
+                                h6.card-subtitle Khách hàng
+                // Column end
+                // Column start
+                .col-lg-8.col-xlg-9.col-md-7
+                    .card
+                        .card-body
+                            form.form-horizontal.form-material()
+                                .form-group
+                                    label.col-md-12 Họ tên người đặt
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Họ tên', name='hoTen', value=order.User.hoTen readonly)
+                                .form-group
+                                    label.col-md-12 Tình trạng đơn hàng
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Tình trạng đơn', name='tinhTrang', value=order.tinhTrang readonly)
+                                .form-group
+                                    label.col-md-12 Số điện thoại
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Số điện thoại', name='sdt', value=order.User.sdt readonly)
+                                .form-group
+                                    label.col-md-12 Ngày tạo đơn
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='date', placeholder='Ngày tạo đơn', name='ngayTao', value=order.ngayTao readonly)
+                                .form-group
+                                    label.col-md-12 Phương thức thanh toán
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Chưa có', name='ngayTao', value=order.tinhTrangThanhToan readonly)
+                                .form-group
+                                    label.col-md-12 Ngày hoàn thành
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='date', placeholder='Ngày hoàn thành', name='ngayTao', value=order.thoiGianHoanThanh readonly)
+                                .form-group
+                                    label.col-md-12 Địa chỉ giao hàng
+                                    .col-md-12
+                                        textarea.form-control.form-control-line(name='diaChi' rows='3' placeholder="Chưa có địa chỉ" readonly)= order.diaChi
+                                .form-group
+                                    label.col-md-12 Ghi chú
+                                    .col-md-12
+                                        textarea.form-control.form-control-line(name='diaChi' rows='3' placeholder="Chưa có ghi chú" readonly)= order.ghiChu
+        .row(style="margin-bottom:10px")
+            .col-lg-8.col-xl-9.col-md-7(style="flex: 0 0 100%; max-width:100%;")
+                .card(style='border-radius: 10px;')
+                    .card-body.p-4
+                        .d-flex.justify-content-between.align-items-center.mb-4
+                            h5.fw-normal.mb-0(style='color: #f6c23e;') <strong>Thông tin món ăn đã đặt </strong>
+                            p.text-muted.mb-0 Mã đơn hàng : #{order.idDonHang}
+                        .card.shadow-0.border.mb-3.text-center(style="background-color: #f8f9fa; padding: 10px; border-radius: 5px; font-weight: bold; border: 1px solid #e0e0e0;")
+                            .row
+                                .col-md-2
+                                    h6(style="margin: 0; color: #333;") <strong>STT</strong>
+                                .col-md-2
+                                    h6(style="margin: 0; color: #333;") <strong>Hình ảnh</strong>
+                                .col-md-2
+                                    h6(style="margin: 0; color: #333;") <strong>Tên món ăn</strong>
+                                .col-md-2
+                                    h6(style="margin: 0; color: #333;") <strong>Số lượng đặt</strong>
+                                .col-md-2
+                                    h6(style="margin: 0; color: #333;") <strong>Đơn vị tính</strong>
+                                .col-md-2
+                                    h6(style="margin: 0; color: #333;") <strong>Giá tiền</strong>
+                        div(clss="order-food-detail" style="max-height: 325px; overflow-y: auto; border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px;")
+                            each item, index in foods
+                                .card.shadow-0.border.mb-4(style="border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden;")
+                                    .card-body(style="padding: 15px; background-color: #fff;")
+                                        .row
+                                            .col-md-2.text-center.d-flex.justify-content-center.align-items-center
+                                                p(style="margin: 0; font-size: 14px; font-weight: bold;") #{index + 1}
+                                            .col-md-2
+                                                img.img-fluid(style="max-width: 80%; height: auto; border-radius: 5px;" src=item.Product.images alt='Images')
+                                            .col-md-2.text-center.d-flex.justify-content-center.align-items-center
+                                                h5.mb-0(style="font-size: 16px; font-weight: bold; color: #555;") #{item.Product.tenSanPham}
+                                            .col-md-2.text-center.d-flex.justify-content-center.align-items-center
+                                                p(style="margin: 0; font-size: 14px; color: #555;") #{item.soLuongDat}
+                                            .col-md-2.text-center.d-flex.justify-content-center.align-items-center
+                                                p(style="margin: 0; font-size: 14px; color: #555;") #{item.Product.donViTinh}
+                                            .col-md-2.text-center.d-flex.justify-content-center.align-items-center
+                                                p(style="margin: 0; font-size: 14px; color: #555;") #{item.Product.giaTien}
+                        h5.fw-normal.mb-0(style='color: #f6c23e; margin-top:15px') <strong>Chi tiết hóa đơn </strong>
+                        .d-flex.justify-content-between.pt-2
+                            p.fw-bold.mb-0 Tổng tiền:
+                            p.text-muted.mb-0
+                                span.fw-bold.me-4
+                                |  #{sum}
+                        .d-flex.justify-content-between.mb-5
+                            p.fw-bold.mb-0 Tiền giao hàng:
+                            p.text-muted.mb-0
+                                span.fw-bold.me-4
+                                | 15.000 đ
+                    .card-footer.border-0.px-4.py-5(style='background-color: #ff5e00; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;')
+                        h5.d-flex.align-items-center.justify-content-end.text-white.text-uppercase.mb-0
+                            <strong>Tổng số tiền là: </strong>
+                            span.h5.mb-0.ms-2.ml-3 #{total}
+                            // Column end

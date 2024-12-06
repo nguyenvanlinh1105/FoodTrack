@@ -1,0 +1,66 @@
+extends ../../layouts/default.pug
+block content
+    .container
+        .row.clearfix
+            .col-lg-12
+                .card.chat-app(style="background: #fff; transition: .5s; border: 0; margin-bottom: 30px; margin-top: 30px; border-radius: .55rem; position: relative; width: 100%; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);")
+                    .chat(style="height: 530px; position: relative")
+                        .chat-header.clearfix
+                            .row
+                                .col-lg-6
+                                    if(customer.avatar)
+                                        a(href='javascript:void(0);', data-toggle='modal', data-target='#view_info')
+                                            img(src=customer.avatar, alt='avatar')
+                                    else
+                                        if(customer.gioiTinh==='Nam')
+                                            a(href='javascript:void(0);', data-toggle='modal', data-target='#view_info')
+                                                img(src='/admin/images/undraw_profile.svg', alt='avatar')
+                                        else 
+                                            a(href='javascript:void(0);', data-toggle='modal', data-target='#view_info')
+                                                img(src='/admin/images/undraw_profile_3.svg', alt='avatar')
+                                    .chat-about
+                                        h6.m-b-0 #{customer.hoTen}
+                                .col-lg-6.hidden-sm.text-right
+                                    a.btn.btn-outline-secondary(href='javascript:void(0);' style="margin-right:10px")
+                                        i.fa.fa-camera
+                                    a.btn.btn-outline-primary(href='javascript:void(0);' style="margin-right:10px")
+                                        i.fa.fa-image
+                                    a.btn.btn-outline-info(href='javascript:void(0);' style="margin-right:10px")
+                                        i.fa.fa-cogs
+                                    a.btn.btn-outline-warning(href='javascript:void(0);')
+                                        i.fa.fa-question
+                        .chat-history(style="height: 369.2px; max-height: 369.2px; overflow-y: auto")
+                            ul.m-b-0#chat-box()
+                                for chat in listChat
+                                    if chat.Gui==user.idNguoiDung
+                                        li.clearfix
+                                            .message-data.text-right.message-data-right
+                                                span.message-data-time(style="margin-right:10px") #{chat.thoiGianTao}
+                                                if(chat.avatar)
+                                                    img.message-data-avatar(src=chat.avatar, alt='avatar')
+                                                else
+                                                    if(chat.gioiTinh==='Nam')
+                                                        img(src='/admin/images/undraw_profile.svg', alt='avatar')
+                                                    else 
+                                                        img(src='/admin/images/undraw_profile_3.svg', alt='avatar')
+                                            div.message.other-message.float-right
+                                                = chat.noiDung
+                                    else
+                                        li.clearfix
+                                            .message-data.message-data-left
+                                                if(chat.avatar)
+                                                    img.message-data-avatar(src=chat.avatar, alt='avatar')
+                                                else
+                                                    if(chat.gioiTinh==='Nam')
+                                                        img(src='/admin/images/undraw_profile.svg', alt='avatar')
+                                                    else 
+                                                        img(src='/admin/images/undraw_profile_3.svg', alt='avatar')
+                                                span.message-data-time #{chat.thoiGianTao}
+                                            div.message.other-message
+                                                = chat.noiDung
+                        .chat-message.clearfix(style="position:absolute; bottom:0; width:100%")
+                            .input-group.mb-0
+                                .input-group-prepend
+                                    span.input-group-text
+                                        i.fas.fa-message
+                                input.form-control(chat-input type='text', placeholder='Enter text here...' id-user=user.idNguoiDung)

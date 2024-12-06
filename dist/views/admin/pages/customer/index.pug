@@ -2,17 +2,14 @@ extends ../../layouts/default.pug
 block content 
     .container-fluid.mt-4
       .d-sm-flex.align-items-center.justify-content-between.mb-4
-          h1.h3.mb-2.text-gray-800 Bảng quản lý khách hàng
-          a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='/admin/management/category/create')
-            i.fas.fa-list-1-2.fa-sm.text-white-50
-            |  Tạo danh mục mới
+          h1.h3.mb-2.text-gray-800 <strong>Bảng quản lý khách hàng</strong>
       // Page Heading
       p.mb-4
         | Bảng này giúp quản lý khách hàng sử dụng trong App 
       // DataTales Example
       .card.shadow.mb-4
         .card-header.py-3
-          h6.m-0.font-weight-bold.text-primary Danh mục
+          h6.m-0.font-weight-bold.text-primary Khách hàng
         .card-body
           .table-responsive
             table#dataTable.table.table-bordered(width='100%', cellspacing='0')
@@ -35,17 +32,17 @@ block content
                       td.text-center #{customer.sdt}
                       td.text-center
                         if(customer.trangThai == "active")
-                          a(href=`/admin/management/customer/change-status/${customer.token}/inactive` class="badge badge-success"
+                          a(href=`/admin/management/customer/change-status/${customer.token}/inactive` class="badge badge-success" style="padding:5px"
                                   staff-id=`` staff-status=`inactive`) Hoạt động
                         else
-                          a(href=`/admin/management/customer/change-status/${customer.token}/active` class="badge badge-danger"
+                          a(href=`/admin/management/customer/change-status/${customer.token}/active` class="badge badge-danger" style="padding:5px"
                               staff-id=`` staff-status=`active`) Dừng hoạt động
                       td.text-center #{customer.gioiTinh}
                       td.text-center(style="display: flex; justify-content: space-between; align-items: center; height: 48px;")
                           a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/management/customer/detail/${customer.token}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
                               i.fas.fa-eye(style="margin-right: 5px;")
                               |  Chi tiết
-                          a.btn.btn-success.btn-sm.btn-table(href=`/${prefixAdmin}/management/customer/${customer.token}`, style="flex: 1; padding: 5px 10px; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                          a.btn.btn-success.btn-sm.btn-table(href=`/${prefixAdmin}/chat/${customer.idPhongChat}`, style="flex: 1; padding: 5px 10px; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
                               i.fas.fa-comment-alt(style="margin-right: 5px;")
                               |  Nhắn tin
                           a.btn.btn-danger.btn-sm.btn-table(href=`#`, style="flex: 1; padding: 5px 10px; background-color: #dc3545; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center;" btn-delete-customer=customer.token)

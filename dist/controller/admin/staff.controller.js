@@ -122,6 +122,7 @@ const createAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         ngayCapNhat: new Date(),
         vaiTro: req.body['vaiTro'],
         token: generateString.generateRandomString(30),
+        tichDiem: 0,
     };
     try {
         const createdUser = yield allModel.NguoiDung.create(newUser);
@@ -170,7 +171,7 @@ const detailStaffPage = (req, res) => __awaiter(void 0, void 0, void 0, function
     staff['ngayTao'] = (0, moment_1.default)(data['ngayTao']).format('YYYY-MM-DD');
     const roles = yield allModel.VaiTro.findAll({
         where: {
-            idVaiTro: ['VT001', 'VT003', 'VT004', 'VT005']
+            idVaiTro: ['VT003', 'VT004', 'VT005']
         },
         raw: true
     });

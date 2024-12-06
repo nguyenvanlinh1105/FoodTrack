@@ -66,12 +66,19 @@ const paginationGeneral = (req_1, ...args_1) => __awaiter(void 0, [req_1, ...arg
         pagination.currentPage = Number(req.query.page);
     }
     pagination.skip = (pagination.currentPage - 1) * pagination.limitItems;
-    const countTotal = yield table.count({
-        where: {
-            deleted: 0
-        }
-    });
-    pagination['totalPages'] = Math.ceil(countTotal / pagination.limitItems);
-    return pagination;
+    if (table.name === 'BinhLuanSanPham') {
+        const countTotal = yield table.count({});
+        pagination['totalPages'] = Math.ceil(countTotal / pagination.limitItems);
+        return pagination;
+    }
+    else {
+        const countTotal = yield table.count({
+            where: {
+                deleted: 0
+            }
+        });
+        pagination['totalPages'] = Math.ceil(countTotal / pagination.limitItems);
+        return pagination;
+    }
 });
 exports.paginationGeneral = paginationGeneral;

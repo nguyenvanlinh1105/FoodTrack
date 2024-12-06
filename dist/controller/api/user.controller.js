@@ -35,8 +35,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.passwordReset = exports.otp = exports.passwordForgot = exports.register = exports.login = void 0;
-const NguoiDung_model_1 = __importDefault(require("../../model/NguoiDung.model"));
+exports.listNotification = exports.comment = exports.getInfo = exports.updateAvatar = exports.updateInfo = exports.passwordReset = exports.otp = exports.passwordForgot = exports.register = exports.login = void 0;
+const allModel = __importStar(require("../../model/index.model"));
+const sequelize_1 = require("sequelize");
 const hashAndVerifyPassword_helper_1 = require("../../helper/hashAndVerifyPassword.helper");
 const generateNextId_helper_1 = __importDefault(require("../../helper/generateNextId.helper"));
 const generateRandom_helper_1 = require("../../helper/generateRandom.helper");
@@ -45,15 +46,21 @@ const generateString = __importStar(require("../../helper/generateRandom.helper"
 const isValid = __importStar(require("../../helper/validField.helper"));
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, matKhau } = req.body;
-    console.log(email, matKhau);
     try {
-        const user = yield NguoiDung_model_1.default.findOne({
+        const user = yield allModel.NguoiDung.findOne({
             where: {
                 email: email,
                 trangThai: 'active',
                 vaiTro: 'VT002',
                 deleted: 0
             },
+            include: [
+                {
+                    model: allModel.ChiTietPhongChat,
+                    as: 'RoomDetails',
+                    attributes: ['idPhongChat']
+                }
+            ],
             raw: true
         });
         if (!user) {
@@ -64,11 +71,16 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             if (isMatch) {
                 res.status(200).json({
                     message: "Đăng nhập thành công",
-                    hoTen: user['hoTen'],
+                    idUser: user['idNguoiDung'],
+                    hoTenNguoiDung: user['hoTen'],
                     email: user['email'],
                     sdt: user['sdt'],
                     gioiTinh: user['gioiTinh'],
-                    avatar: user['avatar']
+                    avatar: user['avatar'],
+                    diaChi: user['diaChi'],
+                    idPhongChat: user['RoomDetails.idPhongChat'],
+                    ngaySinh: user['ngaySinh'],
+                    tichDiem: user['tichDiem'],
                 });
             }
             else {
@@ -77,7 +89,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
     catch (error) {
-        res.status(500).json({ message: "Lỗi server" });
+        res.status(500).json({ message: 'Lỗi ' + error.message });
     }
 });
 exports.login = login;
@@ -92,7 +104,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return;
     }
     try {
-        const user = yield NguoiDung_model_1.default.findOne({
+        const user = yield allModel.NguoiDung.findOne({
             where: {
                 email: email,
                 trangThai: 'active',
@@ -105,7 +117,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         else {
             const newUser = {
-                idNguoiDung: yield (0, generateNextId_helper_1.default)(NguoiDung_model_1.default, 'ND'),
+                idNguoiDung: yield (0, generateNextId_helper_1.default)(allModel.NguoiDung, 'ND'),
                 hoTen: hoTenNguoiDung,
                 email: email,
                 sdt: sdt,
@@ -116,24 +128,34 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 ngayCapNhat: new Date(),
                 vaiTro: 'VT002',
                 token: generateString.generateRandomString(30),
+                tichDiem: 1000
             };
-            const createdUser = yield NguoiDung_model_1.default.create(newUser);
+            const createdUser = yield allModel.NguoiDung.create(newUser);
+            const createdRoom = yield allModel.PhongChat.create({
+                idPhongChat: yield (0, generateNextId_helper_1.default)(allModel.PhongChat, 'PC'),
+                loaiPhong: 'private',
+                thoiGianTao: new Date(),
+                thoiGianCapNhat: new Date()
+            });
+            yield allModel.ChiTietPhongChat.create({
+                idNguoiDung: createdUser['idNguoiDung'],
+                idPhongChat: createdRoom['idPhongChat'],
+            });
             res.status(200).json({ message: 'Đăng ký thành công!' });
         }
     }
     catch (error) {
-        res.status(500).json({ message: 'Lỗi server' });
+        res.status(500).json({ message: 'Lỗi ' + error.message });
     }
 });
 exports.register = register;
 const passwordForgot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = req.body['email'];
-    console.log(email);
     if (!isValid.isValidEmail(email)) {
         res.status(404).json({ message: 'Email không hợp lệ' });
         return;
     }
-    const user = yield NguoiDung_model_1.default.findOne({
+    const user = yield allModel.NguoiDung.findOne({
         where: {
             email: email,
             trangThai: 'active',
@@ -165,7 +187,6 @@ const otp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.otp = otp;
 const passwordReset = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, matKhau } = req.body;
-    console.log(email, matKhau);
     if (!isValid.isValidEmail(email)) {
         res.status(404).json({ message: 'Email không hợp lệ' });
         return;
@@ -174,7 +195,7 @@ const passwordReset = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(404).json({ message: 'Mật khẩu không hợp lệ' });
         return;
     }
-    const user = yield NguoiDung_model_1.default.findOne({
+    const user = yield allModel.NguoiDung.findOne({
         where: {
             email: email,
             trangThai: 'active',
@@ -187,14 +208,147 @@ const passwordReset = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(404).json({ message: 'Tài khoản không tồn tại' });
     }
     else {
-        yield NguoiDung_model_1.default.update({
+        yield allModel.NguoiDung.update({
             matKhau: (0, hashAndVerifyPassword_helper_1.hashPassword)(matKhau)
         }, {
             where: {
                 email: email
             }
         });
-        res.status(200).json({ matKhau: matKhau, message: 'Đổi mật khẩu thành công' });
+        res.status(200).json({
+            matKhau: matKhau,
+            message: 'Đổi mật khẩu thành công',
+            email: email
+        });
     }
 });
 exports.passwordReset = passwordReset;
+const updateInfo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser, hoTenNguoiDung, sdt, email, gioiTinh, ngaySinh, diaChi } = req.body;
+    try {
+        yield allModel.NguoiDung.update({
+            hoTen: hoTenNguoiDung,
+            sdt: sdt,
+            email: email,
+            gioiTinh: gioiTinh,
+            ngaySinh: ngaySinh,
+            diaChi: diaChi,
+            ngayCapNhat: new Date()
+        }, {
+            where: {
+                idNguoiDung: idUser
+            }
+        });
+        res.status(200).send({
+            message: 'Update thông tin thành công',
+            hoTenNguoiDung: hoTenNguoiDung,
+            email: email,
+            sdt: sdt,
+            gioiTinh: gioiTinh,
+            diaChi: diaChi,
+            ngaySinh: ngaySinh,
+        });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Lỗi ' + error.message });
+    }
+});
+exports.updateInfo = updateInfo;
+const updateAvatar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idNguoiDung, img } = req.body;
+    try {
+        yield allModel.NguoiDung.update({
+            avatar: img
+        }, {
+            where: {
+                idNguoiDung: idNguoiDung
+            }
+        });
+        res.status(200).send({
+            message: 'Update ảnh thành công',
+            avatar: img
+        });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Lỗi ' + error.message });
+    }
+});
+exports.updateAvatar = updateAvatar;
+const getInfo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idNguoiDung } = req.query;
+    try {
+        const user = yield allModel.NguoiDung.findOne({
+            where: {
+                idNguoiDung: idNguoiDung
+            },
+            raw: true
+        });
+        if (user) {
+            res.status(200).send({
+                idUser: user['idNguoiDung'],
+                hoTenNguoiDung: user['hoTen'],
+                email: user['email'],
+                sdt: user['sdt'],
+                gioiTinh: user['gioiTinh'],
+                avatar: user['avatar'],
+                diaChi: user['diaChi'],
+                ngaySinh: user['ngaySinh'],
+            });
+        }
+        else {
+            res.status(404).send({ message: 'Tài khoản không tồn tại' });
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Lỗi ' + error.message });
+    }
+});
+exports.getInfo = getInfo;
+const comment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idNguoiDung, idSanPham, noiDung, idDonHang } = req.body;
+    console.log(req.body);
+    try {
+        yield allModel.BinhLuanSanPham.create({
+            idNguoiDung: idNguoiDung,
+            idSanPham: idSanPham,
+            idDonHang: idDonHang,
+            noiDung: noiDung,
+            ngayBinhLuan: new Date()
+        });
+        res.status(200).json({ message: 'Bình luận thành công' });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Lỗi ' + error.message });
+    }
+});
+exports.comment = comment;
+const listNotification = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idNguoiDung } = req.query;
+    try {
+        const notifications = yield allModel.ThongBao.findAll({
+            where: {
+                idNguoiDung: idNguoiDung,
+                tinhTrang: 0
+            },
+            order: [
+                ['ngayThongBao', 'DESC']
+            ],
+            raw: true
+        });
+        if (notifications.length > 0) {
+            const idsToUpdate = notifications.map(notification => notification['idThongBao']);
+            yield allModel.ThongBao.update({ tinhTrang: 1 }, {
+                where: {
+                    idThongBao: {
+                        [sequelize_1.Op.in]: idsToUpdate
+                    }
+                }
+            });
+        }
+        res.status(200).json(notifications);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Lỗi ' + error.message });
+    }
+});
+exports.listNotification = listNotification;

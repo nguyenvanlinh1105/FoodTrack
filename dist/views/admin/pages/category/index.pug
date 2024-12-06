@@ -2,7 +2,7 @@ extends ../../layouts/default.pug
 block content 
     .container-fluid.mt-4
       .d-sm-flex.align-items-center.justify-content-between.mb-4
-          h1.h3.mb-2.text-gray-800 Bảng quản lý danh mục
+          h1.h3.mb-2.text-gray-800 <strong>Bảng quản lý danh mục</strong>
           a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='/admin/management/category/create')
             i.fas.fa-list-1-2.fa-sm.text-white-50
             |  Tạo danh mục mới
@@ -18,11 +18,11 @@ block content
             table#dataTable.table.table-bordered(width='100%', cellspacing='0')
               thead
                 tr
-                    th STT
-                    th Tên danh mục
-                    th Mô tả
-                    th Ngày tạo
-                    th Hành động
+                    th.text-center STT
+                    th.text-center Tên danh mục
+                    th.text-center Mô tả
+                    th.text-center Ngày tạo
+                    th.text-center Hành động
               tbody
                 if(categories.length>0)
                   each category, index in categories
@@ -32,15 +32,15 @@ block content
                       td !{category.moTa}
                       td.text-center #{category.ngayTao}
                       td.text-center(style="display: flex; justify-content: space-between; align-items: center; height:65.6px")
-                          a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/category/detail/${category.token}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                          a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/management/category/detail/${category.slug}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
                               i.fas.fa-eye(style="margin-right: 5px;")
                               |  Chi tiết
-                          a.btn.btn-warning.btn-sm.btn-table(href=`/${prefixAdmin}/category/edit/${category.token}`, style="flex: 1; padding: 5px 10px; background-color: #ffc107; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                          a.btn.btn-warning.btn-sm.btn-table(href=`/${prefixAdmin}/management/category/edit/${category.slug}`, style="flex: 1; padding: 5px 10px; background-color: #ffc107; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
                               i.fas.fa-edit(style="margin-right: 5px;")
-                              |  Sửa
-                          a.btn.btn-danger.btn-sm.btn-table(href=`/${prefixAdmin}/category/delete/${category.token}`, style="flex: 1; padding: 5px 10px; background-color: #dc3545; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center;")
+                              |  Sửa danh mục
+                          a.btn.btn-danger.btn-sm.btn-table(href=`#`, style="flex: 1; padding: 5px 10px; background-color: #dc3545; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center;" btn-delete-category=category.slug)
                               i.fas.fa-trash(style="margin-right: 5px;")
-                              |  Xóa
+                              |  Xóa danh mục
                 else
                   tr
                     td(colspan='5')

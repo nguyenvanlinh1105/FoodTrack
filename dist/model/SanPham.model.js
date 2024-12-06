@@ -38,9 +38,10 @@ const SanPham = database_1.default.define("SanPham", {
     moTa: {
         type: sequelize_1.DataTypes.TEXT,
     },
-    soLuong: {
+    soLuongDaBan: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
     },
     donViTinh: {
         type: sequelize_1.DataTypes.STRING,

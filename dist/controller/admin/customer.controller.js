@@ -44,18 +44,31 @@ const pageCustomer = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const pagination = yield (0, pagination_helper_1.paginationCustomer)(req, 4);
     const customers = yield allModel.NguoiDung.findAll({
         attributes: [
+            'idNguoiDung',
             'hoTen', 'email', 'sdt',
             'ngaySinh', 'gioiTinh', 'avatar',
             'trangThai', 'token'
         ],
         where: {
             vaiTro: 'VT002',
-            deleted: 0,
+            deleted: false,
         },
         limit: pagination.limitItems,
         offset: pagination.skip,
-        raw: true
+        raw: true,
     });
+    for (const customer of customers) {
+        const phongChat = yield allModel.ChiTietPhongChat.findOne({
+            where: {
+                idNguoiDung: customer['idNguoiDung'],
+            },
+            attributes: ['idPhongChat'],
+            raw: true
+        });
+        if (phongChat) {
+            customer['idPhongChat'] = phongChat['idPhongChat'];
+        }
+    }
     res.render('admin/pages/customer/index', {
         title: 'Quản lý khách hàng',
         customers: customers,
@@ -76,7 +89,6 @@ const changeStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.changeStatus = changeStatus;
 const detailCustomerPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    req.session.previousPage = req.headers.referer;
     const token = req.params.token;
     const data = yield allModel.NguoiDung.findOne({
         where: {
@@ -88,8 +100,10 @@ const detailCustomerPage = (req, res) => __awaiter(void 0, void 0, void 0, funct
         attributes: {
             exclude: ['idNguoiDung', 'ngayCapNhat'],
             include: [
-                [database_1.default.fn('COUNT', database_1.default.fn('DISTINCT', database_1.default.col('Orders.idDonHang'))), 'soLuongDonHang'],
-                [database_1.default.fn('SUM', database_1.default.literal('`Orders->OrderDetails`.`soLuongDat` * `Orders->OrderDetails->Product`.`giaTien`')), 'tongTienDonHang']
+                [database_1.default.fn('COUNT', database_1.default.fn('DISTINCT', database_1.default.literal(`CASE WHEN Orders.tinhTrang ='Đang xử lý' or Orders.tinhTrang = 'Đã xác nhận' or Orders.tinhTrang = 'Đang giao' THEN Orders.idDonHang END`))), 'soLuongDonHangDangXuLy'],
+                [database_1.default.fn('SUM', database_1.default.literal(`CASE WHEN Orders.tinhTrang ='Đang xử lý' or Orders.tinhTrang = 'Đã xác nhận' or Orders.tinhTrang = 'Đang giao' THEN \`Orders->OrderDetails\`.\`soLuongDat\` * \`Orders->OrderDetails->Product\`.\`giaTien\` END`)), 'tongTienDonHangDangXuLy'],
+                [database_1.default.fn('COUNT', database_1.default.fn('DISTINCT', database_1.default.literal(`CASE WHEN Orders.tinhTrang = 'Hoàn thành' THEN Orders.idDonHang END`))), 'soLuongDonHangDaThanhToan'],
+                [database_1.default.fn('SUM', database_1.default.literal(`CASE WHEN Orders.tinhTrang = 'Hoàn thành' THEN \`Orders->OrderDetails\`.\`soLuongDat\` * \`Orders->OrderDetails->Product\`.\`giaTien\` END`)), 'tongTienDonHangDaThanhToan']
             ]
         },
         include: [
@@ -118,10 +132,10 @@ const detailCustomerPage = (req, res) => __awaiter(void 0, void 0, void 0, funct
     });
     const customer = Object.assign({}, data);
     customer['ngayTao'] = (0, moment_1.default)(data['ngayTao']).format('YYYY-MM-DD');
-    customer['soLuongDonHang'] = (data['soLuongDonHang'] > 0) ? data['soLuongDonHang'] : 0;
-    customer['tongTienDonHang'] = (data['tongTienDonHang'] > 0) ?
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data['tongTienDonHang']) :
-        '0₫';
+    customer['soLuongDonHangDangXuLy'] = (data['soLuongDonHangDangXuLy'] > 0) ? data['soLuongDonHangDangXuLy'] : 0;
+    customer['tongTienDonHangDangXuLy'] = (data['tongTienDonHangDangXuLy']) ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data['tongTienDonHangDangXuLy']) : '0₫';
+    customer['soLuongDonHangDaThanhToan'] = (data['soLuongDonHangDaThanhToan'] > 0) ? data['soLuongDonHangDaThanhToan'] : 0;
+    customer['tongTienDonHangDaThanhToan'] = (data['tongTienDonHangDaThanhToan']) ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data['tongTienDonHangDaThanhToan']) : '0₫';
     res.render('admin/pages/customer/detail', {
         title: 'Chi tiết khách hàng',
         customer: customer,

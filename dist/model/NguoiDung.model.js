@@ -69,6 +69,10 @@ const NguoiDung = database_1.default.define("NguoiDung", {
     },
     diaChi: {
         type: sequelize_1.DataTypes.TEXT
+    },
+    tichDiem: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
     }
 }, {
     tableName: "NguoiDung",

@@ -7,9 +7,10 @@ const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 const SanPhamYeuThich = database_1.default.define("SanPhamYeuThich", {
     idYeuThich: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     idNguoiDung: {
         type: sequelize_1.DataTypes.STRING,

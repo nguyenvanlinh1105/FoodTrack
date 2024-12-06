@@ -2,7 +2,7 @@ extends ../../layouts/default.pug
 block content 
     .container-fluid.mt-4
       .d-sm-flex.align-items-center.justify-content-between.mb-4
-          h1.h3.mb-2.text-gray-800 Bảng quản lý nhân viên
+          h1.h3.mb-2.text-gray-800 <strong>Bảng quản lý nhân viên</strong>
           a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='/admin/management/staff/create')
             i.fas.fa-user-check.fa-sm.text-white-50
             |  Tạo tài khoản cho nhân viên
@@ -35,10 +35,10 @@ block content
                       td.text-center #{staff.sdt}
                       td.text-center
                         if(staff.trangThai == "active")
-                          a(href=`/admin/management/staff/change-status/${staff.token}/inactive` class="badge badge-success"
+                          a(href=`/admin/management/staff/change-status/${staff.token}/inactive` class="badge badge-success" style="padding:5px"
                                   staff-id=`` staff-status=`inactive`) Hoạt động
                         else
-                          a(href=`/admin/management/staff/change-status/${staff.token}/active` class="badge badge-danger"
+                          a(href=`/admin/management/staff/change-status/${staff.token}/active` class="badge badge-danger" style="padding:5px"
                               staff-id=`` staff-status=`active`) Dừng hoạt động
                       td.text-center #{staff.gioiTinh}
                       td.text-center(style="display: flex; justify-content: space-between; align-items: center;")

@@ -1,0 +1,81 @@
+extends ../../layouts/default.pug
+
+block content 
+    .container-fluid.mt-4
+        .d-sm-flex.align-items-center.justify-content-between.mb-4
+            h1.h3.mb-2.text-gray-800 <strong>Thông tin món ăn</strong>
+        // Page Heading
+        p.mb-4
+            | Thông tin chi tiết món ăn
+            .row
+                // Column
+                .col-lg-4.col-xlg-3.col-md-5
+                    .card
+                        .card-body
+                            center.m-t-30
+                                if(food.images)
+                                    img.img-profile(src=`${food.images}` style="width: 350px; height: 350px; object-fit: cover; border-radius: 10px; image-rendering: auto;")
+                                h4.card-title.mt-3 #{food.tenSanPham}
+                                h6.card-subtitle Danh mục: #{food.tenDanhMuc}
+                // Column end
+                // Column start
+                .col-lg-8.col-xlg-9.col-md-7
+                    .card
+                        .card-body
+                            form.form-horizontal.form-material(action=`/admin/management/food/edit/${food.slug}?_method=PATCH` method='post' enctype="multipart/form-data")
+                                .form-group
+                                    label.col-md-12 Mã món ăn
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Mã món ăn', name='idSanPham', value=food.idSanPham readonly)
+                                .form-group 
+                                    label.col-md-12 Tên slug món ăn
+                                    .col-md-12 
+                                        input.form-control.form-control-line(type='text', placeholder='Tên slug danh mục', name='slug', value=food.slug readonly)
+                                .form-group
+                                    label.col-md-12 Tên món ăn
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Tên món ăn', name='tenSanPham', value=food.tenSanPham)
+                                .form-group
+                                    label.col-sm-12 Danh mục
+                                    .col-md-12
+                                        select.form-control.form-control-line(name='idDanhMuc')
+                                            each category in categories
+                                                option(value=category.idDanhMuc selected=(category.idDanhMuc == food.idDanhMuc)) #{category.tenDanhMuc}
+                                .form-group
+                                    label.col-md-12 Giá tiền
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text' placeholder="Giá tiền" name='giaTien' value=food.giaTien)
+                                .form-group
+                                    label.col-md-12 Số lượng đã bán
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Số lượng', name='soLuongDaBan', value=food.soLuongDaBan)
+                                .form-group
+                                    label.col-md-12 Đơn vị tính
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text', placeholder='Đơn vị tính', name='donViTinh', value=food.donViTinh)
+                                .form-group 
+                                    label.col-md-12 Ngày tạo
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='date', placeholder='Ngày tạo', name='ngayTao', value=food.ngayTao)
+                                .form-group 
+                                    label.col-md-12 Mô tả
+                                    .col-md-12
+                                        textarea.form-control.form-control-line(name='moTa', placeholder='Mô tả', rows='3' textEditor-tinymce) 
+                                            | !{food.moTa}
+                                div(class="form-group" upload-image)
+                                    label.col-md-12 Ảnh món ăn
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='file', placeholder='Ảnh món ăn', name='images', accept='image/*' upload-image-input)
+                                    img(
+                                        id="thumbnailPreview"
+                                        class="mt-2 ml-3"
+                                        src=""
+                                        alt=""
+                                        upload-image-preview
+                                    )
+                                .form-group
+                                    .col-sm-12
+                                        button.btn.btn-success(type='submit')
+                                            i.fas.fa-edit(style="margin-right: 5px;")
+                                            | Cập nhật thông tin
+

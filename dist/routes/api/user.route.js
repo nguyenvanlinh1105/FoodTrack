@@ -28,10 +28,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
+const multer_1 = __importDefault(require("multer"));
 const userController = __importStar(require("../../controller/api/user.controller"));
+const uploadCloud = __importStar(require("../../middleware/uploadCloudinary.middleware"));
+const upload = (0, multer_1.default)();
+router.get('/info', userController.getInfo);
 router.post('/login', userController.login);
 router.post('/register', userController.register);
 router.post('/password/forgot', userController.passwordForgot);
 router.post('/password/otp', userController.otp);
 router.post('/password/reset', userController.passwordReset);
+router.post('/update/avatar', upload.single("img"), uploadCloud.uploadSingle, userController.updateAvatar);
+router.post('/update/info', userController.updateInfo);
+router.post('/comment', userController.comment);
+router.get('/list/notification', userController.listNotification);
 exports.default = router;

@@ -20,7 +20,7 @@ const DonHang = database_1.default.define("DonHang", {
         }
     },
     tinhTrang: {
-        type: sequelize_1.DataTypes.ENUM('pending', 'confirm', 'deliver', 'finish', 'cancel'),
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
     thoiGianHoanThanh: {
@@ -34,6 +34,18 @@ const DonHang = database_1.default.define("DonHang", {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    ghiChu: {
+        type: sequelize_1.DataTypes.STRING,
+    },
+    diaChi: {
+        type: sequelize_1.DataTypes.STRING,
+    },
+    tinhTrangThanhToan: {
+        type: sequelize_1.DataTypes.STRING,
+    },
+    thoiGianHuy: {
+        type: sequelize_1.DataTypes.DATE
     }
 }, {
     tableName: "DonHang",

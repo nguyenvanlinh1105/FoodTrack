@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create = exports.createPage = exports.index = void 0;
+exports.deleteCategory = exports.edit = exports.editPage = exports.detailPage = exports.create = exports.createPage = exports.index = void 0;
 const DanhMuc_model_1 = __importDefault(require("../../model/DanhMuc.model"));
 const slugify_1 = __importDefault(require("slugify"));
 const generateNextId_helper_1 = __importDefault(require("../../helper/generateNextId.helper"));
@@ -64,3 +64,63 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.create = create;
+const detailPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const slug = req.params.slug;
+    const category = yield DanhMuc_model_1.default.findOne({
+        where: {
+            slug: slug,
+            deleted: 0,
+        },
+        raw: true
+    });
+    res.render('admin/pages/category/detail', {
+        title: 'Chi tiết danh mục',
+        category: category
+    });
+});
+exports.detailPage = detailPage;
+const editPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    req.session.previousPage = req.headers.referer;
+    const slug = req.params.slug;
+    const category = yield DanhMuc_model_1.default.findOne({
+        where: {
+            slug: slug,
+            deleted: 0,
+        },
+        raw: true
+    });
+    res.render('admin/pages/category/edit', {
+        title: 'Chỉnh sửa danh mục',
+        category: category
+    });
+});
+exports.editPage = editPage;
+const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const slug = req.params.slug;
+    const { tenDanhMuc, moTa, ngayTao } = req.body;
+    yield DanhMuc_model_1.default.update({
+        tenDanhMuc: tenDanhMuc,
+        moTa: moTa,
+        ngayTao: ngayTao
+    }, {
+        where: {
+            slug: slug
+        }
+    });
+    req.flash('success', 'Danh mục đã được cập nhật thành công!');
+    const previousPage = req.session.previousPage || '/admin/management/category';
+    res.redirect(previousPage);
+});
+exports.edit = edit;
+const deleteCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const slug = req.params.slug;
+    yield DanhMuc_model_1.default.update({
+        deleted: 1
+    }, {
+        where: {
+            slug: slug
+        }
+    });
+    res.status(200).json({ message: 'Xóa danh mục thành công' });
+});
+exports.deleteCategory = deleteCategory;

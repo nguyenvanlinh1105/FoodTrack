@@ -3,7 +3,7 @@ extends ../../layouts/default.pug
 block content 
     .container-fluid.mt-4
         .d-sm-flex.align-items-center.justify-content-between.mb-4
-            h1.h3.mb-2.text-gray-800 Thông tin cá nhân
+            h1.h3.mb-2.text-gray-800 <strong>Thông tin cá nhân</strong>
         // Page Heading
         p.mb-4
             | Thông tin cá nhân của Khách hàng
@@ -44,9 +44,9 @@ block content
                                     .col-md-12
                                         input.form-control.form-control-line(type='text', placeholder='Họ tên', name='hoTen', value=customer.hoTen readonly)
                                 .form-group
-                                    label.col-md-12(for='example-email') Email
+                                    label.col-md-12 Email
                                     .col-md-12
-                                        input#example-email.form-control.form-control-line(type='email', placeholder='email', name='email', value=customer.email, readonly)
+                                        input.form-control.form-control-line(type='email', placeholder='email', name='email', value=customer.email, readonly)
                                 .form-group
                                     label.col-md-12 Số điện thoại
                                     .col-md-12
@@ -66,13 +66,21 @@ block content
                                     .col-md-12
                                         textarea.form-control.form-control-line(name='diaChi' placeholder='Nhập địa chỉ' rows='3' readonly)= customer.diaChi
                                 .form-group
-                                    label.col-md-12 Số lượng đơn hàng đã đặt
+                                    label.col-md-12 Số lượng đơn hàng hoàn thành
                                     .col-md-12
-                                        p.form-control.form-control-static(style='font-weight: bold;')= customer.soLuongDonHang || '0 đơn hàng'
+                                        p.form-control.form-control-static(style='font-weight: bold;')= customer.soLuongDonHangDaThanhToan || '0 đơn hàng'
                                 .form-group
-                                    label.col-md-12 Tổng tiền cho các đơn hàng
+                                    label.col-md-12 Tổng tiền cho các đơn hàng hoàn thành
                                     .col-md-12
-                                        p.form-control.form-control-static(style='font-weight: bold;') #{customer.tongTienDonHang}
+                                        p.form-control.form-control-static(style='font-weight: bold;') #{customer.tongTienDonHangDaThanhToan}
+                                .form-group
+                                    label.col-md-12 Số lượng đơn hàng đang xử lý
+                                    .col-md-12
+                                        p.form-control.form-control-static(style='font-weight: bold;')= customer.soLuongDonHangDangXuLy || '0 đơn hàng'
+                                .form-group
+                                    label.col-md-12 Tổng tiền cho các đơn hàng đang xử lý
+                                    .col-md-12
+                                        p.form-control.form-control-static(style='font-weight: bold;') #{customer.tongTienDonHangDangXuLy}
                                 .form-group
                                     label.col-md-12 Ngày tạo tài khoản
                                     .col-md-12

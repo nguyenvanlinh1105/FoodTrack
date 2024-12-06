@@ -16,15 +16,9 @@ exports.checkOTPAPI = exports.checkOTP = void 0;
 const bullmq_1 = require("bullmq");
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const ioredis_1 = __importDefault(require("ioredis"));
-const redisConnection = {
-    host: process.env.REDIS_HOST,
-    port: parseInt(process.env.REDIS_PORT, 10) || 6379,
-    username: process.env.REDIS_USER,
-    password: process.env.REDIS_PASSWORD,
-    tls: {}
-};
-const redisClient = new ioredis_1.default(redisConnection);
-const emailQueue = new bullmq_1.Queue('emailQueue', { connection: redisConnection });
+const redis_1 = __importDefault(require("../config/redis"));
+const redisClient = new ioredis_1.default(redis_1.default);
+const emailQueue = new bullmq_1.Queue('emailQueue', { connection: redis_1.default });
 const transporter = nodemailer_1.default.createTransport({
     service: 'gmail',
     auth: {
@@ -59,7 +53,7 @@ const worker = new bullmq_1.Worker('emailQueue', (job) => __awaiter(void 0, void
         html: html
     };
     yield sendEmail(mailOptions);
-}), { connection: redisConnection });
+}), { connection: redis_1.default });
 const checkOTP = (email, otp, req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const storedOtp = yield redisClient.get(email);

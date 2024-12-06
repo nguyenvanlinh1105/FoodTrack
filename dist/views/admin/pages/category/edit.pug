@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug
+
+block content 
+    .container-fluid.mt-4
+        // Page Header
+        .d-sm-flex.align-items-center.justify-content-between.mb-4
+            h1.h3.mb-2.text-gray-800 <strong>Chỉnh sửa Danh mục</strong>
+        p.mb-4
+            | Thông tin chi tiết danh mục
+
+        // Form Section
+        .row
+            .col-lg-8.col-xl-9.col-md-7(style="flex: 0 0 100%; max-width:100%")
+                .card
+                    .card-body
+                        form(action=`/admin/management/category/edit/${category.slug}?_method=PATCH` method='post')
+                            // Mã danh mục
+                            .mb-3
+                                label.form-label(for='idDanhMuc') Mã danh mục
+                                input.form-control#idDanhMuc(type='text', placeholder='Mã danh mục', name='idDanhMuc', value=category.idDanhMuc, readonly)
+                            .mb-3
+                                label.form-label(for='idDanhMuc') Tên slug danh mục
+                                input.form-control#idDanhMuc(type='text', placeholder='Tên slug danh mục', name='slug', value=category.slug readonly)
+                            // Tên danh mục
+                            .mb-3
+                                label.form-label(for='tenDanhMuc') Tên danh mục
+                                input.form-control#tenDanhMuc(type='text', placeholder='Tên danh mục', name='tenDanhMuc', value=category.tenDanhMuc )
+                            .mb-3
+                                label.form-label(for='ngayTao') Ngày tạo
+                                input.form-control#ngayTao(type='date', placeholder='Ngày tạo', name='ngayTao', value=category.ngayTao)
+                            // Mô tả
+                            .mb-3
+                                label.form-label(for='moTa') Mô tả
+                                textarea.form-control#moTa(name='moTa' placeholder='Mô tả' rows='3' textEditor-tinymce) 
+                                    | !{category.moTa}
+                            .mb-3
+                                button.btn.btn-success(type='submit')
+                                    i.fas.fa-edit(style="margin-right: 5px;")
+                                    | Cập nhật thông tin
+
