@@ -61,8 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_loai_thong_bao_item"
-            app:layout_constraintTop_toBottomOf="@+id/tv_loai_thong_bao_item"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_loai_thong_bao_item"/>
 
         <TextView
             android:id="@+id/tv_ngay_thong_bao_item"
