@@ -55,6 +55,7 @@ public class edit_profile extends AppCompatActivity {
     TextView luuBtn_editProfile;
     Uri mUri;
 
+
     TextView edt_HoTen, edt_sdt, edt_email, edt_gioiTinh, edt_ngaySinh, edt_diaChi, btn_doiAnh;
     ImageView imgCalendar, img_avt;
     SharedPreferences shareUserResponse;
@@ -90,6 +91,7 @@ public class edit_profile extends AppCompatActivity {
         img_avt = findViewById(R.id.img_avt);
 
 
+
         luuBtn_editProfile = (TextView) findViewById(R.id.luuBtn_editProfile);
     }
 
@@ -109,7 +111,7 @@ public class edit_profile extends AppCompatActivity {
         btn_doiAnh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mUri==null) {
+                if (mUri == null) {
                     onClickRequestPermission();
                 } else {
                     RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
@@ -192,67 +194,6 @@ public class edit_profile extends AppCompatActivity {
                 nguoiDung.setNgaySinh(ngaySinh);
                 nguoiDung.setDiaChi(diaChi);
 
-
-//                RequestBody bodyIdNguoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
-//
-//                RequestBody bodyHoTen = RequestBody.create(MediaType.parse("multipart/form-data"), hoTen);
-//                RequestBody bodySdt = RequestBody.create(MediaType.parse("multipart/form-data"), sdt);
-//                RequestBody bodyEmail = RequestBody.create(MediaType.parse("multipart/form-data"), email);
-//                RequestBody bodyGioiTinh = RequestBody.create(MediaType.parse("multipart/form-data"), gioiTinh);
-//                RequestBody bodyNgaySinh = RequestBody.create(MediaType.parse("multipart/form-data"), ngaySinh);
-//                RequestBody bodyDiaChi = RequestBody.create(MediaType.parse("multipart/form-data"), diaChi);
-//
-//                String realPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
-//                File file = new File(realPath);
-//                RequestBody requestBodyAvt = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//
-//                MultipartBody.Part multipartBodyAvt = MultipartBody.Part.createFormData("img", file.getName(), requestBodyAvt);
-//
-//
-//                APIService.API_SERVICE.ChangInfoUser(bodyIdNguoiDung,bodyHoTen, bodySdt, bodyEmail, bodyGioiTinh, bodyNgaySinh, bodyDiaChi,multipartBodyAvt).enqueue(new Callback<NguoiDungAPIModel>() {
-//                    @Override
-//                    public void onResponse(Call<NguoiDungAPIModel> call, Response<NguoiDungAPIModel> response) {
-//                        if(response.isSuccessful()){
-//                            NguoiDungAPIModel model = response.body();
-//                            edt_HoTen.setText(model.getHoTenNguoiDung());
-//                            edt_sdt.setText(model.getSdt());
-//                            edt_email.setText(model.getEmail());
-//                            edt_gioiTinh.setText(model.getGioiTinh());
-//                            edt_ngaySinh.setText(model.getNgaySinh());
-//                            edt_diaChi.setText(model.getDiaChi());
-//
-//                            String imageUrl = model.getAvatar();
-//                            if (imageUrl.startsWith("http://")) {
-//                                imageUrl = imageUrl.replace("http://", "https://");
-//                            }
-//
-//                            Glide.with(getApplicationContext())
-//                                    .asBitmap()
-//                                    .load(imageUrl)
-//                                    .into(new CustomTarget<Bitmap>() {
-//                                        @Override
-//                                        public void onLoadCleared(@Nullable Drawable placeholder) {
-//                                        }
-//
-//                                        @Override
-//                                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-//                                            img_avt.setImageDrawable(new BitmapDrawable(getApplicationContext().getResources(), resource));
-//
-//                                        }
-//                                    });
-//
-//
-//                        }else{
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<NguoiDungAPIModel> call, Throwable t) {
-//
-//                    }
-//                });
-//
 
 
                 ChangInfoUser(nguoiDung);

@@ -41,7 +41,7 @@ public interface APIService {
           .build();
 
   //    linkAPI root:
-    public static String url ="https://996d-113-23-29-130.ngrok-free.app/";
+    public static String url ="https://a996-118-68-202-224.ngrok-free.app/";
 
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     APIService API_SERVICE = new Retrofit.Builder().baseUrl(url)

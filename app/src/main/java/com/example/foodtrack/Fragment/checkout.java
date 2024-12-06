@@ -67,13 +67,16 @@ public class checkout extends Fragment {
 
     private TextView tv_total_amount; // tổng tiền phải trả :
     private TextView tv_service_fee;
-    private TextView tv_shipping_fee;
+    private TextView tv_so_diem_tich_duoc;
     private TextView tv_ghi_chu;
     private TextView tv_total_price;// thành tiền
     private TextView tv_address;// thành tiền
+    private TextView tv_tich_diem;// thành tiền
     String textGhiChu;
     Double tongTien;
     SharedPreferences sharedPreferencesDonHang, shareUserResponseLogin;
+
+    Integer tichDiem;
 
 
     private LinearLayout tienMat, applePay, icon_check_tien_mat, icon_check_applePay, icon_check_tich_diem;
@@ -114,6 +117,7 @@ public class checkout extends Fragment {
             textGhiChu = getArguments().getString("ghiChu");
             tongTien = getArguments().getDouble("tongTien");
         }
+        tichDiem = shareUserResponseLogin.getInt("tichDiem", 0);
 
         notificationHelper = new NotificationHelper(getContext());
 
@@ -162,10 +166,12 @@ public class checkout extends Fragment {
 
         Log.d("tongTienCheckout", String.valueOf(tongTien));
 
+        tv_so_diem_tich_duoc.setText(formatter.format(tichDiem));
+        tv_tich_diem.setText(formatter.format(tichDiem) + "vnđ");
         tv_ghi_chu.setText(textGhiChu);
         tv_address.setText(shareUserResponseLogin.getString("diaChi", "Khách sạn Novotel, tầng 12 phòng 15, Đà Nẵng"));
         tv_total_price.setText(formatter.format(tongTien) + "vnđ");
-        tv_total_amount.setText(formatter.format(tongTien + 15000 + 2000) + "vnđ");
+        tv_total_amount.setText(formatter.format(tongTien + 15000) + "vnđ");
 
         payBtn.setText("Thanh toán " + tv_total_amount.getText());
 
@@ -188,6 +194,8 @@ public class checkout extends Fragment {
         tv_address = view.findViewById(R.id.tv_address);
         tv_total_price = view.findViewById(R.id.tv_total_price);
         tv_total_amount = view.findViewById(R.id.tv_total_amount);
+        tv_tich_diem = view.findViewById(R.id.tv_tich_diem);
+        tv_so_diem_tich_duoc = view.findViewById(R.id.tv_so_diem_tich_duoc);
     }
 
     private void ControlButton() {
@@ -215,6 +223,17 @@ public class checkout extends Fragment {
                 donHang.setIdDonHang(idDonHang);
                 donHang.setTinhTrang("Đã xác nhận");
                 donHang.setDiaChi(diaChi);
+                Drawable currentBackground = icon_check_tich_diem.getBackground();
+                Drawable checkDrawable = ContextCompat.getDrawable(view.getContext(), R.drawable.icon_check_50);
+
+                if (currentBackground != null && checkDrawable != null &&
+                        currentBackground.getConstantState().equals(checkDrawable.getConstantState())) {
+                    donHang.setTichDiem(tichDiem);
+                }
+                else{
+                    donHang.setTichDiem(0);
+                }
+
 
                 donHang.setGhiChu(textGhiChu);
                 if (payBtn.getText().toString().equals("Xác nhận đặt đơn")) {
@@ -229,6 +248,13 @@ public class checkout extends Fragment {
                     fragment.setArguments(bundle);
 
                     mainActivity.ReplaceFragment(fragment);
+                }
+
+                if (currentBackground != null && checkDrawable != null &&
+                        currentBackground.getConstantState().equals(checkDrawable.getConstantState())) {
+                    SharedPreferences.Editor editorResponseLogin = shareUserResponseLogin.edit();
+                    editorResponseLogin.putInt("tichDiem", 0);
+                    editorResponseLogin.apply();
                 }
 
             }
@@ -260,12 +286,13 @@ public class checkout extends Fragment {
                         currentBackground.getConstantState().equals(checkDrawable.getConstantState())) {
                     icon_check_tich_diem.setBackground(null);
                     ll_tich_diem_checkout.setVisibility(View.GONE);
-                    tv_total_amount.setText(formatter.format(tongTien + 15000 + 2000 ) + "vnđ");
+                    tv_total_amount.setText(formatter.format(tongTien + 15000) + "vnđ");
                 } else {
                     icon_check_tich_diem.setBackgroundResource(R.drawable.icon_check_50);
                     ll_tich_diem_checkout.setVisibility(View.VISIBLE);
-                    tv_total_amount.setText(formatter.format(tongTien + 15000 + 2000 - 2000) + "vnđ");
+                    tv_total_amount.setText(formatter.format(tongTien + 15000 - tichDiem) + "vnđ");
                     payBtn.setText("Thanh toán " + tv_total_amount.getText());
+
                 }
 
             }

@@ -160,6 +160,8 @@ public class Login extends AppCompatActivity {
 
                         editorResponseLogin.putString("idPhongChat", responseUserModel.getIdPhongChat());
 
+                        editorResponseLogin.putInt("tichDiem", responseUserModel.getTichDiem());
+
 
 
                         editorResponseLogin.apply();

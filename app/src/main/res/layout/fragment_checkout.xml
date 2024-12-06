@@ -249,8 +249,14 @@
                 android:id="@+id/tich_diem_checkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icon_tich_diem" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -259,15 +265,16 @@
                     android:paddingLeft="10dp"
                     android:text="Dùng "
                     android:textColor="#6D3805"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_so_diem_tich_duoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="2000"
                     android:textColor="#6D3805"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -276,7 +283,7 @@
                     android:layout_weight="1"
                     android:text=" điểm đã tích được"
                     android:textColor="#6D3805"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="40dp"
@@ -359,7 +366,7 @@
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="2.000vnđ"
+                    android:text="0vnđ"
                     android:textColor="#6D3805"
                     android:textSize="16sp" />
             </LinearLayout>

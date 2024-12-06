@@ -2,6 +2,7 @@ package com.example.foodtrack.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -51,6 +53,8 @@ public class fragment_thong_bao_user extends Fragment {
     private ListView lv_thong_bao_user;
     List<ThongBaoModel> listThongBao = new ArrayList<>();
     private LinearLayout if_empty;
+
+    private ImageView btn_back;
 
     String idNguoiDung;
 
@@ -96,10 +100,18 @@ public class fragment_thong_bao_user extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thong_bao_user, container, false);
 
+        btn_back = (ImageView) view.findViewById(R.id.btn_back_thong_bao_user);
         if_empty = (LinearLayout) view.findViewById(R.id.image_if_empty_thong_bao_user);
         lv_thong_bao_user = (ListView) view.findViewById(R.id.lv_thong_bao_user);
 //        Log.d("idNguoiDung", idNguoiDung);
         GetNoti(idNguoiDung);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
         return view;
     }

@@ -2,6 +2,7 @@ package com.example.foodtrack.Activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
     private NotificationHelper notificationHelper;
 
+    private SharedPreferences shareUserResponseLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         String ghiChu = intent.getStringExtra("ghiChu");
         Double tongTien =  intent.getDoubleExtra("tongTien",0);
 
+        shareUserResponseLogin = getSharedPreferences("shareUserResponseLogin",MODE_PRIVATE);
 
         if (fragmentToLoad != null) {
             if (fragmentToLoad.equals("cartFragment")) {
@@ -163,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
     private void ControlSocket() {
         mSocket = SocketManager.getInstance().getSocket();
         mSocket.on("SEND_NOTIFICATION_CLIENT", onRetrieveNotification);
+        mSocket.on("SEND_SCORE_CLIENT", onRetrieveScore);
     }
 
     private Emitter.Listener onRetrieveNotification = new Emitter.Listener() {
@@ -183,6 +188,29 @@ public class MainActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
+                });
+            }
+        }
+    };
+
+    private Emitter.Listener onRetrieveScore = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            if (this != null) {
+                MainActivity.this.runOnUiThread(() -> {
+                    JSONObject obj = (JSONObject) args[0];
+                    Log.d("objectScrore", obj.toString());
+                    try {
+                        Integer tichDiemOn = obj.getInt("tichDiem");
+//                        tv_tich_diem.setText(String.valueOf(tichDiemOn));
+                        SharedPreferences.Editor editorResponseLogin = shareUserResponseLogin.edit();
+                        editorResponseLogin.putInt("tichDiem", tichDiemOn);
+                        editorResponseLogin.apply();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
                 });
             }
         }

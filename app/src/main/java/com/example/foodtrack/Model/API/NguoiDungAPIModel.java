@@ -29,6 +29,15 @@ public class NguoiDungAPIModel {
 
     private String idPhongChat;
 
+    private Integer tichDiem;
+
+    public Integer getTichDiem() {
+        return tichDiem;
+    }
+
+    public void setTichDiem(Integer tichDiem) {
+        this.tichDiem = tichDiem;
+    }
 
     public String getAvatar() {
         return avatar;
