@@ -117,18 +117,19 @@ public class cart_adapter_api extends BaseAdapter {
 //                notifyDataSetChanged();
 
 
-                Bundle bundle = new Bundle();
-                bundle.putString("idSanPham", product.getIdSanPham());
-                bundle.putString("title", product.getTenSanPham());
-                bundle.putDouble("price", product.getGiaTien());
-                bundle.putString("description", "Mô tả món ăn/đồ uống");
-                bundle.putString("image", product.getImages());
-                bundle.putInt("soluong", product.getSoLuongDat());
-
-                Intent detail = new Intent(context, MainActivity.class);
-                detail.putExtra("fragmentToLoad", "product_detail_change_info");
-                detail.putExtra("productBundle", bundle);
-                context.startActivity(detail);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("idSanPham", product.getIdSanPham());
+//                bundle.putString("title", product.getTenSanPham());
+//                bundle.putDouble("price", product.getGiaTien());
+//                bundle.putString("description", "Mô tả món ăn/đồ uống");
+//                bundle.putString("image", product.getImages());
+//                bundle.putInt("soluong", product.getSoLuongDat());
+//
+//                Intent detail = new Intent(context, MainActivity.class);
+//                detail.putExtra("fragmentToLoad", "product_detail_change_info");
+//                detail.putExtra("productBundle", bundle);
+//
+//                context.startActivity(detail);
 
             }
         });
@@ -158,18 +159,18 @@ public class cart_adapter_api extends BaseAdapter {
 //                        Double.valueOf(product.getSoLuongDat())
 //                );
 
-                Bundle bundle = new Bundle();
-                bundle.putString("idSanPham", product.getIdSanPham());
-                bundle.putString("title", product.getTenSanPham());
-                bundle.putDouble("price", product.getGiaTien());
-                bundle.putString("description", "Mô tả món ăn/đồ uống");
-                bundle.putString("image", product.getImages());
-                bundle.putInt("qty", product.getSoLuongDat());
-
-                Intent detail = new Intent(context, MainActivity.class);
-                detail.putExtra("fragmentToLoad", "product_detail_change_info");
-                detail.putExtra("productBundle", bundle);
-                context.startActivity(detail);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("idSanPham", product.getIdSanPham());
+//                bundle.putString("title", product.getTenSanPham());
+//                bundle.putDouble("price", product.getGiaTien());
+//                bundle.putString("description", "Mô tả món ăn/đồ uống");
+//                bundle.putString("image", product.getImages());
+//                bundle.putInt("qty", product.getSoLuongDat());
+//
+//                Intent detail = new Intent(context, MainActivity.class);
+//                detail.putExtra("fragmentToLoad", "product_detail_change_info");
+//                detail.putExtra("productBundle", bundle);
+//                context.startActivity(detail);
 
             }
         });

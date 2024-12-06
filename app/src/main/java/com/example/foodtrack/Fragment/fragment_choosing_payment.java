@@ -204,11 +204,11 @@ public class fragment_choosing_payment extends Fragment {
                         editorResponseDonHang.putString("idDonHang", null);
                         editorResponseDonHang.apply();
                         if(appPay=="momo"){
-                            notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng của bạn đã được đặt hàng thành công và trong quá trình xử lí!");
-                            notificationHelper.sendNotification("Thông báo thanh toán đơn hàng","Đơn hàng của bạn đã được thanh toán thành công bằng ví điện tử momo!");
+                            notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng " + sharedPreferencesDonHang.getString("idDonHang", "DH000") + " của bạn đã được đặt hàng thành công và trong quá trình xử lí!");
+                            notificationHelper.sendNotification("Thông báo thanh toán đơn hàng","Đơn hàng " + sharedPreferencesDonHang.getString("idDonHang", "DH000") + " của bạn đã được thanh toán thành công bằng ví điện tử momo!");
                         }else{
-                            notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng của bạn đã được đặt hàng thành công và trong quá trình xử lí!");
-                            notificationHelper.sendNotification("Thông báo thanh toán đơn hàng","Đơn hàng của bạn đã được thanh toán thành công bằng ví điện tử zaloPay!");
+                            notificationHelper.sendNotification("Thông báo đơn hàng","Đơn hàng " + sharedPreferencesDonHang.getString("idDonHang", "DH000") + " của bạn đã được đặt hàng thành công và trong quá trình xử lí!");
+                            notificationHelper.sendNotification("Thông báo thanh toán đơn hàng","Đơn hàng " + sharedPreferencesDonHang.getString("idDonHang", "DH000") + " của bạn đã được thanh toán thành công bằng ví điện tử zaloPay!");
 
                         }
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {

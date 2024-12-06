@@ -1,5 +1,6 @@
 package com.example.foodtrack.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -219,7 +220,11 @@ public class product_detail_change_info extends Fragment {
         btn_back_product_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("isUpdated", true);
+                getActivity().setResult(Activity.RESULT_OK, resultIntent);
                 getActivity().finish();
+
             }
         });
 

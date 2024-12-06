@@ -8,11 +8,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -55,6 +57,9 @@ public class cart extends AppCompatActivity {
 
     public static Activity ToFinishActivity;
 
+    public cart_adapter_api adapter;
+    cart_adapter listAdapter;
+
     private SharedPreferences sharedPreferencesDonHang;
 
     @Override
@@ -72,6 +77,7 @@ public class cart extends AppCompatActivity {
         sharedPreferencesDonHang = getSharedPreferences("dataDonHangResponse", Context.MODE_PRIVATE);
 
         Mapping();
+
 
         idDonHang = sharedPreferencesDonHang.getString("idDonHang", "");
 
@@ -94,7 +100,7 @@ public class cart extends AppCompatActivity {
         edt_ghiChu = findViewById(R.id.edt_ghiChu);
 
         if (listView_cart != null) {
-            cart_adapter listAdapter = new cart_adapter(this, cartTitle, cartImg, cartSubTitle, cartPrice, cartQty, this);
+            listAdapter = new cart_adapter(this, cartTitle, cartImg, cartSubTitle, cartPrice, cartQty, this);
             listView_cart.setAdapter(listAdapter);
         }
         total.setText(tongTien + " vnđ");
@@ -136,7 +142,7 @@ public class cart extends AppCompatActivity {
         if (listView_cart != null) {
             int totalPrice = 0;
 
-            cart_adapter_api adapter = (cart_adapter_api) listView_cart.getAdapter();
+            adapter = (cart_adapter_api) listView_cart.getAdapter();
             if (adapter != null) {
                 List<SanPhamAPIModel> sanPhamList = adapter.arrayListSanPham;
 
@@ -183,11 +189,49 @@ public class cart extends AppCompatActivity {
 
                 // Cập nhật RecyclerView
                 UpdateRecyclerView(listSanPham);
+
+                listView_cart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        SanPhamAPIModel selectedProduct = listSanPham.get(i);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("idSanPham", selectedProduct.getIdSanPham());
+                        bundle.putString("title", selectedProduct.getTenSanPham());
+                        bundle.putDouble("price", selectedProduct.getGiaTien());
+                        bundle.putString("description", "Mô tả món ăn/đồ uống");
+                        bundle.putString("image", selectedProduct.getImages());
+                        bundle.putInt("qty", selectedProduct.getSoLuongDat());
+
+                        Intent detail = new Intent(cart.this, MainActivity.class);
+                        detail.putExtra("fragmentToLoad", "product_detail_change_info");
+                        detail.putExtra("productBundle", bundle);
+
+                        startActivityForResult(detail, 100, bundle);
+                    }
+                });
+
             } else {
                 UseFallbackData();
             }
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            boolean isUpdated = data.getBooleanExtra("isUpdated", false);
+            if (isUpdated) {
+                tongTien = 0;
+                GetDsSanPhamOrder(idDonHang);
+
+            }
+        }
+    }
+
 
     public void GetDsSanPhamOrder(String idDonHang) {
         new GetDsSanPhamOrderTask().execute(idDonHang);

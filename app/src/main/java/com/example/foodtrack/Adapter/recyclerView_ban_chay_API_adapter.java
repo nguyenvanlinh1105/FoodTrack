@@ -76,6 +76,7 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
         String formattedPrice = formatter.format(product.getGiaTien());
         formattedPrice = formattedPrice + "vnđ";
         holder.price.setText(formattedPrice);
+        holder.soLuongDaBan.setText(String.valueOf(product.getSoLuongDaBan()));
 
         String imageUrl = product.getImages();
         if (imageUrl.startsWith("http://")) {
@@ -99,33 +100,25 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Tạo Bundle chứa thông tin sản phẩm
                 Bundle bundle = new Bundle();
-                bundle.putString("idSanPham", product.getIdSanPham());
-                bundle.putString("title", product.getTenSanPham());
-                bundle.putDouble("price", product.getGiaTien());
-                bundle.putString("description", product.getMoTa());
+                bundle.putString("idSanPham",product.getIdSanPham());
+                bundle.putString("title", holder.title.getText().toString());
+                bundle.putString("price", holder.price.getText().toString());
+                bundle.putString("description", "Mô tả món ăn/đồ uống");
                 bundle.putString("image", product.getImages());
-                Log.d("image",product.getImages());
-
-                // Tạo Fragment chi tiết sản phẩm và truyền thông tin qua Bundle
+                bundle.putInt("soLuongDaBan", product.getSoLuongDaBan());
                 fragment_product_detail_API productDetailsFragment = fragment_product_detail_API.newInstance(
                         product.getIdSanPham(),
-                        product.getTenSanPham(),
+                        holder.title.getText().toString(),
                         product.getGiaTien(),
                         product.getMoTa(),
                         product.getImages(),
                         product.getSoLuongDaBan()
                 );
-
-                // Truyền Bundle vào Fragment
-                productDetailsFragment.setArguments(bundle);
-
-                // Chuyển fragment
                 MainActivity mainActivity = (MainActivity) context;
-                if (mainActivity != null) {
+                if (mainActivity != null)
                     mainActivity.ReplaceFragment(productDetailsFragment);
-                }
+
             }
         });
 
@@ -165,7 +158,7 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         FrameLayout container;
-        TextView title, price, btn_AddToFavorite_banChay_monMoi, description;
+        TextView title, price, btn_AddToFavorite_banChay_monMoi, description, soLuongDaBan;
         ConstraintLayout img;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -174,6 +167,7 @@ public class recyclerView_ban_chay_API_adapter extends RecyclerView.Adapter<recy
             price = itemView.findViewById(R.id.item_price_product);
             img = itemView.findViewById(R.id.item_image_product);
             description = itemView.findViewById(R.id.item_description_product);
+            soLuongDaBan = itemView.findViewById(R.id.tv_luot_ban_home_page_ban_chay);
             container = itemView.findViewById(R.id.container_item_ban_chay_mon_moi);
             btn_AddToFavorite_banChay_monMoi = itemView.findViewById(R.id.btn_add_to_yeuThich_banChay);
         }

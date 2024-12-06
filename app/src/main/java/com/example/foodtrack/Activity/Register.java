@@ -87,8 +87,6 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Vui lòng nhập nội dung trước khi gửi", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    mSocket.emit("client-register-user", edt_hoTen_signin.getText().toString().trim());
-//                    Toast.makeText(getContext(), "Nội dung: " + edt_chat.getText().toString().trim(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
