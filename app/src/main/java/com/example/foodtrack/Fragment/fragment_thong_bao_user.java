@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.foodtrack.API.APIService;
@@ -49,6 +50,7 @@ public class fragment_thong_bao_user extends Fragment {
 
     private ListView lv_thong_bao_user;
     List<ThongBaoModel> listThongBao = new ArrayList<>();
+    private LinearLayout if_empty;
 
     String idNguoiDung;
 
@@ -94,8 +96,9 @@ public class fragment_thong_bao_user extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thong_bao_user, container, false);
 
+        if_empty = (LinearLayout) view.findViewById(R.id.image_if_empty_thong_bao_user);
         lv_thong_bao_user = (ListView) view.findViewById(R.id.lv_thong_bao_user);
-        Log.d("idNguoiDung", idNguoiDung);
+//        Log.d("idNguoiDung", idNguoiDung);
         GetNoti(idNguoiDung);
 
         return view;
@@ -127,12 +130,15 @@ public class fragment_thong_bao_user extends Fragment {
                 String json = gson.toJson(result);
                 Log.d("responseBody", "onPostExecute: " + json);
 
+                lv_thong_bao_user.setVisibility(View.VISIBLE);
+                if_empty.setVisibility(View.GONE);
+
                 listThongBao = result;
                 listAdapter = new notification_list_adapter(getContext(), result);
                 lv_thong_bao_user.setAdapter(listAdapter);
             } else {
                 lv_thong_bao_user.setVisibility(View.GONE);
-//                imageIfEmpty.setVisibility(View.VISIBLE);
+                if_empty.setVisibility(View.VISIBLE);
             }
         }
     }
