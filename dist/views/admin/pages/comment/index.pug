@@ -28,8 +28,8 @@ block content
                                 each comment, index in comments
                                     tr
                                         td.text-center #{(index + 1) + (pagination.limitItems * (pagination.currentPage - 1))}
-                                        td #{comment.user.hoTen}
-                                        td #{comment.product.tenSanPham}
+                                        td.text-center #{comment.user.hoTen}
+                                        td.text-center #{comment.product.tenSanPham}
                                         td.text-center
                                             if comment.tinhTrang == "Đang xử lý"
                                                 span.badge.badge-secondary(style="padding:8px") Đang xử lý
@@ -39,7 +39,7 @@ block content
                                                 span.badge.badge-danger(style="padding:8px") Đã từ chối
                                         td.text-center #{comment.ngayBinhLuan}
                                         td.text-center(style="display: flex; justify-content: space-between; align-items: center; height:65.6px")
-                                            a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/management/comment/approve/`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
+                                            a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/management/comment/detail/${comment.idBinhLuan}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
                                                 i.fas.fa-eye(style="margin-right: 5px;")
                                                 |  Chi tiết
                                             if(comment.tinhTrang == "Đang xử lý")
@@ -60,10 +60,10 @@ block content
                         ul.pagination(style="margin-top: 10px;")
                             if pagination.currentPage > 1
                                 li.page-item
-                                    a.page-link(href=`/admin/management/category?page=${pagination.currentPage - 1}`) Trang trước
+                                    a.page-link(href=`/admin/management/comment?page=${pagination.currentPage - 1}`) Trang trước
                             - for (let index = 1; index <= pagination.totalPages; index++)
                                 li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
-                                    a.page-link(href=`/admin/management/category?page=${index}`) #{index}
+                                    a.page-link(href=`/admin/management/comment?page=${index}`) #{index}
                             if pagination.currentPage < pagination.totalPages
                                 li.page-item
-                                    a.page-link(href=`/admin/management/category?page=${pagination.currentPage + 1}`) Trang sau
+                                    a.page-link(href=`/admin/management/comment?page=${pagination.currentPage + 1}`) Trang sau

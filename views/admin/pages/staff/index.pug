@@ -30,7 +30,7 @@ block content
                   each staff, index in listStaffs
                     tr
                       td.text-center #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
-                      td #{staff.hoTen}
+                      td.text-center #{staff.hoTen}
                       td.text-center #{staff.tenVaiTro}
                       td.text-center #{staff.sdt}
                       td.text-center
@@ -45,9 +45,6 @@ block content
                           a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/management/staff/detail/${staff.token}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
                               i.fas.fa-eye(style="margin-right: 5px;")
                               |  Chi tiết
-                          a.btn.btn-warning.btn-sm.btn-table(href=`/${prefixAdmin}/management/staff/${staff.token}`, style="flex: 1; padding: 5px 10px; background-color: #ffc107; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")
-                              i.fas.fa-warning(style="margin-right: 5px;")
-                              |  Cảnh báo
                           a.btn.btn-danger.btn-sm.btn-table(href=`#`, style="flex: 1; padding: 5px 10px; background-color: #dc3545; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center;" btn-delete-staff=staff.token)
                               i.fas.fa-trash(style="margin-right: 5px;")
                               |  Xóa tài khoản

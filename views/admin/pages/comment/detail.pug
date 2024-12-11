@@ -1,0 +1,56 @@
+extends ../../layouts/default.pug
+
+block content
+ .container-fluid.mt-4
+        .d-sm-flex.align-items-center.justify-content-between.mb-4
+            h1.h3.mb-2.text-gray-800 <strong>Thông tin bình luận</strong>
+        // Page Heading
+        p.mb-4
+            | Thông tin món ăn được bình luận
+            .row
+                // Column
+                .col-lg-4.col-xlg-3.col-md-5
+                    .card
+                        .card-body
+                            center.m-t-30
+                                if(comment.product.images)
+                                    img.img-profile(src=`${comment.product.images}` style="width: 350px; height: 350px; object-fit: cover; border-radius: 10px; image-rendering: auto;")
+                                h4.card-title.mt-3 #{comment.product.tenSanPham}
+                                h6.card-subtitle Danh mục: #{comment.product.Category.tenDanhMuc}
+                // Column end
+                // Column start
+                .col-lg-8.col-xlg-9.col-md-7
+                    .card()
+                        .card-body
+                            form.form-horizontal.form-material()
+                                .form-group
+                                    label.col-md-12 Tên người bình luận
+                                    .col-md-12(style="position:relative;")
+                                        input.form-control.form-control-line(type='text' value=comment.user.hoTen readonly)
+                                    if(comment.user.avatar)
+                                        img.img-thumbnail.rounded-circle(src=comment.user.avatar alt='Ảnh đại diện' width='100' height='100' style="position: absolute;top:15px;right:20px")
+                                    else 
+                                        if(comment.user.gioiTinh=='Nam')
+                                            img.img-thumbnail.rounded-circle(src="/admin/images/undraw_profile.svg" alt='Ảnh đại diện' width='100' height='100' style="position: absolute;top:15px;right:20px")
+                                        else 
+                                            img.img-thumbnail.rounded-circle(src="/admin/images/undraw_profile_3.svg" alt='Ảnh đại diện' width='100' height='100' style="position: absolute;top:15px;right:20px")
+                                .form-group 
+                                    label.col-md-12 Email
+                                    .col-md-12 
+                                        input.form-control.form-control-line(type='text' value=comment.user.email readonly)
+                                .form-group
+                                    label.col-md-12 Số điện thoại
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text' value=comment.user.sdt readonly )
+                                .form-group
+                                    label.col-md-12 Ngày bình luận
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text' value=comment.ngayBinhLuan readonly)
+                                .form-group
+                                    label.col-md-12 Nội dung bình luận
+                                    .col-md-12
+                                        textarea.form-control.form-control-line(rows='3' readonly)= comment.noiDung
+                                .form-group
+                                    label.col-md-12 Tình trạng bình luận
+                                    .col-md-12
+                                        input.form-control.form-control-line(type='text' value=comment.tinhTrang readonly)

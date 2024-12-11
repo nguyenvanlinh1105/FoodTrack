@@ -32,4 +32,5 @@ const commentController = __importStar(require("../../controller/admin/comment.c
 router.get('/', commentController.index);
 router.patch('/approve/:id', commentController.approveComment);
 router.patch('/disapprove/:id', commentController.disapprove);
+router.get('/detail/:id', commentController.detail);
 exports.default = router;

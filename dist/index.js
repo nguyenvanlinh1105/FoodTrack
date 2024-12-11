@@ -109,6 +109,9 @@ app.use((req, res, next) => {
 });
 (0, index_route_1.default)(app);
 (0, index_route_2.default)(app);
+app.get('*', (req, res) => {
+    res.render('admin/pages/error/404');
+});
 server.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });

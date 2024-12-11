@@ -28,8 +28,8 @@ block content
                   each category, index in categories
                     tr
                       td.text-center #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
-                      td #{category.tenDanhMuc}
-                      td !{category.moTa}
+                      td.text-center #{category.tenDanhMuc}
+                      td.text-center !{category.moTa}
                       td.text-center #{category.ngayTao}
                       td.text-center(style="display: flex; justify-content: space-between; align-items: center; height:65.6px")
                           a.btn.btn-secondary.btn-sm.btn-table(href=`/${prefixAdmin}/management/category/detail/${category.slug}`, style="flex: 1; padding: 5px 10px; background-color: #6c757d; color: white; border-radius: 5px; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-right: 10px;")

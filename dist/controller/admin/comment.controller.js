@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.disapprove = exports.approveComment = exports.index = void 0;
+exports.detail = exports.disapprove = exports.approveComment = exports.index = void 0;
 const allModel = __importStar(require("../../model/index.model"));
 const moment_1 = __importDefault(require("moment"));
 const pagination_helper_1 = require("../../helper/pagination.helper");
@@ -123,3 +123,47 @@ const disapprove = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.disapprove = disapprove;
+const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    try {
+        const comment = yield allModel.BinhLuanSanPham.findOne({
+            where: {
+                idBinhLuan: id
+            },
+            include: [
+                {
+                    model: allModel.NguoiDung,
+                    as: 'user',
+                    attributes: ['idNguoiDung', 'hoTen', 'email', 'sdt', 'avatar', 'gioiTinh']
+                },
+                {
+                    model: allModel.SanPham,
+                    as: 'product',
+                    attributes: ['idSanPham', 'tenSanPham', 'images'],
+                    include: [
+                        {
+                            model: allModel.DanhMuc,
+                            as: 'Category',
+                            attributes: ['tenDanhMuc']
+                        }
+                    ]
+                }
+            ],
+            raw: true,
+            nest: true,
+        });
+        const images = JSON.parse(comment['product']['images']);
+        comment['product']['images'] = images;
+        comment['ngayBinhLuan'] = (0, moment_1.default)(comment['ngayBinhLuan']).format('YYYY-MM-DD HH:mm:ss');
+        console.log(comment);
+        res.render('admin/pages/comment/detail', {
+            title: 'Chi tiết bình luận',
+            comment: comment
+        });
+    }
+    catch (error) {
+        req.flash('error', 'Lỗi' + error.message);
+        res.redirect('/admin/management/comment');
+    }
+});
+exports.detail = detail;

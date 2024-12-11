@@ -28,9 +28,9 @@ block content
                             small.text-muted Email 
                             h6 #{customer.email}
                             small.text-muted.p-t-30.db Số điện thoại
-                            h6 #{customer.sdt}
+                            h6= customer.sdt ? customer.sdt : 'Chưa có số điện thoại'
                             small.text-muted.p-t-30.db Địa chỉ
-                            h6 48 Cao Thắng
+                            h6= customer.diaChi ? customer.diaChi : 'Chưa có địa chỉ'
                             .map-box
                                 iframe(src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.7805804229524!2d108.21105927495516!3d16.07687208460371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421847f0d1243f%3A0xfe9e3527761db501!2zNDggQ2FvIFRo4bqvbmcsIFRoYW5oIELDrG5oLCBI4bqjaSBDaMOidSwgxJDDoCBO4bq1bmcgNTUwMDAwLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1731312904725!5m2!1svi!2s" width="350" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade")
                 // Column end

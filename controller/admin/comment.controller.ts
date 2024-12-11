@@ -85,3 +85,46 @@ export const disapprove=async(req:Request,res:Response)=>{
         res.status(500).json({message:"Lỗi server" + error.message});
     }
 }
+
+export const detail = async (req:Request,res:Response)=>{
+    const id=parseInt(req.params.id);
+    try {
+        const comment=await allModel.BinhLuanSanPham.findOne({
+            where:{
+                idBinhLuan:id
+            },
+            include:[
+                {
+                    model:allModel.NguoiDung,
+                    as:'user',
+                    attributes:['idNguoiDung','hoTen','email','sdt','avatar','gioiTinh']
+                },
+                {
+                    model:allModel.SanPham,
+                    as:'product',
+                    attributes:['idSanPham','tenSanPham','images'],
+                    include:[
+                        {
+                            model:allModel.DanhMuc,
+                            as:'Category',
+                            attributes:['tenDanhMuc']
+                        }
+                    ]
+                }
+            ],
+            raw:true,
+            nest:true,
+        });
+        const images=JSON.parse(comment['product']['images']);
+        comment['product']['images']=images;
+        comment['ngayBinhLuan'] = moment(comment['ngayBinhLuan']).format('YYYY-MM-DD HH:mm:ss');
+        console.log(comment);
+        res.render('admin/pages/comment/detail',{
+            title:'Chi tiết bình luận',
+            comment:comment
+        })
+    } catch (error) {
+        req.flash('error','Lỗi' + error.message);
+        res.redirect('/admin/management/comment');
+    }
+}

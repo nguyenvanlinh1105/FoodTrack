@@ -27,7 +27,7 @@ block content
                     tr
                       td.text-center #{(index+1)+(pagination.limitItems*(pagination.currentPage-1))}
                       td.text-center #{order.idDonHang}
-                      td #{order.tenNguoiDung}
+                      td.text-center #{order.tenNguoiDung}
                       td.text-center
                         if(order.tinhTrang == "Đang xử lý")
                           span(class="badge badge-secondary" style="padding:8px") Đang xử lý

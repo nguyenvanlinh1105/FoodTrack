@@ -22,4 +22,5 @@ router.post('/password/reset',authController.passwordReset);
 router.get('/profile',checkAuthMiddleware,checkMessagesUnreadMiddleware,authController.profilePage);
 router.patch('/profile',checkAuthMiddleware,checkMessagesUnreadMiddleware,upload.single("avatar"),uploadCloud.uploadSingle,authController.profileUpdate);
 router.patch('/update/messages',checkAuthMiddleware,checkMessagesUnreadMiddleware,authController.updateMessages);
+
 export default router;
