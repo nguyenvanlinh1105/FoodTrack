@@ -59,10 +59,10 @@ block content
             ul(class="pagination" style="margin-top: 10px;")
               if(pagination.currentPage > 1)
                 li(class="page-item")
-                  a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage-1}`) Trang trước
+                  a(class="page-link" href=`/admin/management/customer?page=${pagination.currentPage-1}`) Trang trước
               - for (let index = 1; index <= pagination.totalPages; index++) 
                 li(class=("page-item" + (pagination.currentPage == index ? " active" : "")))
-                  a(class="page-link" href=`/admin/management/staff?page=${index}`) #{index}
+                  a(class="page-link" href=`/admin/management/customer?page=${index}`) #{index}
               if(pagination.currentPage < pagination.totalPages)
                 li(class="page-item")
-                  a(class="page-link" href=`/admin/management/staff?page=${pagination.currentPage+1}`) Trang sau
+                  a(class="page-link" href=`/admin/management/customer?page=${pagination.currentPage+1}`) Trang sau

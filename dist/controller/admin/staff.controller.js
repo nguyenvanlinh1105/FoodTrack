@@ -80,7 +80,7 @@ exports.pageStaff = pageStaff;
 const createAdminPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const roles = yield allModel.VaiTro.findAll({
         where: {
-            idVaiTro: { [sequelize_1.Op.ne]: 'VT002' }
+            idVaiTro: { [sequelize_1.Op.notIn]: ['VT002', 'VT001'] }
         }
     });
     res.render('admin/pages/staff/create', {

@@ -46,8 +46,8 @@ export const pageStaff = async(req:Request,res:Response)=>{
 }
 export const createAdminPage=async(req:Request, res:Response)=>{
     const roles= await allModel.VaiTro.findAll({
-        where:{
-            idVaiTro:{[Op.ne]:'VT002'}
+        where: {
+            idVaiTro: { [Op.notIn]: ['VT002', 'VT001'] }
         }
     });
     res.render('admin/pages/staff/create',{
