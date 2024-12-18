@@ -60,7 +60,6 @@ export const detailCustomerPage = async (req:Request, res:Response) => {
     const data = await allModel.NguoiDung.findOne({
         where: {
             token: token,
-            trangThai: 'active',
             vaiTro: 'VT002',
             deleted: 0
         },

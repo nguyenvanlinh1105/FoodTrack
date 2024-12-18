@@ -73,7 +73,8 @@ export const create = async(req: Request, res: Response)=>{
 export const detail= async(req: Request, res: Response)=>{
     const food = await allModel.SanPham.findOne({
         where: {
-            slug: req.params.slug
+            slug: req.params.slug,
+            deleted:0
         },
         include: [{
             model: allModel.DanhMuc,

@@ -23,7 +23,7 @@ export const pageStaff = async(req:Request,res:Response)=>{
         ],
         where:{
             idNguoiDung:{[Op.ne]:idUserCurrent},
-            vaiTro:{[Op.in]:['VT001', 'VT003', 'VT004', 'VT005']},
+            vaiTro:{[Op.in]:['VT003', 'VT004', 'VT005']},
             deleted:0
         },
         include: [{
@@ -47,7 +47,7 @@ export const pageStaff = async(req:Request,res:Response)=>{
 export const createAdminPage=async(req:Request, res:Response)=>{
     const roles= await allModel.VaiTro.findAll({
         where: {
-            idVaiTro: { [Op.notIn]: ['VT002', 'VT001'] }
+            idVaiTro: { [Op.notIn]: ['VT001', 'VT002'] }
         }
     });
     res.render('admin/pages/staff/create',{
@@ -69,7 +69,7 @@ export const createAdmin=async(req:Request, res:Response)=>{
         where:{
             email:req.body['email'],
             trangThai:'active',
-            vaiTro:['VT001','VT003','VT004','VT005']
+            vaiTro:['VT003','VT004','VT005']
         },
         raw:true
     });
@@ -116,20 +116,18 @@ export const changeStatus=async (req:Request, res:Response)=>{
 export const detailStaffPage = async (req:Request, res:Response) => {
     (req.session as any).previousPage = req.headers.referer;
     const token = req.params.token;
+    console.log(token);
     const data= await allModel.NguoiDung.findOne({
         where:{
             token:token,
-            trangThai:'active',
-            vaiTro:['VT001','VT003','VT004','VT005'],
+            vaiTro:['VT003','VT004','VT005'],
             deleted:0
         },
-        include: [
-            {
-                model: allModel.VaiTro,
-                as: 'Role',
-                attributes: ['tenVaiTro'] // Lấy thuộc tính tenVaiTro
-            }
-        ],
+        include: [{
+            model: allModel.VaiTro,
+            as: 'Role',
+            attributes: ['tenVaiTro'] // Lấy tên vai trò
+        }],
         attributes: {
             exclude: ['idNguoiDung','ngayCapNhat']
         },

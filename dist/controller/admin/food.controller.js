@@ -107,7 +107,8 @@ exports.create = create;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const food = yield allModel.SanPham.findOne({
         where: {
-            slug: req.params.slug
+            slug: req.params.slug,
+            deleted: 0
         },
         include: [{
                 model: allModel.DanhMuc,

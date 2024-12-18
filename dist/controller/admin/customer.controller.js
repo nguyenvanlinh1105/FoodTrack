@@ -93,7 +93,6 @@ const detailCustomerPage = (req, res) => __awaiter(void 0, void 0, void 0, funct
     const data = yield allModel.NguoiDung.findOne({
         where: {
             token: token,
-            trangThai: 'active',
             vaiTro: 'VT002',
             deleted: 0
         },

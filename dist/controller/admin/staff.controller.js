@@ -55,7 +55,7 @@ const pageStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         ],
         where: {
             idNguoiDung: { [sequelize_1.Op.ne]: idUserCurrent },
-            vaiTro: { [sequelize_1.Op.in]: ['VT001', 'VT003', 'VT004', 'VT005'] },
+            vaiTro: { [sequelize_1.Op.in]: ['VT003', 'VT004', 'VT005'] },
             deleted: 0
         },
         include: [{
@@ -80,7 +80,7 @@ exports.pageStaff = pageStaff;
 const createAdminPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const roles = yield allModel.VaiTro.findAll({
         where: {
-            idVaiTro: { [sequelize_1.Op.notIn]: ['VT002', 'VT001'] }
+            idVaiTro: { [sequelize_1.Op.notIn]: ['VT001', 'VT002'] }
         }
     });
     res.render('admin/pages/staff/create', {
@@ -102,7 +102,7 @@ const createAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         where: {
             email: req.body['email'],
             trangThai: 'active',
-            vaiTro: ['VT001', 'VT003', 'VT004', 'VT005']
+            vaiTro: ['VT003', 'VT004', 'VT005']
         },
         raw: true
     });
@@ -148,20 +148,18 @@ exports.changeStatus = changeStatus;
 const detailStaffPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     req.session.previousPage = req.headers.referer;
     const token = req.params.token;
+    console.log(token);
     const data = yield allModel.NguoiDung.findOne({
         where: {
             token: token,
-            trangThai: 'active',
-            vaiTro: ['VT001', 'VT003', 'VT004', 'VT005'],
+            vaiTro: ['VT003', 'VT004', 'VT005'],
             deleted: 0
         },
-        include: [
-            {
+        include: [{
                 model: allModel.VaiTro,
                 as: 'Role',
                 attributes: ['tenVaiTro']
-            }
-        ],
+            }],
         attributes: {
             exclude: ['idNguoiDung', 'ngayCapNhat']
         },
