@@ -1,3 +1,6 @@
+# Tài liệu
+[Tài liệu FoodTrack.docx](https://github.com/user-attachments/files/21729997/Tai.li.u.FoodTrack.docx)
+
 # 🥗 FoodTrack – Ứng dụng bán đồ ăn và đồ uống trực tuyến
 
 **FoodTrack** là một ứng dụng Android cho phép người dùng đặt món ăn, đồ uống nhanh chóng và tiện lợi. Bên cạnh đó, ứng dụng còn cung cấp hệ thống quản lý đơn hàng trực tuyến dành cho các quán ăn, nhà hàng truyền thống.
