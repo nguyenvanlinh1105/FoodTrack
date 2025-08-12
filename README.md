@@ -59,8 +59,7 @@
 | Phạm Lê Văn Huy     | 22115053122117   | Thành viên     |
 | Nguyễn Ngọc Tú Anh  | 22115053122302   | Thành viên     |
 
-> Giảng viên hướng dẫn: **ThS. Đỗ Phú Huy**  
-> Lớp: **124LTDD04 – Trường Đại học Sư Phạm Kỹ Thuật, ĐH Đà Nẵng**
+> Giảng viên hướng dẫn: **ThS. Đỗ Phú Huy** – Trường Đại học Sư Phạm Kỹ Thuật, ĐH Đà Nẵng**
 
 ---
 
